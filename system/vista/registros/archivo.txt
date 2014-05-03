@@ -1,0 +1,18 @@
+SELECT 
+                    CONCAT_WS('-' ,(SELECT nombre FROM nacionalidad WHERE id_nacionalidad = re.nacionalidad),re.cedula) AS cedula,
+                    CONCAT_WS(' ',re.nombre,re.apellido) AS nombres,
+                    re.email,
+                    DATE_FORMAT(re.fech_naci,'%d-%m-%Y') AS fech_naci,
+                    (YEAR(CURDATE())-YEAR(re.fech_naci))-(RIGHT(CURDATE(),5)<RIGHT(re.fech_naci,5)) AS edad,
+                    re.lugar_naci,
+                    CONCAT_WS(', ', 
+                    CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = re.cod_telefono),re.telefono),
+                    CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = re.cod_celular),re.celular)) AS telefonos,
+                    e.nombre_estado,
+                    m.nombre_municipio,
+                    p.nombre_parroquia
+                   FROM representante re
+                   INNER JOIN parroquia AS p ON re.id_parroquia=p.id_parroquia
+                   INNER JOIN municipio AS m ON p.id_municipio=m.id_municipio
+                   INNER JOIN estado AS e ON m.id_estado=e.id_estado
+                   WHERE re.cedula=123456

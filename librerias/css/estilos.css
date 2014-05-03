@@ -1,0 +1,535 @@
+/***Etilo General de todo****/
+body
+{
+    font-size: 11px;
+    font-family: Arial,'OpenSans',Tahoma,Geneva,sans-serif;
+}
+
+#img
+{
+    background-image: url("../../imagenes/fondo1.jpg");
+    background-repeat:no-repeat;
+    background-attachment:fixed; 
+    background-position:center;
+}
+
+#contenedor
+{
+    width: 80%;
+    height: 1000px;
+    margin: auto;
+    position: relative;        
+    background-color: transparent;
+}
+
+#banner-imagen
+{
+    width: 200px;
+    height: 100px;
+    background-color: red;
+    margin-left: 95px;
+    float: left;
+}
+
+#banner-logo
+{
+    width: 150px;
+    height: 100px;
+    margin-left: 50px;
+    margin-top: -92px;
+    float: left;
+}
+
+#menu
+{
+    width: 760px;
+    height: 70px;
+    margin-top: 10px;
+    float: left;
+    position: relative;
+    margin-left: 57px;
+    background-color: transparent;
+}
+
+#menu_boton
+{
+    width: 700px;
+    height: 50px;
+    margin-top: -50px;
+    position: relative;
+    margin-left: 30px;
+    background-color: transparent;
+}
+
+#menu_boton ul
+{
+    float:left;
+    width:100%;
+    height: 50px;
+    padding:0;
+    margin:0;
+    background-color: transparent;
+    list-style-type:none;
+}
+
+#menu_boton li
+{
+    color: #ffffff;
+    font-family: "Lucida Sans Unicode","Lucida Grande",sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center; 
+    text-decoration: none;
+    text-transform: uppercase;    
+}
+
+#menu_boton span
+{
+    float:left;
+    text-decoration:none;
+    color:white;
+    padding:18px 35px 15px 20px;
+    border-right:1px solid white;
+    cursor: pointer;
+}
+
+#cuerpo
+{
+    width: 1030px;
+    height: auto;
+    color:#000000;
+/*    background-color: transparent;*/
+    float: left;
+    margin-left: 53px;
+    position: relative;
+    margin-top: 30px;  
+    background-color:#FFFFFF;
+    border:1px solid #CCCCCC;
+    border-bottom-left-radius:4px;
+    border-bottom-right-radius:4px;
+    border-top-left-radius:4px;
+    border-top-right-radius:4px;
+    -moz-border-top-left-radius:4px;
+    -moz-border-top-right-radius:4px;	
+    -moz-border-radius-bottomright: 4px;
+    -moz-border-radius-bottomleft: 4px;
+    -webkit-border-top-left-radius: 4px;
+    -webkit-border-top-right-radius: 4px;
+    -webkit-border-bottom-right-radius: 4px;
+    -webkit-border-bottom-left-radius: 4px;
+    
+}
+
+#cuerpo_nosotros
+{
+    width:820px;
+    height: 480px;
+    background-color: transparent;
+    margin-left: 55px;
+    margin-top: 30px;
+    font-size: 11px;
+    font-family: Arial,'OpenSans',Tahoma,Geneva,sans-serif;           
+    text-align: justify;
+    color: #333333;
+}
+
+#cuerpo_nosotros h1
+{
+    color: #000000;
+    font-size: 24px;
+    font-weight: bold;
+    font-family: Arial,'OpenSans',Tahoma,Geneva,sans-serif;
+}
+
+
+#pie
+{
+    width: 1030px;
+    height: 300px;
+    float: left;
+    margin: 20px auto auto auto;
+    margin-left: 53px;
+    position: relative;  
+}
+
+#borde_negro
+{
+    width: 1028px;
+    height: 298px;
+    float: left;    
+    position: absolute; 
+    box-shadow: 0 0 10px 0 #000000 inset;
+    color: #FFFFFF;
+    display: block;
+    padding: 1px;
+}
+
+#contenido1
+{
+    display: inline-block;
+    margin-top: 18px;
+    margin-left: 55px;
+    width: 180px;
+    float: left;
+    height: 180px;
+}
+
+#menu_contenido1
+{
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: Arial,'OpenSans',Tahoma,Geneva,sans-serif;
+    margin-left: -25px;
+}
+
+#menu_contenido1 a
+{
+    text-decoration: none; 
+    color:#FFFFFF;
+}
+
+#contenido2
+{
+    display: inline-block;
+    margin: 18px 50px 0;
+    height: 250px;
+    width: 250px;
+    float: left;
+
+}
+
+#contenido2 h1
+{
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 5px;
+    text-transform: uppercase;
+    float: left;
+}
+
+#contenido2 input[type="text"],#contenido2 input[type="email"]
+{
+    height: 36px;
+    background: none repeat scroll 0 0 #163672;
+    border: medium none;
+    box-shadow: 0 0 5px 0 rgba(255, 255, 255, 0.4) inset;
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 5px;
+    width: 214px;
+    float: left;
+}
+
+#contenido2 textarea{
+    height: 80px;
+    margin-bottom: 10px;
+    resize: none;
+    background: none repeat scroll 0 0 #163672;
+    border: medium none;
+    box-shadow: 0 0 5px 0 rgba(255, 255, 255, 0.4) inset;
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 400;
+    width: 214px;
+    float: left;
+}    
+
+#contenido2 input[type="text"]:focus,#contenido2 input[type="email"]:focus,#contenido2 textarea:focus
+{
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+#contenido2 input[type="submit"]
+{
+    /*     background-image: url("../../imagenes/boton_enviar.png");*/
+    background: repeat-x scroll 0 0 rgba(0, 0, 0, 0);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 5px;
+    box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.6);
+    color: #FFFFFF;
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    height: 34px;
+    width: 133px;
+    float: left;
+    cursor: pointer;
+}
+
+.requiere
+{
+    color: #FF0000;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: -8px;
+    margin-left: 3px;
+    float: left;
+}
+
+/********Estilo de la letra del logueo**********/
+.letras
+{
+    font-family: Arial,'OpenSans',Tahoma,Geneva,sans-serif;
+    font-size: 12px;
+    color: #000000;
+}
+
+#separacion_pie
+{
+    width: 948px;
+    height: 5px;
+    background-color: transparent;
+    float: left; 
+    margin-top: 7px; margin-left: 82px;
+}
+
+#contenido3
+{
+    display: inline-block;
+    margin: 5px 60px 0;
+/*        background-color: red;*/
+    height: 250px;
+    width: 300px;
+    float: left;
+}
+
+#contenido3 h1
+{
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 15px;
+    text-transform: uppercase;
+    float: left;
+    text-align: center;
+    text-shadow: 2px 3px 2px #000000;
+    font-family: Arial,'OpenSans',Tahoma,Geneva,sans-serif;
+}
+
+#telf
+{
+     background: url("../../imagenes/boton_numeros.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border-radius: 8px;
+    color: #30569C;
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 48px;
+    padding: 6px 0;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);    
+}
+
+.derechos {
+    font-size: 14px;
+    text-align: center;
+}
+
+.derechos a {
+    font-size: 11px;
+    color: #ACCFFF;
+    text-shadow: 0 0 1px #ACCFFF;
+}
+
+.derechos a:hover
+{
+    color: #FFFFFF;
+    text-decoration: none;
+        
+}
+a, a:visited {
+    color: #1B57A3;
+    cursor: pointer;
+    
+}
+
+/***Estilos del index de la pagina ***/
+
+#divisor_superior
+{
+    width: 990px;
+    height: 60px;
+    background-color: transparent;
+    float: left;
+    margin-top: 8px;
+    margin-left: 20px;
+}
+
+#divisor_inferior
+{
+    width: 677px;
+    height: 40px;
+    background-color: transparent;
+    float: left;
+    margin-top: 25px;
+    margin-left: 8px;
+}
+
+#cuerpo_informacion1
+{
+    width: 470px;
+    height: 420px;
+    background-color: transparent;
+    float: left;
+    margin-left: 35px;
+}
+
+#cuerpo_informacion1 h2
+{
+  
+     background: url("../../imagenes/bg_titulo.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+    color: #FFFFFF;
+    display: block;
+    font-size: 24px;
+    font-weight: 700;
+    height: 37px;
+    margin: 20px 0;
+    padding-top: 4px;
+    text-align: center;
+    text-shadow: 0 0 1px;
+    text-transform: uppercase;
+    width: 230px;    
+}
+
+#cuerpo_informacion1 p
+{
+    text-align: justify;
+    color: #333333;
+    font-family: Arial,'OpenSans',Tahoma,Geneva,sans-serif;
+    font-size: 11px;
+}
+
+#cuerpo_informacion1 h2.noticia
+{
+  
+    background: url("../../imagenes/bg_titulo_long.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+    width: 400px;
+    color: #FFFFFF;
+    display: block;
+    font-size: 24px;
+    font-weight: 700;
+    height: 37px;
+    margin: 20px 0;
+    padding-top: 4px;
+    text-align: center;
+    text-shadow: 0 0 1px;
+    text-transform: uppercase;
+}
+
+#cuerpo_informacion2
+{
+    width: 420px;
+    height: 420px;
+    background-color: transparent;
+    float: left;
+    margin-left: 570px;
+    margin-top: -420px;
+}
+
+#cuerpo_informacion2 h2
+{
+    background: url("../../imagenes/bg_titulo.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+    color: #FFFFFF;
+    display: block;
+    font-size: 24px;
+    font-weight: 700;
+    height: 37px;
+    margin: 20px 0;
+    padding-top: 4px;
+    text-align: center;
+    text-shadow: 0 0 1px;
+    text-transform: uppercase;
+    width: 230px;
+}
+
+#div_galeria
+{
+    background: none repeat scroll 0 0 #FFFFFF;
+    box-shadow: 0 0 2px 0 #000000;
+    height: 352px;
+    text-align: center;
+    width: 438px;
+    float: left;
+}
+
+#div_galeria1
+{
+/*    background: none repeat scroll 0 0 #FFFFFF;
+    box-shadow: 0 0 2px 0 #000000;*/
+    height: 352px;
+    text-align: center;
+    width: 438px;
+    float: left;
+}
+
+#ir_galeria
+{
+    background: none repeat scroll 0 0 #0154A0;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    width: 420px;
+    height: 30px;
+    text-align: center; 
+    font-family: Arial,'OpenSans',Tahoma,Geneva,sans-serif;
+    line-height: 32px;
+   margin-top: 20px; 
+   margin-left: 9px;
+   float: left;
+}
+
+/***Estilo del logueo***/
+
+#login {
+    width:100px;
+    height: 50px;
+    float:right;
+    position:relative;
+    margin-right: 60px;
+    background-color: transparent;
+}
+
+#login p {
+    margin:0;
+    padding-left:24px;
+    cursor:pointer;
+    background-position:left;
+    background-repeat:no-repeat;
+    font-family: Arial,'OpenSans',Tahoma,Geneva,sans-serif;
+    font-size: 11px;
+    color: #1B57A3;
+    margin-top: 8px;
+}
+
+
+#login_form {
+    position:relative;
+    z-index:999;
+    background-color:#fff;
+    border:solid 1px rgb(220,220,220);
+    padding:12px;
+    width:252px;
+    box-shadow:1px 1px 4px rgb(220,220,220);
+    top:10px;
+    left:-70px;;
+    display:none;
+    border-radius: 7px 7px 7px 7px;
+}
+
+#login_form input[type="text"],
+#login_form input[type="password"] {
+    display:block;
+}
+ 
+#login_form input,
+#login_form label {
+    margin-bottom:4px;
+}
+
+
+/*********Estilo de prueba de un logueo***********/
