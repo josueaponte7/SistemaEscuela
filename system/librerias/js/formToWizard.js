@@ -3,7 +3,13 @@
 (function($) {
     $.fn.formToWizard = function(options) {
         options = $.extend({  
-            submitButton: "" 
+            submitButton: "",
+            url  :"",
+            next:'Next',
+            finalize:'Finalize',
+            prev:'Prev',
+            message :'',
+            valor:''
         }, options); 
         
         var element = this;
@@ -36,7 +42,11 @@
 
         function createPrevButton(i) {
             var stepName = "step" + i;
-            $("#" + stepName + "commands").append("<button style='float:left;' type='button' id='" + stepName + "Prev' class='prev btn btn-primary btn-sm'><span class='glyphicon glyphicon-chevron-left'></span> Atras</button>");
+            
+            $("#"+stepName+'#cedula').remove();
+            $("#"+stepName+'#accion').remove();
+            
+            $("#" + stepName + "commands").append("<button style='float:left;' type='button' id='" + stepName + "Prev' class='prev btn btn-primary btn-sm'><span class='glyphicon glyphicon-chevron-left'></span>"+options.prev+"</button>");
             $("#" + stepName + "Prev").on("click", function(e) {
                 $("#" + stepName).hide();
                 $("#step" + (i - 1)).show();
@@ -46,21 +56,34 @@
         }
 
         function createNextButton(i) {
+            
+            
+            var stepName  = "step" + i;
  
-            var stepName = "step" + i;
-            var texto = ' Siguiente';
+            var texto     = options.next;
             var glyphicon = 'glyphicon-chevron-right';
             if(i ==  count - 1){
-                texto = 'Finalizar';
+                texto = options.finalize;
                 glyphicon = 'glyphicon-ok';
             }
             
-            $("#" + stepName + "commands").append("<button style='float:right;' type='button' id='" + stepName + "Next' class='next btn btn-primary btn-sm'>"+texto+" <span class='glyphicon "+glyphicon+"'></span></button>");
+            $("#" + stepName + "commands").append("<button style='float:right;' type='button' id='" + stepName + "Next' class='next btn btn-primary btn-sm'> "+texto+" <span class='glyphicon "+glyphicon+"'></span></button>");
             $("#" + stepName + "Next").on("click", function(e) {
-                $.post("../../controlador/Inscripcion.php", $("#"+stepName).serialize(), function(respuesta) {
-                    alert(respuesta);
-                    if (respuesta == 1) {
-                        alert('Registro con Exito');
+                
+                $("input:hidden#hcedula,input:hidden#haccion,input:hidden#hdt").remove();
+                var dat_ced = $('#cedula').find('option:selected').val();
+                
+                var datos_cedula = dat_ced.split('-');
+                
+                var $accion = '<input type="hidden" name="accion" id="haccion" value="GuardarDT"/>';
+                var $cedula = '<input type="hidden" name="cedula" id="hcedula" value="'+datos_cedula[1]+'"/>';
+                var $dt     = '<input type="hidden" name="dt" id="hdt" value="dt'+i+'"/>';
+                $("#"+stepName).append($accion,$cedula,$dt);
+                $.post(options.url, $("#"+stepName).serialize(), function(respuesta) {
+                    $("#"+stepName+'input:hidden#cedula').remove();
+                    $("#"+stepName+'#accion').remove();
+                   if (respuesta == 1) {
+                        alert(options.message);
                         $('input[type="text"]').val('');
                     }
                 });

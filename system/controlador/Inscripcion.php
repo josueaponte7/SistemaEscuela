@@ -2,6 +2,7 @@
 require_once '../modelo/Inscripcion.php';
 
 $obj = new Inscripcion();
+
 if (isset($_POST['accion'])) {
     $accion = $_POST['accion'];
     if (isset($_POST['cedula'])) {
@@ -34,6 +35,58 @@ if (isset($_POST['accion'])) {
     if (isset($_POST['id_tipo'])) {
         $datos['id_tipo'] = $_POST['id_tipo'];
     }
+    
+    
+    // Datos Generales
+    if (isset($_POST['ingreso'])) {
+        $datos['ingreso'] = $_POST['ingreso'];
+    }
+    if (isset($_POST['madre_nivel'])) {
+        $datos['madre_nivel'] = $_POST['madre_nivel'];
+    }
+    if (isset($_POST['padre_nivel'])) {
+        $datos['padre_nivel'] = $_POST['padre_nivel'];
+    }
+    if (isset($_POST['representante_nivel'])) {
+        $datos['representante_nivel'] = $_POST['representante_nivel'];
+    }
+    if (isset($_POST['representante_a'])) {
+        $datos['representante_a'] = $_POST['representante_a'];
+    }
+    if (isset($_POST['representante_see'])) {
+        $datos['representante_see'] = $_POST['representante_see'];
+    }
+    if (isset($_POST['representante_set'])) {
+        $datos['representante_set'] = $_POST['representante_set'];
+    }
+    if (isset($_POST['dt'])) {
+        $datos['dt'] = $_POST['dt'];
+    }
+    if (isset($_POST['representante_al'])) {
+        $datos['representante_al'] = $_POST['representante_al'];
+    }
+    if (isset($_POST['mision'])) {
+        $datos['mision'] = $_POST['mision'];
+    }
+    
+    /*if (isset($_POST['ubicacion_vivienda'])) {
+        $datos['ubicacion'] = $_POST['ubicacion_vivienda'];
+    }
+    if (isset($_POST['tipo_vivienda'])) {
+        $datos['tipo'] = $_POST['tipo_vivienda'];
+    }
+    if (isset($_POST['estado_vivienda'])) {
+        $datos['estado_vivienda'] = $_POST['estado_vivienda'];
+    }
+    if (isset($_POST['cant_habitacion'])) {
+        $datos['estado_vivienda'] = $_POST['cant_habitacion'];
+    }
+    if (isset($_POST['cama'])) {
+        $datos['cama'] = $_POST['cama'];
+    }*/
+    if(isset($_POST['dt']) && $_POST['dt'] == 'dt2'){
+        $datos['dtv'] = $_POST;
+    }
      switch ($accion) {
         case 'Guardar':
             $resultado = $obj->add($datos);
@@ -58,6 +111,10 @@ if (isset($_POST['accion'])) {
         break;
         case 'BuscarDatos':
             $resultado = $obj->getDatos($datos);
+            echo $resultado;
+        break;
+        case 'GuardarDT':
+            $resultado = $obj->addDG($datos);
             echo $resultado;
         break;
     }

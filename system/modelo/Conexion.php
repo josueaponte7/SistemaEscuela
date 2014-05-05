@@ -79,8 +79,9 @@ class Conexion {
             return FALSE;
         } else {
    
-            $resultado = FALSE;
+            $resultado  = FALSE;
             $this->_sql = "SELECT $campo FROM $table WHERE $conditions ORDER BY 1 DESC LIMIT 1";
+            
             $this->_state_query = $this->_query();
             if ($this->_state_query->num_rows > 0) {
                 $this->_state_query->data_seek($this->_state_query->num_rows -1);

@@ -27,16 +27,15 @@ $_SESSION['abrir']       = 'procesos';
         <link href="../../librerias/css/bootstrap.css" rel="stylesheet" media="screen"/>
         <link href="../../librerias/css/dataTables.css" rel="stylesheet" media="screen"/>
         <link href="../../librerias/css/estilos.css" rel="stylesheet" media="screen"/>
-        <link href="../../librerias/css/datepicker3.css" rel="stylesheet" media="screen"/> 
-        <link rel="stylesheet" type="text/css" href="../../librerias/css/select2.css"/>
-        <link rel="stylesheet" type="text/css" href="../../librerias/css/select2-bootstrap.css"/>
+        <link href="../../../librerias/css/jquery.toastmessage.css" rel="stylesheet" media="screen"/>
+        <link href="../../librerias/css/select2.css" rel="stylesheet" type="text/css"/>
+        <link href="../../librerias/css/select2-bootstrap.css" rel="stylesheet" type="text/css"/>
 
         <script type="text/javascript" src="../../librerias/js/jquery.1.10.js"></script>
         <script type="text/javascript" src="../../librerias/js/dataTables.js"></script>
         <script type="text/javascript" src="../../librerias/js/bootstrap.js"></script>
         <script type="text/javascript" src="../../librerias/js/formToWizard.js"></script>
-        <script type="text/javascript" src="../../librerias/js/bootstrap-datepicker.js"></script>
-        <script type="text/javascript" src="../../librerias/js/bootstrap-datepicker.es.js"></script>
+        <script type="text/javascript" src="../../../librerias/js/jquery.toastmessage.js"></script>
         <script type="text/javascript" src="../../librerias/js/select2.js"></script>
         <script type="text/javascript" src="../../librerias/js/select2_locale_es.js"></script>
         <script type="text/javascript" src="../../librerias/js/tab.js"></script>
@@ -52,6 +51,11 @@ $_SESSION['abrir']       = 'procesos';
             }
             .activo{
                 color: #3276B1;
+            }
+
+            .toast-item {
+                font-size: 13px;
+                width: 300px;
             }
         </style>
     </head>
@@ -99,7 +103,7 @@ $_SESSION['abrir']       = 'procesos';
                     <table width="711" border="0" align="center">
                         <form id="frminscripcion" name="frminscripcion">
                             <tr>
-                                <td width="79" height="50" class="letras">Estudiante</td>
+                                <td width="79" height="50" class="letras">Estudiante:</td>
                                 <td width="741"> 
                                     <select  name="cedula" class="form-control input-sm select2" id="cedula">
                                         <option value="0">Seleccione</option>
@@ -165,7 +169,7 @@ $_SESSION['abrir']       = 'procesos';
                                                     <input disabled="disabled" type="text" readonly class="form-control input-sm" id="anio_escolar" name="anio_escolar" value="<?php echo $anio_escolar ?>" placeholder="A&ntilde;o Escolar">
                                                 </div>
                                             </td>
-                                            <td width="93" class="letras"> Actividad </td>
+                                            <td width="93" class="letras"> Actividad: </td>
                                             <td width="229">
                                                 <div class="form-group">
                                                     <select name="actividad" class="form-control input-sm select2" id="actividad">
@@ -183,7 +187,7 @@ $_SESSION['abrir']       = 'procesos';
                                             </td>
                                         </tr>
                                         <tr height="60">
-                                            <td height="68" class="letras">&Aacute;rea</td>
+                                            <td height="68" class="letras">&Aacute;rea:</td>
                                             <td colspan="4">
                                                 <div class="form-group">
                                                     <textarea name="area" rows="2"  class="form-control input-sm"  id="area" placeholder="&Aacute;rea"></textarea>
@@ -217,13 +221,13 @@ $_SESSION['abrir']       = 'procesos';
                                                 <td>
                                                     <table width="706">
                                                         <tr height="60">
-                                                            <td width="83" class="letras"> C&eacute;dula </td>
+                                                            <td width="83" class="letras"> C&eacute;dula: </td>
                                                             <td width="284">
                                                                 <div class="form-group">
-                                                                    <input disabled="disabled" type="text" class="form-control  input-sm" id="cedula_r" name="cedula_r" placeholder="Cédula del Estudiante"/>
+                                                                    <input disabled="disabled" type="text" class="form-control  input-sm" id="cedula_r" name="cedula_r" placeholder="Cédula del Representante"/>
                                                                 </div>
                                                             </td>
-                                                            <td width="67" class="letras"> Nombres </td>
+                                                            <td width="67" class="letras"> Nombres: </td>
                                                             <td width="252">
                                                                 <div class="form-group">
                                                                     <input disabled="disabled"  type="text" class="form-control input-sm" id="nombre_r" name="nombre_r" placeholder="Nombre" />
@@ -231,13 +235,13 @@ $_SESSION['abrir']       = 'procesos';
                                                             </td>
                                                         </tr>
                                                         <tr height="40">
-                                                            <td class="letras"> Apellidos</td>
+                                                            <td class="letras"> Apellidos:</td>
                                                             <td>
                                                                 <div class="form-group">
                                                                     <input disabled="disabled" type="text" class="form-control input-sm" id="apellido_r" name="apellido_r" placeholder="Apellido" />
                                                                 </div>
                                                             </td>
-                                                            <td class="letras"> Parentesco </td>
+                                                            <td class="letras"> Parentesco: </td>
                                                             <td>
                                                                 <div class="form-group">
                                                                     <input disabled="disabled"  type="text" class="form-control input-sm" id="parentesco" name="parentesco" placeholder="Parentesco" />
@@ -258,7 +262,7 @@ $_SESSION['abrir']       = 'procesos';
                                                 <td>
                                                     <table width="706">
                                                         <tr height="60">
-                                                            <td width="83" class="letras"> Tipo de Medio </td>
+                                                            <td width="83" class="letras"> Tipo de Medio: </td>
                                                             <td>
                                                                 <select name="medio" class="form-control input-sm" id="medio">
                                                                     <option value="0">Seleccione</option>
@@ -267,7 +271,7 @@ $_SESSION['abrir']       = 'procesos';
                                                                     <option value="3">Transporte Particular</option>
                                                                 </select>
                                                             </td>
-                                                            <td width="67" class="letras"> C&eacute;dula </td>
+                                                            <td width="67" class="letras"> C&eacute;dula: </td>
                                                             <td width="252">
                                                                 <div class="form-group">
                                                                     <input type="text" style="width: 250px !important;" class="form-control input-sm" id="cedula_cho" name="cedula_cho" placeholder="Cédula"/>
@@ -275,13 +279,13 @@ $_SESSION['abrir']       = 'procesos';
                                                             </td>
                                                         </tr>
                                                         <tr height="40">
-                                                            <td class="letras"> Nombres</td>
+                                                            <td class="letras"> Nombres:</td>
                                                             <td>
                                                                 <div class="form-group">
                                                                     <input disabled="disabled" type="text" class="form-control input-sm" id="nombre_cho" name="nombre_cho" placeholder="Nombres" />
                                                                 </div>
                                                             </td>
-                                                            <td class="letras"> Apellidos </td>
+                                                            <td class="letras"> Apellidos: </td>
                                                             <td>
                                                                 <div class="form-group">
                                                                     <input disabled="disabled" type="text" class="form-control input-sm" id="apellido_cho" name="apellido_cho" placeholder="Apellidos" />
@@ -289,13 +293,13 @@ $_SESSION['abrir']       = 'procesos';
                                                             </td>
                                                         </tr>
                                                         <tr height="40">
-                                                            <td class="letras"> Placa </td>
+                                                            <td class="letras"> Placa: </td>
                                                             <td>
                                                                 <div class="form-group">
                                                                     <input disabled="disabled" type="text" class="form-control input-sm" id="placa" name="placa" placeholder="Placa" />
                                                                 </div>
                                                             </td>
-                                                            <td class="letras"> Tel&eacute;fonos </td>
+                                                            <td class="letras"> Tel&eacute;fonos: </td>
                                                             <td>
                                                                 <div class="form-group">
                                                                     <input disabled="disabled" type="text" style="width: 250px !important;" class="form-control input-sm" id="telefono_cho" name="telefono_cho" placeholder="Teléfonos"/>
@@ -313,6 +317,7 @@ $_SESSION['abrir']       = 'procesos';
                                                 <td align="center">
                                                     <div id="botones">
                                                         <input type="hidden" name="accion" value="Guardar" id="accion"/>
+                                                        <input type="hidden" name="dt" id="dt" value=""/>
                                                         <button type="button" id="guardar" class="btn btn-primary btn-sm">Guardar</button>
                                                         <button type="button" id="limpiar" class="btn btn-primary btn-sm">Limpiar</button>
                                                         <button type="button" id="salir" class="btn btn-primary btn-sm">Salir</button> 
@@ -326,10 +331,10 @@ $_SESSION['abrir']       = 'procesos';
                             </tr>
                             <tr>
                                 <td colspan="2" align="center">
-                                    <fieldset>
+                                    <fieldset id="fil_datos_genereles" style="display: none">
                                         <legend class="letras_label">
                                             <span id="cdt_generales"  class="link">Cargar Datos Generales</span> 
-                                            <span id="rdt_generales" class="link" style="float: right;display: none">Restablecer</span>
+                                            <span id="rest_generales" class="link" style="float: right;display: none">Restablecer</span>
                                         </legend>
                                     </fieldset>
                                 </td>
@@ -350,41 +355,42 @@ $_SESSION['abrir']       = 'procesos';
                                                                             <tr>
                                                                                 <th height="39" class="letras">Fallecido</th>
                                                                                 <td class="letras">
-                                                                                    <input type="checkbox" name="represent_f" id="padre_f">
+                                                                                    <input type="checkbox" name="representante_f[]" id="padre_f" value="1">
                                                                                     <label>Padre</label>
                                                                                     &nbsp;&nbsp;
-                                                                                    <input type="checkbox" name="represent_f" id="madre_f">
+                                                                                    <input type="checkbox" name="representante_f[]" id="madre_f" value="2">
                                                                                     <label>Madre </label>
                                                                                 </td>
                                                                                 <th class="letras">Privados de Libertad</th>
                                                                                 <td class="letras">
-                                                                                    <input type="checkbox" name="represent_pl" id="padre_pl">
+                                                                                    <input type="checkbox" name="representante_pl[]" id="padre_pl" value="1">
                                                                                     <label>Padre</label>
                                                                                     &nbsp;&nbsp;
-                                                                                    <input type="checkbox" name="represent_pl" id="madre_pl">
+                                                                                    <input type="checkbox" name="representante_pl[]" id="madre_pl" value="2">
                                                                                     <label>Madre </label>
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th height="37" class="letras">Alcoh&oacute;licos</th>
                                                                                 <td class="letras">
-                                                                                    <input type="checkbox" name="padre_al" id="padre_al">
+                                                                                    <input type="checkbox" name="representante_al[]" id="padre_al" value="1">
                                                                                     <label>Padre</label>
                                                                                     &nbsp;&nbsp;
-                                                                                    <input type="checkbox" name="madre_al" id="madre_al">
+                                                                                    <input type="checkbox" name="representante_al[]" id="madre_al" value="2">
                                                                                     <label>Madre </label>
                                                                                     &nbsp;&nbsp;
-                                                                                    <input type="checkbox" name="representante_al" id="representante_al">
+                                                                                    <input type="checkbox" name="representante_al[]" id="represent_al" value="3">
                                                                                     <label>Representante</label>
                                                                                 </td>
                                                                                 <th class="letras">F&aacute;rmaco Dependiente</th>
-                                                                                <td class="letras"><input type="checkbox" name="padre_fd" id="padre_fd">
+                                                                                <td class="letras">
+                                                                                    <input type="checkbox" name="representante_fd[]" id="padre_fd" value="1">
                                                                                     <label>Padre</label>
                                                                                     &nbsp;&nbsp;
-                                                                                    <input type="checkbox" name="madre_fd" id="madre_fd">
+                                                                                    <input type="checkbox" name="representante_fd[]" id="madre_fd" value="2">
                                                                                     <label>Madre</label>
                                                                                     &nbsp;&nbsp;
-                                                                                    <input type="checkbox" name="representante_fd" id="representante_fd">
+                                                                                    <input type="checkbox" name="representante_fd[]" id="represent_fd" value="3">
                                                                                     <label>Representante</label>
                                                                                 </td>
                                                                             </tr>
@@ -405,24 +411,24 @@ $_SESSION['abrir']       = 'procesos';
                                                                             <tr>
                                                                                 <th  class="letras">Alfabetizados</th>
                                                                                 <td  class="letras">
-                                                                                    <input type="checkbox" name="repre_alf" id="padre_alf">
+                                                                                    <input type="checkbox" name="representante_a[]" id="padre_alf" value="ps">
                                                                                     <label>Padre</label>
                                                                                     &nbsp;&nbsp;
-                                                                                    <input type="checkbox" name="repre_alf" id="madre_alf">
+                                                                                    <input type="checkbox" name="representante_a[]" id="madre_alf" value="ms">
                                                                                     <label>Madre</label>
                                                                                     &nbsp;&nbsp;
-                                                                                    <input type="checkbox" name="repre_alf" id="representante_alf">
+                                                                                    <input type="checkbox" name="representante_a[]" id="represent_alf" value="rs">
                                                                                     <label>Representante</label>
                                                                                 </td>
                                                                                 <th height="34" class="letras">Analfabeta</th>
                                                                                 <td height="34" class="letras">
-                                                                                    <input type="checkbox" name="repre_anl" id="padre_anl">
+                                                                                    <input type="checkbox" name="representante_a[]" id="padre_anl" value="pn">
                                                                                     <label>Padre</label>
                                                                                     &nbsp;&nbsp;
-                                                                                    <input type="checkbox" name="repre_anl" id="madre_anl">
+                                                                                    <input type="checkbox" name="representante_a[]" id="madre_anl" value="mn">
                                                                                     <label>Madre</label>
                                                                                     &nbsp;&nbsp;
-                                                                                    <input type="checkbox" name="repre_anl" id="representante_anl">
+                                                                                    <input type="checkbox" name="representante_a[]" id="represent_anl" value="rn">
                                                                                     <label>Representante</label>
                                                                                 </td>
                                                                             </tr>
@@ -505,18 +511,18 @@ $_SESSION['abrir']       = 'procesos';
                                                                             <tr>
                                                                                 <th height="39" class="letras">Trabajan</th>
                                                                                 <td class="letras">
-                                                                                    <input type="checkbox" name="repres_se" id="padre_se">
+                                                                                    <input type="checkbox" name="representante_set[]" id="padre_set" value="1">
                                                                                     <label>Padre</label>
                                                                                     &nbsp;&nbsp;
-                                                                                    <input type="checkbox" name="repres_se" id="madre_se">
+                                                                                    <input type="checkbox" name="representante_set[]" id="madre_set" value="2">
                                                                                     <label>Madre</label>
                                                                                 </td>
                                                                                 <th class="letras">Estudiantes</th>
                                                                                 <td class="letras">
-                                                                                    <input type="checkbox" name="repre_se" id="padre_se">
+                                                                                    <input type="checkbox" name="representante_see[]" id="padre_see" value="1">
                                                                                     <label>Padre</label>
                                                                                     &nbsp;&nbsp;
-                                                                                    <input type="checkbox" name="repre_se" id="madre_pse">
+                                                                                    <input type="checkbox" name="representante_see[]" id="madre_see" value="2">
                                                                                     <label>Madre</label>
                                                                                 </td>
                                                                             </tr>
@@ -544,7 +550,7 @@ $_SESSION['abrir']       = 'procesos';
                                                                                 <div class="form-group" >
                                                                                     <div class="checkbox">
                                                                                         <label>
-                                                                                            <input  type="checkbox" name="ingreso" value="<?php echo $resul_naci[$i]['id_ingreso']; ?>" />
+                                                                                            <input  type="checkbox" name="ingreso[]" value="<?php echo $resul_naci[$i]['id_ingreso']; ?>" />
                                                                                             <?php echo $tipo_ingreso; ?>
                                                                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                                                         </label>
@@ -619,7 +625,7 @@ $_SESSION['abrir']       = 'procesos';
                                                                                 <th width="123" class="letras">Ubicaci&oacute;n: </th>
                                                                                 <td width="191">
                                                                                     <div class="form-group">
-                                                                                        <select style="width: 130px;" name="ubiccaion_vivienda" class="form-control input-sm" id="ubiccaion_vivienda">
+                                                                                        <select style="width: 130px;" name="ubicacion_vivienda" class="form-control input-sm" id="ubicacion_vivienda">
                                                                                             <option value="0">Seleccione</option>
                                                                                             <?php
                                                                                             $resultado = $obj_misi->ubicacion();
@@ -739,7 +745,7 @@ $_SESSION['abrir']       = 'procesos';
                                                                                 <div class="form-group" >
                                                                                     <div class="checkbox">
                                                                                         <label>
-                                                                                            <input  type="checkbox" name="tecnologia" value="<?php echo $resul_naci[$i]['id_tecnologia']; ?>" />
+                                                                                            <input  type="checkbox" name="tecnologia[]" value="<?php echo $resul_naci[$i]['id_tecnologia']; ?>" />
                                                                                             <?php echo $nombre_tecnologia; ?>
                                                                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                                                         </label>
