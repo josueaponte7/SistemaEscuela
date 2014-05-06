@@ -87,6 +87,9 @@ if (isset($_POST['accion'])) {
     if(isset($_POST['dt']) && $_POST['dt'] == 'dt2'){
         $datos['dtv'] = $_POST;
     }
+    if(isset($_POST['dt']) && $_POST['dt'] == 'dt3'){
+        $datos['dtdf'] = $_POST;
+    }
      switch ($accion) {
         case 'Guardar':
             $resultado = $obj->add($datos);

@@ -189,7 +189,7 @@ class Inscripcion extends Preinscripcion
                     }
   
                 }
-                $sql_fd = "UPDATE dt_padres SET padre_fd = $p_f,  ,adre_fd = $m_f, represent_fd = $r_f WHERE cedula_estudiante = $cedula;";
+                $sql_fd = "UPDATE dt_padres SET padre_fd = $p_f, adre_fd = $m_f, represent_fd = $r_f WHERE cedula_estudiante = $cedula;";
                 $this->ejecutar($sql_fd);
             }
  
@@ -270,11 +270,11 @@ class Inscripcion extends Preinscripcion
             }
             
             if (isset($datos['ingreso'])) {
-                $sql_di     = "DELETE FROM ingreso_familiar WHERE cedula_estudiante =$cedula";
+                $sql_di     = "DELETE FROM dt_ingreso_familiar WHERE cedula_estudiante =$cedula";
                 $result_del = $this->ejecutar($sql_di);
                 $ingreso    = $datos['ingreso'];
                 foreach ($ingreso as $valores) {
-                    $sql_ii = "INSERT INTO ingreso_familiar(cedula_estudiante,id_ingreso)VALUES ($cedula,$valores);";
+                    $sql_ii = "INSERT INTO dt_ingreso_familiar(cedula_estudiante,id_ingreso)VALUES ($cedula,$valores);";
                     $this->ejecutar($sql_ii);
                 }
             }
@@ -295,6 +295,7 @@ class Inscripcion extends Preinscripcion
                 $tecnologia = $datos['dtv']['tecnologia'];
 
                 $sql_dt = "DELETE FROM dt_tecnologia WHERE cedula_estudiante = $cedula;";
+                $this->ejecutar($sql_dt);
                 foreach ($tecnologia as $valores) {
                     $sql_it = "INSERT INTO dt_tecnologia(cedula_estudiante,id_tecnologia)VALUES ($cedula,$valores);";
                     $this->ejecutar($sql_it);
@@ -310,10 +311,74 @@ class Inscripcion extends Preinscripcion
             $values = implode(',',(array_values($datos['dtv'])));
             $sql_iv = "INSERT INTO dt_vivienda(cedula_estudiante,$column)VALUES($cedula,$values);";
             $this->ejecutar($sql_iv);
+
+        }else if($dt == 'dt3'){
+
+            if(isset($datos['dtdf']['diversidad'])){
+                $sql_ddf = "DELETE FROM dt_diversidad_funcional WHERE cedula_estudiante = $cedula;";
+                $this->ejecutar($sql_ddf);
+                $diversidad = $datos['dtdf']['diversidad'];
+                foreach ($diversidad as $valores) {
+                    $sql_idf = "INSERT INTO dt_diversidad_funcional(cedula_estudiante,id_diversidad)VALUES ($cedula,$valores);";
+                    $this->ejecutar($sql_idf);
+                }
+            }
             
-           
-  
+            if(isset($datos['dtdf']['enfermedad'])){
+                $sql_de = "DELETE FROM dt_enfermedad WHERE cedula_estudiante = $cedula;";
+                $this->ejecutar($sql_de);
+                $diversidad = $datos['dtdf']['enfermedad'];
+                foreach ($diversidad as $valores) {
+                    $sql_ide = "INSERT INTO dt_enfermedad(cedula_estudiante,id_enfermedades)VALUES ($cedula,$valores);";
+                    $this->ejecutar($sql_ide);
+                }
+            }
             
+            if(isset($datos['dtdf']['servicio'])){
+                $sql_dd = "DELETE FROM dt_servicio WHERE cedula_estudiante = $cedula;";
+                $this->ejecutar($sql_dd);
+                $diversidad = $datos['dtdf']['servicio'];
+                foreach ($diversidad as $valores) {
+                    $sql_idd = "INSERT INTO dt_servicio(cedula_estudiante,id_servicio)VALUES ($cedula,$valores);";
+                    $this->ejecutar($sql_idd);
+                }
+            }
+            
+            if(isset($datos['dtdf']['destreza'])){
+                $sql_dd = "DELETE FROM dt_destreza WHERE cedula_estudiante = $cedula;";
+                $this->ejecutar($sql_dd);
+                $diversidad = $datos['dtdf']['destreza'];
+                foreach ($diversidad as $valores) {
+                    $sql_idd = "INSERT INTO dt_destreza(cedula_estudiante,id_destreza)VALUES ($cedula,$valores);";
+                    $this->ejecutar($sql_idd);
+                }
+            }
+
+            if(isset($datos['dtdf']['alimentacion']) || $datos['dtdf']['alimentacion_regular']){
+                $alimentacion   = 0;
+                $alimentacion_r = 0;
+                
+                $sql_da = "DELETE FROM dt_alimentacion WHERE cedula_estudiante = $cedula;";
+                $this->ejecutar($sql_da);
+                if(isset($datos['dtdf']['alimentacion'])){
+                    $alimentacion = $datos['dtdf']['alimentacion'];
+                }
+                if(isset($datos['dtdf']['alimentacion_regular'])){
+                    $alimentacion_r = $datos['dtdf']['alimentacion_regular'];
+                }
+                $sql_ida = "INSERT INTO dt_alimentacion(cedula_estudiante,id_acceso,id_regular)VALUES ($cedula,$alimentacion,$alimentacion_r);";
+                $this->ejecutar($sql_ida);
+            }
+            
+            if(isset($datos['dtdf']['ayuda'])){
+                $sql_de = "DELETE FROM dt_ayuda WHERE cedula_estudiante = $cedula;";
+                $this->ejecutar($sql_de);
+                $diversidad = $datos['dtdf']['ayuda'];
+                foreach ($diversidad as $valores) {
+                    $sql_ide = "INSERT INTO dt_ayuda(cedula_estudiante,id_ayuda)VALUES ($cedula,$valores);";
+                    $this->ejecutar($sql_ide);
+                }
+            }
         }
     }
 }

@@ -786,8 +786,8 @@ $_SESSION['abrir']       = 'procesos';
                                                                                 <div class="form-group" >
                                                                                     <div class="checkbox">
                                                                                         <label>
-                                                                                            <input  type="checkbox" name="diversidad" value="<?php echo $resul_naci[$i]['id_diversidad']; ?>" />
-                                                                                            <?php echo $tipo_diversidad; ?>
+                                                                                            <input  type="checkbox" name="diversidad[]" value="<?php echo $resul_naci[$i]['id_diversidad']; ?>" />
+                                                                                             &nbsp;&nbsp;<?php echo $tipo_diversidad; ?>
                                                                                             &nbsp;&nbsp;&nbsp;&nbsp;
                                                                                         </label>
                                                                                     </div>
@@ -819,7 +819,7 @@ $_SESSION['abrir']       = 'procesos';
                                                                                 <div class="form-group" >
                                                                                     <div class="checkbox">
                                                                                         <label>
-                                                                                            <input  type="checkbox" name="enfermedad" value="<?php echo $resul_naci[$i]['id_enfermedad']; ?>" />
+                                                                                            <input  type="checkbox" name="enfermedad[]" value="<?php echo $resul_naci[$i]['id_enfermedad']; ?>" />
                                                                                             <?php echo $enfermedad; ?>
                                                                                             &nbsp;&nbsp;&nbsp;&nbsp;
                                                                                         </label>
@@ -852,7 +852,7 @@ $_SESSION['abrir']       = 'procesos';
                                                                                 <div class="form-group" >
                                                                                     <div class="checkbox">
                                                                                         <label>
-                                                                                            <input  type="checkbox" name="servicio" value="<?php echo $resul_naci[$i]['id_tiposervicio']; ?>" />
+                                                                                            <input  type="checkbox" name="servicio[]" value="<?php echo $resul_naci[$i]['id_tiposervicio']; ?>" />
                                                                                             <?php echo $tiposervicio; ?>
                                                                                             &nbsp;&nbsp;&nbsp;&nbsp;
                                                                                         </label>
@@ -885,7 +885,7 @@ $_SESSION['abrir']       = 'procesos';
                                                                                 <div class="form-group" >
                                                                                     <div class="checkbox">
                                                                                         <label>
-                                                                                            <input  type="checkbox" name="destreza" value="<?php echo $resul_naci[$i]['id_destreza']; ?>" />
+                                                                                            <input  type="checkbox" name="destreza[]" value="<?php echo $resul_naci[$i]['id_destreza']; ?>" />
                                                                                             <?php echo $tipo_destreza; ?>
                                                                                             &nbsp;&nbsp;&nbsp;&nbsp;
                                                                                         </label>
@@ -965,7 +965,7 @@ $_SESSION['abrir']       = 'procesos';
                                                                                 <div class="form-group" >
                                                                                     <div class="checkbox">
                                                                                         <label>
-                                                                                            <input  type="checkbox" name="ayuda" value="<?php echo $resul_naci[$i]['id_ayuda']; ?>" />
+                                                                                            <input  type="checkbox" name="ayuda[]" value="<?php echo $resul_naci[$i]['id_ayuda']; ?>" />
                                                                                             <?php echo $tipo_ayuda; ?>
                                                                                             &nbsp;&nbsp;&nbsp;&nbsp;
                                                                                         </label>
