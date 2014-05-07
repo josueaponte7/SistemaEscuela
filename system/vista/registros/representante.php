@@ -194,13 +194,13 @@ $_SESSION['abrir']       = 'registros';
                                 <td class="letras"> Fecha de Naci</td>
                                 <td>
                                     <div class="form-group">
-                                        <input type="text" readonly class="form-control input-sm" id="fech_naci" name="fech_naci" placeholder="Fecha de Nacimiento">
+                                        <input type="text" style="background-color: #FFFFFF" readonly class="form-control input-sm" id="fech_naci" name="fech_naci" placeholder="Fecha de Nacimiento">
                                     </div>
                                 </td>
                                  <td class="letras"> Edad: </td>
                                 <td>
                                     <div class="form-group">
-                                        <input disabled="disabled" type="text" class="form-control input-sm" id="edad" name="edad" placeholder="Edad">
+                                        <input disabled="disabled" type="text" style="background-color: #FFFFFF" class="form-control input-sm" id="edad" name="edad" placeholder="Edad">
                                     </div>
                                 </td>
                             </tr>

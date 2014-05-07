@@ -25,7 +25,7 @@ if (isset($_POST['accion'])) {
     }
     if (isset($_POST['lugar_naci'])) {
         $datos['lugar_naci'] = $_POST['lugar_naci'];
-    }  
+    }
     if (isset($_POST['sexo'])) {
         $datos['sexo'] = $_POST['sexo'];
     }
@@ -62,7 +62,7 @@ if (isset($_POST['accion'])) {
     if (isset($_POST['actividad'])) {
         $datos['id_actividad'] = $_POST['actividad'];
     }
-            
+
     switch ($accion) {
         case 'Guardar':
             $resultado = $obj->add($datos);
@@ -84,6 +84,57 @@ if (isset($_POST['accion'])) {
             if ($resultado) {
                 echo 1;
             }
+            break;
+
+
+        case 'BuscarDatos':
+            $cedula    = $datos['cedula'];        
+
+            $opciones['sql']    = "SELECT 
+                                    sexo,DATE_FORMAT(fech_naci,'%d/%m/%Y') AS fech_naci,
+                                    (YEAR(CURDATE())-YEAR(fech_naci)) - (RIGHT(CURDATE(),5)<RIGHT(fech_naci,5)) AS edad, 
+                                    email, 
+                                    cod_telefono,
+                                    telefono,
+                                    cod_celular, 
+                                    celular, 
+                                    lugar_naci, 
+                                    p.id_parroquia, 
+                                    id_actividad,
+                                    m.id_municipio,
+                                    es.id_estado,
+                                    calle,
+                                    casa,
+                                    edificio,
+                                    barrio,
+                                    activo,
+                                    id_actividad,
+                                    nacionalidad
+                                   FROM docente AS doc
+                                   INNER JOIN parroquia  AS p ON doc.id_parroquia=p.id_parroquia
+                                   INNER JOIN municipio AS m ON p.id_municipio=m.id_municipio
+                                   INNER JOIN estado AS es ON m.id_estado=es.id_estado WHERE cedula = $cedula";
+            $resultado             = $obj->getDocente($opciones);
+            echo $resultado[0]['sexo'] . ';' .
+                 $resultado[0]['fech_naci'] . ';' .
+                 $resultado[0]['edad'] . ';' .
+                 $resultado[0]['email'] . ';' .
+                 $resultado[0]['cod_telefono'] . ';' .
+                 $resultado[0]['telefono'] . ';' .
+                 $resultado[0]['cod_celular'] . ';' .
+                 $resultado[0]['celular'] . ';' .
+                 $resultado[0]['lugar_naci'] . ';' .
+                 $resultado[0]['id_estado'] . ';' .
+                 $resultado[0]['id_municipio'] . ';' .            
+                 $resultado[0]['id_parroquia'].';'.
+                 $resultado[0]['calle'].';'.
+                 $resultado[0]['casa'].';'.
+                 $resultado[0]['edificio'].';'.
+                 $resultado[0]['barrio'].';'.
+                 $resultado[0]['activo'].';'.
+                 $resultado[0]['id_actividad'].';'.
+                 $resultado[0]['nacionalidad'];
+
             break;
     }
 }

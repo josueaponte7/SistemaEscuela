@@ -834,7 +834,7 @@ $_SESSION['abrir']       = 'procesos';
                                                                 <tr>
                                                                     <td> 
                                                                         <fieldset >
-                                                                            <legend class="letras_titulosGe" >Servivion P&uacute;blico al que es atendido </legend>
+                                                                            <legend class="letras_titulosGe" >Servicio P&uacute;blico al que es atendido </legend>
                                                                         </fieldset>
                                                                     </td>
                                                                 </tr>
