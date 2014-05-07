@@ -71,7 +71,22 @@ class Inscripcion extends Preinscripcion
         $resultado = $this->consultar_array($sql);
         return $resultado;
     }
-
+    
+    public function getInscritos()
+    {
+        $datos['sql'] = "SELECT
+                         CONCAT_WS('-' ,(SELECT nombre FROM nacionalidad WHERE id_nacionalidad = e.nacionalidad),e.cedula) AS cedula,
+                         CONCAT_WS(' ',e.nombre,e.apellido) AS nombre,
+                         i.tipo,
+                         (SELECT anio_escolar FROM anio_escolar WHERE id_anio=i.id_anio) AS anio,
+                         (SELECT actividad FROM actividad WHERE id_actividad=i.id_actividad) AS actividad,
+                         DATE_FORMAT(fecha_inscripcion,'%d-%m-%Y') AS fecha_inscripcion
+                         FROM inscripcion AS i
+                         INNER JOIN estudiante AS e ON i.cedula_estudiante=e.cedula";
+        $resultado    = $this->datos($datos);
+        return $resultado;
+    }
+    
     public function getDatos($datos)
     {
 
@@ -93,10 +108,11 @@ class Inscripcion extends Preinscripcion
             }
             if (isset($result_anio) && $result_anio == 1) {
                 
-                $datos['sql'] = "SELECT DATE_FORMAT(fecha_inscripcion,'%d-%m-%Y') AS fecha_inscripcion,id_anio,id_actividad,area_descripcion,id_medio,cedula_chofer FROM inscripcion WHERE cedula_estudiante=$cedula[1]";
+                $datos['sql'] = "SELECT DATE_FORMAT(fecha_inscripcion,'%d-%m-%Y') AS fecha_inscripcion,tipo,id_anio,id_actividad,area_descripcion,id_medio,cedula_chofer FROM inscripcion WHERE cedula_estudiante=$cedula[1]";
                 $result_dat    = $this->datos($datos);
                 if(is_array($result_dat)){
-                   $dat_extra = $result_dat[0]['fecha_inscripcion'].';'.$result_dat[0]['id_anio'].';'.$result_dat[0]['id_actividad'].';'.$result_dat[0]['area_descripcion'].';'.$result_dat[0]['id_medio'].';'.$result_dat[0]['cedula_chofer'];
+                   $dat_extra        = $result_dat[0]['fecha_inscripcion'] . ';' . $result_dat[0]['tipo'] . ';' . $result_dat[0]['id_anio'] . ';' . $result_dat[0]['id_actividad'] . ';' . $result_dat[0]['area_descripcion'];
+                   $medio_transporte = $result_dat[0]['id_medio'].';'.$result_dat[0]['cedula_chofer']; 
                 }
                 
             }
@@ -131,8 +147,149 @@ class Inscripcion extends Preinscripcion
                 $parentesco = 'Tio';
             break;
         }
+        
+        
+        $sql_dt['sql'] = "SELECT
+                            padre_f,
+                            madre_f,
+                            padre_pl,
+                            madre_pl,
+                            padre_al,
+                            madre_al,
+                            represent_al,
+                            padre_fd,
+                            madre_fd,
+                            represent_fd,
+                            padre_alf,
+                            madre_alf,
+                            represent_alf,
+                            padre_nivel,
+                            madre_nivel,
+                            represent_nivel,
+                            padre_set,
+                            madre_set,
+                            padre_see,
+                            madre_see
+                          FROM dt_padres WHERE cedula_estudiante=$cedula[1]";
+        $result_sql   = $this->datos($sql_dt);
+        
         $representantes = $resultado[1]['parentesco'].';'.$resultado[2]['parentesco'];
-        $datos = $result_anio.';'.$resultado[0]['cedula'] . ';' . $resultado[0]['nombre'] . ';' . $resultado[0]['apellido'] . ';'. $parentesco . ';'.$resultado[0]['parentesco'].';'  . $id_tipo . ';' . $tipo.';'.$dat_extra.';'.$representantes;
+        $representante  = $resultado[0]['cedula'] . ';' . $resultado[0]['nombre'] . ';' . $resultado[0]['apellido'] . ';'. $parentesco . ';'.$resultado[0]['parentesco'];
+        
+        $dtg_padre = $result_sql[0]['padre_f'].';'.
+                    $result_sql[0]['madre_f'].';'.
+                    $result_sql[0]['padre_pl'].';'.
+                    $result_sql[0]['madre_pl'].';'.
+                    $result_sql[0]['padre_al'].';'.
+                    $result_sql[0]['madre_al'].';'.
+                    $result_sql[0]['represent_al'].';'.
+                    $result_sql[0]['padre_fd'].';'.
+                    $result_sql[0]['madre_fd'].';'.
+                    $result_sql[0]['represent_fd'].';'.
+                    $result_sql[0]['padre_alf'].';'.
+                    $result_sql[0]['madre_alf'].';'.
+                    $result_sql[0]['represent_alf'].';'.
+                    $result_sql[0]['padre_nivel'].';'.
+                    $result_sql[0]['madre_nivel'].';'.
+                    $result_sql[0]['represent_nivel'].';'.
+                    $result_sql[0]['padre_set'].';'.
+                    $result_sql[0]['padre_set'].';'.
+                    $result_sql[0]['madre_see'].';'.
+                    $result_sql[0]['madre_see'].';';
+        
+        
+        $sql_dtgi['sql'] = "SELECT  id_ingreso FROM dt_ingreso_familiar WHERE cedula_estudiante=$cedula[1]";
+        $result_sqli   = $this->datos($sql_dtgi);
+        
+        $dtg_ingreso = '';
+        for ($i = 0; $i < count($result_sqli); $i++) {
+            $dtg_ingreso .= $result_sqli[$i]['id_ingreso'].',';
+        }
+        $dtg_ingreso = substr($dtg_ingreso, 0, -1);
+        
+        
+        $sql_dtgps['sql'] = "SELECT id_programa FROM dt_programa_social WHERE cedula_estudiante=$cedula[1]";
+        $result_sqlps   = $this->datos($sql_dtgps);
+        
+        $dtg_pg = '';
+        for ($i = 0; $i < count($result_sqlps); $i++) {
+            $dtg_pg .= $result_sqlps[$i]['id_programa'].',';
+        }
+        $dtg_pg = substr($dtg_pg, 0, -1);
+        
+        $sql_dtgvi['sql'] = "SELECT  ubicacion_vivienda,  tipo_vivienda,  estado_vivienda,  cant_habitacion,  cama FROM dt_vivienda WHERE cedula_estudiante=$cedula[1]";
+        $result_sqlv  = $this->datos($sql_dtgvi);
+        
+        $dtg_v = $result_sqlv[0]['ubicacion_vivienda'].';'.$result_sqlv[0]['tipo_vivienda'].';'.$result_sqlv[0]['estado_vivienda'].';'.$result_sqlv[0]['cant_habitacion'].';'.$result_sqlv[0]['cama'];
+        
+        $sql_dtgt['sql'] = "SELECT id_tecnologia FROM dt_tecnologia WHERE cedula_estudiante=$cedula[1]";
+        $result_sqlt   = $this->datos($sql_dtgt);
+        
+        $dtg_t = '';
+        for ($i = 0; $i < count($result_sqlt); $i++) {
+            $dtg_t .= $result_sqlt[$i]['id_tecnologia'].',';
+        }
+        
+        $dtg_t = substr($dtg_t, 0, -1);
+        
+        $sql_dtgd['sql'] = "SELECT id_diversidad FROM dt_diversidad_funcional WHERE cedula_estudiante=$cedula[1]";
+        $result_sqld   = $this->datos($sql_dtgd);
+        
+        $dtg_d = '';
+        for ($i = 0; $i < count($result_sqld); $i++) {
+            $dtg_d .= $result_sqld[$i]['id_diversidad'].',';
+        }
+        
+        $dtg_d = substr($dtg_d, 0, -1);
+        
+        $sql_dtge['sql'] = "SELECT  id_enfermedades FROM dt_enfermedad WHERE cedula_estudiante=$cedula[1]";
+        $result_sqle   = $this->datos($sql_dtge);
+        
+        $dtg_e = '';
+        for ($i = 0; $i < count($result_sqle); $i++) {
+            $dtg_e .= $result_sqle[$i]['id_enfermedades'].',';
+        }
+        
+        $dtg_e = substr($dtg_e, 0, -1);
+        
+        $sql_dtgs['sql'] = "SELECT id_servicio FROM dt_servicio WHERE cedula_estudiante=$cedula[1]";
+        $result_sqls   = $this->datos($sql_dtgs);
+        
+        $dtg_s = '';
+        for ($i = 0; $i < count($result_sqls); $i++) {
+            $dtg_s .= $result_sqls[$i]['id_servicio'].',';
+        }
+        
+        $dtg_s = substr($dtg_s, 0, -1);
+
+        $sql_dtgdz['sql'] = "SELECT id_destreza FROM dt_destreza WHERE cedula_estudiante=$cedula[1]";
+        $result_sqldz   = $this->datos($sql_dtgdz);
+        
+        $dtg_dz = '';
+        for ($i = 0; $i < count($result_sqldz); $i++) {
+            $dtg_dz .= $result_sqldz[$i]['id_destreza'].',';
+        }
+        
+        $dtg_dz = substr($dtg_dz, 0, -1);
+        
+        
+        $sql_dtga['sql'] = "SELECT id_acceso, id_regular FROM dt_alimentacion WHERE cedula_estudiante=$cedula[1]";
+        $result_sqla  = $this->datos($sql_dtga);
+        
+        $dtg_a = $result_sqla[0]['id_acceso'].';'.$result_sqla[0]['id_regular'];
+        
+        $sql_dtgay['sql'] = "SELECT id_ayuda FROM dt_ayuda WHERE cedula_estudiante=$cedula[1]";
+        $result_sqlay   = $this->datos($sql_dtgay);
+        
+        $dtg_ay = '';
+        for ($i = 0; $i < count($result_sqlay); $i++) {
+            $dtg_ay .= $result_sqlay[$i]['id_ayuda'].',';
+        }
+        
+        $dtg_ay = substr($dtg_ay, 0, -1);
+        
+        
+        $datos = $result_anio.';'.$dat_extra.'##'.$representante.'##'.$medio_transporte.'##'.$representantes.'##'.$dtg_padre.'##'.$dtg_ingreso.'##'.$dtg_pg.'##'.$dtg_v.'##'.$dtg_t.'##'.$dtg_d.'##'.$dtg_e.'##'.$dtg_s.'##'.$dtg_dz.'##'.$dtg_a.'##'.$dtg_ay;
         return $datos;
     }
     
