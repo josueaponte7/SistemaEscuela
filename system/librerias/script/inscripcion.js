@@ -59,7 +59,10 @@ $(document).ready(function() {
         $('#actividad,#medio').select2('val', 0);
         $('#fecha').val(fecha);
         $('#anio_escolar').val(f.getFullYear());
-
+        
+        $('#actividad').select2('val',0);
+        $('input:checkbox').prop('checked',false);
+        $('input:checkbox').prop('disabled',false);
         if (cedula != 0) {
             $.post("../../controlador/Inscripcion.php", {cedula: cedula, 'accion': 'BuscarDatos'}, function(respuesta) {
                 $().toastmessage('showToast', {
@@ -81,10 +84,10 @@ $(document).ready(function() {
                 //Datos inscripcion
                 if(id_anio == 1){
                     var dat_insc  = datos[0].split(';');
-                    $('#fecha').val(dat_insc[0]);
+                    $('#fecha').val(dat_insc[3]);
                     $('#tipo_estudiante').val(dat_insc[1]);
-                    $('#actividad').select2('val', dat_insc[3]);
-                    $('#area').val(dat_insc[4]);
+                    $('#actividad').select2('val', dat_insc[5]);
+                    $('#area').val(dat_insc[7]);
                     $('#guardar').text('Modificar');
                     var $fila = '<input type="hidden" id="fila"  value="' + fila + '" name="fila">';
                     $($fila).prependTo($('#frminscripcion'));
@@ -117,6 +120,7 @@ $(document).ready(function() {
                 
                 var datg_padres = datos[4].split(';');
                 
+                alert(datg_padres);
                 if(datg_padres[0] == 1){
                     $('#padre_f').prop('checked',true);
                 }
@@ -147,28 +151,29 @@ $(document).ready(function() {
                 if(datg_padres[9] == 1){
                     $('#represent_fd').prop('checked',datg_padres[8]);
                 }
-                if(datg_padres[10] == 1){
+
+                if(datg_padres[10] == 'ps'){
                     $('#padre_alf').prop('checked',datg_padres[8]);
                     $('#padre_anl').prop('disabled',true);
-                }else{
+                }else if(datg_padres[10] == 'pn'){
                    $('#padre_anl').prop('checked',datg_padres[8]);
                    $('#padre_alf').prop('disabled',true); 
                 }
-                if(datg_padres[11] == 1){
+                if(datg_padres[11] == 'ms'){
                     $('#madre_alf').prop('checked',datg_padres[8]);
                     $('#madre_anl').prop('disabled',true);
-                }else{
+                }else if(datg_padres[11] == 'mn'){
                     $('#madre_anl').prop('checked',datg_padres[8]);
                     $('#madre_alf').prop('disabled',true); 
                 }
-                if(datg_padres[12] == 1){
+                if(datg_padres[12] == 'rs'){
                     $('#represent_alf').prop('checked',datg_padres[8]);
                     $('#represent_anl').prop('disabled',true);
-                }else{
+                }else if(datg_padres[12] == 'rn'){
                     $('#represent_anl').prop('checked',datg_padres[8]);
                     $('#represent_alf').prop('disabled',true); 
                 }
-           
+                alert(datg_padres[13])
                 $('#padre_nivel').select2('val',datg_padres[13] );
                 $('#madre_nivel').select2('val',datg_padres[14] );
                 $('#representante_nivel').select2('val',datg_padres[15] );

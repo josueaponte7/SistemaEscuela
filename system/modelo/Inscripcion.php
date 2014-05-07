@@ -130,10 +130,10 @@ class Inscripcion extends Preinscripcion
             }
             if (isset($result_anio) && $result_anio == 1) {
                 
-                $datos['sql'] = "SELECT DATE_FORMAT(fecha_inscripcion,'%d-%m-%Y') AS fecha_inscripcion,tipo,id_anio,id_actividad,area_descripcion,id_medio,cedula_chofer FROM inscripcion WHERE cedula_estudiante=$cedula[1]";
+                $datos['sql'] = "SELECT DATE_FORMAT(fecha_inscripcion,'%d-%m-%Y') AS fecha_inscripcion,id_anio,id_actividad,area_descripcion,id_medio,cedula_chofer FROM inscripcion WHERE cedula_estudiante=$cedula[1]";
                 $result_dat    = $this->datos($datos);
                 if(is_array($result_dat)){
-                   $dat_extra        = $result_dat[0]['fecha_inscripcion'] . ';' . $result_dat[0]['tipo'] . ';' . $result_dat[0]['id_anio'] . ';' . $result_dat[0]['id_actividad'] . ';' . $result_dat[0]['area_descripcion'];
+                   $dat_extra        = $result_dat[0]['fecha_inscripcion'] . ';' . $result_dat[0]['id_anio'] . ';' . $result_dat[0]['id_actividad'] . ';' . $result_dat[0]['area_descripcion'];
                    $medio_transporte = $result_dat[0]['id_medio'].';'.$result_dat[0]['cedula_chofer']; 
                 }
                 
@@ -373,25 +373,25 @@ class Inscripcion extends Preinscripcion
             }
  
             if (isset($datos['representante_a'])) {
-                $p_a = 0;
-                $m_a = 0;
-                $r_a = 0;
+                $p_a = 'ps';
+                $m_a = 'ms';
+                $r_a = 'rs';
                 $representante_a = $datos['representante_a'];
                 
                 foreach ($representante_a as $valores) {
 
-                    if ($valores == 'ps') {
-                        $p_a = 1;
+                    if ($valores == 'pn') {
+                        $p_a = 'pn';
                     }
-                    if ($valores == 'ms') {
-                        $m_a = 1;
+                    if ($valores == 'mn') {
+                        $m_a = 'mn';
                     }
-                    if ($valores == 'rs') {
-                        $r_a = 1;
+                    if ($valores == 'rn') {
+                        $r_a = 'rn';
                     }
                 }
-                $sql_alf = "UPDATE dt_padres SET padre_alf = $p_a,  madre_alf = $m_a,  represent_alf = $r_a WHERE cedula_estudiante = $cedula;";
-                $this->ejecutar($sql_alf);
+                echo $sql_alf = "UPDATE dt_padres SET padre_alf = '$p_a',  madre_alf = '$m_a',  represent_alf = '$r_a' WHERE cedula_estudiante = $cedula;";
+                exit;$this->ejecutar($sql_alf);
             }
             
             if (isset($datos['padre_nivel'])) {
