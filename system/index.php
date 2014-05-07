@@ -225,10 +225,10 @@ if (isset($_SESSION['archivo_sys']) && isset($_SESSION['dir_sys'])) {
                 <div id="menu_boton">
                     <ul>
                         <li>
-                            <span id="">REGISTROS</span>
+                            <span data-toggle="collapse" data-parent="#accordion" href="#registros">REGISTROS</span>
                         </li>
                         <li>
-                            <span id="">PROCESOS</span>
+                            <span data-toggle="collapse" data-parent="#accordion" href="#procesos">PROCESOS</span>
                         </li>
                         <li>
                             <span id="">REPORTES</span>
@@ -237,7 +237,7 @@ if (isset($_SESSION['archivo_sys']) && isset($_SESSION['dir_sys'])) {
                             <span id="">CONSULTA</span>
                         </li>
                         <li>
-                            <span id="">CONFIGURACI&Oacute;N</span>
+                            <span data-toggle="collapse" data-parent="#accordion" href="#configuracion">CONFIGURACI&Oacute;N</span>
                         </li>
 <!--                        <li>
                             <span id="">CONFIGURACI&Oacute;N</span>
