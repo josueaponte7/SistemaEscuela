@@ -119,8 +119,7 @@ $(document).ready(function() {
                 }   
                 
                 var datg_padres = datos[4].split(';');
-                
-                alert(datg_padres);
+
                 if(datg_padres[0] == 1){
                     $('#padre_f').prop('checked',true);
                 }
@@ -173,7 +172,7 @@ $(document).ready(function() {
                     $('#represent_anl').prop('checked',datg_padres[8]);
                     $('#represent_alf').prop('disabled',true); 
                 }
-                alert(datg_padres[13])
+                
                 $('#padre_nivel').select2('val',datg_padres[13] );
                 $('#madre_nivel').select2('val',datg_padres[14] );
                 $('#representante_nivel').select2('val',datg_padres[15] );
