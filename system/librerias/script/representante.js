@@ -161,144 +161,24 @@ $(document).ready(function() {
     });
 
     $('#guardar').click(function() {
-        $('#accion').val($(this).text());
-
-        // Imagenes de modificar y eliminar
         var modificar = '<img class="modificar" src="../../imagenes/edit.png" title="Modificar" style="cursor: pointer"  width="18" height="18" alt="Modificar"/>';
         var eliminar = '<img class="eliminar" src="../../imagenes/delete.png" title="Eliminar" style="cursor: pointer"  width="18" height="18"  alt="Eliminar"/>';
-        if ($(this).text() == 'Guardar') {
-            // obtener el ultimo codigo del status 
-            var ToltalRow = TRepresentante.fnGetData().length;
-            var lastRow = TRepresentante.fnGetData(ToltalRow - 1);
-            var cedula = parseInt(lastRow[1]) + 1;
+        $.post("../../controlador/Representante.php", $("#frmrepresentante").serialize(), function(respuesta) {
+            if (respuesta == 1) {
 
-//            var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
-            $.post("../../controlador/Representante.php", $("#frmrepresentante").serialize(), function(respuesta) {
-                if (respuesta == 1) {
-
-                    var nacionalidad = $('#nacionalidad').find(' option').filter(":selected").text();
-                    var cedula = nacionalidad + '-' + $('#cedula').val();
-                    var nombres = $('#nombre').val() + ' ' + $('#apellido').val();
-                    var cod_telefono = $('#cod_telefono').find(' option').filter(":selected").text();
-                    var cod_celular = $('#cod_celular').find(' option').filter(":selected").text();
-                    var telefonos = cod_telefono + '-' + $('#telefono').val() + ', ' + cod_celular + '-' + $('#celular').val();
-                    var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
-                    alert('Registro con Exito');
-                    var newRow = TRepresentante.fnAddData([$check_cedula, cedula, nombres, telefonos, modificar, eliminar]);
-                    $('input[type="text"]').val('');
-                }
-            });
-        }
-    });
-
-
-    $('table#tabla_representante').on('click', 'img.modificar', function() {
-
-        // borra el campo fila
-        $('#fila').remove();
-        var padre = $(this).closest('tr');
-        var cedula_c = padre.children('td:eq(1)').text();
-        var dat_cedula = cedula_c.split('-');
-        var cedula = dat_cedula[1];;
-
-
-        // obtener la fila a modificar
-        var fila = padre.index();
-
-        $('#guardar').text('Modificar');
-//        $('#cedula').val(cedula).prop('disabled',true);
-        $('#cedula').val(cedula);
-        $('#registro_erepresentante').slideDown(2000);
-        $('#reporte_representante').slideUp(2000);
-
-        $.post("../../controlador/Representante.php", {cedula: cedula, accion: 'BuscarDatos'}, function(respuesta) {
-            var datos = respuesta.split(";");
-            $('#nacionalidad').select2('val', datos[0]);
-            $('#nombre').val(datos[1]);
-            $('#apellido').val(datos[2]);
-            $('#sexo').select2('val', datos[3]);
-            $('#fech_naci').val(datos[4]);
-           $('#edad').val(datos[5]);
-           $('#cod_telefono').select2('val', datos[6]);
-            $('#telefono').val(datos[7]);
-            $('#cod_celular').select2('val', datos[8]);
-            $('#celular').val(datos[9]);
-           $('#lugar_naci').val(datos[10]);
-            $('#estado').select2('val', datos[11]);
-            var id_mun = datos[12];
-            var id_parr = datos[13];
-            $('#municipio').find('option:gt(0)').remove().end();
-
-            $.post('../../controlador/Municipio.php', {id_estado: datos[11], accion: 'buscarMun'}, function(respuesta) {
-                var option = "";
-                $.each(respuesta, function(i, obj) {
-                    option += "<option value=" + obj.codigo + ">" + obj.descripcion + "</option>";
-                });
-                $('#municipio').append(option);
-                $('#municipio').select2('val', id_mun);
-            }, 'json');
-
-            $('#parroquia').find('option:gt(0)').remove().end();
-            $.post('../../controlador/Parroquia.php', {id_municipio: id_mun, accion: 'buscarParr'}, function(respuesta) {
-                var option = "";
-                $.each(respuesta, function(i, obj) {
-                    option += "<option value=" + obj.codigo + ">" + obj.descripcion + "</option>";
-                });
-                $('#parroquia').append(option);
-                $('#parroquia').select2('val', id_parr);
-            }, 'json');
-            $('#calle').val(datos[14]);
-            $('#casa').val(datos[15]);
-            $('#edificio').val(datos[16]);
-            $('#barrio').val(datos[17]);
-            $('#estatus').select2('val', datos[18]);
-            $('#antecedente').val(datos[19]);
-            $('#nivel_inst').select2('val', datos[20]);
-            $('#profesion').select2('val', datos[21]);
-            $('#fuente_ingreso').val(datos[22]);
-            $('#email').val(datos[23]);
-
-            // crear el campo fila y añadir la fila
-            var $fila = '<input type="hidden" id="fila"  value="' + fila + '" name="fila">';
-            $($fila).prependTo($('#frmrepresentante'));
-
-            var $cedula = '<input type="hidden" id="cedula"  value="' + cedula + '" name="cedula">';
-            $($cedula).appendTo($('#frmrepresentante'));
+                var nacionalidad = $('#nacionalidad').find(' option').filter(":selected").text();
+                var cedula = nacionalidad + '-' + $('#cedula').val();
+                var nombres = $('#nombre').val() + ' ' + $('#apellido').val();
+                var cod_telefono = $('#cod_telefono').find(' option').filter(":selected").text();
+                var cod_celular = $('#cod_celular').find(' option').filter(":selected").text();
+                var telefonos = cod_telefono + '-' + $('#telefono').val() + ', ' + cod_celular + '-' + $('#celular').val();
+                var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
+                alert('Registro con Exito');
+                var newRow = TRepresentante.fnAddData([$check_cedula, cedula, nombres, telefonos, modificar, eliminar]);
+                $('input[type="text"]').val('');
+            }
         });
     });
-
-
-    // modificar las funciones de modificar
-//    $('table#tabla_representante').on('click', 'img.modificar', function() {
-//
-//        // borra el campo fila
-//        $('#fila').remove();
-//        var padre = $(this).closest('tr');
-//        var cedula = padre.children('td:eq(1)').text();
-//        var nombre = padre.children('td:eq(2)').html();
-//        var telefono = padre.children('td:eq(3)').html();
-//
-//
-//        // obtener la fila a modificar
-//        var fila = padre.index();
-//
-//        $('#guardar').text('Modificar');
-//        $('#cedula').val(cedula);
-//        $('#nombre').val(nombre);
-////        $('#apellido').val(apellido);
-//        $('#telefono').val(telefono);
-////        $('#celular').val(celular);
-//        $('#registro_erepresentante').slideDown(2000);
-//        $('#reporte_representante').slideUp(2000);
-//
-//        // crear el campo fila y añadir la fila
-//        var $fila = '<input type="hidden" id="fila"  value="' + fila + '" name="fila">';
-//        $($fila).prependTo($('#frmrepresentante'));
-//
-//        var $cedula = '<input type="hidden" id="cedula"  value="' + cedula + '" name="cedula">';
-//        $($cedula).appendTo($('#frmrepresentante'));
-//
-//    });
 
     $('#salir').click(function() {
         $('#guardar').text('Guardar');
@@ -332,7 +212,37 @@ $(document).ready(function() {
         $('#guardar').text('Guardar');
     });
 
+    // modificar las funciones de modificar
+    $('table#tabla_representante').on('click', 'img.modificar', function() {
 
+        // borra el campo fila
+        $('#fila').remove();
+        var padre = $(this).closest('tr');
+        var cedula = padre.children('td:eq(1)').text();
+        var nombre = padre.children('td:eq(2)').html();
+        var telefono = padre.children('td:eq(3)').html();
+
+
+        // obtener la fila a modificar
+        var fila = padre.index();
+
+        $('#guardar').text('Modificar');
+        $('#cedula').val(cedula);
+        $('#nombre').val(nombre);
+//        $('#apellido').val(apellido);
+        $('#telefono').val(telefono);
+//        $('#celular').val(celular);
+        $('#registro_erepresentante').slideDown(2000);
+        $('#reporte_representante').slideUp(2000);
+
+        // crear el campo fila y añadir la fila
+        var $fila = '<input type="hidden" id="fila"  value="' + fila + '" name="fila">';
+        $($fila).prependTo($('#frmrepresentante'));
+
+        var $cedula = '<input type="hidden" id="cedula"  value="' + cedula + '" name="cedula">';
+        $($cedula).appendTo($('#frmrepresentante'));
+
+    });
 
     var letra = ' abcdefghijklmnñopqrstuvwxyzáéíóú';
     $('#nombre').validar(letra);

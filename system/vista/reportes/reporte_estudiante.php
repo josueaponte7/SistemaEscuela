@@ -25,9 +25,7 @@ $campos['sql'] = "SELECT
                     ORDER BY e.cedula";
 
 $resultado  = $obj->getEstudianterepre($campos);
-
-//total de registros a mostrar en el reporte
-$total     = $obj->totalFilas('estudiante AS e', 'e.cedula',$campos['condicion']);
+$total     = $obj->totalFilas('estudiante', 'cedula');
 
 $pdf = new MyClass("P", "mm", "A4", true, 'UTF-8', false);
 

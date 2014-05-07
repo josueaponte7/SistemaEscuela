@@ -18,11 +18,11 @@ $(document).ready(function() {
         $('#registro_programa').slideDown(2000);
         $('#reporte_programa').slideUp(2000);
     });
-
+    
     $('#todos').change(function() {
         var TotalRow = TPrograma.fnGetData().length;
         var nodes = TPrograma.fnGetNodes();
-        if (TotalRow > 0) {
+        if(TotalRow > 0){
             if ($(this).is(':checked')) {
                 $("input:checkbox[name='id_programa[]']", nodes).prop('checked', true);
                 $('#imprimir').fadeIn(500);
@@ -32,6 +32,17 @@ $(document).ready(function() {
             }
         }
     });
+
+//    $('#todos').change(function() {
+//        var nodes = TPrograma.fnGetNodes();
+//        if ($(this).is(':checked')) {
+//            $("input:checkbox[name='id_programa[]']", nodes).prop('checked', true);
+//            $('#imprimir').fadeIn(500);
+//        } else {
+//            $("input:checkbox[name='id_programa[]']", nodes).prop('checked', false);
+//            $('#imprimir').fadeOut(500);
+//        }
+//    });
 
     $('table#tabla_programa').on('change', 'input:checkbox[name="id_programa[]"]', function() {
         $('#todos').prop('checked', false);
@@ -53,7 +64,7 @@ $(document).ready(function() {
             url = url + '?todos=1';
         } else if ($('input:checkbox[name="id_programa[]"]', nodes).is(':checked')) {
             var checkboxValues = "";
-
+            
             $("input:checkbox[name='id_programa[]']:checked", nodes).each(function() {
                 var $chkbox = $(this);
                 var $actualrow = $chkbox.closest('tr');
@@ -76,7 +87,6 @@ $(document).ready(function() {
             // Imagenes de modificar y eliminar
             var modificar = '<img class="modificar" src="../../imagenes/edit.png" title="Modificar" style="cursor: pointer"  width="18" height="18" alt="Modificar"/>';
             var eliminar = '<img class="eliminar" src="../../imagenes/delete.png" title="Eliminar" style="cursor: pointer"  width="18" height="18"  alt="Eliminar"/>';
-            
             if ($(this).text() == 'Guardar') {
                 $('#id_programa').remove();
 
@@ -122,7 +132,6 @@ $(document).ready(function() {
                                     var fila = $("#fila").val();
 
                                     window.parent.bootbox.alert("Modificacion con Exito", function() {
-                                        
                                         // Modificar la fila 1 en la tabla 
                                         $("#tabla_programa tbody tr:eq(" + fila + ")").find("td:eq(2)").html($('#nombre_programa').val());
                                         $('input[type="text"]').val('');
@@ -136,6 +145,20 @@ $(document).ready(function() {
                 });
             }
         }
+    });
+
+    $('#salir').click(function() {
+        $('#guardar').text('Guardar');
+        $('#registro_programa').slideUp(2000);
+        $('#reporte_programa').slideDown(2000);
+        $('#id_programa').remove();
+        $('input:text').val('');
+    });
+
+    $('#limpiar').click(function() {
+        $('#id_programa').remove();
+        $('input:text').val('');
+        $('#guardar').text('Guardar');
     });
 
     $('table#tabla_programa').on('click', 'img.modificar', function() {
@@ -199,21 +222,6 @@ $(document).ready(function() {
                 }
             }
         });
-    });
-    
-    
-    $('#salir').click(function() {
-        $('#guardar').text('Guardar');
-        $('#registro_programa').slideUp(2000);
-        $('#reporte_programa').slideDown(2000);
-        $('#id_programa').remove();
-        $('input:text').val('');
-    });
-
-    $('#limpiar').click(function() {
-        $('#id_programa').remove();
-        $('input:text').val('');
-        $('#guardar').text('Guardar');
     });
 
     var letra = ' abcdefghijklmnñopqrstuvwxyzáéíóú';

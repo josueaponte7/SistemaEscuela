@@ -25,15 +25,15 @@ $(document).ready(function() {
     $('#sexo').select2();
     $('#cod_telefono').select2();
     $('#cod_celular').select2();
-
+    
     $('.tooltip_ced').tooltip({
         html: true,
         placement: 'bottom',
         title: 'Click para ver opciones'
-    });
-
+    }); 
+    
     var $contextMenu = $("#contextMenu");
-    var cedula = '';
+     var cedula = '';
 
     $("table#tabla_docente").on("click", "span.sub-rayar", function(e) {
         $('.dropdown').hide();
@@ -44,7 +44,7 @@ $(document).ready(function() {
             top: e.pageY
         });
     });
-
+    
     $contextMenu.on("click", "span", function() {
         var url = 'vista/registros/ver_datos_representante.php';
         parent.$.fancybox.open({
@@ -65,21 +65,19 @@ $(document).ready(function() {
         });
         $('.dropdown').hide();
     });
-
-
+       
+         
     /***Combos **/
     $('#estado').change(function() {
         var id = $(this).val();
         $('#municipio').find('option:gt(0)').remove().end();
-        if (id > 0) {
-            $.post('../../controlador/Municipio.php', {id_estado: id, accion: 'buscarMun'}, function(respuesta) {
-                var option = "";
-                $.each(respuesta, function(i, obj) {
-                    option += "<option value=" + obj.codigo + ">" + obj.descripcion + "</option>";
-                });
-                $('#municipio').append(option);
-            }, 'json');
-        }
+        $.post('../../controlador/Municipio.php', {id_estado: id, accion: 'buscarMun'}, function(respuesta) {
+            var option = "";
+            $.each(respuesta, function(i, obj) {
+                option += "<option value=" + obj.codigo + ">" + obj.descripcion + "</option>";
+            });
+            $('#municipio').append(option);
+        }, 'json');
     });
 
     $('#municipio').change(function() {
@@ -94,7 +92,7 @@ $(document).ready(function() {
         }, 'json');
     });
 
-    /****Calendario*****/
+     /****Calendario*****/
     $('#fech_naci').datepicker({
         language: "es",
         format: 'dd/mm/yyyy',
@@ -104,20 +102,20 @@ $(document).ready(function() {
     }).on('changeDate', function(ev) {
         var edad = calcular_edad($(this).val());
         $('#edad').val(edad);
-        $('#div_fech_naci').removeClass('has-error');
-
+        $('#div_fech_naci').removeClass('has-error');      
+        
     });
-
-    $('#registrar').click(function() {
+        
+    $('#registrar').click(function() {         
         $('#registro_docente').slideDown(2000);
-        $('#reporte_docente').slideUp(2000, function() {
+        $('#reporte_docente').slideUp(2000,function (){
             $('#cedula').focus();
             $('#nacionalidad').addClass();
         });
-
+        
     });
-
-    /**Los monta todos***/
+    
+       /**Los monta todos***/
     $('#todos').change(function() {
         var TotalRow = TDocente.fnGetData().length;
         var nodes = TDocente.fnGetNodes();
@@ -226,16 +224,14 @@ $(document).ready(function() {
             // Imagenes de modificar y eliminar
             var modificar = '<img class="modificar" src="../../imagenes/edit.png" title="Modificar" style="cursor: pointer"  width="18" height="18" alt="Modificar"/>';
             var eliminar = '<img class="eliminar" src="../../imagenes/delete.png" title="Eliminar" style="cursor: pointer"  width="18" height="18"  alt="Eliminar"/>';
-
             if ($(this).text() == 'Guardar') {
                 // obtener el ultimo codigo del status 
                 var ToltalRow = TDocente.fnGetData().length;
                 var lastRow = TDocente.fnGetData(ToltalRow - 1);
-                var cedula = parseInt(lastRow[1]) + 1;
-
+                var cedula = parseInt(lastRow[1]) + 1;                
                 var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
                 $.post("../../controlador/Docente.php", $("#frmdocente").serialize(), function(respuesta) {
-                    if (respuesta == 1) {
+                    if (respuesta == 1) {                        
                         // obtener el nombre del sexo
                         var sexo = $('#sexo').find(' option').filter(":selected").text();
                         // obtener el nombre del estado 
@@ -247,12 +243,9 @@ $(document).ready(function() {
                         // obtener el nombre del estatus
                         var estatus = $('#estatus').find(' option').filter(":selected").text();
                         // obtener el nombre de la actividad
-//                        var actividad = $('#actividad').find(' option').filter(":selected").text();
-//                        // obtener el id de la actividad
-//                        var id_actividad = $('#actividad').find(' option').filter(":selected").val();
-
-                        var actividad = $('#actividad').find('option:selected').text();
-
+                        var actividad = $('#actividad').find(' option').filter(":selected").text();
+                        // obtener el id de la actividad
+                        var id_actividad = $('#actividad').find(' option').filter(":selected").val();
                         window.parent.bootbox.alert("Registro con Exito", function() {
                             // Agregar los datos a la tabla
                             var nacionalidad = $('#nacionalidad').find(' option').filter(":selected").text();
@@ -263,7 +256,6 @@ $(document).ready(function() {
                                 sexo, $('#telefono').val(), $('#celular').val(), estado, municipio,
                                 parroquia, $('#calle').val(), $('#casa').val(), $('#edificio').val(),
                                 $('#barrio').val(), estatus, actividad, modificar, eliminar]);
-
                             // Agregar el id a la fila estado
                             var oSettings = TDocente.fnSettings();
                             var nTr = oSettings.aoData[ newRow[0] ].nTr;
@@ -290,33 +282,20 @@ $(document).ready(function() {
                         if (result) {
                             $.post("../../controlador/Docente.php", $("#frmdocente").serialize(), function(respuesta) {
                                 if (respuesta == 1) {
-
                                     // obtener la fila a modificar
                                     var fila = $("#fila").val();
-
                                     window.parent.bootbox.alert("Modificacion con Exito", function() {
-
-                                        // obtener el nombre de la actividad
-//                                      var actividad = $('#actividad').find(' option').filter(":selected").text();
-
-//                                        // obtener el id de la actividad
-//                                        var id_actividad = $('#actividad').find(' option').filter(":selected").val();
                                         // obtener el nombre de la actividad
                                         var actividad = $('#actividad').find(' option').filter(":selected").text();
-//
-//                                        // obtener el id de la actividad
-                                       var id_actividad = $('#actividad').find(' option').filter(":selected").val();
-                                        //var actividad = $('#actividad').find('option:selected').text();
-
+                                        // obtener el id de la actividad
+                                        var id_actividad = $('#actividad').find(' option').filter(":selected").val();
                                         // Modificar la fila 1 en la tabla 
                                         $("#tabla_docente tbody tr:eq(" + fila + ")").find("td:eq(1)").html($('#cedula').val());
                                         $("#tabla_docente tbody tr:eq(" + fila + ")").find("td:eq(2)").html($('#nombre').val());
                                         $("#tabla_docente tbody tr:eq(" + fila + ")").find("td:eq(3)").html($('#apellido').val());
-                                        //$("#tabla_docente tbody tr:eq(" + fila + ")").find("td.eq(4)").html(actividad);
-
                                         // Modificar la fila 1 en la tabla 
                                         $("#tabla_docente tbody tr:eq(" + fila + ")").find("td:eq(4)").html(actividad);
-                                       $("#tabla_docente tbody tr:eq(" + fila + ")").find("td:eq(4)").attr('id', id_actividad);
+                                        $("#tabla_docente tbody tr:eq(" + fila + ")").find("td:eq(4)").attr('id', id_actividad);
                                         $('input[type="text"]').val('');
                                     });
                                 }
@@ -328,118 +307,17 @@ $(document).ready(function() {
         }
     });
 
-    $('table#tabla_docente').on('click', 'img.modificar', function() {
-
-        // borra el campo fila
-        $('#fila').remove();
-        var padre = $(this).closest('tr');
-        var cedula_c = padre.children('td:eq(1)').text();
-        var dat_cedula = cedula_c.split('-');
-        var cedula = dat_cedula[1];
-        var nombre = padre.children('td:eq(2)').html();
-        var apellido = padre.children('td:eq(3)').html();
-
-
-        // obtener la fila a modificar
-        var fila = padre.index();
-
-        $('#guardar').text('Modificar');
-//        $('#cedula').val(cedula).prop('disabled',true);
-        $('#cedula').val(cedula);
-        $('#nombre').val(nombre);
-        $('#apellido').val(apellido);
-        $('#registro_docente').slideDown(2000);
-        $('#reporte_docente').slideUp(2000);
-
-        $.post("../../controlador/Docente.php", {cedula: cedula, accion: 'BuscarDatos'}, function(respuesta) {
-            var datos = respuesta.split(";");
-            
-            $('#sexo').select2('val', datos[0]);
-            $('#fech_naci').val(datos[1]);
-            $('#edad').val(datos[2]);
-            $('#email').val(datos[3]);
-            $('#cod_telefono').select2('val', datos[4]);
-            $('#telefono').val(datos[5]);
-            $('#cod_celular').select2('val', datos[6]);
-            $('#celular').val(datos[7]);
-            $('#lugar_naci').val(datos[8]);
-            $('#estado').select2('val', datos[9]);
-            var id_mun = datos[10];
-            var id_parr = datos[11];
-            $('#municipio').find('option:gt(0)').remove().end();
-            
-            $.post('../../controlador/Municipio.php', {id_estado: datos[9], accion: 'buscarMun'}, function(respuesta) {
-                var option = "";
-                $.each(respuesta, function(i, obj) {
-                    option += "<option value=" + obj.codigo + ">" + obj.descripcion + "</option>";
-                });
-                $('#municipio').append(option);
-                $('#municipio').select2('val', id_mun);
-            }, 'json');
-
-            $('#parroquia').find('option:gt(0)').remove().end();
-            $.post('../../controlador/Parroquia.php', {id_municipio: id_mun, accion: 'buscarParr'}, function(respuesta) {
-                var option = "";
-                $.each(respuesta, function(i, obj) {
-                    option += "<option value=" + obj.codigo + ">" + obj.descripcion + "</option>";
-                });
-                $('#parroquia').append(option);
-                $('#parroquia').select2('val', id_parr);
-            }, 'json');
-              $('#calle').val(datos[12]);
-              $('#casa').val(datos[13]);
-              $('#edificio').val(datos[14]);
-              $('#barrio').val(datos[15]);
-              $('#estatus').select2('val', datos[16]);
-              $('#actividad').select2('val', datos[17]);
-              $('#nacionalidad').select2('val', datos[18]);
-
-            // crear el campo fila y añadir la fila
-            var $fila = '<input type="hidden" id="fila"  value="' + fila + '" name="fila">';
-            $($fila).prependTo($('#frmdocente'));
-
-            var $cedula = '<input type="hidden" id="cedula"  value="' + cedula + '" name="cedula">';
-            $($cedula).appendTo($('#frmdocente'));
-        });
-    });
-
-
     $('#salir').click(function() {
         $('#guardar').text('Guardar');
         $('#registro_docente').slideUp(2000);
         $('#reporte_docente').slideDown(2000);
         $('input:text').val('');
-        $('#estado').select2('val', 0);
-        $('#municipio').select2('val', 0);
-        $('#parroquia').select2('val', 0);
-        $('#estatus').select2('val', 0);
-        $('#sexo').select2('val', 0);
-        $('#cod_telefono').select2('val', 0);
-        $('#cod_celular').select2('val', 0);
-        $('#actividad').select2('val', 0);
     });
 
     $('#limpiar').click(function() {
         $('input:text').val('');
-        $('#estado').select2('val', 0);
-        $('#municipio').select2('val', 0);
-        $('#parroquia').select2('val', 0);
-        $('#estatus').select2('val', 0);
-        $('#sexo').select2('val', 0);
-        $('#cod_telefono').select2('val', 0);
-        $('#cod_celular').select2('val', 0);
-        $('#actividad').select2('val', 0);
         $('#guardar').text('Guardar');
     });
-
-    var letra = ' abcdefghijklmnñopqrstuvwxyzáéíóú';
-    $('#nombre').validar(letra);
-    $('#apellido').validar(letra);
-
-    var numero = '0123456789';
-    $('#telefono').validar(numero);
-    $('#celular').validar(numero);
-    $('#cedula').validar(numero);
 
 });
 
