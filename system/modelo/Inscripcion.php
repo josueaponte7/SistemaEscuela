@@ -390,8 +390,8 @@ class Inscripcion extends Preinscripcion
                         $r_a = 'rn';
                     }
                 }
-                echo $sql_alf = "UPDATE dt_padres SET padre_alf = '$p_a',  madre_alf = '$m_a',  represent_alf = '$r_a' WHERE cedula_estudiante = $cedula;";
-                exit;$this->ejecutar($sql_alf);
+                $sql_alf = "UPDATE dt_padres SET padre_alf = '$p_a',  madre_alf = '$m_a',  represent_alf = '$r_a' WHERE cedula_estudiante = $cedula;";
+                $this->ejecutar($sql_alf);
             }
             
             if (isset($datos['padre_nivel'])) {
