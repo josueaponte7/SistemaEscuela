@@ -239,9 +239,11 @@ $(document).ready(function() {
     });
     
     $('#medio').change(function(){
+         $('input:text[id$="cho"],#placa').val('');
         if($(this).val() !=0){
             if($(this).val() == 1){
                 $('#cedula_cho').prop('disabled',true);
+                $('input:text[id$="cho"],#placa').val('');
             }else{
                 $('#cedula_cho').prop('disabled',false);
             }
