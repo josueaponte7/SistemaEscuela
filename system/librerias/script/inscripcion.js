@@ -119,8 +119,7 @@ $(document).ready(function() {
                 }   
                 
                 var datg_padres = datos[4].split(';');
-                
-                alert(datg_padres);
+
                 if(datg_padres[0] == 1){
                     $('#padre_f').prop('checked',true);
                 }
