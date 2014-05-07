@@ -104,8 +104,8 @@ if (isset($_SESSION['archivo_sys']) && isset($_SESSION['dir_sys'])) {
                         var height = '1200px';
                         var heightifm = '1100px';
                     } else if (archivo == 'docente') {
-                        var height = '990px';
-                        var heightifm = '930px';
+                        var height = '1100px';
+                        var heightifm = '995px';
 
                     } else if (archivo == 'choferes') {
                         var height = '770px';

@@ -40,6 +40,56 @@ class Docente extends Seguridad {
         $resultado = $this->ejecutar($sql);
         return $resultado;
     }
+    
+     public function update($datos){
+         
+        $nacionalidad = $datos['nacionalidad'];
+        $cedula       = $datos['cedula'];
+        $nombre       = $datos['nombre'];
+        $apellido     = $datos['apellido'];
+        $email        = $datos['email'];
+        $fech_naci    = $datos['fech_naci'];
+        $lugar_naci   = $datos['lugar_naci'];
+        $sexo         = $datos['sexo'];
+        $calle        = $datos['calle'];
+        $casa         = $datos['casa'];
+        $edificio     = $datos['edificio'];
+        $barrio       = $datos['barrio'];
+        $cod_telefono = $datos['cod_telefono'];
+        $telefono     = $datos['telefono'];
+        $cod_celular  = $datos['cod_celular'];
+        $celular      = $datos['celular'];
+        $id_parroquia = $datos['id_parroquia'];
+        $estatus      = $datos['estatus'];
+        $id_actividad = $datos['id_actividad'];
+        $fech_naci = $this->formateaBD($fech_naci);
+        $cedula   = explode('-', $cedula);
+        $cedula       = $cedula[1];
+        
+       $sql           = "UPDATE docente
+                            SET nacionalidad = '$nacionalidad',
+                              nombre = '$nombre',
+                              apellido = '$apellido',
+                              email = '$email',
+                              fech_naci = '$fech_naci',
+                              lugar_naci = '$lugar_naci',
+                              sexo = '$sexo',
+                              calle = '$calle',
+                              casa = '$casa',
+                              edificio = '$edificio',
+                              barrio = '$barrio',
+                              cod_telefono = '$cod_telefono',
+                              telefono = '$telefono',
+                              cod_celular = '$cod_celular',
+                              celular = '$celular',
+                              id_parroquia = '$id_parroquia',
+                              activo = '$estatus',
+                              id_actividad = '$id_actividad'
+                            WHERE cedula = '$cedula';";
+
+        $resultado = $this->ejecutar($sql);
+        return $resultado;
+    }
 
     public function estatusDoce($where = 1) {
         $where = ' WHERE ' . $where;
@@ -68,5 +118,5 @@ class Docente extends Seguridad {
         $resultado = $this->consultar_array($sql);
         return $resultado;
     }
-
+    
 }
