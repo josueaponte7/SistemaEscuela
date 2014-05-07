@@ -263,6 +263,7 @@ $(document).ready(function() {
                 var $chkbox = $(this);
                 var $actualrow = $chkbox.closest('tr');
                 var cedula = $actualrow.find('td:eq(1)').text();
+                cedula = cedula.trim();
                 checkboxValues += cedula.substr(2) + ',';
             });
             checkboxValues = checkboxValues.substring(0, checkboxValues.length - 1);
@@ -364,7 +365,7 @@ $(document).ready(function() {
         $('#guardar').text('Guardar');
     });
     
-     var letra = ' abcdefghijklmnñopqrstuvwxyzáéíóú';
+    var letra = ' abcdefghijklmnñopqrstuvwxyzáéíóú';
     $('#nombre').validar(letra);
     $('#apellido').validar(letra);
     

@@ -205,13 +205,13 @@ $_SESSION['abrir']       = 'registros';
                                 <td>
                                     <div class="form-group">
 <!--                                        <input type="text"  style="background-color: #FFFFFF" readonly class="form-control input-sm" id="fech_naci" name="fech_naci" placeholder="Fecha de Nacimiento">-->
-                                            <input type="text" readonly class="form-control input-sm" id="fech_naci" name="fech_naci" placeholder="Fecha de Nacimiento">
+                                        <input type="text" style="background-color: #ffffff" readonly class="form-control input-sm" id="fech_naci" name="fech_naci" placeholder="Fecha de Nacimiento">
                                     </div>
                                 </td>
                                 <td class="letras"> Edad: </td>
                                 <td>
                                     <div class="form-group">
-                                        <input disabled="disabled" type="text" class="form-control input-sm" id="edad" name="edad" placeholder="Edad">
+                                        <input type="text" disabled="disabled"  style="background-color: #ffffff" class="form-control input-sm" id="edad" name="edad" placeholder="Edad">
                                     </div>
                                 </td
                             </tr>
@@ -271,7 +271,7 @@ $_SESSION['abrir']       = 'registros';
                                 </td>
                                 <td class="letras">Estatus</td>
                                 <td>
-                                    <select name="estatus" class="form-control input-sm" id="estatus">
+                                    <select name="estatus"  class="form-control input-sm" id="estatus">
                                         <option value="0">Seleccione</option>
                                         <?php
                                         $opciones['campos'] = 'id_estatus,nombre';
@@ -292,7 +292,7 @@ $_SESSION['abrir']       = 'registros';
                                 <td height="52" class="letras">Lugar de Naci:</td>
                                 <td colspan="3">
                                     <div class="form-group">
-                                        <textarea style="width:98% !important" id="lugar_naci" class="form-control input-sm" placeholder="Lugar de Nacimiento" rows="1" name="lugar_naci"></textarea>
+                                        <textarea style="width:99% !important" id="lugar_naci" class="form-control input-sm" placeholder="Lugar de Nacimiento" rows="1" name="lugar_naci"></textarea>
                                     </div>
                                 </td>
                             </tr>

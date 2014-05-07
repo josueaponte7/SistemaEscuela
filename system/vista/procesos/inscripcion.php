@@ -89,33 +89,7 @@ $_SESSION['abrir']       = 'procesos';
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
-                        $resul_insc = $obj_inscrip->getInscritos();
-                        $es_array   = is_array($resul_insc) ? TRUE : FALSE;
-                        if ($es_array === TRUE) {
-                            for ($i = 0; $i < count($resul_insc); $i++) {
-                                ?>
-                                <tr class="letras">
-                                    <td>
-                                        <input type="checkbox" id="<?php echo $resul_insc[$i]['cedula']; ?>" name="id_actividad[]" value="<?php echo $resul_insc[$i]['cedula']; ?>" />
-                                    </td>
-                                    <td><?php echo $resul_insc[$i]['cedula']; ?></td>                            
-                                    <td><?php echo $resul_insc[$i]['nombre']; ?></td>
-                                    <td><?php echo $resul_insc[$i]['tipo'] ?></td>
-                                    <td><?php echo $resul_insc[$i]['anio'] ?></td>
-                                    <td><?php echo $resul_insc[$i]['actividad'] ?></td>
-                                    <td><?php echo $resul_insc[$i]['fecha_inscripcion'] ?></td>
-                                    <td style="text-align: center">
-                                        <img class="modificar" src="../../imagenes/edit.png" title="Modificar" style="cursor: pointer"  width="18" height="18" alt="Modificar"/>
-                                    </td>
-                                    <td style="text-align: center">
-                                        <img class="eliminar" src="../../imagenes/delete.png" title="Eliminar" style="cursor: pointer"  width="18" height="18"  alt="Eliminar"/>
-                                    </td>
-                                </tr>
-                                <?php
-                            }
-                        }
-                        ?>
+
                     </tbody>
                 </table>
 
@@ -183,7 +157,7 @@ $_SESSION['abrir']       = 'procesos';
                                             <td>
                                                 <div class="form-group">
                                                     <input type="hidden" id="id_tipo" name="id_tipo" value="" />
-                                                    <input disabled="disabled" type="text" class="form-control  input-sm" id="tipo_estudiante" name="tipo_estudiante"  placeholder="Tipo de Estudiante"/>
+                                                    <input disabled="disabled" type="text" class="form-control  input-sm" id="tipo_estudiate" name="tipo_estudiate"  placeholder="Tipo de Estudiante"/>
                                                 </div>
                                             </td>
                                         </tr>
@@ -860,7 +834,7 @@ $_SESSION['abrir']       = 'procesos';
                                                                 <tr>
                                                                     <td> 
                                                                         <fieldset >
-                                                                            <legend class="letras_titulosGe" >Servivion P&uacute;blico al que es atendido </legend>
+                                                                            <legend class="letras_titulosGe" >Servicio P&uacute;blico al que es atendido </legend>
                                                                         </fieldset>
                                                                     </td>
                                                                 </tr>
