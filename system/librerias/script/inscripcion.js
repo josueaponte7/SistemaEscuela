@@ -73,11 +73,11 @@ $(document).ready(function() {
                 $('#cdt_generales').css('color','#FF0000');
                 $('#fil_datos_genereles').fadeIn();
                 
-                var respuesta = respuesta.substring(2);
-                var id_anio   = respuesta.substring(0, 1);
+               
                 
                 var datos     = respuesta.split('##');
-                
+                var dat_ex =  datos[0].split(';');
+                var id_anio = dat_ex[0];
                 //Datos inscripcion
                 if(id_anio == 1){
                     var dat_insc  = datos[0].split(';');
@@ -89,7 +89,7 @@ $(document).ready(function() {
                     var $fila = '<input type="hidden" id="fila"  value="' + fila + '" name="fila">';
                     $($fila).prependTo($('#frminscripcion'));
                 }
-                
+                $('#tipo_estudiante').val(dat_ex[2]);
                 // datos representante
                 var dat_repre = datos[1].split(';');
    
@@ -263,13 +263,67 @@ $(document).ready(function() {
     });
     
     $('#guardar').click(function(){
-        $('#cedula_r').prop('disabled',false);
-        $.post("../../controlador/Inscripcion.php", $('#frminscripcion').serialize(), function(respuesta) {
-           $('#cedula_r').prop('disabled',true);
-           if(respuesta == 1){
-                alert("Registro con exito");
-           }
-        });
+        var accion = $(this).text();
+        $('#accion').val(accion);
+        $('#cedula_r,#tipo_estudiante').prop('disabled', false);
+        
+        if (accion == 'Guardar') {
+            $.post("../../controlador/Inscripcion.php", $('#frminscripcion').serialize(), function(respuesta) {
+                $('#cedula_r,#tipo_estudiante').prop('disabled', true);
+                
+                window.parent.bootbox.alert("Registro con Exito", function() {
+                    var cedula = $('#cedula').find('option:selected').val();
+                    var $check = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
+                    var dat_c = $('#cedula').find('option:selected').text();
+                    var dat_n = dat_c.split(' ');
+
+                    delete dat_n[0];
+                    var nombre = dat_n.join(' ');
+                    var tipo = $('#tipo_estudiante').val();
+                    var anio = $('#anio_escolar').val();
+                    var fecha = $('#fecha').val();
+                    var actividad = $('#actividad').find('option:selected').text();
+
+                    var modificar = '<img class="modificar" src="../../imagenes/edit.png" title="Modificar" style="cursor: pointer"  width="18" height="18" alt="Modificar"/>';
+                    var eliminar = '<img class="eliminar" src="../../imagenes/delete.png" title="Eliminar" style="cursor: pointer"  width="18" height="18"  alt="Eliminar"/>';
+
+                    TInscripcion.fnAddData([$check, cedula, nombre, tipo, anio, actividad, fecha, modificar, eliminar]);
+                });
+            });
+        } else {
+            window.parent.bootbox.confirm({
+                message: '¿Desea Modificar los datos del Registro?',
+                buttons: {
+                    'cancel': {
+                        label: 'Cancelar',
+                        className: 'btn-default'
+                    },
+                    'confirm': {
+                        label: 'Modificar',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function(result) {
+                    if (result) {
+                        $.post("../../controlador/Inscripcion.php", $("#frminscripcion").serialize(), function(respuesta) {
+                            if (respuesta == 1) {
+                                var actividad = $('#acitvidad').find('option:selected').text();
+                                // obtener la fila a modificar
+                                var fila = $("#fila").val();
+
+                                window.parent.bootbox.alert("Modificacion con Exito", function() {
+                                    // Modificar la fila 1 en la tabla 
+                                    $("table#tabla_inscripcion tbody tr:eq(" + fila + ")").find("td:eq(24)").html(actividad);
+                                    $('input[type="text"]').val('');
+
+                                });
+
+                            }
+                        });
+                    }
+                }
+            });
+        }
     });
     
     $('#cdt_generales.link').on('click',function() {

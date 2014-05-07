@@ -11,8 +11,8 @@ if (isset($_POST['accion'])) {
     if (isset($_POST['fecha'])) {
         $datos['fecha'] = $_POST['fecha'];
     }    
-     if (isset($_POST['tipo_estudainte'])) {
-        $datos['tipo_estudainte'] = $_POST['tipo_estudainte'];
+     if (isset($_POST['tipo_estudiante'])) {
+        $datos['tipo_estudiante'] = $_POST['tipo_estudiante'];
     }
     if (isset($_POST['id_anio'])) {
         $datos['id_anio'] = $_POST['id_anio'];
@@ -68,22 +68,7 @@ if (isset($_POST['accion'])) {
     if (isset($_POST['mision'])) {
         $datos['mision'] = $_POST['mision'];
     }
-    
-    /*if (isset($_POST['ubicacion_vivienda'])) {
-        $datos['ubicacion'] = $_POST['ubicacion_vivienda'];
-    }
-    if (isset($_POST['tipo_vivienda'])) {
-        $datos['tipo'] = $_POST['tipo_vivienda'];
-    }
-    if (isset($_POST['estado_vivienda'])) {
-        $datos['estado_vivienda'] = $_POST['estado_vivienda'];
-    }
-    if (isset($_POST['cant_habitacion'])) {
-        $datos['estado_vivienda'] = $_POST['cant_habitacion'];
-    }
-    if (isset($_POST['cama'])) {
-        $datos['cama'] = $_POST['cama'];
-    }*/
+
     if(isset($_POST['dt']) && $_POST['dt'] == 'dt2'){
         $datos['dtv'] = $_POST;
     }

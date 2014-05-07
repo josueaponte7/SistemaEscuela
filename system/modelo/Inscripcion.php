@@ -22,12 +22,12 @@ class Inscripcion extends Preinscripcion
         $id_medio             = $datos['id_medio'];
         $cedula_chofer        = $datos['cedula_chofer'];
         $id_tipo              = $datos['id_tipo'];
-
+        $tipo                 = $datos['tipo_estudiante'];
         $sql_del       = "DELETE FROM inscripcion WHERE cedula_estudiante = $cedula";
         $resultado_del = $this->ejecutar($sql_del);
         if ($resultado_del) {
-            $sql       = "INSERT INTO inscripcion(cedula_estudiante,fecha_inscripcion,id_anio,id_actividad,area_descripcion,cedula_representante,id_medio,cedula_chofer)
-                    VALUES ($cedula,CURRENT_DATE,$id_anio,$id_actividad,'$area',$cedula_representante,$id_medio,$cedula_chofer);";
+            $sql       = "INSERT INTO inscripcion(cedula_estudiante,fecha_inscripcion,id_anio,id_actividad,area_descripcion,cedula_representante,id_medio,tipo,cedula_chofer)
+                    VALUES ($cedula,CURRENT_DATE,$id_anio,$id_actividad,'$area',$cedula_representante,$id_medio,'$tipo',$cedula_chofer);";
             $resultado = $this->ejecutar($sql);
 
             if ($resultado) {
@@ -41,6 +41,27 @@ class Inscripcion extends Preinscripcion
                     $resultado = TRUE;
                 }
             }
+        }
+        return $resultado;
+    }
+    
+    public function update($datos)
+    {
+        $dat_ced       = explode('-', $datos['cedula_estudiante']);
+        $cedula        = $dat_ced[1];
+        $actividad     = $datos['id_actividad'];
+        $area          = $datos['area'];
+        $medio         = $datos['id_medio'];
+        $cedula_chofer = $datos['cedula_chofer'];
+        $sql_update = "UPDATE inscripcion SET 
+                        id_actividad     = $actividad,
+                        area_descripcion = '$area',
+                        id_medio         = $medio,
+                        cedula_chofer    = $cedula_chofer
+                      WHERE cedula_estudiante = $cedula;";
+        $result_up     = $this->ejecutar($sql_update);
+        if ($result_up) {
+            $resultado = TRUE;
         }
         return $resultado;
     }
@@ -96,6 +117,7 @@ class Inscripcion extends Preinscripcion
         $id_tipo     = 1;
         $result_anio = 0;
         $dat_extra   = 0;
+        $medio_transporte = 0;
         if ($hay == 1) {
             $tiempo = $this->get('inscripcion', '(YEAR(CURDATE())-YEAR(fecha_inscripcion)) - (RIGHT(CURDATE(),5)<RIGHT(fecha_inscripcion,5)) AS tiempo', "cedula_estudiante=$cedula[1]");
             $result_anio = $this->get('inscripcion AS i', 'IF(i.id_anio=(SELECT id_anio FROM anio_escolar ORDER BY id_anio DESC LIMIT 1),1,0) AS id_anio', "cedula_estudiante=$cedula[1]");
@@ -289,7 +311,7 @@ class Inscripcion extends Preinscripcion
         $dtg_ay = substr($dtg_ay, 0, -1);
         
         
-        $datos = $result_anio.';'.$dat_extra.'##'.$representante.'##'.$medio_transporte.'##'.$representantes.'##'.$dtg_padre.'##'.$dtg_ingreso.'##'.$dtg_pg.'##'.$dtg_v.'##'.$dtg_t.'##'.$dtg_d.'##'.$dtg_e.'##'.$dtg_s.'##'.$dtg_dz.'##'.$dtg_a.'##'.$dtg_ay;
+        $datos = $result_anio.';'.$id_tipo.';'.$tipo.';'.$dat_extra.'##'.$representante.'##'.$medio_transporte.'##'.$representantes.'##'.$dtg_padre.'##'.$dtg_ingreso.'##'.$dtg_pg.'##'.$dtg_v.'##'.$dtg_t.'##'.$dtg_d.'##'.$dtg_e.'##'.$dtg_s.'##'.$dtg_dz.'##'.$dtg_a.'##'.$dtg_ay;
         return $datos;
     }
     
