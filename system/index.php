@@ -55,7 +55,6 @@ if (isset($_SESSION['archivo_sys']) && isset($_SESSION['dir_sys'])) {
     }
 }
 ?>
-
 <!DOCTYPE HTML>
 <html>
     <head>
