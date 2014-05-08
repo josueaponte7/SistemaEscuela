@@ -7,13 +7,13 @@ $(document).ready(function() {
         "aLengthMenu": [5, 10, 20, 30, 40, 50],
         "oLanguage": {"sUrl": "../../librerias/js/es.txt"},
         "aoColumns": [
-            {"sClass": "center", "sWidth": "4%", "bSortable": false, "bSearchable": false},
+            {"sClass": "center", "sWidth": "3%", "bSortable": false, "bSearchable": false},
             {"sClass": "center", "sWidth": "10%"},
-            {"sClass": "center"},
-            {"sClass": "center", "sWidth": "26%"},
-            {"sClass": "center", "sWidth": "20"},
-            {"sWidth": "4%", "bSortable": false, "sClass": "center sorting_false", "bSearchable": false},
-            {"sWidth": "4%", "bSortable": false, "sClass": "center sorting_false", "bSearchable": false}
+            {"sClass": "center", "sWidth": "35%"},
+            {"sClass": "center", "sWidth": "35%"},
+            {"sClass": "center", "sWidth": "10"},
+            {"sWidth": "2%", "bSortable": false, "sClass": "center sorting_false", "bSearchable": false},
+            {"sWidth": "2%", "bSortable": false, "sClass": "center sorting_false", "bSearchable": false}
         ]
     });
 
@@ -175,7 +175,14 @@ $(document).ready(function() {
 //            var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
             $.post("../../controlador/Representante.php", $("#frmrepresentante").serialize(), function(respuesta) {
                 if (respuesta == 1) {
-
+                    
+                     //obtener el nombre de la estatus
+                        var estatus = $('#estatus').find(' option').filter(":selected").text();
+                        // obtener el id de la actividad
+                        var id_estatus = $('#estatus').find(' option').filter(":selected").val();
+                    
+                    window.parent.bootbox.alert("Registro con Exito", function() {
+                    
                     var nacionalidad = $('#nacionalidad').find(' option').filter(":selected").text();
                     var cedula = nacionalidad + '-' + $('#cedula').val();
                     var nombres = $('#nombre').val() + ' ' + $('#apellido').val();
@@ -183,11 +190,73 @@ $(document).ready(function() {
                     var cod_celular = $('#cod_celular').find(' option').filter(":selected").text();
                     var telefonos = cod_telefono + '-' + $('#telefono').val() + ', ' + cod_celular + '-' + $('#celular').val();
                     var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
-                    alert('Registro con Exito');
-                    var newRow = TRepresentante.fnAddData([$check_cedula, cedula, nombres, telefonos, modificar, eliminar]);
+                    
+//                    alert('Registro con Exito');
+                    var newRow = TRepresentante.fnAddData([$check_cedula, cedula, nombres, telefonos, estatus,  modificar,  eliminar]);
+                    
+                    
+                     // Agregar el id a la fila estado
+                            var oSettings = TRepresentante.fnSettings();
+                            var nTr = oSettings.aoData[ newRow[0] ].nTr;
+                            $('td', nTr)[4].setAttribute('id', id_estatus);
+                            $('#estatus').select2('val', 0);
+                    
                     $('input[type="text"]').val('');
+                    
+                    });
                 }
             });
+        }else{
+             window.parent.bootbox.confirm({
+                    message: '¿Desea Modificar los datos del Registro?',
+                    buttons: {
+                        'cancel': {
+                            label: 'Cancelar',
+                            className: 'btn-default'
+                        },
+                        'confirm': {
+                            label: 'Modificar',
+                            className: 'btn-danger'
+                        }
+                    },
+                    callback: function(result) {
+                        if (result) {
+                            $.post("../../controlador/Representante.php", $("#frmrepresentante").serialize(), function(respuesta) {
+                                if (respuesta == 1) {
+
+                                    // obtener la fila a modificar
+                                    var fila = $("#fila").val();
+
+                                    window.parent.bootbox.alert("Modificacion con Exito", function() {
+
+                                        // obtener el nombre de la actividad
+//                                      var actividad = $('#actividad').find(' option').filter(":selected").text();
+
+//                                        // obtener el id de la actividad
+//                                        var id_actividad = $('#actividad').find(' option').filter(":selected").val();
+                                        // obtener el nombre de la actividad
+                                        var estatus = $('#estatus').find(' option').filter(":selected").text();
+//
+//                                        // obtener el id de la actividad
+                                       var id_estatus= $('#estatus').find(' option').filter(":selected").val();
+                                        //var actividad = $('#actividad').find('option:selected').text();
+
+                                        // Modificar la fila 1 en la tabla 
+                                        $("#tabla_representante tbody tr:eq(" + fila + ")").find("td:eq(1)").html($('#cedula').val());
+                                        $("#tabla_representante tbody tr:eq(" + fila + ")").find("td:eq(2)").html($('#nombres').val());
+                                        $("#tabla_representante tbody tr:eq(" + fila + ")").find("td:eq(3)").html($('#telefonos').val());
+                                        //$("#tabla_docente tbody tr:eq(" + fila + ")").find("td.eq(4)").html(actividad);
+
+                                        // Modificar la fila 1 en la tabla 
+                                        $("#tabla_representante tbody tr:eq(" + fila + ")").find("td:eq(4)").html(estatus);
+                                       $("#tabla_representante tbody tr:eq(" + fila + ")").find("td:eq(4)").attr('id', id_estatus);
+                                        $('input[type="text"]').val('');
+                                    });
+                                }
+                            });
+                        }
+                    }
+                });
         }
     });
 
@@ -199,8 +268,7 @@ $(document).ready(function() {
         var padre = $(this).closest('tr');
         var cedula_c = padre.children('td:eq(1)').text();
         var dat_cedula = cedula_c.split('-');
-        var cedula = dat_cedula[1];;
-
+        var cedula = dat_cedula[1];
 
         // obtener la fila a modificar
         var fila = padre.index();

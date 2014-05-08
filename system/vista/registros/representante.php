@@ -352,7 +352,7 @@ $_SESSION['abrir']       = 'registros';
                                     Status
                                 </td>
                                 <td width="250">
-                                    <div cclass="form-group">
+                                    <div class="form-group">
                                         <select  name="estatus" class="form-control input-sm" id="estatus">
                                             <option value="0">Seleccione</option>
                                             <?php

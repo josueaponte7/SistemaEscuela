@@ -48,6 +48,63 @@ class Representante extends Seguridad {
         $resultado = $this->ejecutar($sql);
         return $resultado;
     }
+    
+        public function update($datos) {
+
+        $nacionalidad   = $datos['nacionalidad'];
+        $cedula         = $datos['cedula'];
+        $nombre         = $datos['nombre'];
+        $apellido       = $datos['apellido'];
+        $email          = $datos['email'];
+        $fech_naci      = $datos['fech_naci'];
+        $lugar_naci     = $datos['lugar_naci'];
+        $sexo           = $datos['sexo'];
+        $calle          = $datos['calle'];
+        $casa           = $datos['casa'];
+        $edificio       = $datos['edificio'];
+        $barrio         = $datos['barrio'];
+        $cod_telefono   = $datos['cod_telefono'];
+        $telefono       = $datos['telefono'];
+        $cod_celular    = $datos['cod_celular'];
+        $celular        = $datos['celular'];
+        $antecedente    = $datos['antecedente'];
+        $fuente_ingreso = $datos['fuente_ingreso'];
+        $id_parroquia   = $datos['id_parroquia'];
+        $id_estatus     = $datos['id_estatus'];
+        $id_nivel       = $datos['id_nivel'];
+        $id_profesion   = $datos['id_profesion'];
+
+        $fech_naci = $this->formateaBD($fech_naci);
+
+      $sql = "UPDATE representante
+                    SET nacionalidad = '$nacionalidad',
+                      nombre = '$nombre',
+                      apellido = '$apellido',
+                      email = '$email',
+                      fech_naci = '$fech_naci',
+                      lugar_naci = '$lugar_naci',
+                      sexo = '$sexo',
+                      calle = '$calle',
+                      casa = '$casa',
+                      edificio = '$edificio',
+                      barrio = '$barrio',
+                      antecedente = '$antecedente',
+                      fuente_ingreso = '$fuente_ingreso',
+                      cod_telefono = '$cod_telefono',
+                      telefono = '$telefono',
+                      cod_celular = '$cod_celular',
+                      celular = '$celular',
+                      id_parroquia = '$id_parroquia',
+                      id_estatus = '$id_estatus',
+                      id_nivel = '$id_nivel',
+                      id_profesion = '$id_profesion'
+                    WHERE cedula = '$cedula';";
+
+        $resultado = $this->ejecutar($sql);
+        return $resultado;
+    }
+    
+    
 
     public function estatusRep($where = 1) {
         $where = ' WHERE ' . $where;

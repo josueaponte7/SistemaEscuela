@@ -235,6 +235,7 @@ $(document).ready(function() {
 
                 var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
                 $.post("../../controlador/Docente.php", $("#frmdocente").serialize(), function(respuesta) {
+                    
                     if (respuesta == 1) {
                         // obtener el nombre del sexo
                         var sexo = $('#sexo').find(' option').filter(":selected").text();
@@ -257,6 +258,7 @@ $(document).ready(function() {
                             // Agregar los datos a la tabla
                             var nacionalidad = $('#nacionalidad').find(' option').filter(":selected").text();
                             var cedula = nacionalidad + '-' + $('#cedula').val();
+                            
                             var newRow = TDocente.fnAddData([$check_cedula, cedula,
                                 $('#nombre').val(), $('#apellido').val(), $('#email').val(),
                                 $('#fech_naci').val(), $('#lugar_naci').val(), $('#edad').val(),
@@ -344,6 +346,8 @@ $(document).ready(function() {
         var fila = padre.index();
 
         $('#guardar').text('Modificar');
+        
+        
 //        $('#cedula').val(cedula).prop('disabled',true);
         $('#cedula').val(cedula);
         $('#nombre').val(nombre);

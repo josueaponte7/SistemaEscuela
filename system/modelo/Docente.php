@@ -63,8 +63,9 @@ class Docente extends Seguridad {
         $estatus      = $datos['estatus'];
         $id_actividad = $datos['id_actividad'];
         $fech_naci = $this->formateaBD($fech_naci);
-        $cedula   = explode('-', $cedula);
-        $cedula       = $cedula[1];
+        
+//        $cedula   = explode('-', $cedula);
+//        $cedula       = $cedula[1];
         
        $sql           = "UPDATE docente
                             SET nacionalidad = '$nacionalidad',

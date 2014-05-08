@@ -41,7 +41,7 @@ if (isset($_POST['accion'])) {
     if (isset($_POST['color'])) {
         $datos['color'] = $_POST['color'];
     }
-    
+
     switch ($accion) {
         case 'Guardar':
             $resultado = $obj->add($datos);
@@ -56,28 +56,67 @@ if (isset($_POST['accion'])) {
             if ($resultado) {
                 echo 1;
             }
-        break;
+            break;
 
         case 'Eliminar':
             $resultado = $obj->delete($datos);
             if ($resultado) {
                 echo 1;
             }
-        break;
-        case 'BuscarChofer':
-            $data['sql'] = "SELECT 
-                                ch.nombre,
-                                ch.apellido,
-                                au.placa, 
-                                CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = ch.cod_telefono),ch.telefono) AS telefono
-                            FROM chofer AS ch 
-                            INNER JOIN automovil AS au ON ch.cedula=au.cedula_chofer
-                            WHERE ch.cedula=".$datos['cedula'];
-            
-            $resultado = $obj->getChofer($data);
-            $data = $resultado[0]['nombre'].';'.$resultado[0]['apellido'].';'.$resultado[0]['placa'].';'.$resultado[0]['telefono'];
-            echo $data;
-        break;
+            break;
+
+        case 'BuscarDatos':
+
+            $cedula = $datos['cedula'];
+
+            $opciones['sql'] = "SELECT 
+                                    ch.nacionalidad,
+                                    ch.nombre,
+                                    ch.apellido,
+                                    ch.email,
+                                    au.placa,
+                                    au.modelo,
+                                    au.color, 
+                                    ch.cod_telefono,
+                                    ch.telefono,
+                                    ch.cod_celular, 
+                                    ch.celular
+                                 FROM chofer AS ch 
+                                 INNER JOIN automovil AS au ON ch.cedula=au.cedula_chofer
+                                 WHERE ch.cedula= $cedula";
+            $resultado       = $obj->getChofer($opciones);
+            echo $resultado[0]['nacionalidad'] . ';' .
+                 $resultado[0]['nombre'] . ';' .
+                 $resultado[0]['apellido'] . ';' .
+                 $resultado[0]['email'] . ';' .
+                 $resultado[0]['cod_telefono'] . ';' .
+                 $resultado[0]['telefono'] . ';' .
+                 $resultado[0]['cod_celular'] . ';' .
+                 $resultado[0]['celular'] . ';' .
+                 $resultado[0]['placa'] . ';' .
+                 $resultado[0]['modelo'] . ';' .
+                 $resultado[0]['color'];
+
+            break;
+
+
+
+
+
+//        case 'BuscarChofer':
+//            $data['sql'] = "SELECT 
+//                                ch.nombre,
+//                                ch.apellido,
+//                                au.placa, 
+//                                CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = ch.cod_telefono),ch.telefono) AS telefono
+//                            FROM chofer AS ch 
+//                            INNER JOIN automovil AS au ON ch.cedula=au.cedula_chofer
+//                            WHERE ch.cedula=".$datos['cedula'];
+//            
+//            $resultado = $obj->getChofer($data);
+//            $data = $resultado[0]['nombre'].';'.$resultado[0]['apellido'].';'.$resultado[0]['placa'].';'.$resultado[0]['telefono'];
+//            echo $data;
+//        break;
     }
 }
 

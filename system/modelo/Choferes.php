@@ -35,7 +35,48 @@ class Choferes extends Seguridad {
         return $resultado;
     }
     
-    public function getChofer($opciones)
+    public function update($datos){
+        $nacionalidad = $datos['nacionalidad'];
+        $cedula       = $datos['cedula'];
+        $nombre       = $datos['nombre'];
+        $apellido     = $datos['apellido'];
+        $email        = $datos['email'];
+        $cod_telefono = $datos['cod_telefono'];
+        $telefono     = $datos['telefono'];
+        $cod_celular  = $datos['cod_celular'];
+        $celular      = $datos['celular'];
+        $placa        = $datos['placa'];
+        $modelo       = $datos['modelo'];
+        $color        = $datos['color'];
+        
+       $sql = "UPDATE chofer
+                    SET nacionalidad = '$nacionalidad',
+                      nombre         = '$nombre',
+                      apellido       = '$apellido',
+                      email          = '$email',
+                      cod_telefono   = '$cod_telefono',
+                      telefono       = '$telefono',
+                      cod_celular    = '$cod_celular',
+                      celular        = '$celular'
+                    WHERE cedula     = '$cedula';";
+
+       $sql1 = "UPDATE automovil
+                    SET placa       = '$placa',
+                      modelo        = '$modelo',
+                      color         = '$color'
+                    WHERE cedula_chofer     = '$cedula';";
+
+
+        $resultado = $this->ejecutar($sql);
+        $resultado = $this->ejecutar($sql1);
+        return $resultado;
+        
+        
+        
+        
+    }
+
+        public function getChofer($opciones)
     {
         if(!isset($opciones['sql'])){
         $default   = array('campos' => '*', 'condicion' => '1', 'ordenar' => '1', 'limite' => 200);
