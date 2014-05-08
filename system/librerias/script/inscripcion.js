@@ -31,7 +31,7 @@ $(document).ready(function() {
     $('#medio').select2();
     $('#padre_nivel').select2();
     $('#madre_nivel').select2();
-    $('#representante_nivel').select2();
+    $('#represent_nivel').select2();
     $('#ubicacion_vivienda').select2();
     $('#tipo_vivienda').select2();
     $('#estado_vivienda').select2();
@@ -172,9 +172,21 @@ $(document).ready(function() {
                     $('#represent_anl').prop('checked',datg_padres[8]);
                     $('#represent_alf').prop('disabled',true); 
                 }
-                $('#padre_nivel').select2('val',datg_padres[13] );
-                $('#madre_nivel').select2('val',datg_padres[14] );
-                $('#representante_nivel').select2('val',datg_padres[15] );
+                var np = datg_padres[13];
+                var nm = datg_padres[14];
+                var nr = datg_padres[15];
+                if(datg_padres[13] == ''){
+                    np = 0;
+                }
+                if(datg_padres[14] == ''){
+                    nm = 0;
+                }
+                if(datg_padres[15] == ''){
+                    nr = 0;
+                }
+                $('#padre_nivel').select2('val',np );
+                $('#madre_nivel').select2('val',nm );
+                $('#representante_nivel').select2('val',nr );
                 
                 if(datg_padres[16] == 1){
                     $('#padre_set').prop('checked',true);
@@ -199,11 +211,27 @@ $(document).ready(function() {
                 }
                 
                var dtg_v = datos[7].split(';');
-               $('#ubicacion_vivienda').select2('val',dtg_v[0]);
-               $('#tipo_vivienda').select2('val',dtg_v[1]);
-               $('#estado_vivienda').select2('val',dtg_v[2]);
+               var ub = dtg_v[0];
+               var tv = dtg_v[1];
+               var ev = dtg_v[2];
+               var ca = dtg_v[4];
+               if(dtg_v[0] == ''){
+                   ub = 0;
+               }
+               if(dtg_v[1] == ''){
+                   tv = 0;
+               }
+               if(dtg_v[0] == ''){
+                   ev = 0;
+               }
+               if(dtg_v[0] == ''){
+                   ca = 0;
+               }
+               $('#ubicacion_vivienda').select2('val',ub);
+               $('#tipo_vivienda').select2('val',tv);
+               $('#estado_vivienda').select2('val',ev);
                $('#cant_habitacion').val(dtg_v[3]);
-               $('#cama').select2('val',dtg_v[4]);
+               $('#cama').select2('val',ca);
     
                var dtg_t = datos[8].split(',');
                for(var i=0;i<dtg_t.length;i++){
@@ -229,11 +257,19 @@ $(document).ready(function() {
                    $('input:checkbox[name="destreza[]"][value="'+dtg_dz[i]+'"]').prop('checked',true);
                }
                
-               var dtg_a = datos[7].split(';');
-               $('#alimentacion').select2('val',dtg_a[0]);
-               $('#alimentacion_regular').select2('val',dtg_a[1]);
+               var dtg_a = datos[13].split(',');
+               var aa = dtg_a[0];
+               var ar = dtg_a[1];
+               if(dtg_a[0] == ''){
+                   aa = 0;
+               }
+               if(dtg_a[1] == ''){
+                   ar = 0;
+               }
+              $('#alimentacion').select2('val',aa);
+               $('#alimentacion_regular').select2('val',ar);
 
-               var dtg_ay = datos[11].split(',');
+               var dtg_ay = datos[14].split(',');
                for(var i=0;i<dtg_ay.length;i++){
                    $('input:checkbox[name="ayuda[]"][value="'+dtg_ay[i]+'"]').prop('checked',true);
                }
@@ -374,40 +410,45 @@ $(document).ready(function() {
     });
 
 
-    $('input:checkbox[name="representante_f[]"]').change(function (){
+    $('input:checkbox[name^="dt_padres"][name$="_f]"]').change(function (){
+        
         var id_repre = $(this).attr('id');
+        
         var res = id_repre.split("_");
         var repre =  res[0];
-        var repre_alf = repre+'_alf';
-        var repre_anl = repre+'_anl';
+        var repre_pl = repre+'_pl';
+        var repre_al = repre+'_al';
+        var repre_fd = repre+'_fd';
+        var repre_set = repre+'_set';
+        var repre_see = repre+'_see';
         if($(this).is(':checked')){
-            $('input:checkbox[id^="'+repre+'"]').not('#'+id_repre+',#'+repre_alf+',#'+repre_anl+'').prop('disabled',true).prop('checked',false);
+            $('#'+repre_pl+',#'+repre_al+',#'+repre_fd+',#'+repre_set+',#'+repre_see+'').prop('disabled',true).prop('checked',false);
         }else{
-            $('input:checkbox[id^="'+repre+'"]').not('#'+id_repre).prop('disabled',false);
+            $('#'+repre_pl+',#'+repre_al+',#'+repre_fd+',#'+repre_set+',#'+repre_see+'').prop('disabled',false);
         }
     });
     
-    $('input:checkbox[name="representante_a[]"]').change(function (){
+    $('input:checkbox[name^="dt_padres"][name$="_alf]"]').change(function (){
         
-        var id_repre = $(this).attr('id');
-        var res = id_repre.split("_");
-        
-        var repre =  res[0];
-        
-        var repre_alf = repre+'_alf';
-        var repre_anl = repre+'_anl';
-
+        var id_repre  = $(this).attr('id');
+        var res       = id_repre.split("_");
+        var repre     = res[0];
+        var sufijo    = res[1];
+        var repre_alf = repre + '_alf';
+        var repre_anl = repre + '_anl';
+        var repre_nivel = repre + '_nivel';
+        var repre_see = repre + '_see';
         if ($(this).is(':checked')) {
-            if (res[1] == 'alf') {
-                $('input:checkbox#' + repre_anl).prop('disabled', true).prop('checked', false);
+            if (sufijo == 'alf') {
+                $('#' + repre_anl).prop('disabled', true).prop('checked', false);
             }else{
-               $('input:checkbox#' + repre_alf).prop('disabled', true).prop('checked', false);
+               $('#' + repre_alf+',#'+repre_nivel+',#'+repre_see).prop('disabled', true).prop('checked', false);
             }
         } else {
-            if (res[1] == 'alf') {
-                $('input:checkbox#' + repre_anl).prop('disabled', false);
+            if (sufijo == 'alf') {
+                $('#' + repre_anl).prop('disabled', false);
             }else{
-               $('input:checkbox#' + repre_alf).prop('disabled', false);
+               $('#' + repre_alf+',#'+repre_nivel+',#'+repre_see).prop('disabled', false);
             }
         }
     });

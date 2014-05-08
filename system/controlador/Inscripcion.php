@@ -38,37 +38,30 @@ if (isset($_POST['accion'])) {
     
     
     // Datos Generales
-    if (isset($_POST['ingreso'])) {
-        $datos['ingreso'] = $_POST['ingreso'];
-    }
-    if (isset($_POST['madre_nivel'])) {
-        $datos['madre_nivel'] = $_POST['madre_nivel'];
-    }
-    if (isset($_POST['padre_nivel'])) {
-        $datos['padre_nivel'] = $_POST['padre_nivel'];
-    }
-    if (isset($_POST['representante_nivel'])) {
-        $datos['representante_nivel'] = $_POST['representante_nivel'];
-    }
-    if (isset($_POST['representante_a'])) {
-        $datos['representante_a'] = $_POST['representante_a'];
-    }
-    if (isset($_POST['representante_see'])) {
-        $datos['representante_see'] = $_POST['representante_see'];
-    }
-    if (isset($_POST['representante_set'])) {
-        $datos['representante_set'] = $_POST['representante_set'];
-    }
-    if (isset($_POST['dt'])) {
-        $datos['dt'] = $_POST['dt'];
-    }
-    if (isset($_POST['representante_al'])) {
-        $datos['representante_al'] = $_POST['representante_al'];
-    }
+    
+    
+    
+    
+    
+   
     if (isset($_POST['mision'])) {
         $datos['mision'] = $_POST['mision'];
     }
-
+    if (isset($_POST['dt_padres'])) {
+        $datos['dt_padres'] = $_POST['dt_padres'];
+        if (isset($_POST['cedula'])) {
+            $datos['dt_padres']['cedula_estudiante'] = $_POST['cedula'];
+        }
+    }
+    if(isset($_POST['id_ingreso'])){
+        $datos['id_ingreso'] = $_POST['id_ingreso'];
+        if (isset($_POST['cedula'])) {
+            $datos['id_ingreso']['cedula_estudiante'] = $_POST['cedula'];
+        }
+    }
+    /*if(isset($_POST['dt']) && $_POST['dt'] == 'dt0'){
+        $datos['dtp'] = $_POST;
+    }*/
     if(isset($_POST['dt']) && $_POST['dt'] == 'dt2'){
         $datos['dtv'] = $_POST;
     }

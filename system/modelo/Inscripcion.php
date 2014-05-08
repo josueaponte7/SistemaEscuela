@@ -309,155 +309,65 @@ class Inscripcion extends Preinscripcion
         }
         
         $dtg_ay = substr($dtg_ay, 0, -1);
+        $r_inscrip = $result_anio.';'.$id_tipo.';'.$tipo;
         
-        
-        $datos = $result_anio.';'.$id_tipo.';'.$tipo.';'.$dat_extra.'##'.$representante.'##'.$medio_transporte.'##'.$representantes.'##'.$dtg_padre.'##'.$dtg_ingreso.'##'.$dtg_pg.'##'.$dtg_v.'##'.$dtg_t.'##'.$dtg_d.'##'.$dtg_e.'##'.$dtg_s.'##'.$dtg_dz.'##'.$dtg_a.'##'.$dtg_ay;
+        $datos = $r_inscrip.';'.
+                 $dat_extra.'##'.
+                 $representante.'##'.
+                 $medio_transporte.'##'.
+                 $representantes.'##'.
+                 $dtg_padre.'##'.
+                 $dtg_ingreso.'##'.
+                 $dtg_pg.'##'.
+                 $dtg_v.'##'.
+                 $dtg_t.'##'.
+                 $dtg_d.'##'.
+                 $dtg_e.'##'.
+                 $dtg_s.'##'.
+                 $dtg_dz.'##'.
+                 $dtg_a.'##'.
+                 $dtg_ay;
         return $datos;
     }
     
     public function addDG($datos)
     {
-        $dt = $datos['dt'];
-        $cedula = $datos['cedula_estudiante'];
-        if($dt == 'dt0'){
-            
-            $sql_del    = "DELETE FROM dt_padres WHERE cedula_estudiante =$cedula";
-            $result_del = $this->ejecutar($sql_del);
-            $sql_insert = "INSERT INTO dt_padres(cedula_estudiante)VALUES ($cedula)";
-            $result_insert = $this->ejecutar($sql_insert);
 
-            if (isset($datos['representante_al'])) {
-                $p_a = 0;
-                $m_a = 0;
-                $r_a = 0;
-                $representante_a = $datos['representante_al'];
+        if (isset($datos['dt_padres'])) {
 
-                foreach ($representante_a as $valores) {
-
-                    if ($valores == 1) {
-                        $p_a = 1;
-                    }
-                    if ($valores == 2) {
-                        $m_a = 1;
-                    }
-                    if ($valores == 3) {
-                        $r_a = 1;
-                    }
-  
+            foreach ($datos['dt_padres'] as $id => $value) {
+                $fields[] = $id;
+                if (is_array($value) && !empty($value[0])) {
+                    $values[] = $value[0];
+                } else {
+                    $values[] = "'" . $value . "'";
                 }
-                $sql_al = "UPDATE dt_padres SET padre_al = $p_a,  madre_al = $m_a, represent_al = $r_a WHERE cedula_estudiante = $cedula;";
-                $this->ejecutar($sql_al);
             }
-            
-            if (isset($datos['representante_fd'])) {
-                $p_f = 0;
-                $m_f = 0;
-                $r_f = 0;
-                $representante_f = $datos['representante_fd'];
 
-                foreach ($representante_f as $valores) {
+            $campos            = implode(',', $fields);
+            $valores           = implode(',', $values);
+            $cedula            = $datos['dt_padres']['cedula_estudiante'];
+            $sql_del_dt_padres = "DELETE FROM dt_padres WHERE cedula_estudiante = $cedula;";
+            $result_del = $this->ejecutar($sql_del_dt_padres);
 
-                    if ($valores == 1) {
-                        $p_f = 1;
-                    }
-                    if ($valores == 2) {
-                        $m_f = 1;
-                    }
-                    if ($valores == 3) {
-                        $r_f = 1;
-                    }
-  
+            $sql_insert_dt_padres = "INSERT INTO dt_padres($campos)VALUES ($valores)";
+            $result_insert        = $this->ejecutar($sql_insert_dt_padres);
+
+            $valores = '';
+            $values  = '';
+            if (isset($datos['id_ingreso'])) {
+                $cedula = $datos['id_ingreso']['cedula_estudiante'];
+                unset($datos['id_ingreso']['cedula_estudiante']);
+                foreach ($datos['id_ingreso'] as $id => $value) {
+                    $values .= "($cedula,$value),";
                 }
-                $sql_fd = "UPDATE dt_padres SET padre_fd = $p_f, adre_fd = $m_f, represent_fd = $r_f WHERE cedula_estudiante = $cedula;";
-                $this->ejecutar($sql_fd);
-            }
- 
-            if (isset($datos['representante_a'])) {
-                $p_a = 'ps';
-                $m_a = 'ms';
-                $r_a = 'rs';
-                $representante_a = $datos['representante_a'];
-                
-                foreach ($representante_a as $valores) {
-
-                    if ($valores == 'pn') {
-                        $p_a = 'pn';
-                    }
-                    if ($valores == 'mn') {
-                        $m_a = 'mn';
-                    }
-                    if ($valores == 'rn') {
-                        $r_a = 'rn';
-                    }
-                }
-                $sql_alf = "UPDATE dt_padres SET padre_alf = '$p_a',  madre_alf = '$m_a',  represent_alf = '$r_a' WHERE cedula_estudiante = $cedula;";
-                $this->ejecutar($sql_alf);
-            }
-            
-            if (isset($datos['padre_nivel'])) {
-                $nivel = $datos['padre_nivel'];
-                $sql_pn = "UPDATE dt_padres SET padre_nivel = $nivel WHERE cedula_estudiante = $cedula;";
-                $this->ejecutar($sql_pn);
-            }
-            if (isset($datos['madre_nivel'])) {
-                $nivel = $datos['madre_nivel'];
-                $sql_mn = "UPDATE dt_padres SET madre_nivel = $nivel WHERE cedula_estudiante = $cedula;";
-                $this->ejecutar($sql_mn);
-            }
-            if (isset($datos['representante_nivel'])) {
-                $nivel = $datos['representante_nivel'];
-                $sql_rn = "UPDATE dt_padres SET represent_nivel = $nivel WHERE cedula_estudiante = $cedula;";
-                $this->ejecutar($sql_rn);
-            }
-            
-            if (isset($datos['representante_set'])) {
-                $p_s = 0;
-                $m_s = 0;
-                $representante_s = $datos['representante_set'];
-
-                foreach ($representante_s as $valores) {
-
-                    if ($valores == 1) {
-                        $p_s = 1;
-                    }
-                    if ($valores == 2) {
-                        $m_s = 1;
-                    }
-  
-                }
-                $sql_set = "UPDATE dt_padres SET padre_set = $p_s,  madre_set = $m_s WHERE cedula_estudiante = $cedula;";
-                $this->ejecutar($sql_set);
-            }
-
-            if (isset($datos['representante_see'])) {
-                $p_e = 0;
-                $m_e = 0;
-                $representante_e = $datos['representante_see'];
-
-                foreach ($representante_e as $valores) {
-
-                    if ($valores == 1) {
-                        $p_e = 1;
-                    }
-                    if ($valores == 2) {
-                        $m_e = 1;
-                    }
-  
-                }
-                $sql_see = "UPDATE dt_padres SET padre_see = $p_e,  madre_see = $m_e WHERE cedula_estudiante = $cedula;";
-                $this->ejecutar($sql_see);
-            }
-            
-            if (isset($datos['ingreso'])) {
+                $valores    = substr($values, 0, -1);
                 $sql_di     = "DELETE FROM dt_ingreso_familiar WHERE cedula_estudiante =$cedula";
                 $result_del = $this->ejecutar($sql_di);
-                $ingreso    = $datos['ingreso'];
-                foreach ($ingreso as $valores) {
-                    $sql_ii = "INSERT INTO dt_ingreso_familiar(cedula_estudiante,id_ingreso)VALUES ($cedula,$valores);";
-                    $this->ejecutar($sql_ii);
-                }
+                $sql_ii     = "INSERT INTO dt_ingreso_familiar(cedula_estudiante,id_ingreso)VALUES $valores;";
+                $this->ejecutar($sql_ii);
             }
-        }else if($dt == 'dt1'){
+        } else if ($dt == 'dt1') {
             if(isset($datos['mision'])){
                 $mision = $datos['mision'];
                 $sql_dp = "DELETE FROM dt_programa_social WHERE cedula_estudiante = $cedula;";

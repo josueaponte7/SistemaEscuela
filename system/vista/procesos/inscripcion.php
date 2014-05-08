@@ -381,42 +381,42 @@ $_SESSION['abrir']       = 'procesos';
                                                                             <tr>
                                                                                 <th height="39" class="letras">Fallecido</th>
                                                                                 <td class="letras">
-                                                                                    <input type="checkbox" name="representante_f[]" id="padre_f" value="1">
+                                                                                    <input type="checkbox" name="dt_padres[padre_f]" id="padre_f" value="1">
                                                                                     <label>Padre</label>
                                                                                     &nbsp;&nbsp;
-                                                                                    <input type="checkbox" name="representante_f[]" id="madre_f" value="2">
+                                                                                    <input type="checkbox" name="dt_padres[madre_f]" id="madre_f" value="2">
                                                                                     <label>Madre </label>
                                                                                 </td>
                                                                                 <th class="letras">Privados de Libertad</th>
                                                                                 <td class="letras">
-                                                                                    <input type="checkbox" name="representante_pl[]" id="padre_pl" value="1">
+                                                                                    <input type="checkbox" name="dt_padres[padre_pl]" id="padre_pl" value="1">
                                                                                     <label>Padre</label>
                                                                                     &nbsp;&nbsp;
-                                                                                    <input type="checkbox" name="representante_pl[]" id="madre_pl" value="2">
+                                                                                    <input type="checkbox" name="dt_padres[madre_pl]" id="madre_pl" value="2">
                                                                                     <label>Madre </label>
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th height="37" class="letras">Alcoh&oacute;licos</th>
                                                                                 <td class="letras">
-                                                                                    <input type="checkbox" name="representante_al[]" id="padre_al" value="1">
+                                                                                    <input type="checkbox" name="dt_padres[padre_al]" id="padre_al" value="1">
                                                                                     <label>Padre</label>
                                                                                     &nbsp;&nbsp;
-                                                                                    <input type="checkbox" name="representante_al[]" id="madre_al" value="2">
+                                                                                    <input type="checkbox" name="dt_padres[madre_al]" id="madre_al" value="2">
                                                                                     <label>Madre </label>
                                                                                     &nbsp;&nbsp;
-                                                                                    <input type="checkbox" name="representante_al[]" id="represent_al" value="3">
+                                                                                    <input type="checkbox" name="dt_padres[represent_al]" id="represent_al" value="3">
                                                                                     <label>Representante</label>
                                                                                 </td>
                                                                                 <th class="letras">F&aacute;rmaco Dependiente</th>
                                                                                 <td class="letras">
-                                                                                    <input type="checkbox" name="representante_fd[]" id="padre_fd" value="1">
+                                                                                    <input type="checkbox" name="dt_padres[padre_fd]" id="padre_fd" value="1">
                                                                                     <label>Padre</label>
                                                                                     &nbsp;&nbsp;
-                                                                                    <input type="checkbox" name="representante_fd[]" id="madre_fd" value="2">
+                                                                                    <input type="checkbox" name="dt_padres[madre_fd]" id="madre_fd" value="2">
                                                                                     <label>Madre</label>
                                                                                     &nbsp;&nbsp;
-                                                                                    <input type="checkbox" name="representante_fd[]" id="represent_fd" value="3">
+                                                                                    <input type="checkbox" name="dt_padres[represent_fd]" id="represent_fd" value="3">
                                                                                     <label>Representante</label>
                                                                                 </td>
                                                                             </tr>
@@ -437,24 +437,24 @@ $_SESSION['abrir']       = 'procesos';
                                                                             <tr>
                                                                                 <th  class="letras">Alfabetizados</th>
                                                                                 <td  class="letras">
-                                                                                    <input type="checkbox" name="representante_a[]" id="padre_alf" value="ps">
+                                                                                    <input type="checkbox" name="dt_padres[padre_alf]" id="padre_alf" value="si">
                                                                                     <label>Padre</label>
                                                                                     &nbsp;&nbsp;
-                                                                                    <input type="checkbox" name="representante_a[]" id="madre_alf" value="ms">
+                                                                                    <input type="checkbox" name="dt_padres[madre_alf]" id="madre_alf" value="si">
                                                                                     <label>Madre</label>
                                                                                     &nbsp;&nbsp;
-                                                                                    <input type="checkbox" name="representante_a[]" id="represent_alf" value="rs">
+                                                                                    <input type="checkbox" name="dt_padres[represent_alf]" id="represent_alf" value="si">
                                                                                     <label>Representante</label>
                                                                                 </td>
                                                                                 <th height="34" class="letras">Analfabeta</th>
                                                                                 <td height="34" class="letras">
-                                                                                    <input type="checkbox" name="representante_a[]" id="padre_anl" value="pn">
+                                                                                    <input type="checkbox" name="dt_padres[padre_alf]" id="padre_anl" value="no">
                                                                                     <label>Padre</label>
                                                                                     &nbsp;&nbsp;
-                                                                                    <input type="checkbox" name="representante_a[]" id="madre_anl" value="mn">
+                                                                                    <input type="checkbox" name="dt_padres[madre_alf]" id="madre_anl" value="no">
                                                                                     <label>Madre</label>
                                                                                     &nbsp;&nbsp;
-                                                                                    <input type="checkbox" name="representante_a[]" id="represent_anl" value="rn">
+                                                                                    <input type="checkbox" name="dt_padres[represent_alf]" id="represent_anl" value="no">
                                                                                     <label>Representante</label>
                                                                                 </td>
                                                                             </tr>
@@ -475,7 +475,7 @@ $_SESSION['abrir']       = 'procesos';
                                                                                 <th height="54" class="letras">Padre: </th>
                                                                                 <td>
                                                                                     <div class="form-group">
-                                                                                        <select style="width: 130px;" name="padre_nivel" class="form-control input-sm" id="padre_nivel">
+                                                                                        <select style="width: 130px;" name="dt_padres[padre_nivel]" class="form-control input-sm" id="padre_nivel">
                                                                                             <option value="0">Seleccione</option>
                                                                                             <?php
                                                                                             $resultado = $obj_datos->nivelInst();
@@ -491,7 +491,7 @@ $_SESSION['abrir']       = 'procesos';
                                                                                 <th class="letras">Madre: </th>
                                                                                 <td>
                                                                                     <div class="form-group">
-                                                                                        <select style="width: 130px;" name="madre_nivel" class="form-control input-sm" id="madre_nivel">
+                                                                                        <select style="width: 130px;" name="dt_padres[madre_nivel]" class="form-control input-sm" id="madre_nivel">
                                                                                             <option value="0">Seleccione</option>
                                                                                             <?php
                                                                                             $resultado = $obj_datos->nivelInst();
@@ -507,7 +507,7 @@ $_SESSION['abrir']       = 'procesos';
                                                                                 <th class="letras">Representante: </th>
                                                                                 <td>
                                                                                     <div class="form-group">
-                                                                                        <select style="width: 130px;" name="representante_nivel" class="form-control input-sm" id="representante_nivel">
+                                                                                        <select style="width: 130px;" name="dt_padres[represent_nivel]" class="form-control input-sm" id="represent_nivel">
                                                                                             <option value="0">Seleccione</option>
                                                                                             <?php
                                                                                             $resultado = $obj_datos->nivelInst();
@@ -537,18 +537,18 @@ $_SESSION['abrir']       = 'procesos';
                                                                             <tr>
                                                                                 <th height="39" class="letras">Trabajan</th>
                                                                                 <td class="letras">
-                                                                                    <input type="checkbox" name="representante_set[]" id="padre_set" value="1">
+                                                                                    <input type="checkbox" name="dt_padres[padre_set]" id="padre_set" value="1">
                                                                                     <label>Padre</label>
                                                                                     &nbsp;&nbsp;
-                                                                                    <input type="checkbox" name="representante_set[]" id="madre_set" value="2">
+                                                                                    <input type="checkbox" name="dt_padres[madre_set]" id="madre_set" value="2">
                                                                                     <label>Madre</label>
                                                                                 </td>
                                                                                 <th class="letras">Estudiantes</th>
                                                                                 <td class="letras">
-                                                                                    <input type="checkbox" name="representante_see[]" id="padre_see" value="1">
+                                                                                    <input type="checkbox" name="dt_padres[padre_see]" id="padre_see" value="1">
                                                                                     <label>Padre</label>
                                                                                     &nbsp;&nbsp;
-                                                                                    <input type="checkbox" name="representante_see[]" id="madre_see" value="2">
+                                                                                    <input type="checkbox" name="dt_padres[madre_see]" id="madre_see" value="2">
                                                                                     <label>Madre</label>
                                                                                 </td>
                                                                             </tr>
@@ -576,7 +576,7 @@ $_SESSION['abrir']       = 'procesos';
                                                                                 <div class="form-group" >
                                                                                     <div class="checkbox">
                                                                                         <label>
-                                                                                            <input  type="checkbox" name="ingreso[]" value="<?php echo $resul_naci[$i]['id_ingreso']; ?>" />
+                                                                                            <input  type="checkbox" name="id_ingreso[]" value="<?php echo $resul_naci[$i]['id_ingreso']; ?>" />
                                                                                             <?php echo $tipo_ingreso; ?>
                                                                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                                                         </label>
