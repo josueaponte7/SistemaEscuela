@@ -104,7 +104,11 @@ if (isset($_SESSION['archivo_web']) && isset($_SESSION['dir'])) {
                                     text: 'Usuario o Contrae&ntilde;a Incorrectos',
                                     sticky: false,
                                     stayTime: 2000,
-                                    type: 'error'
+                                    type: 'error',
+                                    close    : function () {
+                                        $('#usuario').val('');
+                                        $('#contrasena').val('');
+                                    }
                                 });
                             }
                         });
