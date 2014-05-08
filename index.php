@@ -7,7 +7,6 @@ $height      = '550px';
 $heightifm   = '540px';
 $pagina      = 'inicio';
 
-
 $nosotros = 'NOSOTROS';
 $usuario  = 0;
 if ($usuario == 1) {
@@ -25,7 +24,6 @@ if (isset($_SESSION['archivo_web']) && isset($_SESSION['dir'])) {
     $heightifm = $_SESSION['heightifm'];
 }
 ?>
-
 <!DOCTYPE HTML>
 <html>
     <head>
