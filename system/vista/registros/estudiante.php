@@ -45,9 +45,10 @@ $_SESSION['abrir']       = 'registros';
         <script type="text/javascript" src="../../librerias/js/dataTables.js"></script>
         <script type="text/javascript" src="../../librerias/js/bootstrap.js"></script>
         <script type="text/javascript" src="../../librerias/js/bootstrap.tooltip.js"></script>
-        <script type="text/javascript" src="../../librerias/js/bootstrap-datepicker.js"></script>
-        <script type="text/javascript" src="../../librerias/js/bootstrap-datepicker.es.js"></script>
         <script type="text/javascript" src="../../librerias/js/validarcampos.js"></script>
+        <script type="text/javascript" src="../../librerias/js/bootstrap-datepicker.js"></script>
+        <script type="text/javascript" src="../../librerias/js/bootstrap-datepicker.es.js"></script>       
+
         <script type="text/javascript" src="../../librerias/js/select2.js"></script>
         <script type="text/javascript" src="../../librerias/js/select2_locale_es.js"></script> 
         <script type="text/javascript" src="../../librerias/script/estudiante.js"></script> 
@@ -191,9 +192,10 @@ $_SESSION['abrir']       = 'registros';
                                         <input type="text" class="form-control  input-sm" id="apellido" name="apellido" placeholder="Apellido"/>
                                     </div>
                                 </td>
+                                
                                 <td class="letras"> Sexo:</td>
                                 <td>
-                                    <select name="sexo" class="form-control input-sm" id="sexo">
+                                    <select name="sexo" class="form-control input-sm select2" id="sexo">
                                         <option value="0">Seleccione</option>
                                         <option value="1">Femenino</option>
                                         <option value="2">Masculino</option>
@@ -204,7 +206,6 @@ $_SESSION['abrir']       = 'registros';
                                 <td class="letras"> Fecha de Naci: </td>
                                 <td>
                                     <div class="form-group">
-<!--                                        <input type="text"  style="background-color: #FFFFFF" readonly class="form-control input-sm" id="fech_naci" name="fech_naci" placeholder="Fecha de Nacimiento">-->
                                         <input type="text" style="background-color: #ffffff" readonly class="form-control input-sm" id="fech_naci" name="fech_naci" placeholder="Fecha de Nacimiento">
                                     </div>
                                 </td>

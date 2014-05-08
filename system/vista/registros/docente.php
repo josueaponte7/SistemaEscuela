@@ -42,7 +42,7 @@ $_SESSION['abrir']       = 'registros';
         <script type="text/javascript" src="../../librerias/js/validarcampos.js"></script>
         <script type="text/javascript" src="../../librerias/js/bootstrap-datepicker.js"></script>
         <script type="text/javascript" src="../../librerias/js/bootstrap-datepicker.es.js"></script>
-        
+
         <script type="text/javascript" src="../../librerias/js/select2.js"></script>
         <script type="text/javascript" src="../../librerias/js/select2_locale_es.js"></script>
         <script type="text/javascript" src="../../librerias/script/docente.js"></script>
@@ -184,7 +184,7 @@ $_SESSION['abrir']       = 'registros';
                                 </td>
                                 <td height="49" class="letras"> Sexo:</td>
                                 <td>
-                                    <select name="sexo" class="form-control input-sm" id="sexo">
+                                    <select name="sexo" class="form-control input-sm select2" id="sexo">
                                         <option value="0">Seleccione</option>
                                         <option value="1">Femenino</option>
                                         <option value="2">Masculino</option>
@@ -229,7 +229,7 @@ $_SESSION['abrir']       = 'registros';
                                             </select>
                                         </div>
                                         <div id="div_telefono" class="form-group">
-                                            <input type="text" class="form-control input-sm" id="telefono" name="telefono" placeholder="Teléfono Hab.."/>
+                                            <input type="text" class="form-control input-sm" id="telefono" name="telefono" placeholder="Teléfono Hab.." maxlength="7"/>
                                         </div>
                                     </div>
                                 </td> 
@@ -254,7 +254,7 @@ $_SESSION['abrir']       = 'registros';
 
                                         </div> 
                                         <div id="div_celular" class="form-group">
-                                            <input  type="text" class="form-control input-sm" id="celular" name="celular" placeholder="Teléfono Celular"/>
+                                            <input  type="text" class="form-control input-sm" id="celular" name="celular" placeholder="Teléfono Celular" maxlength="7"/>
 
                                         </div> 
                                     </div>
@@ -276,7 +276,7 @@ $_SESSION['abrir']       = 'registros';
                                     </div>
                                 </td>
                             </tr>
-                            
+
                             <tr>
                                 <td height="86" colspan="4" align="center"> 
                                     <fieldset style="width: 710px;">

@@ -48,3 +48,19 @@ function calcular_edad(fecha) {
     }
     return edad;
 }
+
+
+//function validar(valor) {
+//    expr = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+//    if ( !expr.test(valor) )
+//        alert("Error: La dirección de correo " + valor + " es incorrecta.");
+//}
+
+//function validarEmail(valor) {
+//    expr =' /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3,4})+$/';
+//  if (! expr.test(valor)){
+//   alert("La dirección de email " + valor + " es correcta.");
+//  } else {
+//   alert("La dirección de email es incorrecta.");
+//  }
+//}

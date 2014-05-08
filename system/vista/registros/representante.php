@@ -16,7 +16,7 @@ $datos['sql'] = "SELECT
                     CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = re.cod_celular),re.celular)) AS telefonos,
                     (SELECT er.nombre FROM estatus_representante er WHERE re.id_estatus = er.id_estatus) AS estatus
                    FROM representante re;";
-$resultado               = $obj_rep->getRepresentantes($datos);
+$resultado    = $obj_rep->getRepresentantes($datos);
 
 $_SESSION['menu']        = 'registros_representante';
 $_SESSION['dir_sys']     = 'registros';
@@ -42,13 +42,15 @@ $_SESSION['abrir']       = 'registros';
         <script type="text/javascript" src="../../librerias/js/dataTables.js"></script>
         <script type="text/javascript" src="../../librerias/js/bootstrap.js"></script>
         <script type="text/javascript" src="../../librerias/js/bootstrap.tooltip.js"></script>
+        <script type="text/javascript" src="../../librerias/js/validarcampos.js"></script>
         <script type="text/javascript" src="../../librerias/js/bootstrap-datepicker.js"></script>
         <script type="text/javascript" src="../../librerias/js/bootstrap-datepicker.es.js"></script>
-        <script type="text/javascript" src="../../librerias/js/validarcampos.js"></script>
+
+
         <script type="text/javascript" src="../../librerias/js/select2.js"></script>
         <script type="text/javascript" src="../../librerias/js/select2_locale_es.js"></script>
         <script type="text/javascript" src="../../librerias/script/representante.js"></script>
-         <style type="text/css">
+        <style type="text/css">
             .sub-rayar:hover{
                 text-decoration: underline;
                 cursor: pointer;
@@ -94,39 +96,39 @@ $_SESSION['abrir']       = 'registros';
                     <tbody>
 
                         <?php
-                         $es_array = is_array($resultado) ? TRUE : FALSE;
-                        if($es_array === TRUE){
-                        for ($i = 0; $i < count($resultado); $i++) {
-                            ?>
-                            <tr>
-                                <td><input type="checkbox" name="cedula[]" value="<?php echo $resultado[$i]['cedula'] ?>" /></td>
-                                <td><span class="sub-rayar tooltip_ced"><?php echo $resultado[$i]['cedula'] ?></span></td>
-                                <td><?php echo $resultado[$i]['nombres'] ?></td>
-                                <td><?php echo $resultado[$i]['telefonos'] ?></td>
-                                <td><?php echo $resultado[$i]['estatus'] ?></td>
-                                <td style="text-align: center">
-                                    <img class="modificar" src="../../imagenes/edit.png" title="Modificar" style="cursor: pointer"  width="18" height="18" alt="Modificar"/>
-                                </td>
-                                <td style="text-align: center">
-                                    <img class="eliminar" src="../../imagenes/delete.png" title="Eliminar" style="cursor: pointer"  width="18" height="18"  alt="Eliminar"/>
-                                </td>
-                            </tr>
-                            <?php
-                        }
+                        $es_array                = is_array($resultado) ? TRUE : FALSE;
+                        if ($es_array === TRUE) {
+                            for ($i = 0; $i < count($resultado); $i++) {
+                                ?>
+                                <tr>
+                                    <td><input type="checkbox" name="cedula[]" value="<?php echo $resultado[$i]['cedula'] ?>" /></td>
+                                    <td><span class="sub-rayar tooltip_ced"><?php echo $resultado[$i]['cedula'] ?></span></td>
+                                    <td><?php echo $resultado[$i]['nombres'] ?></td>
+                                    <td><?php echo $resultado[$i]['telefonos'] ?></td>
+                                    <td><?php echo $resultado[$i]['estatus'] ?></td>
+                                    <td style="text-align: center">
+                                        <img class="modificar" src="../../imagenes/edit.png" title="Modificar" style="cursor: pointer"  width="18" height="18" alt="Modificar"/>
+                                    </td>
+                                    <td style="text-align: center">
+                                        <img class="eliminar" src="../../imagenes/delete.png" title="Eliminar" style="cursor: pointer"  width="18" height="18"  alt="Eliminar"/>
+                                    </td>
+                                </tr>
+                                <?php
+                            }
                         }
                         ?>
                     </tbody>
                 </table>
-                
+
                 <!-- Menu desplegable al hacer click sobre la cedula --->
-                
+
                 <button type="button" id="imprimir" class="btn btn-default btn-sm" style="margin-top:5%;margin-left: 25%;display: none;color:#2781D5" >Generar Listado</button>
                 <div id="contextMenu" class="dropdown clearfix">
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:block;position:static;margin-bottom:5px;">
                         <li><span id="v_datos_r">Ver Datos del Representante</span></li>
                     </ul>
                 </div>
-                
+
                 <!-------------------------------------------------------->
             </div>
         </div>
@@ -181,12 +183,12 @@ $_SESSION['abrir']       = 'registros';
                                         <input type="text" class="form-control  input-sm" id="apellido" name="apellido" placeholder="Apellido"/>
                                     </div>
                                 </td>
-                                 <td class="letras"> Sexo:</td>
+                                <td class="letras"> Sexo:</td>
                                 <td>
-                                    <select name="sexo" class="form-control input-sm" id="sexo">
-                                            <option value="0">Seleccione</option>
-                                            <option value="1">Femenino</option>
-                                            <option value="2">Masculino</option>
+                                    <select name="sexo" class="form-control input-sm select2" id="sexo">
+                                        <option value="0">Seleccione</option>
+                                        <option value="1">Femenino</option>
+                                        <option value="2">Masculino</option>
                                     </select>
                                 </td>                               
                             </tr>
@@ -197,14 +199,14 @@ $_SESSION['abrir']       = 'registros';
                                         <input type="text" style="background-color: #FFFFFF" readonly class="form-control input-sm" id="fech_naci" name="fech_naci" placeholder="Fecha de Nacimiento">
                                     </div>
                                 </td>
-                                 <td class="letras"> Edad: </td>
+                                <td class="letras"> Edad: </td>
                                 <td>
                                     <div class="form-group">
                                         <input disabled="disabled" type="text" style="background-color: #FFFFFF" class="form-control input-sm" id="edad" name="edad" placeholder="Edad">
                                     </div>
                                 </td>
                             </tr>
-                          
+
                             <tr height="60">
                                 <td class="letras"> Tel&eacute;fono Hab </td>
                                 <td>
@@ -420,7 +422,7 @@ $_SESSION['abrir']       = 'registros';
                                         <input  type="text" class="form-control input-sm" id="fuente_ingreso" name="fuente_ingreso" placeholder="Fuente de Ingreso">
                                     </div>
                                 </td>
-                                 <td class="letras"> Email </td>
+                                <td class="letras"> Email </td>
                                 <td>
                                     <div class="form-group">
                                         <input type="text" class="form-control input-sm" id="email" name="email" placeholder="Email">

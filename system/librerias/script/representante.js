@@ -267,39 +267,6 @@ $(document).ready(function() {
         });
     });
 
-
-    // modificar las funciones de modificar
-//    $('table#tabla_representante').on('click', 'img.modificar', function() {
-//
-//        // borra el campo fila
-//        $('#fila').remove();
-//        var padre = $(this).closest('tr');
-//        var cedula = padre.children('td:eq(1)').text();
-//        var nombre = padre.children('td:eq(2)').html();
-//        var telefono = padre.children('td:eq(3)').html();
-//
-//
-//        // obtener la fila a modificar
-//        var fila = padre.index();
-//
-//        $('#guardar').text('Modificar');
-//        $('#cedula').val(cedula);
-//        $('#nombre').val(nombre);
-////        $('#apellido').val(apellido);
-//        $('#telefono').val(telefono);
-////        $('#celular').val(celular);
-//        $('#registro_erepresentante').slideDown(2000);
-//        $('#reporte_representante').slideUp(2000);
-//
-//        // crear el campo fila y añadir la fila
-//        var $fila = '<input type="hidden" id="fila"  value="' + fila + '" name="fila">';
-//        $($fila).prependTo($('#frmrepresentante'));
-//
-//        var $cedula = '<input type="hidden" id="cedula"  value="' + cedula + '" name="cedula">';
-//        $($cedula).appendTo($('#frmrepresentante'));
-//
-//    });
-
     $('#salir').click(function() {
         $('#guardar').text('Guardar');
         $('#registro_erepresentante').slideUp(2000);
@@ -337,8 +304,14 @@ $(document).ready(function() {
     var letra = ' abcdefghijklmnñopqrstuvwxyzáéíóú';
     $('#nombre').validar(letra);
     $('#apellido').validar(letra);
-
-
+    
+    var numero = '0123456789';
+    $('#telefono').validar(numero);
+    $('#celular').validar(numero);
+    $('#cedula').validar(numero);
+    $('#fuente_ingreso').validar(numero);
+    
+    
 });
 
 
