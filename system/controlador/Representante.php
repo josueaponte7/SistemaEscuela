@@ -3,6 +3,9 @@
 require_once '../modelo/Representante.php';
 
 $obj = new Representante();
+//
+//print_r($_POST);
+//exit;
 
 if (isset($_POST['accion'])) {
     $accion = $_POST['accion'];

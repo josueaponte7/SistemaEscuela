@@ -120,6 +120,10 @@ $(document).ready(function() {
             var modificar = '<img class="modificar" src="../../imagenes/edit.png" title="Modificar" style="cursor: pointer"  width="18" height="18" alt="Modificar"/>';
             var eliminar = '<img class="eliminar" src="../../imagenes/delete.png" title="Eliminar" style="cursor: pointer"  width="18" height="18"  alt="Eliminar"/>';
            
+            var cod_telefono = $('#cod_telefono').find(' option').filter(":selected").text();
+            var cod_celular = $('#cod_celular').find(' option').filter(":selected").text();
+            var telefonos = cod_telefono + '-' + $('#telefono').val() + ', ' + cod_celular + '-' + $('#celular').val();
+           
         if ($(this).text() == 'Guardar') {
             
                 // obtener el ultimo codigo del status 
@@ -136,10 +140,7 @@ $(document).ready(function() {
                             // Agregar los datos a la tabla
                             var nacionalidad = $('#nacionalidad').find(' option').filter(":selected").text();
                             var cedula = nacionalidad + '-' + $('#cedula').val();
-                            var nombres = $('#nombre').val() + ' ' + $('#apellido').val();
-                            var cod_telefono = $('#cod_telefono').find(' option').filter(":selected").text();
-                            var cod_celular = $('#cod_celular').find(' option').filter(":selected").text();
-                            var telefonos = cod_telefono + '-' + $('#telefono').val() + ', ' + cod_celular + '-' + $('#celular').val();
+                            var nombres = $('#nombre').val() + ' ' + $('#apellido').val();                            
                             var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
                             
                             var newRow = TChoferes.fnAddData([$check_cedula, cedula, nombres, telefonos, modificar, eliminar]);
@@ -172,10 +173,8 @@ $(document).ready(function() {
                                     var fila = $("#fila").val();
                                     window.parent.bootbox.alert("Modificacion con Exito", function() {
                                       
-                                        // Modificar la fila 1 en la tabla 
-                                        $("#tabla_choferes tbody tr:eq(" + fila + ")").find("td:eq(1)").html($('#cedula').val());
-                                        $("#tabla_choferes tbody tr:eq(" + fila + ")").find("td:eq(2)").html($('#nombres').val());
-                                        $("#tabla_choferes tbody tr:eq(" + fila + ")").find("td:eq(3)").html($('#telefonos').val());
+                                        // Modificar la fila 1 en la tabla
+                                        $("#tabla_choferes tbody tr:eq(" + fila + ")").find("td:eq(3)").html(telefonos);
                                        
                                         $('input[type="text"]').val('');
                                     });

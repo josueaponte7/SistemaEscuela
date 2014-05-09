@@ -124,6 +124,11 @@ $(document).ready(function() {
         // Imagenes de modificar y eliminar
         var modificar = '<img class="modificar" src="../../imagenes/edit.png" title="Modificar" style="cursor: pointer"  width="18" height="18" alt="Modificar"/>';
         var eliminar = '<img class="eliminar" src="../../imagenes/delete.png" title="Eliminar" style="cursor: pointer"  width="18" height="18"  alt="Eliminar"/>';
+        
+        var cod_telefono  = $('#cod_telefono').find(' option').filter(":selected").text();
+            
+        var telefono     = cod_telefono + '-' + $('#telefono').val();
+        
         if ($(this).text() == 'Guardar') {
             // obtener el ultimo codigo del status 
             var codigo = 1;
@@ -134,11 +139,6 @@ $(document).ready(function() {
             }
 
             // obtener el nombre del egrupo 
-            
-            var cod_telefono  = $('#cod_telefono').find(' option').filter(":selected").text();
-            
-            var telefono     = cod_telefono + '-' + $('#telefono').val();
-
             var tiposervicio = $('#tiposervicio').find(' option').filter(":selected").text();
 
             var $check_servicio = '<input type="checkbox" name="id_servicio[]" value="' + codigo + '" />';
@@ -184,7 +184,7 @@ $(document).ready(function() {
                                     
                                     var tiposervicio    = $('#tiposervicio').find(' option').filter(":selected").text();
                                     var id_tiposervicio = $('#tiposervicio').find(' option').filter(":selected").val(); 
-                                    var telefono        = $('#telefono').find(' option').filter(":selected").text();
+                                   
                                     
                                     
                                     $("#tabla_salud tbody tr:eq(" + fila + ")").find("td:eq(2)").html($('#servicio').val());
@@ -207,6 +207,7 @@ $(document).ready(function() {
         // borra el campo fila
         $('#fila').remove();
         var padre = $(this).closest('tr');
+        var id_servicio = padre.children('td:eq(1)').text(); 
         var servicio = padre.children('td:eq(2)').html();   
         var tiposervicio = padre.children('td:eq(3)').html();
         var telefono = padre.children('td:eq(4)').html();
@@ -222,20 +223,21 @@ $(document).ready(function() {
         $('#servicio').val(servicio);
         $('#tiposervicio').val(tiposervicio);
         $('#telefono').val(telefono);
-        $('#registro_docente').slideDown(2000);
-        $('#reporte_docente').slideUp(2000);
+        $('#registro_salud').slideDown(2000);
+        $('#reporte_salud').slideUp(2000);
 
-        $.post("../../controlador/ServicioSalud.php", {cedula: cedula, accion: 'BuscarDatos'}, function(respuesta) {
+        $.post("../../controlador/ServicioSalud.php", {id_servicio: id_servicio, accion: 'BuscarDatos'}, function(respuesta) {
             var datos = respuesta.split(";");
             
-            $('#servicio').select2('val', datos[0]);
-            $('#tiposervicio').val(datos[1]);
-            $('#estado').select2('val', datos[2]);
-            var id_mun = datos[3];
-            var id_parr = datos[4];
+            $('#servicio').select2('val', datos[0]);            
+            $('#cod_telefono').select2('val', datos[1]);
+            $('#telefono').val(datos[2]);
+            $('#estado').select2('val', datos[3]);
+            var id_mun = datos[4];
+            var id_parr = datos[5];
             $('#municipio').find('option:gt(0)').remove().end();
             
-            $.post('../../controlador/Municipio.php', {id_estado: datos[2], accion: 'buscarMun'}, function(respuesta) {
+            $.post('../../controlador/Municipio.php', {id_estado: datos[3], accion: 'buscarMun'}, function(respuesta) {
                 var option = "";
                 $.each(respuesta, function(i, obj) {
                     option += "<option value=" + obj.codigo + ">" + obj.descripcion + "</option>";
@@ -253,15 +255,14 @@ $(document).ready(function() {
                 $('#parroquia').append(option);
                 $('#parroquia').select2('val', id_parr);
             }, 'json');
-              $('#cod_telefono').select2('val', datos[5]);
-              $('#telefono').val(datos[6]);
+              $('#tiposervicio').select2('val', datos[6]);
 
             // crear el campo fila y añadir la fila
             var $fila = '<input type="hidden" id="fila"  value="' + fila + '" name="fila">';
             $($fila).prependTo($('#frmservicio_salud'));
 
-            var $cedula = '<input type="hidden" id="id_servicio"  value="' + id_servicio + '" name="cedula">';
-            $($cedula).appendTo($('#frmservicio_salud'));
+            var $id_servicio = '<input type="hidden" id="id_servicio"  value="' + id_servicio + '" name="id_servicio">';
+            $($id_servicio).appendTo($('#frmservicio_salud'));
         });
     });
 

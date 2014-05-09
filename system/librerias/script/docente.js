@@ -311,7 +311,6 @@ $(document).ready(function() {
                                         //var actividad = $('#actividad').find('option:selected').text();
 
                                         // Modificar la fila 1 en la tabla 
-                                        $("#tabla_docente tbody tr:eq(" + fila + ")").find("td:eq(1)").html($('#cedula').val());
                                         $("#tabla_docente tbody tr:eq(" + fila + ")").find("td:eq(2)").html($('#nombre').val());
                                         $("#tabla_docente tbody tr:eq(" + fila + ")").find("td:eq(3)").html($('#apellido').val());
                                         //$("#tabla_docente tbody tr:eq(" + fila + ")").find("td.eq(4)").html(actividad);
