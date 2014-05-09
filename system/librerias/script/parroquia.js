@@ -218,26 +218,7 @@ $(document).ready(function() {
         }
     });
 
-    $('#salir').click(function() {
-        $('#guardar').text('Guardar');
-        $('#registro_parroquia').slideUp(2000);
-        $('#reporte_parroquia').slideDown(2000);
-        $('#id_estado').remove();
-        $('input:text').val('');
-        $('#estado').select2('val', 0);
-        $('#municipio').select2('val', 0);
-        $('#municipio').find('option:gt(0)').remove().end();
-
-    });
-
-    $('#limpiar').click(function() {
-        $('#estado').select2('val', 0);
-        $('#municipio').select2('val', 0);
-        $('input:text').val('');
-        $('#guardar').text('Guardar');
-    });
-
-
+  
     // modificar las funciones de modificar
     $('table#tabla_parroquia').on('click', 'img.modificar', function() {
 
@@ -323,6 +304,25 @@ $(document).ready(function() {
             }
         });
 
+    });
+    
+      $('#salir').click(function() {
+        $('#guardar').text('Guardar');
+        $('#registro_parroquia').slideUp(2000);
+        $('#reporte_parroquia').slideDown(2000);
+        $('#id_estado').remove();
+        $('input:text').val('');
+        $('#estado').select2('val', 0);
+        $('#municipio').select2('val', 0);
+        $('#municipio').find('option:gt(0)').remove().end();
+
+    });
+
+    $('#limpiar').click(function() {
+        $('#estado').select2('val', 0);
+        $('#municipio').select2('val', 0);
+        $('input:text').val('');
+        $('#guardar').text('Guardar');
     });
 
     var letra = ' abcdefghijklmnñopqrstuvwxyzáéíóú';

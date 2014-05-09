@@ -14,9 +14,11 @@ if (isset($_GET['cedula'])) {
 
 $obj      = new Choferes();
 $campos['sql'] = "SELECT 
-                        CONCAT_WS('-' ,(SELECT nombre FROM nacionalidad WHERE id_nacionalidad = ch.nacionalidad),ch.cedula) AS cedula,
-                        ch.nombre,  
-                        ch.apellido
+                         CONCAT_WS('-' ,(SELECT nombre FROM nacionalidad WHERE id_nacionalidad = ch.nacionalidad),ch.cedula) AS cedula,
+                         CONCAT_WS(' ',ch.nombre,ch.apellido) AS nombres,
+                         CONCAT_WS(', ', 
+                         CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = ch.cod_telefono),ch.telefono),
+                         CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = ch.cod_celular),ch.celular)) AS telefonos
                         FROM chofer AS ch
                     WHERE " . $campos['condicion'] . "
                   ORDER BY ch.cedula;";
@@ -65,21 +67,21 @@ $backup_group = "";
 
 // width de las filas 
 
-$w_cedula   = 40;
-$w_nombre   = 50;
-$w_apellido = 50;
+$w_cedula   = 50;
+$w_nombres   = 60;
+$w_telefonos = 60;
 
 
 // Mover a la derecha 
-$pdf->SetX(10);
+$pdf->SetX(18);
 
 // Color Cabecera de la tabla
 $pdf->SetFillColor(39, 129, 213);
 
 // Titulos de la Cabecera
 $pdf->Cell($w_cedula, $row_height, 'Cedula', 1, 0, 'C', 1);
-$pdf->Cell($w_nombre, $row_height, 'Nombres', 1, 0, 'L', 1);
-$pdf->Cell($w_apellido, $row_height, 'Apellidos', 1, 1, 'L', 1);
+$pdf->Cell($w_nombres, $row_height, 'Nombres', 1, 0, 'L', 1);
+$pdf->Cell($w_telefonos, $row_height, 'Teléfonos', 1, 1, 'L', 1);
 
 
 // Ciclo para crear los registros
@@ -87,8 +89,8 @@ for ($i = 0; $i < count($resultado); $i++) {
 
     // Asignarle variables a los registros
     $cedula    = $resultado[$i]['cedula'];
-    $nombre   = $resultado[$i]['nombre'];
-    $apellido  = $resultado[$i]['apellido'];
+    $nombres   = $resultado[$i]['nombres'];
+    $telefonos  = $resultado[$i]['telefonos'];
 
     // verificar que la variable $j no si es mayor se hace un salto de pagina
     if ($j > $max) {
@@ -113,8 +115,8 @@ for ($i = 0; $i < count($resultado); $i++) {
         $pdf->SetFillColor(39, 129, 213);
         $pdf->SetX(10);
         $pdf->Cell($w_cedula, $row_height, 'Cedula', 1, 0, 'C', 1);
-        $pdf->Cell($w_nombre, $row_height, 'Nombres', 1, 0, 'L', 1);
-        $pdf->Cell($w_apellido, $row_height, 'Apellidos', 1, 1, 'L', 1);
+        $pdf->Cell($w_nombres, $row_height, 'Nombres', 1, 0, 'L', 1);
+        $pdf->Cell($w_telefonos, $row_height, 'Telefonos', 1, 1, 'L', 1);
         $j = 0;
     }
 
@@ -131,10 +133,10 @@ for ($i = 0; $i < count($resultado); $i++) {
 
     // crear los registros a mostrar
     $pdf->SetFont('FreeSerif', '', 12);
-    $pdf->SetX(10);
+    $pdf->SetX(18);
     $pdf->Cell($w_cedula, $row_height, $cedula, 1, 0, 'C', 1);
-    $pdf->Cell($w_nombre, $row_height, $nombre, 1, 0, 'L', 1);
-    $pdf->Cell($w_apellido, $row_height, $apellido, 1, 1, 'L', 1);
+    $pdf->Cell($w_nombres, $row_height, $nombres, 1, 0, 'L', 1);
+    $pdf->Cell($w_telefonos, $row_height, $telefonos, 1, 1, 'L', 1);
     $j++;
 }
 /* * *************Linea de fin de hoja con la cantidad total de registros********************* */

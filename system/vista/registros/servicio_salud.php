@@ -39,8 +39,10 @@ $_SESSION['abrir']       = 'registros';
         <script type="text/javascript" src="../../librerias/js/jquery.1.10.js"></script>
         <script type="text/javascript" src="../../librerias/js/dataTables.js"></script>
         <script type="text/javascript" src="../../librerias/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../../librerias/js/validarcampos.js"></script>
         <script type="text/javascript" src="../../librerias/js/bootstrap-datepicker.js"></script>
         <script type="text/javascript" src="../../librerias/js/bootstrap-datepicker.es.js"></script>
+        
         <script type="text/javascript" src="../../librerias/js/select2.js"></script>
         <script type="text/javascript" src="../../librerias/js/select2_locale_es.js"></script>
         <script type="text/javascript" src="../../librerias/script/servicio_salud.js"></script>        
@@ -206,7 +208,7 @@ $_SESSION['abrir']       = 'registros';
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control input-sm" id="telefono" name="telefono" placeholder="Teléfono Ubicaci&oacute;n"/>
+                                            <input type="text" class="form-control input-sm" id="telefono" name="telefono" placeholder="Teléfono Ubicaci&oacute;n" maxlength="7"/>
                                         </div>
                                     </div>
                                 </td> 
