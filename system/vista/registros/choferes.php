@@ -8,8 +8,10 @@ $obj_parro            = new Parroquia();
 $obj_chof             = new Seguridad();
 $obj_cho              = new Choferes();
 $d_choferes['campos'] = "CONCAT_WS('-' ,(SELECT nombre FROM nacionalidad WHERE id_nacionalidad = ch.nacionalidad),ch.cedula) AS cedula,
-                        ch.nombre,
-                        ch.apellido";
+                         CONCAT_WS(' ',ch.nombre,ch.apellido) AS nombres,
+                         CONCAT_WS(', ', 
+                         CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = ch.cod_telefono),ch.telefono),
+                         CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = ch.cod_celular),ch.celular)) AS telefonos";
 $resul_choferes       = $obj_cho->getChofer($d_choferes);
 
 
@@ -34,7 +36,9 @@ $_SESSION['abrir']       = 'registros';
 
         <script type="text/javascript" src="../../librerias/js/jquery.1.10.js"></script>
         <script type="text/javascript" src="../../librerias/js/dataTables.js"></script>
+        <script type="text/javascript" src="../../librerias/js/validarcampos.js"></script>
         <script type="text/javascript" src="../../librerias/js/bootstrap.min.js"></script>
+        
         <script type="text/javascript" src="../../librerias/js/select2.js"></script>
         <script type="text/javascript" src="../../librerias/js/select2_locale_es.js"></script>
         <script type="text/javascript" src="../../librerias/script/choferes.js"></script>
@@ -76,8 +80,8 @@ $_SESSION['abrir']       = 'registros';
                                 <input type="checkbox" name="todos" id="todos" value="todos" />
                             </th>
                             <th style="width: 35%">C&eacute;dula</th>
-                            <th width="150">Nombre</th>
-                            <th width="150">Apellido</th>
+                            <th width="150">Nombres</th>
+                            <th width="150">Tel&eacute;fonos</th>
                             <th style="width: 5%;text-align: center">Modificar</th>
                             <th style="width: 5%;text-align: center">Eliminar</th>
                         </tr>
@@ -94,8 +98,8 @@ $_SESSION['abrir']       = 'registros';
                                         <input type="checkbox" id="<?php echo $resul_choferes[$i]['cedula']; ?>" name="cedula[]" value="<?php echo $resul_choferes[$i]['cedula']; ?>" />
                                     </td>
                                     <td><span class="sub-rayar tooltip_ced"><?php echo $resul_choferes[$i]['cedula'] ?></span></td>
-                                    <td><?php echo $resul_choferes[$i]['nombre']; ?></td>
-                                    <td><?php echo $resul_choferes[$i]['apellido']; ?></td>
+                                    <td><?php echo $resul_choferes[$i]['nombres']; ?></td>
+                                    <td><?php echo $resul_choferes[$i]['telefonos']; ?></td>
                                     <td style="text-align: center">
                                         <img class="modificar" src="../../imagenes/edit.png" title="Modificar" style="cursor: pointer"  width="18" height="18" alt="Modificar"/>
                                     </td>
@@ -197,7 +201,7 @@ $_SESSION['abrir']       = 'registros';
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control input-sm" id="telefono" name="telefono" placeholder="Teléfono Hab.."/>
+                                            <input type="text" class="form-control input-sm" id="telefono" name="telefono" placeholder="Teléfono Hab.." maxlength="7"/>
                                         </div>
                                     </div>
                                 </td>                          
@@ -219,7 +223,7 @@ $_SESSION['abrir']       = 'registros';
 
                                         </div> 
                                         <div class="form-group">
-                                            <input  type="text" class="form-control input-sm" id="celular" name="celular" placeholder="Teléfono Celular"/>
+                                            <input  type="text" class="form-control input-sm" id="celular" name="celular" placeholder="Teléfono Celular" maxlength="7"/>
 
                                         </div> 
                                     </div>

@@ -27,6 +27,33 @@ $(document).ready(function() {
         $('#registro_salud').slideDown(2000);
         $('#reporte_salud').slideUp(2000);
     });
+    
+    
+    /***Combos **/
+
+    $('#estado').change(function() {
+        var id = $(this).val();
+        $('#municipio').find('option:gt(0)').remove().end();
+        $.post('../../controlador/Municipio.php', {id_estado: id, accion: 'buscarMun'}, function(respuesta) {
+            var option = "";
+            $.each(respuesta, function(i, obj) {
+                option += "<option value=" + obj.codigo + ">" + obj.descripcion + "</option>";
+            });
+            $('#municipio').append(option);
+        }, 'json');
+    });
+
+    $('#municipio').change(function() {
+        var id = $(this).val();
+        $('#parroquia').find('option:gt(0)').remove().end();
+        $.post('../../controlador/Parroquia.php', {id_municipio: id, accion: 'buscarParr'}, function(respuesta) {
+            var option = "";
+            $.each(respuesta, function(i, obj) {
+                option += "<option value=" + obj.codigo + ">" + obj.descripcion + "</option>";
+            });
+            $('#parroquia').append(option);
+        }, 'json');
+    });
 
     /**Los monta todos***/
     $('#todos').change(function() {
@@ -175,42 +202,70 @@ $(document).ready(function() {
         }
     });
 
-//    $('#guardar').click(function() {
-//        $.post("../../controlador/ServicioSalud.php", $("#frmservicio_salud").serialize(), function(respuesta) {
-//            if (respuesta == 1) {
-//                alert('Registro con Exito');
-//                $('input[type="text"]').val('');
-//            }
-//        });
-//    });
+    $('table#tabla_salud').on('click', 'img.modificar', function() {
 
-    /***Combos **/
+        // borra el campo fila
+        $('#fila').remove();
+        var padre = $(this).closest('tr');
+        var servicio = padre.children('td:eq(2)').html();   
+        var tiposervicio = padre.children('td:eq(3)').html();
+        var telefono = padre.children('td:eq(4)').html();
 
-    $('#estado').change(function() {
-        var id = $(this).val();
-        $('#municipio').find('option:gt(0)').remove().end();
-        $.post('../../controlador/Municipio.php', {id_estado: id, accion: 'buscarMun'}, function(respuesta) {
-            var option = "";
-            $.each(respuesta, function(i, obj) {
-                option += "<option value=" + obj.codigo + ">" + obj.descripcion + "</option>";
-            });
-            $('#municipio').append(option);
-        }, 'json');
+
+        // obtener la fila a modificar
+        var fila = padre.index();
+
+        $('#guardar').text('Modificar');
+        
+        
+//        $('#cedula').val(cedula).prop('disabled',true);
+        $('#servicio').val(servicio);
+        $('#tiposervicio').val(tiposervicio);
+        $('#telefono').val(telefono);
+        $('#registro_docente').slideDown(2000);
+        $('#reporte_docente').slideUp(2000);
+
+        $.post("../../controlador/ServicioSalud.php", {cedula: cedula, accion: 'BuscarDatos'}, function(respuesta) {
+            var datos = respuesta.split(";");
+            
+            $('#servicio').select2('val', datos[0]);
+            $('#tiposervicio').val(datos[1]);
+            $('#estado').select2('val', datos[2]);
+            var id_mun = datos[3];
+            var id_parr = datos[4];
+            $('#municipio').find('option:gt(0)').remove().end();
+            
+            $.post('../../controlador/Municipio.php', {id_estado: datos[2], accion: 'buscarMun'}, function(respuesta) {
+                var option = "";
+                $.each(respuesta, function(i, obj) {
+                    option += "<option value=" + obj.codigo + ">" + obj.descripcion + "</option>";
+                });
+                $('#municipio').append(option);
+                $('#municipio').select2('val', id_mun);
+            }, 'json');
+
+            $('#parroquia').find('option:gt(0)').remove().end();
+            $.post('../../controlador/Parroquia.php', {id_municipio: id_mun, accion: 'buscarParr'}, function(respuesta) {
+                var option = "";
+                $.each(respuesta, function(i, obj) {
+                    option += "<option value=" + obj.codigo + ">" + obj.descripcion + "</option>";
+                });
+                $('#parroquia').append(option);
+                $('#parroquia').select2('val', id_parr);
+            }, 'json');
+              $('#cod_telefono').select2('val', datos[5]);
+              $('#telefono').val(datos[6]);
+
+            // crear el campo fila y añadir la fila
+            var $fila = '<input type="hidden" id="fila"  value="' + fila + '" name="fila">';
+            $($fila).prependTo($('#frmservicio_salud'));
+
+            var $cedula = '<input type="hidden" id="id_servicio"  value="' + id_servicio + '" name="cedula">';
+            $($cedula).appendTo($('#frmservicio_salud'));
+        });
     });
 
-    $('#municipio').change(function() {
-        var id = $(this).val();
-        $('#parroquia').find('option:gt(0)').remove().end();
-        $.post('../../controlador/Parroquia.php', {id_municipio: id, accion: 'buscarParr'}, function(respuesta) {
-            var option = "";
-            $.each(respuesta, function(i, obj) {
-                option += "<option value=" + obj.codigo + ">" + obj.descripcion + "</option>";
-            });
-            $('#parroquia').append(option);
-        }, 'json');
-    });
 
-  
     $('#salir').click(function() {
         $('#guardar').text('Guardar');
         $('#registro_salud').slideUp(2000);
@@ -233,5 +288,10 @@ $(document).ready(function() {
         $('#cod_telefono').select2('val', 0);
         $('#guardar').text('Guardar');
     });
+    
+    var numero = '0123456789';
+    $('#telefono').validar(numero);
+    $('#celular').validar(numero);
+    $('#cedula').validar(numero);
 
 });

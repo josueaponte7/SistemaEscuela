@@ -373,4 +373,11 @@ $(document).ready(function() {
     $('#telefono').validar(numero);
     $('#celular').validar(numero);
     $('#cedula').validar(numero);
+    
+//    var campo = 'abcdefghijklmnopqrstuvwxyzáéíóúñ#/º-1234567890';
+//    $('#direccion').validar(campo);
+    
+//     var valor = 'me@example.com';    
+//     $('#email').validar(valor);
+    
 });
