@@ -166,6 +166,11 @@ $(document).ready(function() {
         // Imagenes de modificar y eliminar
         var modificar = '<img class="modificar" src="../../imagenes/edit.png" title="Modificar" style="cursor: pointer"  width="18" height="18" alt="Modificar"/>';
         var eliminar = '<img class="eliminar" src="../../imagenes/delete.png" title="Eliminar" style="cursor: pointer"  width="18" height="18"  alt="Eliminar"/>';
+        
+        var cod_telefono = $('#cod_telefono').find(' option').filter(":selected").text();
+        var cod_celular = $('#cod_celular').find(' option').filter(":selected").text();
+        var telefonos = cod_telefono + '-' + $('#telefono').val() + ', ' + cod_celular + '-' + $('#celular').val();
+        
         if ($(this).text() == 'Guardar') {
             // obtener el ultimo codigo del status 
             var ToltalRow = TRepresentante.fnGetData().length;
@@ -185,10 +190,7 @@ $(document).ready(function() {
                     
                     var nacionalidad = $('#nacionalidad').find(' option').filter(":selected").text();
                     var cedula = nacionalidad + '-' + $('#cedula').val();
-                    var nombres = $('#nombre').val() + ' ' + $('#apellido').val();
-                    var cod_telefono = $('#cod_telefono').find(' option').filter(":selected").text();
-                    var cod_celular = $('#cod_celular').find(' option').filter(":selected").text();
-                    var telefonos = cod_telefono + '-' + $('#telefono').val() + ', ' + cod_celular + '-' + $('#celular').val();
+                    var nombres = $('#nombre').val() + ' ' + $('#apellido').val();                   
                     var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
                     
 //                    alert('Registro con Exito');
@@ -241,10 +243,8 @@ $(document).ready(function() {
                                        var id_estatus= $('#estatus').find(' option').filter(":selected").val();
                                         //var actividad = $('#actividad').find('option:selected').text();
 
-                                        // Modificar la fila 1 en la tabla 
-                                        $("#tabla_representante tbody tr:eq(" + fila + ")").find("td:eq(1)").html($('#cedula').val());
-                                        $("#tabla_representante tbody tr:eq(" + fila + ")").find("td:eq(2)").html($('#nombres').val());
-                                        $("#tabla_representante tbody tr:eq(" + fila + ")").find("td:eq(3)").html($('#telefonos').val());
+                                        // Modificar la fila 1 en la tabla                                       
+                                        $("#tabla_representante tbody tr:eq(" + fila + ")").find("td:eq(3)").html(telefonos);
                                         //$("#tabla_docente tbody tr:eq(" + fila + ")").find("td.eq(4)").html(actividad);
 
                                         // Modificar la fila 1 en la tabla 
@@ -286,12 +286,12 @@ $(document).ready(function() {
             $('#apellido').val(datos[2]);
             $('#sexo').select2('val', datos[3]);
             $('#fech_naci').val(datos[4]);
-           $('#edad').val(datos[5]);
-           $('#cod_telefono').select2('val', datos[6]);
+            $('#edad').val(datos[5]);
+            $('#cod_telefono').select2('val', datos[6]);
             $('#telefono').val(datos[7]);
             $('#cod_celular').select2('val', datos[8]);
             $('#celular').val(datos[9]);
-           $('#lugar_naci').val(datos[10]);
+            $('#lugar_naci').val(datos[10]);
             $('#estado').select2('val', datos[11]);
             var id_mun = datos[12];
             var id_parr = datos[13];

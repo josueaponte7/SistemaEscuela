@@ -46,6 +46,36 @@ if (isset($_POST['accion'])) {
                 echo 1;
             }
             break;
+            
+            
+            case 'BuscarDatos':    ;
+                
+            $id_servicio    = $datos['id_servicio'];      
+                
+            $opciones['sql']    = "SELECT
+                                    servicio,
+                                    cod_telefono,
+                                    telefono,
+                                    p.id_parroquia, 
+                                    m.id_municipio,
+                                    es.id_estado,
+                                    id_tiposervicio
+                                    FROM servicio_publico sp
+                                    INNER JOIN parroquia  AS p ON sp.id_parroquia=p.id_parroquia
+                                    INNER JOIN municipio AS m ON p.id_municipio=m.id_municipio
+                                    INNER JOIN estado AS es ON m.id_estado=es.id_estado 
+                                    WHERE id_servicio = $id_servicio";
+            $resultado             = $obj->getServicio($opciones);
+            echo $resultado[0]['servicio'] . ';' .
+                 $resultado[0]['cod_telefono'] . ';' .
+                 $resultado[0]['telefono'].';'.
+                 $resultado[0]['id_estado'] . ';' .
+                 $resultado[0]['id_municipio'].';'.           
+                 $resultado[0]['id_parroquia'].';'.
+                 $resultado[0]['id_tiposervicio'];
+
+            break;
+            
     }
 }
 

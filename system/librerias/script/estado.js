@@ -146,22 +146,6 @@ $(document).ready(function() {
         }
     });
 
-
-
-    $('#salir').click(function() {
-        $('#guardar').text('Guardar');
-        $('#registro_estado').slideUp(2000);
-        $('#reporte_estado').slideDown(2000);
-        $('#id_estado').remove();
-        $('input:text').val('');
-    });
-
-    $('#limpiar').click(function() {
-        $('#id_estado').remove();
-        $('input:text').val('');
-        $('#guardar').text('Guardar');
-    });
-
     // modificar las funciones de modificar
     $('table#tabla_estado').on('click', 'img.modificar', function() {
         $('#id_estado').remove();
@@ -231,6 +215,21 @@ $(document).ready(function() {
             }
         });
 
+    });
+    
+    
+    $('#salir').click(function() {
+        $('#guardar').text('Guardar');
+        $('#registro_estado').slideUp(2000);
+        $('#reporte_estado').slideDown(2000);
+        $('#id_estado').remove();
+        $('input:text').val('');
+    });
+
+    $('#limpiar').click(function() {
+        $('#id_estado').remove();
+        $('input:text').val('');
+        $('#guardar').text('Guardar');
     });
 
     var letra = ' abcdefghijklmnñopqrstuvwxyzáéíóú';
