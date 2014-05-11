@@ -48,7 +48,7 @@ if (isset($_POST['accion'])) {
             break;
             
             
-            case 'BuscarDatos':    ;
+            case 'BuscarDatos': 
                 
             $id_servicio    = $datos['id_servicio'];      
                 

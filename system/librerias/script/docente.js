@@ -259,17 +259,12 @@ $(document).ready(function() {
                             var nacionalidad = $('#nacionalidad').find(' option').filter(":selected").text();
                             var cedula = nacionalidad + '-' + $('#cedula').val();
                             
-                            var newRow = TDocente.fnAddData([$check_cedula, cedula,
-                                $('#nombre').val(), $('#apellido').val(), $('#email').val(),
-                                $('#fech_naci').val(), $('#lugar_naci').val(), $('#edad').val(),
-                                sexo, $('#telefono').val(), $('#celular').val(), estado, municipio,
-                                parroquia, $('#calle').val(), $('#casa').val(), $('#edificio').val(),
-                                $('#barrio').val(), estatus, actividad, modificar, eliminar]);
+                            var newRow = TDocente.fnAddData([$check_cedula, cedula, $('#nombre').val(), $('#apellido').val(), actividad, modificar, eliminar]);
 
                             // Agregar el id a la fila estado
                             var oSettings = TDocente.fnSettings();
                             var nTr = oSettings.aoData[ newRow[0] ].nTr;
-                            $('td', nTr)[4].setAttribute('id', id_actividad);
+//                            $('td', nTr)[4].setAttribute('id', id_actividad);
                             $('#actividad').select2('val', 0);
                             $('div,#actividad').removeClass('has-error');
                         });

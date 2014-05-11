@@ -3,7 +3,9 @@ session_start();
 require_once '../../modelo/Municipio.php';
 
 $obj_mun            = new Municipio;
-$d_municipio['sql'] = "SELECT m.id_municipio,e.id_estado,e.nombre_estado,m.nombre_municipio FROM municipio AS m INNER JOIN estado AS e ON m.id_estado=e.id_estado";
+$d_municipio['sql'] = "SELECT m.id_municipio,e.id_estado,e.nombre_estado,m.nombre_municipio
+                            FROM municipio AS m 
+                            INNER JOIN estado AS e ON m.id_estado=e.id_estado ORDER BY m.id_municipio";
 
 $resul_municipio = $obj_mun->getMunicipio($d_municipio);
 

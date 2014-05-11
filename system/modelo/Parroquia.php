@@ -17,7 +17,8 @@ class Parroquia extends Municipio
         $nombre_parroquia = $datos['nombre_parroquia'];
         $id_municipio     = $datos['id_municipio'];
         $id_parroquia     = $datos['id_parroquia'];
-        $sql = "INSERT INTO parroquia(id_parroquia ,nombre_parroquia, id_municipio)VALUES ($id_parroquia ,'$nombre_parroquia',$id_municipio);";
+        
+       $sql = "INSERT INTO parroquia(id_parroquia ,nombre_parroquia, id_municipio)VALUES ($id_parroquia ,'$nombre_parroquia',$id_municipio);";
 
         $resultado = $this->ejecutar($sql);
         return $resultado;

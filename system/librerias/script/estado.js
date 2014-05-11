@@ -94,7 +94,8 @@ $(document).ready(function() {
                 var $check_estado = '<input type="checkbox" name="id_estado[]" value="' + codigo + '" />';
 
                 var $id_estado = '<input type="hidden" id="id_estado"  value="' + codigo + '" name="id_estado">';
-                $($id_estado).prependTo($('#frmestado'));
+                $($id_estado).prependTo($('#frmestado'));                
+               
 
                 $.post("../../controlador/Estado.php", $("#frmestado").serialize(), function(respuesta) {
                     if (respuesta == 1) {
@@ -173,6 +174,7 @@ $(document).ready(function() {
         $($id_estado).appendTo($('#frmestado'));
 
     });
+    
 
     // modificar las funciones de eliminar
     $('table#tabla_estado').on('click', 'img.eliminar', function() {

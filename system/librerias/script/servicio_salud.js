@@ -130,6 +130,8 @@ $(document).ready(function() {
         var telefono     = cod_telefono + '-' + $('#telefono').val();
         
         if ($(this).text() == 'Guardar') {
+             $('#id_servicio').remove();
+            
             // obtener el ultimo codigo del status 
             var codigo = 1;
             var TotalRow = TServiciosalud.fnGetData().length;

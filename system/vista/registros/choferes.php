@@ -158,7 +158,7 @@ $_SESSION['abrir']       = 'registros';
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control input-sm" id="cedula" name="cedula" placeholder="Cédula"/>
+                                            <input type="text" class="form-control input-sm" id="cedula" name="cedula" placeholder="Cédula" maxlength="8"/>
                                         </div>
                                     </div>
                                 </td>

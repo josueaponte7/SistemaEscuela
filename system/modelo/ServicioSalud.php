@@ -19,7 +19,7 @@ class ServicioSalud extends Seguridad {
         $id_parroquia = $datos['parroquia'];
 
         $sql = "INSERT INTO servicio_publico (id_servicio, servicio,cod_telefono,telefono,id_parroquia,id_tiposervicio)
-                                    VALUES ($id_servicio, '$servicio','$cod_telefono','$telefono','$id_parroquia','$tiposervicio');";
+                                      VALUES ($id_servicio, '$servicio','$cod_telefono','$telefono','$id_parroquia','$tiposervicio');";
 
         $resultado = $this->ejecutar($sql);
         return $resultado;

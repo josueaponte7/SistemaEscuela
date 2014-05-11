@@ -16,8 +16,9 @@ class Estado extends Seguridad
                 
         $nombre_estado = $datos['nombre_estado'];
         $id_estado     = $datos['id_estado'];
-      echo  $sql = "INSERT INTO estado(id_estado,nombre_estado)VALUES ($id_estado,'$nombre_estado');";
-      exit;
+        
+        $sql = "INSERT INTO estado(id_estado,nombre_estado)VALUES ($id_estado,'$nombre_estado');";
+      
         $resultado = $this->ejecutar($sql);
         return $resultado;
     }
@@ -27,6 +28,7 @@ class Estado extends Seguridad
 
         $nombre_estado = $datos['nombre_estado'];
         $id_estado     = $datos['id_estado'];
+        
         $sql           = "UPDATE estado SET  nombre_estado = '$nombre_estado' WHERE id_estado = '$id_estado';";
 
         $resultado = $this->ejecutar($sql);
