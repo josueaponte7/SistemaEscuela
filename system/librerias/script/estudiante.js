@@ -343,25 +343,15 @@ $(document).ready(function() {
         $('#reporte_estudiante').slideDown(2000);
         $('input:text').val('');
         $('textarea').val('');
-        $('#estado').select2('val', 0);
-        $('#municipio').select2('val', 0);
-        $('#parroquia').select2('val', 0);
-        $('#estatus').select2('val', 0);
-        $('#sexo').select2('val', 0);
-        $('#cod_telefono').select2('val', 0);
-        $('#cod_celular').select2('val', 0);
+        $('#estado,#municipio,#parroquia,#estatus,#sexo,#cod_telefono,#cod_celular,#nivel_inst,#profesion').select2('val', 0);
+        $('#nacionalidad').select2('val',1);
     });
 
     $('#limpiar').click(function() {
         $('input:text').val('');
         $('textarea').val('');
-        $('#estado').select2('val', 0);
-        $('#municipio').select2('val', 0);
-        $('#parroquia').select2('val', 0);
-        $('#estatus').select2('val', 0);
-        $('#sexo').select2('val', 0);
-        $('#cod_telefono').select2('val', 0);
-        $('#cod_celular').select2('val', 0);
+        $('#estado,#municipio,#parroquia,#estatus,#sexo,#cod_telefono,#cod_celular,#nivel_inst,#profesion').select2('val', 0);
+        $('#nacionalidad').select2('val',1);
         $('#guardar').text('Guardar');
     });
 

@@ -160,11 +160,7 @@ $(document).ready(function() {
                         var nTr = oSettings.aoData[ newRow[0] ].nTr;
 
                         $('input[type="text"]').val('');
-                        $('#tiposervicio').select2('val', 0);
-                        $('#estado').select2('val', 0);
-                        $('#municipio').select2('val', 0);
-                        $('#parroquia').select2('val', 0);
-                        $('#cod_telefono').select2('val', 0);
+                        $('#tiposervicio,#estado,#municipio,#parroquia,#cod_telefono,#cod_celular').select2('val', 0);
                     });
                 }
             });
@@ -200,13 +196,9 @@ $(document).ready(function() {
                                     $("#tabla_salud tbody tr:eq(" + fila + ")").find("td:eq(3)").html(tiposervicio);
                                     $("#tabla_salud tbody tr:eq(" + fila + ")").find("td:eq(3)").attr('id', id_tiposervicio);
                                     $("#tabla_salud tbody tr:eq(" + fila + ")").find("td:eq(4)").html(telefono);
-
+                                    
                                     $('input[type="text"]').val('');
-                                    $('#tiposervicio').select2('val', 0);
-                                    $('#estado').select2('val', 0);
-                                    $('#municipio').select2('val', 0);
-                                    $('#parroquia').select2('val', 0);
-                                    $('#cod_telefono').select2('val', 0);
+                                    $('#tiposervicio,#estado,#municipio,#parroquia,#cod_telefono,#cod_celular').select2('val', 0);
                                 });
                             }
                         });
@@ -285,22 +277,14 @@ $(document).ready(function() {
         $('#guardar').text('Guardar');
         $('#registro_salud').slideUp(2000);
         $('#reporte_salud').slideDown(2000);
-        $('input:text').val('');
-        $('#tiposervicio').select2('val', 0);
-        $('#estado').select2('val', 0);
-        $('#municipio').select2('val', 0);
-        $('#parroquia').select2('val', 0);
-        $('#cod_telefono').select2('val', 0);
+        $('input[type="text"]').val('');
+        $('#tiposervicio,#estado,#municipio,#parroquia,#cod_telefono,#cod_celular').select2('val', 0);
 
     });
 
     $('#limpiar').click(function() {
-        $('input:text').val('');
-        $('#tiposervicio').select2('val', 0);
-        $('#estado').select2('val', 0);
-        $('#municipio').select2('val', 0);
-        $('#parroquia').select2('val', 0);
-        $('#cod_telefono').select2('val', 0);
+        $('input[type="text"]').val('');
+        $('#tiposervicio,#estado,#municipio,#parroquia,#cod_telefono,#cod_celular').select2('val', 0);
         $('#guardar').text('Guardar');
     });
 

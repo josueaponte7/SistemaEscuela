@@ -419,7 +419,7 @@ $_SESSION['abrir']       = 'registros';
                                 </td>
                                 <td>
                                     <div cclass="form-group">
-                                        <input  type="text" class="form-control input-sm" id="fuente_ingreso" name="fuente_ingreso" placeholder="Fuente de Ingreso">
+                                        <input  type="text" class="form-control input-sm" id="fuente_ingreso" name="fuente_ingreso" placeholder="Fuente de Ingreso" maxlength="6">
                                     </div>
                                 </td>
                                 <td class="letras"> Email </td>
