@@ -192,11 +192,11 @@ $(document).ready(function() {
                                         $("#tabla_usuario tbody tr:eq(" + fila + ")").find("td:eq(1)").html($('#usuario').val());
                                         $("#tabla_usuario tbody tr:eq(" + fila + ")").find("td:eq(2)").html($('#nombre').val());
                                         $("#tabla_usuario tbody tr:eq(" + fila + ")").find("td:eq(3)").html($('#apellido').val());
-                                        $("#tabla_usuario tbody tr:eq(" + fila + ")").find("td:eq(4)").html($('#estatus').val());
-
-                                        // Modificar la fila 1 en la tabla 
-                                        $("#tabla_usuario tbody tr:eq(" + fila + ")").find("td:eq(5)").html(grupo_usuario);
-                                        $("#tabla_usuario tbody tr:eq(" + fila + ")").find("td:eq(5)").attr('id', id_grupo_usuario);
+//                                        $("#tabla_usuario tbody tr:eq(" + fila + ")").find("td:eq(4)").html($('#estatus').val());
+//
+//                                        // Modificar la fila 1 en la tabla 
+//                                        $("#tabla_usuario tbody tr:eq(" + fila + ")").find("td:eq(5)").html(grupo_usuario);
+//                                        $("#tabla_usuario tbody tr:eq(" + fila + ")").find("td:eq(5)").attr('id', id_grupo_usuario);
 
                                         $('input[type="text"]').val('');
                                         $('textarea').val('');
@@ -235,8 +235,6 @@ $(document).ready(function() {
         var usuario = padre.children('td:eq(2)').text();
         var nombre = padre.children('td:eq(3)').text();
         var apellido = padre.children('td:eq(4)').text();
-        var activo = padre.children('td:eq(5)').attr('id');
-        var id_grupo = padre.children('td:eq(6)').attr('id');
         // obtener la fila a modificar
         var fila = padre.index();
 
@@ -244,12 +242,14 @@ $(document).ready(function() {
         $('#usuario').val(usuario);
         $('#nombre').val(nombre);
         $('#apellido').val(apellido);
-        $('#grupo_usuario').select2('val', id_grupo);
-        $('#estatus').select2('val', activo);
-
-
         $('#registro_usuario').slideDown(2000);
         $('#reporte_usuario').slideUp(2000);
+        
+        $.post("../../controlador/Usuario.php", {id_usuario: id_usuario, accion: 'BuscarDatos'}, function(respuesta) {
+            var datos = respuesta.split(";");  
+            $('#estatus').select2('val', datos[0]);
+            $('#grupo_usuario').select2('val', datos[1]);
+        
 
         // crear el campo fila y añadir la fila
         var $fila = '<input type="hidden" id="fila"  value="' + fila + '" name="fila">';
@@ -257,6 +257,7 @@ $(document).ready(function() {
 
         var $id_usuario = '<input type="hidden" id="id_usuario"  value="' + id_usuario + '" name="id_usuario">';
         $($id_usuario).appendTo($('#frmusuario'));
+        });
     });
 
     $('table#tabla_usuario').on('click', 'img.eliminar', function() {

@@ -99,24 +99,6 @@ if (isset($_POST['accion'])) {
 
             break;
 
-
-
-
-
-//        case 'BuscarChofer':
-//            $data['sql'] = "SELECT 
-//                                ch.nombre,
-//                                ch.apellido,
-//                                au.placa, 
-//                                CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = ch.cod_telefono),ch.telefono) AS telefono
-//                            FROM chofer AS ch 
-//                            INNER JOIN automovil AS au ON ch.cedula=au.cedula_chofer
-//                            WHERE ch.cedula=".$datos['cedula'];
-//            
-//            $resultado = $obj->getChofer($data);
-//            $data = $resultado[0]['nombre'].';'.$resultado[0]['apellido'].';'.$resultado[0]['placa'].';'.$resultado[0]['telefono'];
-//            echo $data;
-//        break;
     }
 }
 

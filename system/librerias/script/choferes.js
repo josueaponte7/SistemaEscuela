@@ -13,25 +13,25 @@ $(document).ready(function() {
             {"sWidth": "4%", "bSortable": false, "sClass": "center sorting_false", "bSearchable": false},
             {"sWidth": "4%", "bSortable": false, "sClass": "center sorting_false", "bSearchable": false}
         ]
-    });    
-    
+    });
+
     $('#nacionalidad').select2();
     $('#cod_telefono').select2();
     $('#cod_celular').select2();
-    
+
     $('#registrar').click(function() {
         $('#registro_choferes').slideDown(2000);
         $('#reporte_choferes').slideUp(2000);
     });
-    
-        $('.tooltip_ced').tooltip({
+
+    $('.tooltip_ced').tooltip({
         html: true,
         placement: 'bottom',
         title: 'Click para ver opciones'
-    }); 
-    
+    });
+
     var $contextMenu = $("#contextMenu");
-     var cedula = '';
+    var cedula = '';
 
     $("table#tabla_choferes").on("click", "span.sub-rayar", function(e) {
         $('.dropdown').hide();
@@ -42,7 +42,7 @@ $(document).ready(function() {
             top: e.pageY
         });
     });
-    
+
     $contextMenu.on("click", "span", function() {
         var url = 'vista/registros/ver_datos_representante.php';
         parent.$.fancybox.open({
@@ -63,8 +63,8 @@ $(document).ready(function() {
         });
         $('.dropdown').hide();
     });
-    
-           /**Los monta todos***/
+
+    /**Los monta todos***/
     $('#todos').change(function() {
         var TotalRow = TChoferes.fnGetData().length;
         var nodes = TChoferes.fnGetNodes();
@@ -112,81 +112,84 @@ $(document).ready(function() {
         }
         window.open(url);
     });
-    
-    $('#guardar').click(function() {        
-            $('#accion').val($(this).text());
-            
-            // Imagenes de modificar y eliminar
-            var modificar = '<img class="modificar" src="../../imagenes/edit.png" title="Modificar" style="cursor: pointer"  width="18" height="18" alt="Modificar"/>';
-            var eliminar = '<img class="eliminar" src="../../imagenes/delete.png" title="Eliminar" style="cursor: pointer"  width="18" height="18"  alt="Eliminar"/>';
-           
-            var cod_telefono = $('#cod_telefono').find(' option').filter(":selected").text();
-            var cod_celular = $('#cod_celular').find(' option').filter(":selected").text();
-            var telefonos = cod_telefono + '-' + $('#telefono').val() + ', ' + cod_celular + '-' + $('#celular').val();
-           
+
+    $('#guardar').click(function() {
+        $('#accion').val($(this).text());
+
+        // Imagenes de modificar y eliminar
+        var modificar = '<img class="modificar" src="../../imagenes/edit.png" title="Modificar" style="cursor: pointer"  width="18" height="18" alt="Modificar"/>';
+        var eliminar = '<img class="eliminar" src="../../imagenes/delete.png" title="Eliminar" style="cursor: pointer"  width="18" height="18"  alt="Eliminar"/>';
+
+        var cod_telefono = $('#cod_telefono').find(' option').filter(":selected").text();
+        var cod_celular = $('#cod_celular').find(' option').filter(":selected").text();
+        var telefonos = cod_telefono + '-' + $('#telefono').val() + ', ' + cod_celular + '-' + $('#celular').val();
+
         if ($(this).text() == 'Guardar') {
-            
-                // obtener el ultimo codigo del status 
-                var ToltalRow = TChoferes.fnGetData().length;
-                var lastRow = TChoferes.fnGetData(ToltalRow - 1);
-                var cedula = parseInt(lastRow[1]) + 1;      
-                
-                var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
-                $.post("../../controlador/Choferes.php", $("#frmchoferes").serialize(), function(respuesta) {
-                    
-                    if (respuesta == 1) {                        
-                      
-                        window.parent.bootbox.alert("Registro con Exito", function() {
-                            // Agregar los datos a la tabla
-                            var nacionalidad = $('#nacionalidad').find(' option').filter(":selected").text();
-                            var cedula = nacionalidad + '-' + $('#cedula').val();
-                            var nombres = $('#nombre').val() + ' ' + $('#apellido').val();                            
-                            var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
-                            
-                            var newRow = TChoferes.fnAddData([$check_cedula, cedula, nombres, telefonos, modificar, eliminar]);
-                            $('input[type="text"]').val('');
-                            
-                            // Agregar el id a la fila estado
-                            var oSettings = TChoferes.fnSettings();
-                            var nTr = oSettings.aoData[ newRow[0] ].nTr;
+
+            // obtener el ultimo codigo del status 
+            var ToltalRow = TChoferes.fnGetData().length;
+            var lastRow = TChoferes.fnGetData(ToltalRow - 1);
+            var cedula = parseInt(lastRow[1]) + 1;
+
+            var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
+            $.post("../../controlador/Choferes.php", $("#frmchoferes").serialize(), function(respuesta) {
+
+                if (respuesta == 1) {
+
+                    window.parent.bootbox.alert("Registro con Exito", function() {
+                        // Agregar los datos a la tabla
+                        var nacionalidad = $('#nacionalidad').find(' option').filter(":selected").text();
+                        var cedula = nacionalidad + '-' + $('#cedula').val();
+                        var nombres = $('#nombre').val() + ' ' + $('#apellido').val();
+                        var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
+
+                        var newRow = TChoferes.fnAddData([$check_cedula, cedula, nombres, telefonos, modificar, eliminar]);
+                        $('input[type="text"]').val('');
+
+                        // Agregar el id a la fila estado
+                        var oSettings = TChoferes.fnSettings();
+                        var nTr = oSettings.aoData[ newRow[0] ].nTr;
+                    });
+                }
+            });
+        } else {
+            window.parent.bootbox.confirm({
+                message: '¿Desea Modificar los datos del Registro?',
+                buttons: {
+                    'cancel': {
+                        label: 'Cancelar',
+                        className: 'btn-default'
+                    },
+                    'confirm': {
+                        label: 'Modificar',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function(result) {
+                    if (result) {
+                        $.post("../../controlador/Choferes.php", $("#frmchoferes").serialize(), function(respuesta) {
+                            if (respuesta == 1) {
+                                // obtener la fila a modificar
+                                var fila = $("#fila").val();
+                                window.parent.bootbox.alert("Modificacion con Exito", function() {
+
+                                    // Modificar la fila 1 en la tabla
+                                    $("#tabla_choferes tbody tr:eq(" + fila + ")").find("td:eq(3)").html(telefonos);
+
+                                    $('input[type="text"]').val('');
+                                    $('input:text').val('');
+                                    $('#cod_telefono').select2('val', 0);
+                                    $('#cod_celular').select2('val', 0);
+                                });
+                            }
                         });
                     }
-                });
-            } else {
-                window.parent.bootbox.confirm({
-                    message: '¿Desea Modificar los datos del Registro?',
-                    buttons: {
-                        'cancel': {
-                            label: 'Cancelar',
-                            className: 'btn-default'
-                        },
-                        'confirm': {
-                            label: 'Modificar',
-                            className: 'btn-danger'
-                        }
-                    },
-                    callback: function(result) {
-                        if (result) {
-                            $.post("../../controlador/Choferes.php", $("#frmchoferes").serialize(), function(respuesta) {
-                                if (respuesta == 1) {
-                                    // obtener la fila a modificar
-                                    var fila = $("#fila").val();
-                                    window.parent.bootbox.alert("Modificacion con Exito", function() {
-                                      
-                                        // Modificar la fila 1 en la tabla
-                                        $("#tabla_choferes tbody tr:eq(" + fila + ")").find("td:eq(3)").html(telefonos);
-                                       
-                                        $('input[type="text"]').val('');
-                                    });
-                                }
-                            });
-                        }
-                    }
-                });
-            }        
+                }
+            });
+        }
     });
-    
-    
+
+
     $('table#tabla_choferes').on('click', 'img.modificar', function() {
 
         // borra el campo fila
@@ -207,8 +210,8 @@ $(document).ready(function() {
         $('#reporte_choferes').slideUp(2000);
 
         $.post("../../controlador/Choferes.php", {cedula: cedula, accion: 'BuscarDatos'}, function(respuesta) {
-            var datos = respuesta.split(";");  
-            
+            var datos = respuesta.split(";");
+
             $('#nacionalidad').select2('val', datos[0]);
             $('#nombre').val(datos[1]);
             $('#apellido').val(datos[2]);
@@ -220,7 +223,7 @@ $(document).ready(function() {
             $('#placa').val(datos[8]);
             $('#modelo').val(datos[9]);
             $('#color').val(datos[10]);
-             
+
             // crear el campo fila y añadir la fila
             var $fila = '<input type="hidden" id="fila"  value="' + fila + '" name="fila">';
             $($fila).prependTo($('#frmchoferes'));
@@ -229,7 +232,7 @@ $(document).ready(function() {
             $($cedula).appendTo($('#frmchoferes'));
         });
     });
-        
+
     $('#salir').click(function() {
         $('#guardar').text('Guardar');
         $('#registro_choferes').slideUp(2000);
@@ -245,8 +248,8 @@ $(document).ready(function() {
         $('#cod_celular').select2('val', 0);
         $('#guardar').text('Guardar');
     });
-    
-     var letra = ' abcdefghijklmnñopqrstuvwxyzáéíóú';
+
+    var letra = ' abcdefghijklmnñopqrstuvwxyzáéíóú';
     $('#nombre').validar(letra);
     $('#apellido').validar(letra);
 
@@ -254,5 +257,5 @@ $(document).ready(function() {
     $('#telefono').validar(numero);
     $('#celular').validar(numero);
     $('#cedula').validar(numero);
-    
+
 });

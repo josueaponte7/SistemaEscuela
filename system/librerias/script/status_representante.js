@@ -81,9 +81,9 @@ $(document).ready(function() {
 
                 // obtener el ultimo codigo del status 
                 var codigo = 1;
-                var ToltalRow = TStatusrepre.fnGetData().length;
+                var TotalRow = TStatusrepre.fnGetData().length;
                 if (TotalRow > 0) {
-                    var lastRow = TStatusrepre.fnGetData(ToltalRow - 1);
+                    var lastRow = TStatusrepre.fnGetData(TotalRow - 1);
                     var codigo = parseInt(lastRow[1]) + 1;
                 }
 

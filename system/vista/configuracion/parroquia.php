@@ -12,7 +12,7 @@ $d_parroquia['sql'] = 'SELECT
                             p.nombre_parroquia
                             FROM parroquia AS p
                             INNER JOIN municipio AS m ON p.id_municipio=m.id_municipio 
-                            INNER JOIN estado AS e ON m.id_estado=e.id_estado';
+                            INNER JOIN estado AS e ON m.id_estado=e.id_estado ORDER BY p.id_parroquia';
 
 $resul_parroquia = $obj_parr->getParroquia($d_parroquia);
 

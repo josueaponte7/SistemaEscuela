@@ -45,9 +45,6 @@ $_SESSION['abrir']       = 'configuracion';
                 <table style="width:100%;" border="0" class="dataTable" id="tabla_anio" align="center">
                     <thead>
                         <tr class="letras">
-<!--                          <th style="margin-left: 20px !important;" width="81">
-                              <input type="checkbox" name="todos" id="todos" value="todos" />
-                            </th>-->
                             <th style="width: 35%">C&oacute;digo</th>
                             <th width="81">A&ntilde;o Escolar</th>
                             <th style="width: 5%;text-align: center">Modificar</th>
@@ -62,9 +59,6 @@ $_SESSION['abrir']       = 'configuracion';
                         for ($i = 0; $i < count($resul_anio); $i++) {
                             ?>
                         <tr class="letras">
-<!--                                <td>
-                                    <input type="checkbox" id="<?php echo $resul_anio[$i]['id_anio']; ?>" name="id_anio[]" value="<?php echo $resul_anio[$i]['id_anio']; ?>" />
-                                </td>-->
                                 <td><?php echo $resul_anio[$i]['id_anio']; ?></td>
                                 <td><?php echo $resul_anio[$i]['anio_escolar']; ?></td>
                                 <td style="text-align: center">

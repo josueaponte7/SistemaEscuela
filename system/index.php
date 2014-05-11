@@ -13,7 +13,7 @@ $pagina       = 'titulo_pagina';
 $abrir        = 'registros';
 $abrir_reg    = 'in';
 $abrir_pro    = '';
-$abrir_consul = '';
+$abrir_rep    = '';
 $abrir_conf   = '';
 
 $nosotros = 'NOSOTROS';
@@ -35,22 +35,22 @@ if (isset($_SESSION['archivo_sys']) && isset($_SESSION['dir_sys'])) {
     if ($abrir == 'registros') {
         $abrir_reg    = 'in';
         $abrir_pro    = '';
-        $abrir_consul = '';
+        $abrir_rep    = '';
         $abrir_conf   = '';
     } else if ($abrir == 'procesos') {
         $abrir_reg    = '';
         $abrir_pro    = 'in';
-        $abrir_consul = '';
+        $abrir_rep = '';
         $abrir_conf   = '';
-    } else if ($abrir == 'consultas') {
+    } else if ($abrir == 'reportes') {
         $abrir_reg    = '';
         $abrir_pro    = '';
-        $abrir_consul = 'in';
+        $abrir_rep    = 'in';
         $abrir_conf   = '';
     } else if ($abrir == 'configuracion') {
         $abrir_reg    = '';
         $abrir_pro    = '';
-        $abrir_consul = '';
+        $abrir_rep    = '';
         $abrir_conf   = 'in';
     }
 }
@@ -230,26 +230,22 @@ if (isset($_SESSION['archivo_sys']) && isset($_SESSION['dir_sys'])) {
                         <li>
                             <span data-toggle="collapse" data-parent="#accordion" href="#procesos">PROCESOS</span>
                         </li>
-                        <li>
+<!--                        <li>
                             <span id="">REPORTES</span>
-                        </li>
+                        </li>-->
                         <li>
-                            <span id="">CONSULTA</span>
+                            <span data-toggle="collapse" data-parent="#accordion" href="#reportes">REPORTES</span>
                         </li>
                         <li>
                             <span data-toggle="collapse" data-parent="#accordion" href="#configuracion">CONFIGURACI&Oacute;N</span>
                         </li>
-<!--                        <li>
-                            <span id="">CONFIGURACI&Oacute;N</span>
-                        </li>-->
-                      
                     </ul>
                 </div>
             </div>
             <div id="cuerpo">
                 <div id="sidebar-izquierdo">
                     <div class="menu_izquierdo panel-title" data-toggle="collapse" data-parent="#accordion" href="#registros" style="margin-top: 40px;">Registros</div>
-                    <div id="registros" class="panel-collapse collapse <?php echo $abrir_reg ?>">
+                    <div id="registros" class="panel-collapse collapse <?php echo $abrir_reg?>">
                         <div class="panel-body">
                             <div class="contenido_men_izq">
                                 <ul  style="list-style-type:none;">
@@ -264,19 +260,18 @@ if (isset($_SESSION['archivo_sys']) && isset($_SESSION['dir_sys'])) {
                         </div>
                     </div>  
                     <div class="menu_izquierdo panel-title" data-toggle="collapse" data-parent="#accordion" href="#procesos" style="margin-top: 8px;">Procesos</div>
-                    <div id="procesos" class="panel-collapse collapse <?php echo $abrir_pro ?>">
+                    <div id="procesos" class="panel-collapse collapse <?php echo $abrir_pro?>">
                         <div class="panel-body">
                             <div class="contenido_men_izq">
                                 <ul  style="list-style-type:none;">
                                     <li id="procesos_preinscripcion">Pre-Inscripci&oacute;n</li>
-                                    <li id="procesos_inscripcion">Inscripci&oacute;n</li>
-                                    <!--                                    <li id="procesos_reinscripcion">Re-Inscripci&oacute;n</li>                                    -->
+                                    <li id="procesos_inscripcion">Inscripci&oacute;n</li>                                   
                                 </ul>
                             </div> 
                         </div>
                     </div>
-<!--                    <div class="menu_izquierdo panel-title" data-toggle="collapse" data-parent="#accordion" href="#consultas" style="margin-top: 8px;">Consultas</div>
-                    <div id="consultas" class="panel-collapse collapse <?php echo $abrir_consul ?>">
+                    <div class="menu_izquierdo panel-title" data-toggle="collapse" data-parent="#accordion" href="#reportes" style="margin-top: 8px;">Reportes</div>
+                    <div id="reportes" class="panel-collapse collapse <?php echo $abrir_rep?>">
                         <div class="panel-body">
                             <div class="contenido_men_izq">
                                 <ul  style="list-style-type:none;">
@@ -288,9 +283,9 @@ if (isset($_SESSION['archivo_sys']) && isset($_SESSION['dir_sys'])) {
                                 </ul>
                             </div>
                         </div>
-                    </div>-->
+                    </div>
                     <div class="menu_izquierdo panel-title" data-toggle="collapse" data-parent="#accordion" href="#configuracion" style="margin-top: 8px;">Configuraci&oacute;n</div>
-                    <div id="configuracion" class="panel-collapse collapse <?php echo $abrir_conf ?>">
+                    <div id="configuracion" class="panel-collapse collapse <?php echo $abrir_conf?>">
                         <div class="panel-body">
                             <div class="contenido_men_izq">
                                 <ul  style="list-style-type:none;">
@@ -318,9 +313,9 @@ if (isset($_SESSION['archivo_sys']) && isset($_SESSION['dir_sys'])) {
                 </div>
             </div>
             <div id="pie">
-                <img src="imagenes/bg_footer.jpg" style="height: 300px; width: 1027px; float: left;"/>
+                <img src="imagenes/bg_footer.jpg" style="height: 100px; width: 1027px; float: left;"/>
                 <div id="borde_negro">
-                    <div id="contenido1">
+<!--                    <div id="contenido1">
                         <a href="#">
                             <img src="imagenes/logo_f.png"/>
                         </a>
@@ -343,8 +338,8 @@ if (isset($_SESSION['archivo_sys']) && isset($_SESSION['dir_sys'])) {
                                 </li>                                
                             </ul>
                         </div>
-                    </div>
-                    <div id="contenido2">
+                    </div>-->
+<!--                    <div id="contenido2">
                         <h1 style="color: #fff;">cont&aacute;ctenos</h1>
                         <form role="form" autocomplete="off">
                             <div class="form-group">
@@ -359,9 +354,9 @@ if (isset($_SESSION['archivo_sys']) && isset($_SESSION['dir_sys'])) {
                             <input type="button" style="background-image: url('imagenes/boton_enviar.png');" value="Enviar"  name="enviar" id="enviar"/>
                             <span class="requiere">*</span>
                         </form>
-                    </div>
+                    </div>-->
                     <div id="contenido3">
-                        <h1 style="color: #fff;">estamos en las redes sociales</h1>
+<!--                        <h1 style="color: #fff;">estamos en las redes sociales</h1>
                         <img style="margin-left: 100px;" alt="" src="imagenes/facebook.png"/>
                         <img alt="" src="imagenes/twitter.png"/>
                         <h1 style="color: #fff; width: 350px; height: 5px; float: left; margin-left: -22px;">
@@ -370,9 +365,9 @@ if (isset($_SESSION['archivo_sys']) && isset($_SESSION['dir_sys'])) {
                         </h1>
                         <div id="telf">
                             <span style="margin-left: 76px;"> (0243) 235.56.72</span>
-                        </div>
+                        </div>-->
                         <div class="derechos">
-                            Copyright &COPY; 2013 Escuela T&eacute;cnica Robinsoniana y Zamorana para la Diversidad Funcional San Carlos
+                            Copyright &COPY; 2014 Escuela T&eacute;cnica Robinsoniana y Zamorana para la Diversidad Funcional San Carlos
                             <br>
                             Desarrollado por
                             <a href="#">Grupo 6</a>
@@ -380,7 +375,7 @@ if (isset($_SESSION['archivo_sys']) && isset($_SESSION['dir_sys'])) {
                     </div>
                 </div>  
             </div>
-            <div id="separacion_pie"></div>
+<!--            <div id="separacion_pie"></div>-->
         </div>        
     </body>
 </html>        

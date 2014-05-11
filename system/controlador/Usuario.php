@@ -55,7 +55,21 @@ if (isset($_POST['accion'])) {
                 echo 1;
             }
             break;
-    }  
+            
+        case 'BuscarDatos':
+
+            $id_usuario = $datos['id_usuario'];
+
+            $opciones['sql'] = "SELECT activo, id_grupo FROM usuario u WHERE id_usuario = $id_usuario ";
+            $resultado       = $obj_usu->getUsuario($opciones);
+            echo $resultado[0]['activo'] . ';' .
+                 $resultado[0]['id_grupo'] ;
+            break;    
+            
+            
+            
+            
+    }
     
 }else{
   $obj_usu->Logout();  

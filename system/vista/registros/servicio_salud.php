@@ -12,7 +12,7 @@ $d_serviciosa['sql'] = "SELECT sp.id_servicio, sp.servicio,
                         CONCAT_WS('-',ct.codigo, sp.telefono) AS telefono, ts.tiposervicio 
                         FROM servicio_publico sp 
                         INNER JOIN codigo_telefono ct ON (sp.cod_telefono = ct.id) 
-                        INNER JOIN tiposervicio ts ON (sp.id_tiposervicio = ts.id_tiposervicio)";
+                        INNER JOIN tiposervicio ts ON (sp.id_tiposervicio = ts.id_tiposervicio) ORDER BY sp.id_servicio";
 
 $resul_serviciosa = $obj_salud->getServicio($d_serviciosa);
 

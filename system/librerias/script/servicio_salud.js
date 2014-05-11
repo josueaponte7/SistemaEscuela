@@ -22,13 +22,13 @@ $(document).ready(function() {
     $('#municipio').select2();
     $('#parroquia').select2();
     $('#cod_telefono').select2();
-        
+
     $('#registrar').click(function() {
         $('#registro_salud').slideDown(2000);
         $('#reporte_salud').slideUp(2000);
     });
-    
-    
+
+
     /***Combos **/
 
     $('#estado').change(function() {
@@ -104,32 +104,34 @@ $(document).ready(function() {
     });
 
     $('#guardar').click(function() {
-         if ($('#servicio').val() === null || $('#servicio').val().length === 0 || /^\s+$/.test($('#servicio').val())) {
+        if ($('#servicio').val() === null || $('#servicio').val().length === 0 || /^\s+$/.test($('#servicio').val())) {
             $('#div_servicio').addClass('has-error');
             $('#servicio').focus();
-        } else  if ($('#tiposervicio').val() == 0) {
+        } else if ($('#tiposervicio').val() == 0) {
             $('#tiposervicio').addClass('has-error');
-        } else if($('#estado').val() == 0){
+        } else if ($('#estado').val() == 0) {
             $('#estado').addClass('has-error');
-        }else if($('#municipio').val() == 0){
+        } else if ($('#municipio').val() == 0) {
             $('#municipio').addClass('has-error');
-        }else if($('#parroquia').val() == 0){
+        } else if ($('#parroquia').val() == 0) {
             $('#parroquia').addClass('has-error');
-        }else if($('#cod_telefono').val() == 0){
+        } else if ($('#cod_telefono').val() == 0) {
             $('#cod_telefono').addClass('has-error');
         }
-            
-        
+
+
         $('#accion').val($(this).text());
         // Imagenes de modificar y eliminar
         var modificar = '<img class="modificar" src="../../imagenes/edit.png" title="Modificar" style="cursor: pointer"  width="18" height="18" alt="Modificar"/>';
         var eliminar = '<img class="eliminar" src="../../imagenes/delete.png" title="Eliminar" style="cursor: pointer"  width="18" height="18"  alt="Eliminar"/>';
-        
-        var cod_telefono  = $('#cod_telefono').find(' option').filter(":selected").text();
-            
-        var telefono     = cod_telefono + '-' + $('#telefono').val();
-        
+
+        var cod_telefono = $('#cod_telefono').find(' option').filter(":selected").text();
+
+        var telefono = cod_telefono + '-' + $('#telefono').val();
+
         if ($(this).text() == 'Guardar') {
+            $('#id_servicio').remove();
+
             // obtener el ultimo codigo del status 
             var codigo = 1;
             var TotalRow = TServiciosalud.fnGetData().length;
@@ -156,6 +158,13 @@ $(document).ready(function() {
                         // Agregar el id a la fila estado
                         var oSettings = TServiciosalud.fnSettings();
                         var nTr = oSettings.aoData[ newRow[0] ].nTr;
+
+                        $('input[type="text"]').val('');
+                        $('#tiposervicio').select2('val', 0);
+                        $('#estado').select2('val', 0);
+                        $('#municipio').select2('val', 0);
+                        $('#parroquia').select2('val', 0);
+                        $('#cod_telefono').select2('val', 0);
                     });
                 }
             });
@@ -181,18 +190,23 @@ $(document).ready(function() {
                                 window.parent.bootbox.alert("Modificacion con Exito", function() {
 
                                     // Modificar la fila 1 en la tabla 
-                                    
-                                    var tiposervicio    = $('#tiposervicio').find(' option').filter(":selected").text();
-                                    var id_tiposervicio = $('#tiposervicio').find(' option').filter(":selected").val(); 
-                                   
-                                    
-                                    
+
+                                    var tiposervicio = $('#tiposervicio').find(' option').filter(":selected").text();
+                                    var id_tiposervicio = $('#tiposervicio').find(' option').filter(":selected").val();
+
+
+
                                     $("#tabla_salud tbody tr:eq(" + fila + ")").find("td:eq(2)").html($('#servicio').val());
                                     $("#tabla_salud tbody tr:eq(" + fila + ")").find("td:eq(3)").html(tiposervicio);
                                     $("#tabla_salud tbody tr:eq(" + fila + ")").find("td:eq(3)").attr('id', id_tiposervicio);
                                     $("#tabla_salud tbody tr:eq(" + fila + ")").find("td:eq(4)").html(telefono);
 
                                     $('input[type="text"]').val('');
+                                    $('#tiposervicio').select2('val', 0);
+                                    $('#estado').select2('val', 0);
+                                    $('#municipio').select2('val', 0);
+                                    $('#parroquia').select2('val', 0);
+                                    $('#cod_telefono').select2('val', 0);
                                 });
                             }
                         });
@@ -207,8 +221,8 @@ $(document).ready(function() {
         // borra el campo fila
         $('#fila').remove();
         var padre = $(this).closest('tr');
-        var id_servicio = padre.children('td:eq(1)').text(); 
-        var servicio = padre.children('td:eq(2)').html();   
+        var id_servicio = padre.children('td:eq(1)').text();
+        var servicio = padre.children('td:eq(2)').html();
         var tiposervicio = padre.children('td:eq(3)').html();
         var telefono = padre.children('td:eq(4)').html();
 
@@ -217,8 +231,8 @@ $(document).ready(function() {
         var fila = padre.index();
 
         $('#guardar').text('Modificar');
-        
-        
+
+
 //        $('#cedula').val(cedula).prop('disabled',true);
         $('#servicio').val(servicio);
         $('#tiposervicio').val(tiposervicio);
@@ -228,15 +242,15 @@ $(document).ready(function() {
 
         $.post("../../controlador/ServicioSalud.php", {id_servicio: id_servicio, accion: 'BuscarDatos'}, function(respuesta) {
             var datos = respuesta.split(";");
-            
-            $('#servicio').select2('val', datos[0]);            
+
+            $('#servicio').select2('val', datos[0]);
             $('#cod_telefono').select2('val', datos[1]);
             $('#telefono').val(datos[2]);
             $('#estado').select2('val', datos[3]);
             var id_mun = datos[4];
             var id_parr = datos[5];
             $('#municipio').find('option:gt(0)').remove().end();
-            
+
             $.post('../../controlador/Municipio.php', {id_estado: datos[3], accion: 'buscarMun'}, function(respuesta) {
                 var option = "";
                 $.each(respuesta, function(i, obj) {
@@ -255,7 +269,7 @@ $(document).ready(function() {
                 $('#parroquia').append(option);
                 $('#parroquia').select2('val', id_parr);
             }, 'json');
-              $('#tiposervicio').select2('val', datos[6]);
+            $('#tiposervicio').select2('val', datos[6]);
 
             // crear el campo fila y añadir la fila
             var $fila = '<input type="hidden" id="fila"  value="' + fila + '" name="fila">';
@@ -277,7 +291,7 @@ $(document).ready(function() {
         $('#municipio').select2('val', 0);
         $('#parroquia').select2('val', 0);
         $('#cod_telefono').select2('val', 0);
-        
+
     });
 
     $('#limpiar').click(function() {
@@ -289,7 +303,7 @@ $(document).ready(function() {
         $('#cod_telefono').select2('val', 0);
         $('#guardar').text('Guardar');
     });
-    
+
     var numero = '0123456789';
     $('#telefono').validar(numero);
     $('#celular').validar(numero);
