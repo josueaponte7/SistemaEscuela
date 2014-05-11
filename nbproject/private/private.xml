@@ -3,11 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp/www/SistemaEscuela/system/controlador/Usuario.php</file>
-            <file>file:/C:/wamp/www/SistemaEscuela/system/modelo/Estado.php</file>
-            <file>file:/C:/wamp/www/SistemaEscuela/system/librerias/script/usuario.js</file>
-            <file>file:/C:/wamp/www/SistemaEscuela/system/controlador/Docente.php</file>
-            <file>file:/C:/wamp/www/SistemaEscuela/system/modelo/Usuario.php</file>
+            <file>file:/C:/wamp/www/SistemaEscuela/system/librerias/script/estudiante.js</file>
+            <file>file:/C:/wamp/www/SistemaEscuela/system/librerias/script/servicio_salud.js</file>
+            <file>file:/C:/wamp/www/SistemaEscuela/system/librerias/script/choferes.js</file>
+            <file>file:/C:/wamp/www/SistemaEscuela/system/librerias/script/docente.js</file>
+            <file>file:/C:/wamp/www/SistemaEscuela/system/librerias/script/parroquia.js</file>
+            <file>file:/C:/wamp/www/SistemaEscuela/system/librerias/script/representante.js</file>
         </group>
     </open-files>
 </project-private>

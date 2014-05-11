@@ -166,11 +166,11 @@ $(document).ready(function() {
         // Imagenes de modificar y eliminar
         var modificar = '<img class="modificar" src="../../imagenes/edit.png" title="Modificar" style="cursor: pointer"  width="18" height="18" alt="Modificar"/>';
         var eliminar = '<img class="eliminar" src="../../imagenes/delete.png" title="Eliminar" style="cursor: pointer"  width="18" height="18"  alt="Eliminar"/>';
-        
+
         var cod_telefono = $('#cod_telefono').find(' option').filter(":selected").text();
         var cod_celular = $('#cod_celular').find(' option').filter(":selected").text();
         var telefonos = cod_telefono + '-' + $('#telefono').val() + ', ' + cod_celular + '-' + $('#celular').val();
-        
+
         if ($(this).text() == 'Guardar') {
             // obtener el ultimo codigo del status 
             var ToltalRow = TRepresentante.fnGetData().length;
@@ -180,83 +180,105 @@ $(document).ready(function() {
 //            var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
             $.post("../../controlador/Representante.php", $("#frmrepresentante").serialize(), function(respuesta) {
                 if (respuesta == 1) {
-                    
-                     //obtener el nombre de la estatus
-                        var estatus = $('#estatus').find(' option').filter(":selected").text();
-                        // obtener el id de la actividad
-                        var id_estatus = $('#estatus').find(' option').filter(":selected").val();
-                    
+
+                    //obtener el nombre de la estatus
+                    var estatus = $('#estatus').find(' option').filter(":selected").text();
+                    // obtener el id de la actividad
+                    var id_estatus = $('#estatus').find(' option').filter(":selected").val();
+
                     window.parent.bootbox.alert("Registro con Exito", function() {
-                    
-                    var nacionalidad = $('#nacionalidad').find(' option').filter(":selected").text();
-                    var cedula = nacionalidad + '-' + $('#cedula').val();
-                    var nombres = $('#nombre').val() + ' ' + $('#apellido').val();                   
-                    var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
-                    
+
+                        var nacionalidad = $('#nacionalidad').find(' option').filter(":selected").text();
+                        var cedula = nacionalidad + '-' + $('#cedula').val();
+                        var nombres = $('#nombre').val() + ' ' + $('#apellido').val();
+                        var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
+
 //                    alert('Registro con Exito');
-                    var newRow = TRepresentante.fnAddData([$check_cedula, cedula, nombres, telefonos, estatus,  modificar,  eliminar]);
-                    
-                    
-                     // Agregar el id a la fila estado
-                            var oSettings = TRepresentante.fnSettings();
-                            var nTr = oSettings.aoData[ newRow[0] ].nTr;
-                            $('td', nTr)[4].setAttribute('id', id_estatus);
-                            $('#estatus').select2('val', 0);
-                    
-                    $('input[type="text"]').val('');
-                    
+                        var newRow = TRepresentante.fnAddData([$check_cedula, cedula, nombres, telefonos, estatus, modificar, eliminar]);
+
+
+                        // Agregar el id a la fila estado
+                        var oSettings = TRepresentante.fnSettings();
+                        var nTr = oSettings.aoData[ newRow[0] ].nTr;
+                        $('td', nTr)[4].setAttribute('id', id_estatus);
+
+                        $('input[type="text"]').val('');
+                        $('#nacionalidad').select2('val', 0);
+                        $('#sexo').select2('val', 0);
+                        $('#cod_telefono').select2('val', 0);
+                        $('#cod_celular').select2('val', 0);
+                        $('textarea').val('');
+                        $('#estado').select2('val', 0);
+                        $('#municipio').select2('val', 0);
+                        $('#parroquia').select2('val', 0);
+                        $('#estatus').select2('val', 0);
+                        $('#nivel_inst').select2('val', 0);
+                        $('#profesion').select2('val', 0);
+
                     });
                 }
             });
-        }else{
-             window.parent.bootbox.confirm({
-                    message: '¿Desea Modificar los datos del Registro?',
-                    buttons: {
-                        'cancel': {
-                            label: 'Cancelar',
-                            className: 'btn-default'
-                        },
-                        'confirm': {
-                            label: 'Modificar',
-                            className: 'btn-danger'
-                        }
+        } else {
+            window.parent.bootbox.confirm({
+                message: '¿Desea Modificar los datos del Registro?',
+                buttons: {
+                    'cancel': {
+                        label: 'Cancelar',
+                        className: 'btn-default'
                     },
-                    callback: function(result) {
-                        if (result) {
-                            $.post("../../controlador/Representante.php", $("#frmrepresentante").serialize(), function(respuesta) {
-                                if (respuesta == 1) {
+                    'confirm': {
+                        label: 'Modificar',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function(result) {
+                    if (result) {
+                        $.post("../../controlador/Representante.php", $("#frmrepresentante").serialize(), function(respuesta) {
+                            if (respuesta == 1) {
 
-                                    // obtener la fila a modificar
-                                    var fila = $("#fila").val();
+                                // obtener la fila a modificar
+                                var fila = $("#fila").val();
 
-                                    window.parent.bootbox.alert("Modificacion con Exito", function() {
+                                window.parent.bootbox.alert("Modificacion con Exito", function() {
 
-                                        // obtener el nombre de la actividad
+                                    // obtener el nombre de la actividad
 //                                      var actividad = $('#actividad').find(' option').filter(":selected").text();
 
 //                                        // obtener el id de la actividad
 //                                        var id_actividad = $('#actividad').find(' option').filter(":selected").val();
-                                        // obtener el nombre de la actividad
-                                        var estatus = $('#estatus').find(' option').filter(":selected").text();
+                                    // obtener el nombre de la actividad
+                                    var estatus = $('#estatus').find(' option').filter(":selected").text();
 //
 //                                        // obtener el id de la actividad
-                                       var id_estatus= $('#estatus').find(' option').filter(":selected").val();
-                                        //var actividad = $('#actividad').find('option:selected').text();
+                                    var id_estatus = $('#estatus').find(' option').filter(":selected").val();
+                                    //var actividad = $('#actividad').find('option:selected').text();
 
-                                        // Modificar la fila 1 en la tabla                                       
-                                        $("#tabla_representante tbody tr:eq(" + fila + ")").find("td:eq(3)").html(telefonos);
-                                        //$("#tabla_docente tbody tr:eq(" + fila + ")").find("td.eq(4)").html(actividad);
+                                    // Modificar la fila 1 en la tabla                                       
+                                    $("#tabla_representante tbody tr:eq(" + fila + ")").find("td:eq(3)").html(telefonos);
+                                    //$("#tabla_docente tbody tr:eq(" + fila + ")").find("td.eq(4)").html(actividad);
 
-                                        // Modificar la fila 1 en la tabla 
-                                        $("#tabla_representante tbody tr:eq(" + fila + ")").find("td:eq(4)").html(estatus);
-                                       $("#tabla_representante tbody tr:eq(" + fila + ")").find("td:eq(4)").attr('id', id_estatus);
-                                        $('input[type="text"]').val('');
-                                    });
-                                }
-                            });
-                        }
+                                    // Modificar la fila 1 en la tabla 
+                                    $("#tabla_representante tbody tr:eq(" + fila + ")").find("td:eq(4)").html(estatus);
+                                    $("#tabla_representante tbody tr:eq(" + fila + ")").find("td:eq(4)").attr('id', id_estatus);
+
+                                    $('input[type="text"]').val('');
+                                    $('$#nacionalidad').select2('val', 0);
+                                    $('#sexo').select2('val', 0);
+                                    $('#cod_telefono').select2('val', 0);
+                                    $('#cod_celular').select2('val', 0);
+                                    $('textarea').val('');
+                                    $('#estado').select2('val', 0);
+                                    $('#municipio').select2('val', 0);
+                                    $('#parroquia').select2('val', 0);
+                                    $('#estatus').select2('val', 0);
+                                    $('#nivel_inst').select2('val', 0);
+                                    $('#profesion').select2('val', 0);
+                                });
+                            }
+                        });
                     }
-                });
+                }
+            });
         }
     });
 
@@ -341,6 +363,7 @@ $(document).ready(function() {
         $('#reporte_representante').slideDown(2000);
         $('input:text').val('');
         $('textarea').val('');
+        $('$#nacionalidad').select2('val', 0);
         $('#estado').select2('val', 0);
         $('#municipio').select2('val', 0);
         $('#parroquia').select2('val', 0);
@@ -355,6 +378,7 @@ $(document).ready(function() {
     $('#limpiar').click(function() {
         $('input:text').val('');
         $('textarea').val('');
+        $('$#nacionalidad').select2('val', 0);
         $('#estado').select2('val', 0);
         $('#municipio').select2('val', 0);
         $('#parroquia').select2('val', 0);
@@ -372,14 +396,14 @@ $(document).ready(function() {
     var letra = ' abcdefghijklmnñopqrstuvwxyzáéíóú';
     $('#nombre').validar(letra);
     $('#apellido').validar(letra);
-    
+
     var numero = '0123456789';
     $('#telefono').validar(numero);
     $('#celular').validar(numero);
     $('#cedula').validar(numero);
     $('#fuente_ingreso').validar(numero);
-    
-    
+
+
 });
 
 

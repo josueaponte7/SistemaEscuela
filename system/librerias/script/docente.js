@@ -235,7 +235,7 @@ $(document).ready(function() {
 
                 var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
                 $.post("../../controlador/Docente.php", $("#frmdocente").serialize(), function(respuesta) {
-                    
+
                     if (respuesta == 1) {
                         // obtener el nombre del sexo
                         var sexo = $('#sexo').find(' option').filter(":selected").text();
@@ -258,7 +258,7 @@ $(document).ready(function() {
                             // Agregar los datos a la tabla
                             var nacionalidad = $('#nacionalidad').find(' option').filter(":selected").text();
                             var cedula = nacionalidad + '-' + $('#cedula').val();
-                            
+
                             var newRow = TDocente.fnAddData([$check_cedula, cedula, $('#nombre').val(), $('#apellido').val(), actividad, modificar, eliminar]);
 
                             // Agregar el id a la fila estado
@@ -267,6 +267,18 @@ $(document).ready(function() {
 //                            $('td', nTr)[4].setAttribute('id', id_actividad);
                             $('#actividad').select2('val', 0);
                             $('div,#actividad').removeClass('has-error');
+
+                            $('input:text').val('');
+                            $('textarea').val('');
+                            $('$#nacionalidad').select2('val', 0);
+                            $('#estado').select2('val', 0);
+                            $('#municipio').select2('val', 0);
+                            $('#parroquia').select2('val', 0);
+                            $('#estatus').select2('val', 0);
+                            $('#sexo').select2('val', 0);
+                            $('#cod_telefono').select2('val', 0);
+                            $('#cod_celular').select2('val', 0);
+
                         });
                     }
                 });
@@ -302,7 +314,7 @@ $(document).ready(function() {
                                         var actividad = $('#actividad').find(' option').filter(":selected").text();
 //
 //                                        // obtener el id de la actividad
-                                       var id_actividad = $('#actividad').find(' option').filter(":selected").val();
+                                        var id_actividad = $('#actividad').find(' option').filter(":selected").val();
                                         //var actividad = $('#actividad').find('option:selected').text();
 
                                         // Modificar la fila 1 en la tabla 
@@ -312,8 +324,19 @@ $(document).ready(function() {
 
                                         // Modificar la fila 1 en la tabla 
                                         $("#tabla_docente tbody tr:eq(" + fila + ")").find("td:eq(4)").html(actividad);
-                                       $("#tabla_docente tbody tr:eq(" + fila + ")").find("td:eq(4)").attr('id', id_actividad);
+                                        $("#tabla_docente tbody tr:eq(" + fila + ")").find("td:eq(4)").attr('id', id_actividad);
+
                                         $('input[type="text"]').val('');
+                                        $('input:text').val('');
+                                        $('$#nacionalidad').select2('val', 0);
+                                        $('#estado').select2('val', 0);
+                                        $('#municipio').select2('val', 0);
+                                        $('#parroquia').select2('val', 0);
+                                        $('#estatus').select2('val', 0);
+                                        $('#sexo').select2('val', 0);
+                                        $('#cod_telefono').select2('val', 0);
+                                        $('#cod_celular').select2('val', 0);
+                                        $('#actividad').select2('val', 0);
                                     });
                                 }
                             });
@@ -340,8 +363,8 @@ $(document).ready(function() {
         var fila = padre.index();
 
         $('#guardar').text('Modificar');
-        
-        
+
+
 //        $('#cedula').val(cedula).prop('disabled',true);
         $('#cedula').val(cedula);
         $('#nombre').val(nombre);
@@ -351,7 +374,7 @@ $(document).ready(function() {
 
         $.post("../../controlador/Docente.php", {cedula: cedula, accion: 'BuscarDatos'}, function(respuesta) {
             var datos = respuesta.split(";");
-            
+
             $('#sexo').select2('val', datos[0]);
             $('#fech_naci').val(datos[1]);
             $('#edad').val(datos[2]);
@@ -365,7 +388,7 @@ $(document).ready(function() {
             var id_mun = datos[10];
             var id_parr = datos[11];
             $('#municipio').find('option:gt(0)').remove().end();
-            
+
             $.post('../../controlador/Municipio.php', {id_estado: datos[9], accion: 'buscarMun'}, function(respuesta) {
                 var option = "";
                 $.each(respuesta, function(i, obj) {
@@ -384,13 +407,13 @@ $(document).ready(function() {
                 $('#parroquia').append(option);
                 $('#parroquia').select2('val', id_parr);
             }, 'json');
-              $('#calle').val(datos[12]);
-              $('#casa').val(datos[13]);
-              $('#edificio').val(datos[14]);
-              $('#barrio').val(datos[15]);
-              $('#estatus').select2('val', datos[16]);
-              $('#actividad').select2('val', datos[17]);
-              $('#nacionalidad').select2('val', datos[18]);
+            $('#calle').val(datos[12]);
+            $('#casa').val(datos[13]);
+            $('#edificio').val(datos[14]);
+            $('#barrio').val(datos[15]);
+            $('#estatus').select2('val', datos[16]);
+            $('#actividad').select2('val', datos[17]);
+            $('#nacionalidad').select2('val', datos[18]);
 
             // crear el campo fila y añadir la fila
             var $fila = '<input type="hidden" id="fila"  value="' + fila + '" name="fila">';

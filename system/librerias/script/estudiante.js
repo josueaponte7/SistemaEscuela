@@ -47,8 +47,8 @@ $(document).ready(function() {
     $('#cod_telefono').select2();
     $('#cod_celular').select2();
     $('#estatus').select2();
-    $('#estatus').select2('val','1');
-    $('#estatus').select2('val','1');
+    $('#estatus').select2('val', '1');
+    $('#estatus').select2('val', '1');
     $('#estatus').select2("enable", false);
     $('.tooltip_ced').tooltip({
         html: true,
@@ -223,11 +223,11 @@ $(document).ready(function() {
         $('#registro_estudiante').slideDown(2000);
         $('#reporte_estudiante').slideUp(2000);
     });
-    
-     $('#todos').change(function() {
+
+    $('#todos').change(function() {
         var TotalRow = TEstudiante.fnGetData().length;
         var nodes = TEstudiante.fnGetNodes();
-        if(TotalRow > 0){
+        if (TotalRow > 0) {
             if ($(this).is(':checked')) {
                 $("input:checkbox[name='cedula[]']", nodes).prop('checked', true);
                 $('#imprimir').fadeIn(500);
@@ -251,7 +251,7 @@ $(document).ready(function() {
         }
     });
 
-    
+
     $('#imprimir').click(function() {
         var url = '../reportes/reporte_estudiante.php';
         if ($('#todos').is(':checked')) {
@@ -279,7 +279,7 @@ $(document).ready(function() {
         }
     });
 
-    $('table#tbl_repre').on('change','input:radio[name="representant"]', function() {
+    $('table#tbl_repre').on('change', 'input:radio[name="representant"]', function() {
         var $chkbox = $(this);
         $('input:checkbox[name="repre[]"]:checked').prop('disabled', false);
         $('input:radio[name="representant"]:checked').prop('checked', false);
@@ -288,9 +288,9 @@ $(document).ready(function() {
             var $actualrow = $chkbox.closest('tr');
             var $clonedRow = $actualrow.children('td');
             $clonedRow.find('input:checkbox[name="repre[]"]:checked').prop('disabled', true);
-        }  
+        }
     });
-    
+
     $('#guardar').click(function() {
         $('#representantes').remove();
         var checkboxValues = "";
@@ -316,7 +316,7 @@ $(document).ready(function() {
         $('#accion').val($(this).text());
         var modificar = '<img class="modificar" src="../../imagenes/edit.png" title="Modificar" style="cursor: pointer"  width="18" height="18" alt="Modificar"/>';
         var eliminar = '<img class="eliminar" src="../../imagenes/delete.png" title="Eliminar" style="cursor: pointer"  width="18" height="18"  alt="Eliminar"/>';
-        
+
         $('#estatus').select2("enable", true);
         $.post("../../controlador/Estudiante.php", $("#frmestudiante").serialize(), function(respuesta) {
             var estatus = $('#estatus').find('option').filter(":selected").text();
@@ -327,9 +327,9 @@ $(document).ready(function() {
                 var $check_cedula = '<input type="checkbox" name="cedula[] " value="' + cedula + '" />';
                 alert('Registro con Exito');
                 cedula = '<span class="sub-rayar tooltip_ced" data-original-title="" title="">' + cedula + '</span>';
-                
-                var nombres = $('#nombre').val() + ' ' +  $('#apellido').val();
-                TEstudiante.fnAddData([$check_cedula, cedula, nombres,estatus, nombre, modificar, eliminar]);
+
+                var nombres = $('#nombre').val() + ' ' + $('#apellido').val();
+                TEstudiante.fnAddData([$check_cedula, cedula, nombres, estatus, nombre, modificar, eliminar]);
                 $('table#tbl_repre').css('display', 'none');
                 TTbl_Repre.fnClearTable();
                 $('input[type="text"]').val('');
@@ -342,7 +342,7 @@ $(document).ready(function() {
         $('#registro_estudiante').slideUp(2000);
         $('#reporte_estudiante').slideDown(2000);
         $('input:text').val('');
-         $('textarea').val('');
+        $('textarea').val('');
         $('#estado').select2('val', 0);
         $('#municipio').select2('val', 0);
         $('#parroquia').select2('val', 0);
@@ -364,20 +364,20 @@ $(document).ready(function() {
         $('#cod_celular').select2('val', 0);
         $('#guardar').text('Guardar');
     });
-    
+
     var letra = ' abcdefghijklmnñopqrstuvwxyzáéíóú';
     $('#nombre').validar(letra);
     $('#apellido').validar(letra);
-    
+
     var numero = '0123456789';
     $('#telefono').validar(numero);
     $('#celular').validar(numero);
     $('#cedula').validar(numero);
-    
+
 //    var campo = 'abcdefghijklmnopqrstuvwxyzáéíóúñ#/º-1234567890';
 //    $('#direccion').validar(campo);
-    
+
 //     var valor = 'me@example.com';    
 //     $('#email').validar(valor);
-    
+
 });
