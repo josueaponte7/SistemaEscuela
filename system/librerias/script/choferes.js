@@ -143,12 +143,16 @@ $(document).ready(function() {
                         var nombres = $('#nombre').val() + ' ' + $('#apellido').val();
                         var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
 
-                        var newRow = TChoferes.fnAddData([$check_cedula, cedula, nombres, telefonos, modificar, eliminar]);
-                        $('input[type="text"]').val('');
+                        var newRow = TChoferes.fnAddData([$check_cedula, cedula, nombres, telefonos, modificar, eliminar]);                       
 
                         // Agregar el id a la fila estado
                         var oSettings = TChoferes.fnSettings();
                         var nTr = oSettings.aoData[ newRow[0] ].nTr;
+                        
+                         $('input[type="text"]').val('');
+                         $('#cod_telefono,#cod_celular').select2('val', 0);
+                         $('#nacionalidad').select2('val',1);
+                        
                     });
                 }
             });
@@ -177,9 +181,8 @@ $(document).ready(function() {
                                     $("#tabla_choferes tbody tr:eq(" + fila + ")").find("td:eq(3)").html(telefonos);
 
                                     $('input[type="text"]').val('');
-                                    $('input:text').val('');
-                                    $('#cod_telefono').select2('val', 0);
-                                    $('#cod_celular').select2('val', 0);
+                                    $('#cod_telefono,#cod_celular').select2('val', 0);
+                                    $('#nacionalidad').select2('val',1);
                                 });
                             }
                         });
@@ -237,15 +240,15 @@ $(document).ready(function() {
         $('#guardar').text('Guardar');
         $('#registro_choferes').slideUp(2000);
         $('#reporte_choferes').slideDown(2000);
-        $('input:text').val('');
-        $('#cod_telefono').select2('val', 0);
-        $('#cod_celular').select2('val', 0);
+        $('input[type="text"]').val('');
+        $('#cod_telefono,#cod_celular').select2('val', 0);
+        $('#nacionalidad').select2('val',1);
     });
 
     $('#limpiar').click(function() {
-        $('input:text').val('');
-        $('#cod_telefono').select2('val', 0);
-        $('#cod_celular').select2('val', 0);
+        $('input[type="text"]').val('');
+        $('#cod_telefono,#cod_celular').select2('val', 0);
+        $('#nacionalidad').select2('val',1);
         $('#guardar').text('Guardar');
     });
 
@@ -259,3 +262,4 @@ $(document).ready(function() {
     $('#cedula').validar(numero);
 
 });
+>>>>>>> 7fcf50fe4daf2bd28ce736001a25ed1613779293
