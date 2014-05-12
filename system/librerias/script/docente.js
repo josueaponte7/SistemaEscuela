@@ -440,4 +440,3 @@ $(document).ready(function() {
 
 });
 
->>>>>>> 7fcf50fe4daf2bd28ce736001a25ed1613779293

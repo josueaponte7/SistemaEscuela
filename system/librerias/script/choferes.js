@@ -262,4 +262,4 @@ $(document).ready(function() {
     $('#cedula').validar(numero);
 
 });
->>>>>>> 7fcf50fe4daf2bd28ce736001a25ed1613779293
+
