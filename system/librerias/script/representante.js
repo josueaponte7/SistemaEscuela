@@ -28,6 +28,7 @@ $(document).ready(function() {
     $('#sexo').select2();
     $('#cod_telefono').select2();
     $('#cod_celular').select2();
+    $('#condicion').select2();
 
     $('.tooltip_ced').tooltip({
         html: true,
@@ -338,6 +339,49 @@ $(document).ready(function() {
             var $cedula = '<input type="hidden" id="cedula"  value="' + cedula + '" name="cedula">';
             $($cedula).appendTo($('#frmrepresentante'));
         });
+    });
+    
+       // modificar las funciones de eliminar
+    $('table#tabla_representante').on('click', 'img.eliminar', function() {
+        $('#cedula').val(cedula);
+        var padre = $(this).closest('tr');
+
+        // obtener la fila clickeada
+        var nRow = $(this).parents('tr')[0];
+
+        window.parent.bootbox.confirm({
+            message: '¿Desea Eliminar el Registro?',
+            buttons: {
+                'cancel': {
+                    label: 'Cancelar',
+                    className: 'btn-default'
+                },
+                'confirm': {
+                    label: 'Eliminar',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function(result) {
+                if (result) {
+                    
+                    var cedula = padre.children('td:eq(1)').text();
+                    $.post("../../controlador/Representante.php", {'accion': 'Eliminar', 'cedula': cedula}, function(respuesta) {
+                        if (respuesta == 1) {
+
+                            window.parent.bootbox.alert("Eliminacion con Exito", function() {
+                                //borra la fila de la tabla
+                                TRepresentante.fnDeleteRow(nRow);
+
+                                $('input[type="text"]').val('');
+                            });
+
+
+                        }
+                    });
+                }
+            }
+        });
+
     });
 
     $('#salir').click(function() {        

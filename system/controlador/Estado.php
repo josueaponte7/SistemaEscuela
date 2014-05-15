@@ -5,33 +5,36 @@ require_once '../modelo/Estado.php';
 $obj = new Estado();
 if (!isset($_POST['accion'])) {
     
-} else { 
-    if(isset($_POST['nombre_estado'])){
+} else {
+    if (isset($_POST['nombre_estado'])) {
         $datos['nombre_estado'] = $_POST['nombre_estado'];
     }
-    if(isset($_POST['id_estado'])){
+    if (isset($_POST['id_estado'])) {
         $datos['id_estado'] = $_POST['id_estado'];
     }
-    
+
     switch ($_POST['accion']) {
         case 'Guardar':
             $resultado = $obj->add($datos);
-            if ($resultado) {
+            if ($resultado == 13) {
+                echo 13;
+            } else if ($resultado == TRUE) {
                 echo 1;
+            } else {
+                echo 15;
             }
-        break;
+            break;
         case 'Modificar':
             $resultado = $obj->update($datos);
             if ($resultado) {
                 echo 1;
             }
-        break;
+            break;
         case 'Eliminar':
             $resultado = $obj->delete($datos);
             if ($resultado) {
                 echo 1;
             }
-        break;
-
+            break;
     }
 }

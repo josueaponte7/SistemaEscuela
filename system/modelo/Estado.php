@@ -13,13 +13,18 @@ class Estado extends Seguridad
 
     public function add($datos)
     {
-                
+
         $nombre_estado = $datos['nombre_estado'];
         $id_estado     = $datos['id_estado'];
-        
-        $sql = "INSERT INTO estado(id_estado,nombre_estado)VALUES ($id_estado,'$nombre_estado');";
-      
-        $resultado = $this->ejecutar($sql);
+        $condicion     = "nombre_estado='$nombre_estado'";
+        $total         = $this->totalFilas('estado', 'nombre_estado', $condicion);
+        if ($total > 0) {
+            $resultado = 13;
+        } else {
+            $sql = "INSERT INTO estado(id_estado,nombre_estado)VALUES ($id_estado,'$nombre_estado');";
+
+            $resultado = $this->ejecutar($sql);
+        }
         return $resultado;
     }
 
@@ -28,8 +33,8 @@ class Estado extends Seguridad
 
         $nombre_estado = $datos['nombre_estado'];
         $id_estado     = $datos['id_estado'];
-        
-        $sql           = "UPDATE estado SET  nombre_estado = '$nombre_estado' WHERE id_estado = '$id_estado';";
+
+        $sql = "UPDATE estado SET  nombre_estado = '$nombre_estado' WHERE id_estado = '$id_estado';";
 
         $resultado = $this->ejecutar($sql);
         return $resultado;

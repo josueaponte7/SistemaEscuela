@@ -15,7 +15,7 @@ $datos['sql'] = "SELECT
                     CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = re.cod_telefono),re.telefono),
                     CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = re.cod_celular),re.celular)) AS telefonos,
                     (SELECT er.nombre FROM estatus_representante er WHERE re.id_estatus = er.id_estatus) AS estatus
-                   FROM representante re;";
+                   FROM representante re WHERE condicion = 1 ;";
 $resultado    = $obj_rep->getRepresentantes($datos);
 
 $_SESSION['menu']        = 'registros_representante';
@@ -45,7 +45,6 @@ $_SESSION['abrir']       = 'registros';
         <script type="text/javascript" src="../../librerias/js/validarcampos.js"></script>
         <script type="text/javascript" src="../../librerias/js/bootstrap-datepicker.js"></script>
         <script type="text/javascript" src="../../librerias/js/bootstrap-datepicker.es.js"></script>
-
 
         <script type="text/javascript" src="../../librerias/js/select2.js"></script>
         <script type="text/javascript" src="../../librerias/js/select2_locale_es.js"></script>
@@ -332,9 +331,10 @@ $_SESSION['abrir']       = 'registros';
                                         <input type="text" class="form-control input-sm" id="barrio" name="barrio" placeholder="Barrio o Urbanización">
                                     </div>
                                 </td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
+                                <td class="letras"></td>
+                                <td>
+                                    &nbsp;
+                                </td>
                             </tr>
 
                             <tr>
@@ -422,7 +422,7 @@ $_SESSION['abrir']       = 'registros';
                                         <input  type="text" class="form-control input-sm" id="fuente_ingreso" name="fuente_ingreso" placeholder="Fuente de Ingreso" maxlength="6">
                                     </div>
                                 </td>
-                                <td class="letras"> Email </td>
+                               <td class="letras"> Email </td>
                                 <td>
                                     <div class="form-group">
                                         <input type="text" class="form-control input-sm" id="email" name="email" placeholder="Email">
@@ -447,4 +447,3 @@ $_SESSION['abrir']       = 'registros';
         </div>
     </body>
 </html>
-

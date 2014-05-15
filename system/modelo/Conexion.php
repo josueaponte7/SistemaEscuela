@@ -100,9 +100,9 @@ class Conexion {
             return FALSE;
         } else {
             $resultado = 0;
-            $sql       = "SELECT $field FROM $table WHERE $conditions ORDER BY 1 DESC LIMIT 200";
+            $this->_sql       = "SELECT $field FROM $table WHERE $conditions ORDER BY 1 DESC LIMIT 200";
             $this->_query();
-            $this->_state_query = $this->_conn->query($sql);
+            $this->_state_query = $this->_conn->query($this->_sql );
             if ($this->_state_conn && $this->_state_query && $this->_state_query->num_rows > 0) {
                 $resultado = $this->_state_query->num_rows;
                 $this->_state_query->free();
