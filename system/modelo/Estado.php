@@ -16,6 +16,7 @@ class Estado extends Seguridad
 
         $nombre_estado = $datos['nombre_estado'];
         $id_estado     = $datos['id_estado'];
+        
         $condicion     = "nombre_estado='$nombre_estado'";
         $total         = $this->totalFilas('estado', 'nombre_estado', $condicion);
         if ($total > 0) {

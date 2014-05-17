@@ -95,21 +95,18 @@ $(document).ready(function() {
 
                 var $id_municipio = '<input type="hidden" id="id_municipio"  value="' + codigo + '" name="id_municipio">';
                 $($id_municipio).prependTo($('#frmmunicipio'));
-
+                
                 $.post("../../controlador/Municipio.php", $("#frmmunicipio").serialize(), function(respuesta) {
                     if (respuesta == 1) {
-
-
+                        
                         // obtener el nombre del estado 
                         var estado = $('#estado').find(' option').filter(":selected").text();
 
                         // obtener el id del estado
                         var id_estado = $('#estado').find(' option').filter(":selected").val();
-
-
+                        
                         window.parent.bootbox.alert("Registro con Exito", function() {
-                            // Agregar los datos a la tabla
-                            // Cambion aqui asigno TMunicipio.fnAddData a la variable newRow
+                             
                             var newRow = TMunicipio.fnAddData([$check_municipio, codigo, estado, $('#nombre_municipio').val(), modificar, eliminar]);
 
                             // Agregar el id a la fila estado
@@ -120,7 +117,15 @@ $(document).ready(function() {
                             $('input[type="text"]').val('');
                             $('#estado').select2('val', 0);
                         });
+                    } else if (respuesta == 13) {
+                        window.parent.bootbox.alert("El Municipio se encuentra Registrado", function() {
+                            $('#div_muni').addClass('has-error');
+                            $('#nombre_municipio').focus();
+                        });
+                    } else {
+                        window.parent.bootbox.alert("Ocurrio un error comuniquese con informatica", function() {
 
+                        });
                     }
                 });
             } else {

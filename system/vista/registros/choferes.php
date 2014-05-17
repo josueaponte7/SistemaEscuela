@@ -157,14 +157,14 @@ $_SESSION['abrir']       = 'registros';
                                                 ?>
                                             </select>
                                         </div>
-                                        <div class="form-group">
+                                        <div id="div_cedula" class="form-group">
                                             <input type="text" class="form-control input-sm" id="cedula" name="cedula" placeholder="Cédula" maxlength="8"/>
                                         </div>
                                     </div>
                                 </td>
                                 <td width="119" class="letras"> Nombre </td>
                                 <td width="272">
-                                    <div class="form-group">
+                                    <div id="div_nombre" class="form-group">
                                         <input  type="text" class="form-control  input-sm" id="nombre" name="nombre" placeholder="Nombre"/>
                                     </div>
                                 </td>
@@ -172,13 +172,13 @@ $_SESSION['abrir']       = 'registros';
                             <tr height="60">
                                 <td height="49" class="letras"> Apellido </td>
                                 <td>
-                                    <div class="form-group">
+                                    <div id="div_apellido" class="form-group">
                                         <input type="text" class="form-control  input-sm" id="apellido" name="apellido" placeholder="Apellido"/>
                                     </div>
                                 </td>
                                 <td class="letras"> Email </td>
                                 <td>
-                                    <div class="form-group">
+                                    <div id="div_email" class="form-group">
                                         <input type="text" class="form-control input-sm" id="email" name="email" placeholder="Email">
                                     </div>
                                 </td>
@@ -200,7 +200,7 @@ $_SESSION['abrir']       = 'registros';
                                                 ?>
                                             </select>
                                         </div>
-                                        <div class="form-group">
+                                        <div id="div_telefono" class="form-group">
                                             <input type="text" class="form-control input-sm" id="telefono" name="telefono" placeholder="Teléfono Hab.." maxlength="7"/>
                                         </div>
                                     </div>
@@ -222,7 +222,7 @@ $_SESSION['abrir']       = 'registros';
                                             </select>
 
                                         </div> 
-                                        <div class="form-group">
+                                        <div id="div_celular" class="form-group">
                                             <input  type="text" class="form-control input-sm" id="celular" name="celular" placeholder="Teléfono Celular" maxlength="7"/>
 
                                         </div> 
@@ -241,7 +241,7 @@ $_SESSION['abrir']       = 'registros';
                             <tr  height="45">
                                 <td class="letras"> Placa  </td>
                                 <td>
-                                    <div class="form-group">
+                                    <div id="div_placa" class="form-group">
                                         <input type="text" class="form-control  input-sm" id="placa" name="placa" placeholder="Placa"/>
                                     </div>
                                 </td>
@@ -249,7 +249,7 @@ $_SESSION['abrir']       = 'registros';
                             <tr height="35">
                                 <td class="letras"> Modelo </td>
                                 <td>
-                                    <div class="form-group">
+                                    <div id="div_modelo" class="form-group">
                                         <input type="text" class="form-control input-sm" id="modelo" name="modelo" placeholder="Modelo">
                                     </div>
                                 </td>
@@ -257,7 +257,7 @@ $_SESSION['abrir']       = 'registros';
                             <tr height="35">
                                 <td class="letras"> Color </td>
                                 <td>
-                                    <div class="form-group">
+                                    <div id="div_color" class="form-group">
                                         <input type="text" class="form-control input-sm" id="color" name="color" placeholder="Color">
                                     </div>
                                 </td>
