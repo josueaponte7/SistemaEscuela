@@ -234,8 +234,8 @@ $(document).ready(function() {
                 var cedula = parseInt(lastRow[1]) + 1;
 
                 var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
+                
                 $.post("../../controlador/Docente.php", $("#frmdocente").serialize(), function(respuesta) {
-
                     if (respuesta == 1) {
                         // obtener el nombre del sexo
                         var sexo = $('#sexo').find(' option').filter(":selected").text();
@@ -272,6 +272,15 @@ $(document).ready(function() {
                             $('textarea').val('');
                             $('#estado,#municipio,#parroquia,#estatus,#sexo,#cod_telefono,#cod_celular').select2('val', 0);
                             $('#nacionalidad').select2('val',1);
+                        });
+                    } else if (respuesta == 13) {
+                        window.parent.bootbox.alert("La Cédula se encuentra Registrada", function() {
+                            $('#div_cedula').addClass('has-error');
+                            $('#cedula').focus();
+                        });
+                    } else {
+                        window.parent.bootbox.alert("Ocurrio un error comuniquese con informatica", function() {
+
                         });
                     }
                 });

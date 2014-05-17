@@ -3,15 +3,18 @@
 $path = dirname(__FILE__);
 require_once "$path/Seguridad.php";
 
-class Representante extends Seguridad {
+class Representante extends Seguridad
+{
 
     private $_sql;
 
-    public function __construct() {
+    public function __construct()
+    {
         
     }
 
-    public function add($datos) {
+    public function add($datos)
+    {
 
         $nacionalidad   = $datos['nacionalidad'];
         $cedula         = $datos['cedula'];
@@ -36,10 +39,9 @@ class Representante extends Seguridad {
         $id_nivel       = $datos['id_nivel'];
         $id_profesion   = $datos['id_profesion'];
 
-
         $fech_naci = $this->formateaBD($fech_naci);
 
-       $sql = "INSERT INTO representante(nacionalidad, cedula, nombre,  apellido, email, fech_naci, lugar_naci, sexo, calle, casa, edificio,barrio,
+        $sql = "INSERT INTO representante(nacionalidad, cedula, nombre,  apellido, email, fech_naci, lugar_naci, sexo, calle, casa, edificio,barrio,
                            antecedente,fuente_ingreso, cod_telefono, telefono, cod_celular, celular, id_parroquia, id_estatus, id_nivel, id_profesion)               
                      VALUES ('$nacionalidad','$cedula', '$nombre', '$apellido','$email', '$fech_naci', '$lugar_naci', '$sexo', '$calle', '$casa',
                              '$edificio', '$barrio', '$antecedente', '$fuente_ingreso', '$cod_telefono', '$telefono', '$cod_celular', '$celular',
@@ -48,8 +50,9 @@ class Representante extends Seguridad {
         $resultado = $this->ejecutar($sql);
         return $resultado;
     }
-    
-        public function update($datos) {
+
+    public function update($datos)
+    {
 
         $nacionalidad   = $datos['nacionalidad'];
         $cedula         = $datos['cedula'];
@@ -76,7 +79,7 @@ class Representante extends Seguridad {
 
         $fech_naci = $this->formateaBD($fech_naci);
 
-      $sql = "UPDATE representante
+        $sql = "UPDATE representante
                     SET nacionalidad = '$nacionalidad',
                       nombre = '$nombre',
                       apellido = '$apellido',
@@ -103,10 +106,21 @@ class Representante extends Seguridad {
         $resultado = $this->ejecutar($sql);
         return $resultado;
     }
-    
-    
 
-    public function estatusRep($where = 1) {
+    public function delete($datos)
+    {
+
+        $dat_cedula = explode('-', $datos['cedula']);
+        $cedula     = $dat_cedula[1];
+
+        $sql = "UPDATE representante SET  condicion = 0 WHERE cedula = $cedula;";
+
+        $resultado = $this->ejecutar($sql);
+        return $resultado;
+    }
+
+    public function estatusRep($where = 1)
+    {
         $where = ' WHERE ' . $where;
         $sql   = "SELECT  id_estatus,  nombre FROM estatus_representante" . $where;
 
@@ -114,7 +128,8 @@ class Representante extends Seguridad {
         return $resultado;
     }
 
-    public function nivelInst($where = 1) {
+    public function nivelInst($where = 1)
+    {
         $where = ' WHERE ' . $where;
         $sql   = "SELECT  id_nivel,  nombre_nivel FROM nivel_academico" . $where;
 
@@ -122,7 +137,8 @@ class Representante extends Seguridad {
         return $resultado;
     }
 
-    public function Profesion($where = 1) {
+    public function Profesion($where = 1)
+    {
         $where = ' WHERE ' . $where;
         $sql   = "SELECT  id_profesion,  nombre_profesion FROM profesion" . $where;
 
@@ -130,7 +146,8 @@ class Representante extends Seguridad {
         return $resultado;
     }
 
-    public function getRepresentantes($opciones = array()) {
+    public function getRepresentantes($opciones = array())
+    {
 
         if (!isset($opciones['sql'])) {
             $default    = array('campos' => '*', 'condicion' => '1', 'ordenar' => '1', 'limite' => 200);

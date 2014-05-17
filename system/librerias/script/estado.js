@@ -21,7 +21,6 @@ $(document).ready(function() {
         $('#reporte_estado').slideUp(2000);
     });
 
-
     /**Los monta todos***/
     $('#todos').change(function() {
         var TotalRow = TEstado.fnGetData().length;
@@ -94,16 +93,24 @@ $(document).ready(function() {
                 var $check_estado = '<input type="checkbox" name="id_estado[]" value="' + codigo + '" />';
 
                 var $id_estado = '<input type="hidden" id="id_estado"  value="' + codigo + '" name="id_estado">';
-                $($id_estado).prependTo($('#frmestado'));                
-               
+                $($id_estado).prependTo($('#frmestado'));
+
 
                 $.post("../../controlador/Estado.php", $("#frmestado").serialize(), function(respuesta) {
                     if (respuesta == 1) {
-
                         window.parent.bootbox.alert("Registro con Exito", function() {
                             // Agregar los datos a la tabla
                             TEstado.fnAddData([$check_estado, codigo, $('#nombre_estado').val(), modificar, eliminar]);
                             $('input[type="text"]').val('');
+                        });
+                    } else if (respuesta == 13) {
+                        window.parent.bootbox.alert("El Estado se encuentra Registrado", function() {
+                            $('#div_estado').addClass('has-error');
+                            $('#nombre_estado').focus();
+                        });
+                    } else {
+                        window.parent.bootbox.alert("Ocurrio un error comuniquese con informatica", function() {
+
                         });
                     }
                 });
@@ -157,7 +164,6 @@ $(document).ready(function() {
         var id_estado = padre.children('td:eq(1)').text();
         var nombre_estado = padre.children('td:eq(2)').html();
 
-
         // obtener la fila a modificar
         var fila = padre.index();
 
@@ -174,7 +180,7 @@ $(document).ready(function() {
         $($id_estado).appendTo($('#frmestado'));
 
     });
-    
+
 
     // modificar las funciones de eliminar
     $('table#tabla_estado').on('click', 'img.eliminar', function() {
@@ -218,8 +224,7 @@ $(document).ready(function() {
         });
 
     });
-    
-    
+
     $('#salir').click(function() {
         $('#guardar').text('Guardar');
         $('#registro_estado').slideUp(2000);
@@ -236,5 +241,4 @@ $(document).ready(function() {
 
     var letra = ' abcdefghijklmnñopqrstuvwxyzáéíóú';
     $('#nombre_estado').validar(letra);
-
 });
