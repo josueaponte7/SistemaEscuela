@@ -231,11 +231,13 @@ $(document).ready(function() {
         $('#reporte_estado').slideDown(2000);
         $('#id_estado').remove();
         $('input:text').val('');
+        $('div').removeClass('has-error');
     });
 
     $('#limpiar').click(function() {
         $('#id_estado').remove();
         $('input:text').val('');
+        $('div').removeClass('has-error');
         $('#guardar').text('Guardar');
     });
 

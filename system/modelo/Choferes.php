@@ -25,19 +25,24 @@ class Choferes extends Seguridad {
         $modelo       = $datos['modelo'];
         $color        = $datos['color'];
         
-        $condicion     = "cedula='$cedula'";
+        $condicion     = "cedula='$cedula' AND nacionalidad=$nacionalidad";
         $total         = $this->totalFilas('chofer', 'cedula', $condicion);
         if ($total > 0) {
             $resultado = 13;
         } else {
             $sql = "INSERT INTO chofer(nacionalidad,cedula,nombre,apellido,email,cod_telefono,telefono, cod_celular,celular)
-                        VALUES ('$nacionalidad','$cedula','$nombre','$apellido','$email','$cod_telefono','$telefono','$cod_celular','$celular');";
+                               VALUES ('$nacionalidad','$cedula','$nombre','$apellido','$email','$cod_telefono','$telefono','$cod_celular','$celular');";
 
         $sql1 = "INSERT INTO automovil(placa,modelo,color,cedula_chofer)
                     VALUES ('$placa','$modelo','$color','$cedula');";
 
         $resultado = $this->ejecutar($sql);
-        $resultado = $this->ejecutar($sql1);
+            if ($resultado) {
+                $resultado = $this->ejecutar($sql1);
+                if($resultado){
+                    $resultado = 1;
+                }
+            }
         }
         return $resultado;
     }

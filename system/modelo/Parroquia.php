@@ -13,14 +13,28 @@ class Parroquia extends Municipio
 
     public function add($datos)
     {
-
+       
         $nombre_parroquia = $datos['nombre_parroquia'];
         $id_municipio     = $datos['id_municipio'];
         $id_parroquia     = $datos['id_parroquia'];
+        $id_estado     = $datos['id_estado'];
+        $sql_exis = "SELECT COUNT(p.id_parroquia) as total FROM parroquia AS p
+                     INNER JOIN municipio AS m ON p.id_municipio=m.id_municipio
+                     WHERE p.nombre_parroquia = '$nombre_parroquia' 
+                     AND p.id_municipio=$id_municipio 
+                     AND m.id_estado=$id_estado";
         
-       $sql = "INSERT INTO parroquia(id_parroquia ,nombre_parroquia, id_municipio)VALUES ($id_parroquia ,'$nombre_parroquia',$id_municipio);";
-
-        $resultado = $this->ejecutar($sql);
+        $result = $this->consultar_array($sql_exis);
+        $total  = $result[0]['total'];
+        if ($total > 0) {
+            $resultado = 13;
+        } else {
+            $sql = "INSERT INTO parroquia(id_parroquia ,nombre_parroquia, id_municipio)VALUES ($id_parroquia ,'$nombre_parroquia',$id_municipio);";
+            $resultado = $this->ejecutar($sql);
+            if($resultado){
+                $resultado = 1;
+            }
+        }
         return $resultado;
     }
 

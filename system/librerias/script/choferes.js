@@ -15,7 +15,9 @@ $(document).ready(function() {
         ]
     });
 
-    $('#nacionalidad').select2();
+    $('#nacionalidad').select2({
+        minimumResultsForSearch: -1
+    });
     $('#cod_telefono').select2();
     $('#cod_celular').select2();
 
@@ -189,7 +191,7 @@ $(document).ready(function() {
                     } else if (respuesta == 13) {
                         window.parent.bootbox.alert("La Cédula se encuentra Registrada", function() {
                             $('#div_cedula').addClass('has-error');
-                            $('#cedula').focus();
+                            $('#cedula').focus().select();
                         });
                     } else {
                         window.parent.bootbox.alert("Ocurrio un error comuniquese con informatica", function() {

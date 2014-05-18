@@ -447,8 +447,3 @@ $_SESSION['abrir']       = 'registros';
         </div>
     </body>
 </html>
-<<<<<<< HEAD
-
->>>>>>> 7fcf50fe4daf2bd28ce736001a25ed1613779293
-=======
->>>>>>> 287b2d82a1880b0f76d2b16dfba4a13ba33624b4

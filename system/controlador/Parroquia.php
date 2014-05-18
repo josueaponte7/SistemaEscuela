@@ -18,14 +18,18 @@ if (isset($_POST['accion'])) {
     if (isset($_POST['id_parroquia'])) {
         $datos['id_parroquia'] = $_POST['id_parroquia'];
     }
-
+    if (isset($_POST['estado'])) {
+        $datos['id_estado'] = $_POST['estado'];
+    }
     switch ($accion) {
         case 'Guardar':
             $resultado = $obj->add($datos);
-            if ($resultado) {
+            if ($resultado == 13) {
+                echo 13;
+            } else if ($resultado == 1) {
                 echo 1;
             } else {
-                echo 0;
+                echo 15;
             }
             break;
         case 'buscarParr':

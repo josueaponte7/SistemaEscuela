@@ -124,7 +124,7 @@ $_SESSION['abrir']       = 'registros';
                             <tr>                            
                                 <td width="125" class="letras"> Nombre de Centro </td>
                                 <td width="353">
-                                    <div id="div_servicio"class="form-group">
+                                    <div id="div_servicio" class="form-group">
                                         <input  type="text" class="form-control  input-sm" id="servicio" name="servicio" placeholder="Nombre de Centro de Salud P&uacute;blica"/>
                                     </div>
                                 </td>
@@ -207,7 +207,7 @@ $_SESSION['abrir']       = 'registros';
                                                 ?>
                                             </select>
                                         </div>
-                                        <div class="form-group">
+                                        <div  id="div_telefono" class="form-group">
                                             <input type="text" class="form-control input-sm" id="telefono" name="telefono" placeholder="Teléfono Ubicaci&oacute;n" maxlength="7"/>
                                         </div>
                                     </div>

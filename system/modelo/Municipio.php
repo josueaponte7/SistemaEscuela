@@ -19,7 +19,7 @@ class Municipio extends Estado
         $id_municipio     = $datos['id_municipio'];
         
 //        $condicion     = "nombre_municipio='$nombre_municipio' && id_estado='$id_estado'";
-        $condicion     = "nombre_municipio='$nombre_municipio'";
+        $condicion     = "nombre_municipio='$nombre_municipio AND id_estado= $id_estado'";
         $total         = $this->totalFilas('municipio', 'nombre_municipio', $condicion);
         if ($total > 0) {
             $resultado = 13;
@@ -27,6 +27,9 @@ class Municipio extends Estado
             $sql = "INSERT INTO municipio(id_municipio,nombre_municipio, id_estado)VALUES ($id_municipio,'$nombre_municipio', $id_estado);";
 
             $resultado = $this->ejecutar($sql);
+            if($resultado){
+                $resultado = 1;
+            }
         }
         return $resultado;
     }

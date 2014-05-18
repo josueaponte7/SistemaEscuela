@@ -25,6 +25,9 @@ class Estado extends Seguridad
             $sql = "INSERT INTO estado(id_estado,nombre_estado)VALUES ($id_estado,'$nombre_estado');";
 
             $resultado = $this->ejecutar($sql);
+            if($resultado){
+                $resultado = 1;
+            }
         }
         return $resultado;
     }

@@ -148,8 +148,16 @@ $(document).ready(function() {
                                 $('#municipio').select2('val', 0);
                                 $('#municipio').find('option:gt(0)').remove().end();
                             });
+                        } else if (respuesta == 13) {
+                            window.parent.bootbox.alert("La Parroquia se encuentra Registrada", function() {
+                                $('#div_parroquia').addClass('has-error');
+                                $('#nombre_parroquia').focus().select();
+                            });
+                        }
+                        else {
+                            window.parent.bootbox.alert("Ocurrio un error comuniquese con informatica", function() {
 
-
+                            });
                         }
                     });
                 }

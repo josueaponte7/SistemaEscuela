@@ -26,7 +26,7 @@ if (isset($_POST['accion'])) {
             $resultado = $obj->add($datos);
             if ($resultado == 13) {
                 echo 13;
-            } else if ($resultado == TRUE) {
+            } else if ($resultado == 1) {
                 echo 1;
             } else {
                 echo 15;
