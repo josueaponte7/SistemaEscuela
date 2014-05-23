@@ -25,7 +25,7 @@ class Choferes extends Seguridad {
         $modelo       = $datos['modelo'];
         $color        = $datos['color'];
         
-        $condicion     = "cedula='$cedula' AND nacionalidad=$nacionalidad";
+        $condicion     = "cedula = '$cedula' AND nacionalidad = $nacionalidad";
         $total         = $this->totalFilas('chofer', 'cedula', $condicion);
         if ($total > 0) {
             $resultado = 13;

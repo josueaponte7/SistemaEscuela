@@ -398,9 +398,9 @@ body
 #contenido3
 {
     display: inline-block;
-    margin: 20px 350px 0;
-    /*        background-color: red;*/
-    height: 250px;
+    margin: 20px 350px 0px 350px;
+/*            background-color: red;*/
+    height: 90px;
     width: 300px;
     float: left;
 }

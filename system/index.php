@@ -6,15 +6,15 @@ if (!isset($_SESSION['id_usuario'])) {
 } else {
     $nombres = $_SESSION['nombres'];
 }
-$menu_activo  = '';
-$height       = '700px';
-$heightifm    = '800px';
-$pagina       = 'titulo_pagina';
-$abrir        = 'registros';
-$abrir_reg    = 'in';
-$abrir_pro    = '';
-$abrir_rep    = '';
-$abrir_conf   = '';
+$menu_activo = '';
+$height      = '700px';
+$heightifm   = '800px';
+$pagina      = 'titulo_pagina';
+$abrir       = 'registros';
+$abrir_reg   = 'in';
+$abrir_pro   = '';
+$abrir_rep   = '';
+$abrir_conf  = '';
 
 $nosotros = 'NOSOTROS';
 $usuario  = 0;
@@ -33,25 +33,25 @@ if (isset($_SESSION['archivo_sys']) && isset($_SESSION['dir_sys'])) {
     $heightifm = $_SESSION['heightifm'];
     $abrir     = $_SESSION['abrir'];
     if ($abrir == 'registros') {
-        $abrir_reg    = 'in';
-        $abrir_pro    = '';
-        $abrir_rep    = '';
-        $abrir_conf   = '';
+        $abrir_reg  = 'in';
+        $abrir_pro  = '';
+        $abrir_rep  = '';
+        $abrir_conf = '';
     } else if ($abrir == 'procesos') {
-        $abrir_reg    = '';
-        $abrir_pro    = 'in';
-        $abrir_rep = '';
-        $abrir_conf   = '';
+        $abrir_reg  = '';
+        $abrir_pro  = 'in';
+        $abrir_rep  = '';
+        $abrir_conf = '';
     } else if ($abrir == 'reportes') {
-        $abrir_reg    = '';
-        $abrir_pro    = '';
-        $abrir_rep    = 'in';
-        $abrir_conf   = '';
+        $abrir_reg  = '';
+        $abrir_pro  = '';
+        $abrir_rep  = 'in';
+        $abrir_conf = '';
     } else if ($abrir == 'configuracion') {
-        $abrir_reg    = '';
-        $abrir_pro    = '';
-        $abrir_rep    = '';
-        $abrir_conf   = 'in';
+        $abrir_reg  = '';
+        $abrir_pro  = '';
+        $abrir_rep  = '';
+        $abrir_conf = 'in';
     }
 }
 ?>
@@ -119,10 +119,10 @@ if (isset($_SESSION['archivo_sys']) && isset($_SESSION['dir_sys'])) {
                         var heightifm = '540px';
 
                     }
-                       else if (archivo == 'programa_social' ) {
+                    else if (archivo == 'programa_social') {
                         var height = '880px';
                         var heightifm = '830px';
-                        
+
                     } else if (archivo == 'status_estudiante' || archivo == 'status_representante' || archivo == 'grupo_usuario'
                             || archivo == 'estado' || archivo == 'municipio' || archivo == 'parroquia'
                             || archivo == 'status_docente' || archivo == 'status_chofer' || archivo == 'tipo_servicio' || archivo == 'actividad'
@@ -230,9 +230,9 @@ if (isset($_SESSION['archivo_sys']) && isset($_SESSION['dir_sys'])) {
                         <li>
                             <span data-toggle="collapse" data-parent="#accordion" href="#procesos">PROCESOS</span>
                         </li>
-<!--                        <li>
-                            <span id="">REPORTES</span>
-                        </li>-->
+                        <!--                        <li>
+                                                    <span id="">REPORTES</span>
+                                                </li>-->
                         <li>
                             <span data-toggle="collapse" data-parent="#accordion" href="#reportes">REPORTES</span>
                         </li>
@@ -245,7 +245,7 @@ if (isset($_SESSION['archivo_sys']) && isset($_SESSION['dir_sys'])) {
             <div id="cuerpo">
                 <div id="sidebar-izquierdo">
                     <div class="menu_izquierdo panel-title" data-toggle="collapse" data-parent="#accordion" href="#registros" style="margin-top: 40px;">Registros</div>
-                    <div id="registros" class="panel-collapse collapse <?php echo $abrir_reg?>">
+                    <div id="registros" class="panel-collapse collapse <?php echo $abrir_reg ?>">
                         <div class="panel-body">
                             <div class="contenido_men_izq">
                                 <ul  style="list-style-type:none;">
@@ -254,13 +254,13 @@ if (isset($_SESSION['archivo_sys']) && isset($_SESSION['dir_sys'])) {
                                     <li id="registros_docente">Docentes</li>
                                     <li id="registros_choferes">Choferes</li>
                                     <li id="registros_servicio_salud">Servicios de Salud</li>
-<!--                                    <li id="registros_datos_generales" >Datos Generales</li>-->
+                                    <!--                                    <li id="registros_datos_generales" >Datos Generales</li>-->
                                 </ul>
                             </div>
                         </div>
                     </div>  
                     <div class="menu_izquierdo panel-title" data-toggle="collapse" data-parent="#accordion" href="#procesos" style="margin-top: 8px;">Procesos</div>
-                    <div id="procesos" class="panel-collapse collapse <?php echo $abrir_pro?>">
+                    <div id="procesos" class="panel-collapse collapse <?php echo $abrir_pro ?>">
                         <div class="panel-body">
                             <div class="contenido_men_izq">
                                 <ul  style="list-style-type:none;">
@@ -271,7 +271,7 @@ if (isset($_SESSION['archivo_sys']) && isset($_SESSION['dir_sys'])) {
                         </div>
                     </div>
                     <div class="menu_izquierdo panel-title" data-toggle="collapse" data-parent="#accordion" href="#reportes" style="margin-top: 8px;">Reportes</div>
-                    <div id="reportes" class="panel-collapse collapse <?php echo $abrir_rep?>">
+                    <div id="reportes" class="panel-collapse collapse <?php echo $abrir_rep ?>">
                         <div class="panel-body">
                             <div class="contenido_men_izq">
                                 <ul  style="list-style-type:none;">
@@ -285,7 +285,7 @@ if (isset($_SESSION['archivo_sys']) && isset($_SESSION['dir_sys'])) {
                         </div>
                     </div>
                     <div class="menu_izquierdo panel-title" data-toggle="collapse" data-parent="#accordion" href="#configuracion" style="margin-top: 8px;">Configuraci&oacute;n</div>
-                    <div id="configuracion" class="panel-collapse collapse <?php echo $abrir_conf?>">
+                    <div id="configuracion" class="panel-collapse collapse <?php echo $abrir_conf ?>">
                         <div class="panel-body">
                             <div class="contenido_men_izq">
                                 <ul  style="list-style-type:none;">
@@ -315,57 +315,57 @@ if (isset($_SESSION['archivo_sys']) && isset($_SESSION['dir_sys'])) {
             <div id="pie">
                 <img src="imagenes/bg_footer.jpg" style="height: 100px; width: 1027px; float: left;"/>
                 <div id="borde_negro">
-<!--                    <div id="contenido1">
-                        <a href="#">
-                            <img src="imagenes/logo_f.png"/>
-                        </a>
-                        <div id="menu_contenido1">
-                            <ul style="list-style-type:none;">
-                                <li>
-                                    <a href="#">nosotros</a>
-                                </li>
-                                <li>
-                                    <a href="#">noticias</a>
-                                </li>
-                                <li>
-                                    <a href="#">galerias</a>
-                                </li>
-                                <li>
-                                    <a href="#">contactenos</a>
-                                </li>
-                                <li>
-                                    <a href="#">iniciar sesi&oacute;n</a>
-                                </li>                                
-                            </ul>
-                        </div>
-                    </div>-->
-<!--                    <div id="contenido2">
-                        <h1 style="color: #fff;">cont&aacute;ctenos</h1>
-                        <form role="form" autocomplete="off">
-                            <div class="form-group">
-                                <input type="text" class="form-control input-sm" id="nombre_contacto" name="nombre_contacto" placeholder="Nombre y Apellido">
-                            </div>
-                            <div class="form-group">
-                                <input type="email" class="form-control input-sm" id="email_contacto" name="email_contacto" placeholder="Correo Electronico">
-                            </div>
-                            <div class="form-group">
-                                <textarea class="form-control input-sm" rows="5" id="mensaje_contacto" name="mensaje_contacto" placeholder="Mensaje"></textarea>
-                            </div>
-                            <input type="button" style="background-image: url('imagenes/boton_enviar.png');" value="Enviar"  name="enviar" id="enviar"/>
-                            <span class="requiere">*</span>
-                        </form>
-                    </div>-->
-                    <div id="contenido3">
-<!--                        <h1 style="color: #fff;">estamos en las redes sociales</h1>
-                        <img style="margin-left: 100px;" alt="" src="imagenes/facebook.png"/>
-                        <img alt="" src="imagenes/twitter.png"/>
-                        <h1 style="color: #fff; width: 350px; height: 5px; float: left; margin-left: -22px;">
-                            llame a nuestros
-                            <i style="font-family: Arial,'OpenSans',Tahoma,Geneva,sans-serif; font-size: 11px;">tel&eacute;fonos:</i>
-                        </h1>
-                        <div id="telf">
-                            <span style="margin-left: 76px;"> (0243) 235.56.72</span>
-                        </div>-->
+                    <!--                    <div id="contenido1">
+                                            <a href="#">
+                                                <img src="imagenes/logo_f.png"/>
+                                            </a>
+                                            <div id="menu_contenido1">
+                                                <ul style="list-style-type:none;">
+                                                    <li>
+                                                        <a href="#">nosotros</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">noticias</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">galerias</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">contactenos</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">iniciar sesi&oacute;n</a>
+                                                    </li>                                
+                                                </ul>
+                                            </div>
+                                        </div>-->
+                    <!--                    <div id="contenido2">
+                                            <h1 style="color: #fff;">cont&aacute;ctenos</h1>
+                                            <form role="form" autocomplete="off">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control input-sm" id="nombre_contacto" name="nombre_contacto" placeholder="Nombre y Apellido">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="email" class="form-control input-sm" id="email_contacto" name="email_contacto" placeholder="Correo Electronico">
+                                                </div>
+                                                <div class="form-group">
+                                                    <textarea class="form-control input-sm" rows="5" id="mensaje_contacto" name="mensaje_contacto" placeholder="Mensaje"></textarea>
+                                                </div>
+                                                <input type="button" style="background-image: url('imagenes/boton_enviar.png');" value="Enviar"  name="enviar" id="enviar"/>
+                                                <span class="requiere">*</span>
+                                            </form>
+                                        </div>-->
+                    <div id="contenido3" >
+                        <!--                        <h1 style="color: #fff;">estamos en las redes sociales</h1>
+                                                <img style="margin-left: 100px;" alt="" src="imagenes/facebook.png"/>
+                                                <img alt="" src="imagenes/twitter.png"/>
+                                                <h1 style="color: #fff; width: 350px; height: 5px; float: left; margin-left: -22px;">
+                                                    llame a nuestros
+                                                    <i style="font-family: Arial,'OpenSans',Tahoma,Geneva,sans-serif; font-size: 11px;">tel&eacute;fonos:</i>
+                                                </h1>
+                                                <div id="telf">
+                                                    <span style="margin-left: 76px;"> (0243) 235.56.72</span>
+                                                </div>-->
                         <div class="derechos">
                             Copyright &COPY; 2014 Escuela T&eacute;cnica Robinsoniana y Zamorana para la Diversidad Funcional San Carlos
                             <br>
@@ -375,7 +375,7 @@ if (isset($_SESSION['archivo_sys']) && isset($_SESSION['dir_sys'])) {
                     </div>
                 </div>  
             </div>
-<!--            <div id="separacion_pie"></div>-->
+            <!--            <div id="separacion_pie"></div>-->
         </div>        
     </body>
 </html>        

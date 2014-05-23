@@ -16,7 +16,9 @@ $(document).ready(function() {
         ]
     });
 
-    $('#nacionalidad').select2();
+    $('#nacionalidad').select2({
+        minimumResultsForSearch: -1
+    });
     $('#estado').select2();
     $('#municipio').select2();
     $('#parroquia').select2();
@@ -66,58 +68,8 @@ $(document).ready(function() {
         $('.dropdown').hide();
     });
 
-
-    /***Combos **/
-    $('#estado').change(function() {
-        var id = $(this).val();
-        $('#municipio').find('option:gt(0)').remove().end();
-        if (id > 0) {
-            $.post('../../controlador/Municipio.php', {id_estado: id, accion: 'buscarMun'}, function(respuesta) {
-                var option = "";
-                $.each(respuesta, function(i, obj) {
-                    option += "<option value=" + obj.codigo + ">" + obj.descripcion + "</option>";
-                });
-                $('#municipio').append(option);
-            }, 'json');
-        }
-    });
-
-    $('#municipio').change(function() {
-        var id = $(this).val();
-        $('#parroquia').find('option:gt(0)').remove().end();
-        $.post('../../controlador/Parroquia.php', {id_municipio: id, accion: 'buscarParr'}, function(respuesta) {
-            var option = "";
-            $.each(respuesta, function(i, obj) {
-                option += "<option value=" + obj.codigo + ">" + obj.descripcion + "</option>";
-            });
-            $('#parroquia').append(option);
-        }, 'json');
-    });
-
-    /****Calendario*****/
-    $('#fech_naci').datepicker({
-        language: "es",
-        format: 'dd/mm/yyyy',
-        startDate: "-60y",
-        endDate: "-20y",
-        autoclose: true
-    }).on('changeDate', function(ev) {
-        var edad = calcular_edad($(this).val());
-        $('#edad').val(edad);
-        $('#div_fech_naci').removeClass('has-error');
-
-    });
-
-    $('#registrar').click(function() {
-        $('#registro_docente').slideDown(2000);
-        $('#reporte_docente').slideUp(2000, function() {
-            $('#cedula').focus();
-            $('#nacionalidad').addClass();
-        });
-
-    });
-
-    /**Los monta todos***/
+    
+     /**Los monta todos***/
     $('#todos').change(function() {
         var TotalRow = TDocente.fnGetData().length;
         var nodes = TDocente.fnGetNodes();
@@ -165,62 +117,139 @@ $(document).ready(function() {
         }
         window.open(url);
     });
+    
+    $('#registrar').click(function() {
+        $('#registro_docente').slideDown(2000);
+        $('#reporte_docente').slideUp(2000);
+    });
+    
+    /***Combos **/
+    $('#estado').change(function() {
+        var id = $(this).val();
+        $('#municipio').find('option:gt(0)').remove().end();
+        if (id > 0) {
+            $.post('../../controlador/Municipio.php', {id_estado: id, accion: 'buscarMun'}, function(respuesta) {
+                var option = "";
+                $.each(respuesta, function(i, obj) {
+                    option += "<option value=" + obj.codigo + ">" + obj.descripcion + "</option>";
+                });
+                $('#municipio').append(option);
+            }, 'json');
+        }
+    });
 
+    $('#municipio').change(function() {
+        var id = $(this).val();
+        $('#parroquia').find('option:gt(0)').remove().end();
+        $.post('../../controlador/Parroquia.php', {id_municipio: id, accion: 'buscarParr'}, function(respuesta) {
+            var option = "";
+            $.each(respuesta, function(i, obj) {
+                option += "<option value=" + obj.codigo + ">" + obj.descripcion + "</option>";
+            });
+            $('#parroquia').append(option);
+        }, 'json');
+    });
+
+    /****Calendario*****/
+    $('#fech_naci').datepicker({
+        language: "es",
+        format: 'dd/mm/yyyy',
+        startDate: "-60y",
+        endDate: "-20y",
+        autoclose: true
+    }).on('changeDate', function(ev) {
+        var edad = calcular_edad($(this).val());
+        $('#edad').val(edad);
+        $('#div_fech_naci').removeClass('has-error');
+
+    });
+
+    
     $('#guardar').click(function() {
-        if ($('#cedula').val() === null || $('#cedula').val().length === 0 || /^\s+$/.test($('#cedula').val())) {
+          
+         //window.parent.$("body").animate({scrollTop:0}, 'slow'); 
+        if ($('#nacionalidad').val() == 0) {
+            window.parent.scrollTo(0,300);
+            $('#nacionalidad').addClass('has-error');
+            //$('#nacionalidad').focus();
+        }else if ($('#cedula').val() === null || $('#cedula').val().length === 0 || /^\s+$/.test($('#cedula').val())) {
+            window.parent.scrollTo(0,300);
             $('#div_cedula').addClass('has-error');
             $('#cedula').focus();
         } else if ($('#nombre').val() === null || $('#nombre').val().length === 0 || /^\s+$/.test($('#nombre').val())) {
+            window.parent.scrollTo(0,300);
             $('#div_nombre').addClass('has-error');
             $('#nombre').focus();
         } else if ($('#apellido').val() === null || $('#apellido').val().length === 0 || /^\s+$/.test($('#apellido').val())) {
+            window.parent.scrollTo(0,300);;
             $('#div_apellido').addClass('has-error');
             $('#apellido').focus();
-        } else if ($('#email').val() === null || $('#email').val().length === 0 || /^\s+$/.test($('#email').val())) {
-            $('#div_email').addClass('has-error');
-            $('#email').focus();
-        } else if ($('#fech_naci').val() === null || $('#fech_naci').val().length === 0 || /^\s+$/.test($('#fech_naci').val())) {
+        }else if ($('#sexo').val() == 0) {
+            window.parent.scrollTo(0,300);
+            $('#sexo').addClass('has-error');
+         } else if ($('#fech_naci').val() === null || $('#fech_naci').val().length === 0 || /^\s+$/.test($('#fech_naci').val())) {
+            window.parent.scrollTo(0,300);
             $('#div_fech_naci').addClass('has-error');
             $('#fech_naci').focus();
-        } else if ($('#lugar_naci').val() === null || $('#lugar_naci').val().length === 0 || /^\s+$/.test($('#lugar_naci').val())) {
-            $('#div_lugar_naci').addClass('has-error');
-            $('#lugar_naci').focus();
-        } else if ($('#sexo').val() == 0) {
-            $('#sexo').addClass('has-error');
-            $('#sexo').focus();
+        } else if ($('#email').val() === null || $('#email').val().length === 0 || /^\s+$/.test($('#email').val())) {
+            window.parent.scrollTo(0,300);
+            $('#div_email').addClass('has-error');
+            $('#email').focus();
+        }else if ($('#cod_telefono').val() == 0) {
+            window.parent.scrollTo(0,300);
+            $('#cod_telefono').addClass('has-error');
+            $('#cod_telefono').focus();
         } else if ($('#telefono').val() === null || $('#telefono').val().length === 0 || /^\s+$/.test($('#telefono').val())) {
+            window.parent.scrollTo(0,300);
             $('#div_telefono').addClass('has-error');
             $('#telefono').focus();
+        } else if ($('#telefono').val() === null || $('#telefono').val().length === 0 || /^\s+$/.test($('#telefono').val())) {
+            window.parent.scrollTo(0,300);
+            $('#div_telefono').addClass('has-error');
+            $('#telefono').focus();
+        }else if ($('#cod_celular').val() == 0) {
+            window.parent.scrollTo(0,600);
+            $('#cod_celular').addClass('has-error');
+            $('#cod_celular').focus();
         } else if ($('#celular').val() === null || $('#celular').val().length === 0 || /^\s+$/.test($('#celular').val())) {
+            window.parent.scrollTo(0,600);
             $('#div_celular').addClass('has-error');
             $('#celular').focus();
+        } else if ($('#lugar_naci').val() === null || $('#lugar_naci').val().length === 0 || /^\s+$/.test($('#lugar_naci').val())) {
+            window.parent.scrollTo(0,600);
+            $('#div_lugar_naci').addClass('has-error');
+            $('#lugar_naci').focus();
         } else if ($('#estado').val() == 0) {
+            window.parent.scrollTo(0,700);
             $('#estado').addClass('has-error');
-            $('#estado').focus();
         } else if ($('#municipio').val() == 0) {
+            window.parent.scrollTo(0,700);
             $('#municipio').addClass('has-error');
-            $('#municipio').focus();
         } else if ($('#parroquia').val() == 0) {
+            window.parent.scrollTo(0,700);
             $('#parroquia').addClass('has-error');
-            $('#parroquia').focus();
         } else if ($('#calle').val() === null || $('#calle').val().length === 0 || /^\s+$/.test($('#calle').val())) {
+            window.parent.scrollTo(0,700);
             $('#div_calle').addClass('has-error');
             $('#calle').focus();
         } else if ($('#casa').val() === null || $('#casa').val().length === 0 || /^\s+$/.test($('#casa').val())) {
+            window.parent.scrollTo(0,700);
             $('#div_casa').addClass('has-error');
             $('#casa').focus();
         } else if ($('#edificio').val() === null || $('#edificio').val().length === 0 || /^\s+$/.test($('#edificio').val())) {
+            window.parent.scrollTo(0,700);
             $('#div_edificio').addClass('has-error');
             $('#edificio').focus();
         } else if ($('#barrio').val() === null || $('#barrio').val().length === 0 || /^\s+$/.test($('#barrio').val())) {
+            window.parent.scrollTo(0,700);
             $('#div_barrio').addClass('has-error');
             $('#barrio').focus();
         } else if ($('#estatus').val() == 0) {
             $('#estatus').addClass('has-error');
-            $('#estatus').focus();
+            window.parent.scrollTo(0,700);
         } else if ($('#actividad').val() == 0) {
             $('#actividad').addClass('has-error');
-            $('#actividad').focus();
+             window.parent.scrollTo(0,700);
         } else {
             $('#accion').val($(this).text());
             // Imagenes de modificar y eliminar
@@ -275,8 +304,9 @@ $(document).ready(function() {
                         });
                     } else if (respuesta == 13) {
                         window.parent.bootbox.alert("La Cédula se encuentra Registrada", function() {
+                            window.parent.scrollTo(0,300);
                             $('#div_cedula').addClass('has-error');
-                            $('#cedula').focus();
+                            $('#cedula').focus().select();
                         });
                     } else {
                         window.parent.bootbox.alert("Ocurrio un error comuniquese con informatica", function() {

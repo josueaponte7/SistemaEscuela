@@ -35,7 +35,7 @@ class Docente extends Seguridad
         $id_actividad = $datos['id_actividad'];
         $fech_naci    = $this->formateaBD($fech_naci);
 
-        $condicion = "cedula='$cedula'";
+       $condicion     = "cedula = '$cedula' AND nacionalidad = $nacionalidad";
         $total     = $this->totalFilas('docente', 'cedula', $condicion);
         if ($total > 0) {
             $resultado = 13;

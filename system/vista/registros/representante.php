@@ -153,6 +153,7 @@ $_SESSION['abrir']       = 'registros';
                                     <div class="form-inline">
                                         <div class="form-group">
                                             <select name="nacionalidad" class="form-control input-sm select2 " id="nacionalidad" style="float: left;">
+                                                <option value="0">N</option>
                                                 <?php
                                                 $resul_naci = $obj_repre->codNacionalidad();
                                                 for ($i = 0; $i < count($resul_naci); $i++) {
