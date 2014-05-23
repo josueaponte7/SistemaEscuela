@@ -23,8 +23,10 @@ class Inscripcion extends Preinscripcion
         $cedula_chofer        = $datos['cedula_chofer'];
         $id_tipo              = $datos['id_tipo'];
         $tipo                 = $datos['tipo_estudiante'];
+        
         $sql_del       = "DELETE FROM inscripcion WHERE cedula_estudiante = $cedula";
         $resultado_del = $this->ejecutar($sql_del);
+        
         if ($resultado_del) {
             $sql       = "INSERT INTO inscripcion(cedula_estudiante,fecha_inscripcion,id_anio,id_actividad,area_descripcion,cedula_representante,id_medio,tipo,cedula_chofer)
                     VALUES ($cedula,CURRENT_DATE,$id_anio,$id_actividad,'$area',$cedula_representante,$id_medio,'$tipo',$cedula_chofer);";

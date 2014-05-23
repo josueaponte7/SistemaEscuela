@@ -18,6 +18,7 @@ $(document).ready(function() {
     $('#nacionalidad').select2({
         minimumResultsForSearch: -1
     });
+    
     $('#cod_telefono').select2();
     $('#cod_celular').select2();
 
