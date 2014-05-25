@@ -5,13 +5,11 @@
         <group>
             <file>file:/C:/wamp/www/SistemaEscuela/system/vista/registros/estudiante.php</file>
             <file>file:/C:/wamp/www/SistemaEscuela/system/librerias/script/estudiante.js</file>
-            <file>file:/C:/wamp/www/SistemaEscuela/system/vista/reportes/reporte_estudiante.php</file>
             <file>file:/C:/wamp/www/SistemaEscuela/system/vista/registros/representante.php</file>
             <file>file:/C:/wamp/www/SistemaEscuela/system/vista/registros/choferes.php</file>
-            <file>file:/C:/wamp/www/SistemaEscuela/system/librerias/script/servicio_salud.js</file>
             <file>file:/C:/wamp/www/SistemaEscuela/system/librerias/script/choferes.js</file>
-            <file>file:/C:/wamp/www/SistemaEscuela/system/librerias/script/docente.js</file>
             <file>file:/C:/wamp/www/SistemaEscuela/system/vista/registros/docente.php</file>
+            <file>file:/C:/wamp/www/SistemaEscuela/system/librerias/script/docente.js</file>
             <file>file:/C:/wamp/www/SistemaEscuela/system/librerias/script/representante.js</file>
         </group>
     </open-files>

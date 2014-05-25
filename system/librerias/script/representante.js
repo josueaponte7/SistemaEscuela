@@ -163,7 +163,6 @@ $(document).ready(function() {
 
     $('#guardar').click(function() {
         //window.parent.$("body").animate({scrollTop:0}, 'slow'); 
-        alert($('#nacionalidad').find('option:selected').val());
         if ($('#nacionalidad').val() == 0) {
             /*********window parent para que la validacion llegue a su lugar********/
             window.parent.scrollTo(0, 300);
