@@ -183,7 +183,6 @@ $(document).ready(function() {
             $('#nombre').focus();
         } else if ($('#apellido').val() === null || $('#apellido').val().length === 0 || /^\s+$/.test($('#apellido').val())) {
             window.parent.scrollTo(0, 300);
-            ;
             $('#div_apellido').addClass('has-error');
             $('#apellido').focus();
         } else if ($('#sexo').val() == 0) {
@@ -201,11 +200,7 @@ $(document).ready(function() {
             window.parent.scrollTo(0, 300);
             $('#cod_telefono').addClass('has-error');
             $('#cod_telefono').focus();
-        } else if ($('#telefono').val() === null || $('#telefono').val().length === 0 || /^\s+$/.test($('#telefono').val())) {
-            window.parent.scrollTo(0, 300);
-            $('#div_telefono').addClass('has-error');
-            $('#telefono').focus();
-        } else if ($('#telefono').val() === null || $('#telefono').val().length === 0 || /^\s+$/.test($('#telefono').val())) {
+        }  else if ($('#telefono').val() === null || $('#telefono').val().length === 0 || /^\s+$/.test($('#telefono').val())) {
             window.parent.scrollTo(0, 300);
             $('#div_telefono').addClass('has-error');
             $('#telefono').focus();

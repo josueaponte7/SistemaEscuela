@@ -272,7 +272,7 @@ $_SESSION['abrir']       = 'registros';
                             <tr height="60">
                                 <td height="52" class="letras">Lugar de Naci:</td>
                                 <td colspan="3">
-                                    <div class="form-group">
+                                    <div id="div_lugar_naci" class="form-group">
                                         <textarea style="width:99% !important" id="lugar_naci" class="form-control input-sm" placeholder="Lugar de Nacimiento" rows="1" name="lugar_naci"></textarea>
                                     </div>
                                 </td>
