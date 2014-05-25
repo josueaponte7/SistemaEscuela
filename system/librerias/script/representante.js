@@ -162,21 +162,22 @@ $(document).ready(function() {
     });
 
     $('#guardar').click(function() {
+        var edificio = $('#edificio').val()
         //window.parent.$("body").animate({scrollTop:0}, 'slow'); 
         if ($('#nacionalidad').val() == 0) {
             /*********window parent para que la validacion llegue a su lugar********/
             window.parent.scrollTo(0, 300);
             $('#nacionalidad').addClass('has-error');
             //$('#nacionalidad').focus();
-        } else if ($('#cedula').val() === null || $('#cedula').val().length === 0 || /^\s+$/.test($('#cedula').val()) || $('#cedula').val().length < 7) {
+        } else if ($('#cedula').val() === null || $('#cedula').val().length === 0 || $('#cedula').val().length < 7 || /^\s+$/.test($('#cedula').val()) || $('#cedula').val().length < 7) {
             window.parent.scrollTo(0, 300);
             $('#div_cedula').addClass('has-error');
             $('#cedula').focus();
-        } else if ($('#nombre').val() === null || $('#nombre').val().length === 0 || /^\s+$/.test($('#nombre').val())) {
+        } else if ($('#nombre').val() === null || $('#nombre').val().length === 0 || $('#nombre').val().length < 2 || /^\s+$/.test($('#nombre').val())) {
             window.parent.scrollTo(0, 300);
             $('#div_nombre').addClass('has-error');
             $('#nombre').focus();
-        } else if ($('#apellido').val() === null || $('#apellido').val().length === 0 || /^\s+$/.test($('#apellido').val())) {
+        } else if ($('#apellido').val() === null || $('#apellido').val().length === 0 || $('#apellido').val().length < 2 || /^\s+$/.test($('#apellido').val())) {
             window.parent.scrollTo(0, 300);
             $('#div_apellido').addClass('has-error');
             $('#apellido').focus();
@@ -191,7 +192,7 @@ $(document).ready(function() {
             window.parent.scrollTo(0, 300);
             $('#cod_telefono').addClass('has-error');
             $('#cod_telefono').focus();
-        } else if ($('#telefono').val() === null || $('#telefono').val().length === 0 || /^\s+$/.test($('#telefono').val())) {
+        } else if ($('#telefono').val() === null || $('#telefono').val().length === 0 || $('#telefono').val().length < 7 || /^\s+$/.test($('#telefono').val())) {
             window.parent.scrollTo(0, 300);
             $('#div_telefono').addClass('has-error');
             $('#telefono').focus();
@@ -199,11 +200,11 @@ $(document).ready(function() {
             window.parent.scrollTo(0, 600);
             $('#cod_celular').addClass('has-error');
             $('#cod_celular').focus();
-        } else if ($('#celular').val() === null || $('#celular').val().length === 0 || /^\s+$/.test($('#celular').val())) {
+        } else if ($('#celular').val() === null || $('#celular').val().length === 0 || $('#celular').val().length < 7 || /^\s+$/.test($('#celular').val())) {
             window.parent.scrollTo(0, 600);
             $('#div_celular').addClass('has-error');
             $('#celular').focus();
-        } else if ($('#lugar_naci').val() === null || $('#lugar_naci').val().length === 0 || /^\s+$/.test($('#lugar_naci').val())) {
+        } else if ($('#lugar_naci').val() === null || $('#lugar_naci').val().length === 0 || $('#lugar_naci').val().length < 5 || /^\s+$/.test($('#lugar_naci').val())) {
             window.parent.scrollTo(0, 600);
             $('#div_lugar_naci').addClass('has-error');
             $('#lugar_naci').focus();
@@ -216,19 +217,15 @@ $(document).ready(function() {
         } else if ($('#parroquia').val() == 0) {
             window.parent.scrollTo(0, 700);
             $('#parroquia').addClass('has-error');
-        } else if ($('#calle').val() === null || $('#calle').val().length === 0 || /^\s+$/.test($('#calle').val())) {
+        } else if ($('#calle').val() === null || $('#calle').val().length === 0 || $('#calle').val().length < 1 || /^\s+$/.test($('#calle').val())) {
             window.parent.scrollTo(0, 700);
             $('#div_calle').addClass('has-error');
             $('#calle').focus();
-        } else if ($('#casa').val() === null || $('#casa').val().length === 0 || /^\s+$/.test($('#casa').val())) {
+        } else if ($('#casa').val() === null || $('#casa').val().length === 0 || $('#casa').val().length < 2 || /^\s+$/.test($('#casa').val())) {
             window.parent.scrollTo(0, 700);
             $('#div_casa').addClass('has-error');
             $('#casa').focus();
-        } else if ($('#edificio').val() === null || $('#edificio').val().length === 0 || /^\s+$/.test($('#edificio').val())) {
-            window.parent.scrollTo(0, 700);
-            $('#div_edificio').addClass('has-error');
-            $('#edificio').focus();
-        } else if ($('#barrio').val() === null || $('#barrio').val().length === 0 || /^\s+$/.test($('#barrio').val())) {
+        }else if ($('#barrio').val() === null || $('#barrio').val().length === 0 || $('#barrio').val().length < 5 || /^\s+$/.test($('#barrio').val())) {
             window.parent.scrollTo(0, 700);
             $('#div_barrio').addClass('has-error');
             $('#barrio').focus();

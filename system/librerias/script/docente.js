@@ -131,7 +131,8 @@ $(document).ready(function() {
     /***Combos **/
     $('#estado').change(function() {
         var id = $(this).val();
-        $('#municipio').find('option:gt(0)').remove().end();
+        $('#municipio,#parroquia').select2('val', 0);
+        $('#municipio,#parroquia').find('option:gt(0)').remove().end();
         if (id > 0) {
             $.post('../../controlador/Municipio.php', {id_estado: id, accion: 'buscarMun'}, function(respuesta) {
                 var option = "";
@@ -145,6 +146,7 @@ $(document).ready(function() {
 
     $('#municipio').change(function() {
         var id = $(this).val();
+        $('#parroquia').select2('val', 0);
         $('#parroquia').find('option:gt(0)').remove().end();
         $.post('../../controlador/Parroquia.php', {id_municipio: id, accion: 'buscarParr'}, function(respuesta) {
             var option = "";
@@ -230,11 +232,11 @@ $(document).ready(function() {
         } else if ($('#parroquia').val() == 0) {
             window.parent.scrollTo(0, 700);
             $('#parroquia').addClass('has-error');
-        } else if ($('#calle').val() === null || $('#calle').val().length === 0 || /^\s+$/.test($('#calle').val())) {
+        } else if ($('#calle').val() === null || $('#calle').val().length === 0 || $('#calle').val().length < 1 || /^\s+$/.test($('#calle').val())) {
             window.parent.scrollTo(0, 700);
             $('#div_calle').addClass('has-error');
             $('#calle').focus();
-        } else if ($('#casa').val() === null || $('#casa').val().length === 0 || $('#casa').val().length < 5 || /^\s+$/.test($('#casa').val())) {
+        } else if ($('#casa').val() === null || $('#casa').val().length === 0 || $('#casa').val().length < 2 || /^\s+$/.test($('#casa').val())) {
             window.parent.scrollTo(0, 700);
             $('#div_casa').addClass('has-error');
             $('#casa').focus();
@@ -304,6 +306,7 @@ $(document).ready(function() {
                             $('input:text').val('');
                             $('textarea').val('');
                             $('#estado,#municipio,#parroquia,#estatus,#sexo,#cod_telefono,#cod_celular').select2('val', 0);
+                            $('#municipio,#parroquia').find('option:gt(0)').remove().end();
                             $('#nacionalidad').select2('val', 1);
                         });
                     } else if (respuesta == 13) {
@@ -365,6 +368,7 @@ $(document).ready(function() {
                                         $('input[type="text"]').val('');
                                         $('textarea').val('');
                                         $('#estado,#municipio,#parroquia,#estatus,#sexo,#cod_telefono,#cod_celular,#actividad').select2('val', 0);
+                                        $('#municipio,#parroquia').find('option:gt(0)').remove().end();
                                         $('#nacionalidad').select2('val', 1);
                                     });
                                 }
@@ -460,6 +464,7 @@ $(document).ready(function() {
         $('input:text').val('');
         $('textarea').val('');
         $('#estado,#municipio,#parroquia,#estatus,#sexo,#cod_telefono,#cod_celular,#actividad').select2('val', 0);
+        $('#municipio,#parroquia').find('option:gt(0)').remove().end();
         $('#nacionalidad').select2('val', 0);
     });
 
@@ -467,6 +472,7 @@ $(document).ready(function() {
         $('input:text').val('');
         $('textarea').val('');
         $('#estado,#municipio,#parroquia,#estatus,#sexo,#cod_telefono,#cod_celular,#actividad').select2('val', 0);
+        $('#municipio,#parroquia').find('option:gt(0)').remove().end();
         $('#nacionalidad').select2('val', 0);
         $('#guardar').text('Guardar');
     });
