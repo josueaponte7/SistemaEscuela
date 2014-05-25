@@ -240,6 +240,10 @@ $(document).ready(function() {
             window.parent.scrollTo(0, 700);
             $('#div_casa').addClass('has-error');
             $('#casa').focus();
+        } else if ($('#edificio').val().length > 0   && $('#edificio').val().length < 2 ) {
+            window.parent.scrollTo(0, 700);
+            $('#div_edificio').addClass('has-error');
+            $('#edificio').focus();
         }else if ($('#barrio').val() === null || $('#barrio').val().length === 0 || $('#barrio').val().length < 5 || /^\s+$/.test($('#barrio').val())) {
             window.parent.scrollTo(0, 700);
             $('#div_barrio').addClass('has-error');
