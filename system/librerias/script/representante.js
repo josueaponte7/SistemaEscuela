@@ -168,7 +168,7 @@ $(document).ready(function() {
             window.parent.scrollTo(0, 300);
             $('#nacionalidad').addClass('has-error');
             //$('#nacionalidad').focus();
-        } else if ($('#cedula').val() === null || $('#cedula').val().length === 0 || /^\s+$/.test($('#cedula').val())) {
+        } else if ($('#cedula').val() === null || $('#cedula').val().length === 0 || /^\s+$/.test($('#cedula').val()) || $('#cedula').val().length < 7) {
             window.parent.scrollTo(0, 300);
             $('#div_cedula').addClass('has-error');
             $('#cedula').focus();
@@ -236,21 +236,16 @@ $(document).ready(function() {
             $('#estatus').addClass('has-error');
             window.parent.scrollTo(0, 700);
         } else if ($('#antecedente').val() === null || $('#antecedente').val().length === 0 || /^\s+$/.test($('#antecedente').val())) {
-            window.parent.scrollTo(0, 700);
             $('#div_antecedente').addClass('has-error');
             $('#antecedente').focus();
         } else if ($('#nivel_inst').val() == 0) {
             $('#nivel_inst').addClass('has-error');
-            window.parent.scrollTo(0, 700);
         } else if ($('#profesion').val() == 0) {
             $('#profesion').addClass('has-error');
-            window.parent.scrollTo(0, 700);
         } else if ($('#fuente_ingreso').val() === null || $('#fuente_ingreso').val().length === 0 || /^\s+$/.test($('#fuente_ingreso').val())) {
-            window.parent.scrollTo(0, 700);
             $('#div_fuente_ingreso').addClass('has-error');
             $('#fuente_ingreso').focus();
         } else if ($('#email').val() === null || $('#email').val().length === 0 || /^\s+$/.test($('#email').val())) {
-            window.parent.scrollTo(0, 700);
             $('#div_email').addClass('has-error');
             $('#email').focus();
         } else {
@@ -299,6 +294,16 @@ $(document).ready(function() {
                             $('textarea').val('');
                             $('#estado,#municipio,#parroquia,#estatus,#sexo,#cod_telefono,#cod_celular,#nivel_inst,#profesion').select2('val', 0);
                             $('#nacionalidad').select2('val', 1);
+                        });
+                    }else if (respuesta == 13) {
+                        window.parent.bootbox.alert("La Cédula se encuentra Registrada", function() {
+                            window.parent.scrollTo(0, 300);
+                            $('#div_cedula').addClass('has-error');
+                            $('#cedula').focus().select();
+                        });
+                    }else {
+                        window.parent.bootbox.alert("Ocurrio un error comuniquese con informatica", function() {
+
                         });
                     }
                 });
@@ -493,5 +498,6 @@ $(document).ready(function() {
         $('#estado,#municipio,#parroquia,#estatus,#sexo,#cod_telefono,#cod_celular,#nivel_inst,#profesion').select2('val', 0);
         $('#nacionalidad').select2('val', 0);
         $('#guardar').text('Guardar');
+        $('div').removeClass('has-error');
     });
 });

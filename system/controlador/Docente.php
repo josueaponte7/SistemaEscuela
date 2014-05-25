@@ -73,7 +73,7 @@ if (isset($_POST['accion'])) {
             } else {
                 echo 15;
             }
-            break;
+        break;
         case 'Modificar':
             $resultado = $obj->update($datos);
             if ($resultado) {

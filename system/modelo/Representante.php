@@ -40,7 +40,14 @@ class Representante extends Seguridad
         $id_profesion   = $datos['id_profesion'];
 
         $fech_naci = $this->formateaBD($fech_naci);
-
+        
+        
+        $condicion = "cedula = '$cedula' AND nacionalidad = $nacionalidad";
+        $total     = $this->totalFilas('representante', 'cedula', $condicion);
+        
+        if ($total > 0) {
+            $resultado = 13;
+        } else{
         $sql = "INSERT INTO representante(nacionalidad, cedula, nombre,  apellido, email, fech_naci, lugar_naci, sexo, calle, casa, edificio,barrio,
                            antecedente,fuente_ingreso, cod_telefono, telefono, cod_celular, celular, id_parroquia, id_estatus, id_nivel, id_profesion)               
                      VALUES ('$nacionalidad','$cedula', '$nombre', '$apellido','$email', '$fech_naci', '$lugar_naci', '$sexo', '$calle', '$casa',
@@ -48,6 +55,7 @@ class Representante extends Seguridad
                              '$id_parroquia', '$id_estatus','$id_nivel', '$id_profesion');";
 
         $resultado = $this->ejecutar($sql);
+        }
         return $resultado;
     }
 

@@ -243,7 +243,7 @@ $_SESSION['abrir']       = 'registros';
                                 <td class="letras"> Placa  </td>
                                 <td>
                                     <div id="div_placa" class="form-group">
-                                        <input type="text" class="form-control  input-sm" id="placa" name="placa" placeholder="Placa"/>
+                                        <input type="text" class="form-control  input-sm" id="placa" name="placa" placeholder="Placa" maxlength="8"/>
                                     </div>
                                 </td>
                             </tr>

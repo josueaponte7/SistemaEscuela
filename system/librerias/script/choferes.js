@@ -18,13 +18,18 @@ $(document).ready(function() {
     $('#cod_telefono,#cod_celular').select2();
 
     var letra = ' abcdefghijklmnñopqrstuvwxyzáéíóú';
-    $('#nombre, #apellido').validar(letra);
+    $('#nombre, #apellido,#modelo,#color').validar(letra);
 
     var numero = '0123456789';
     $('#telefono, #celular, #cedula').validar(numero);
-    $('#celular').validar(numero);
-    $('#cedula').validar(numero);
-
+    
+    var placa = '0123456789abcdefghijklmnopqrstuvwxyz';
+    $('#placa').validar(placa);
+    
+    
+    var correo = '0123456789abcdefghijklmnopqrstuvwxyz_-.#$&*@';
+    $('#email').validar(correo);
+    
     $('#nacionalidad').select2({
         minimumResultsForSearch: -1
     });
@@ -127,32 +132,35 @@ $(document).ready(function() {
 
     /********Proceso de registro*************/
     $('#guardar').click(function() {
-
+        var val_correo = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
         if ($('#nacionalidad').val() == 0) {
             $('#nacionalidad').addClass('has-error');
-            $('#nacionalidad').focus();
-        } else if ($('#cedula').val() === null || $('#cedula').val().length === 0 || /^\s+$/.test($('#cedula').val())) {
+        } else if ($('#cedula').val() === null || $('#cedula').val().length === 0 || $('#cedula').val().length < 7 || /^\s+$/.test($('#cedula').val())) {
             $('#div_cedula').addClass('has-error');
             $('#cedula').focus();
-        } else if ($('#nombre').val() === null || $('#nombre').val().length === 0 || /^\s+$/.test($('#nombre').val())) {
+        } else if ($('#nombre').val() === null || $('#nombre').val().length === 0 || $('#nombre').val().length < 2 || /^\s+$/.test($('#nombre').val())) {
             $('#div_nombre').addClass('has-error');
             $('#nombre').focus();
-        } else if ($('#apellido').val() === null || $('#apellido').val().length === 0 || /^\s+$/.test($('#apellido').val())) {
+        } else if ($('#apellido').val() === null || $('#apellido').val().length === 0 || $('#apellido').val().length < 2 || /^\s+$/.test($('#apellido').val())) {
             $('#div_apellido').addClass('has-error');
             $('#apellido').focus();
-        } else if ($('#email').val() === null || $('#email').val().length === 0 || /^\s+$/.test($('#email').val())) {
+        } else if ($('#email').val() === null || $('#email').val().length === 0 || /^\s+$/.test($('#email').val()) || !val_correo.test($('#email').val())) {
             $('#div_email').addClass('has-error');
             $('#email').focus();
-        } else if ($('#telefono').val() === null || $('#telefono').val().length === 0 || /^\s+$/.test($('#telefono').val())) {
+        }else  if ($('#cod_telefono').val() == 0) {
+            $('#cod_telefono').addClass('has-error');
+        } else if ($('#telefono').val() === null || $('#telefono').val().length === 0 || $('#telefono').val().length < 7  || /^\s+$/.test($('#telefono').val())) {
             $('#div_telefono').addClass('has-error');
             $('#telefono').focus();
-        } else if ($('#celular').val() === null || $('#celular').val().length === 0 || /^\s+$/.test($('#celular').val())) {
+        }else  if ($('#cod_celular').val() == 0) {
+            $('#cod_celular').addClass('has-error');
+        } else if ($('#celular').val() === null || $('#celular').val().length === 0 || $('#celular').val().length < 7 || /^\s+$/.test($('#celular').val())) {
             $('#div_celular').addClass('has-error');
             $('#celular').focus();
-        } else if ($('#placa').val() === null || $('#placa').val().length === 0 || /^\s+$/.test($('#placa').val())) {
+        } else if ($('#placa').val() === null || $('#placa').val().length === 0 || $('#placa').val().length < 8 || /^\s+$/.test($('#placa').val())) {
             $('#div_placa').addClass('has-error');
             $('#placa').focus();
-        } else if ($('#modelo').val() === null || $('#modelo').val().length === 0 || /^\s+$/.test($('#modelo').val())) {
+        } else if ($('#modelo').val() === null || $('#modelo').val().length === 0  || /^\s+$/.test($('#modelo').val())) {
             $('#div_modelo').addClass('has-error');
             $('#modelo').focus();
         } else if ($('#color').val() === null || $('#color').val().length === 0 || /^\s+$/.test($('#color').val())) {
