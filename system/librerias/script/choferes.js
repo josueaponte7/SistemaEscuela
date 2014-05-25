@@ -308,6 +308,7 @@ $(document).ready(function() {
         $('#cod_telefono,#cod_celular').select2('val', 0);
         $('#nacionalidad').select2('val', 0);
         $('#guardar').text('Guardar');
+        
     });
 });
 
