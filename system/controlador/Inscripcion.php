@@ -38,11 +38,6 @@ if (isset($_POST['accion'])) {
     
     
     // Datos Generales
-    
-    
-    
-    
-    
    
     if (isset($_POST['mision'])) {
         $datos['mision'] = $_POST['mision'];

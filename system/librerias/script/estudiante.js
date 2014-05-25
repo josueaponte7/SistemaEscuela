@@ -50,6 +50,7 @@ $(document).ready(function() {
     $('#estatus').select2('val', '1');
     $('#estatus').select2('val', '1');
     $('#estatus').select2("enable", false);
+    
     $('.tooltip_ced').tooltip({
         html: true,
         placement: 'bottom',
@@ -363,11 +364,5 @@ $(document).ready(function() {
     $('#telefono').validar(numero);
     $('#celular').validar(numero);
     $('#cedula').validar(numero);
-
-//    var campo = 'abcdefghijklmnopqrstuvwxyzáéíóúñ#/º-1234567890';
-//    $('#direccion').validar(campo);
-
-//     var valor = 'me@example.com';    
-//     $('#email').validar(valor);
 
 });

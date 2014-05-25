@@ -1,5 +1,6 @@
 <?php
 require_once './tcpdf/tcpdf.php';
+
 class MyClass extends TCPDF
 {
 

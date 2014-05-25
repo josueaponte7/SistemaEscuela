@@ -19,6 +19,7 @@ $(document).ready(function() {
     $('#nacionalidad').select2({
         minimumResultsForSearch: -1
     });
+    
     $('#estado').select2();
     $('#municipio').select2();
     $('#parroquia').select2();

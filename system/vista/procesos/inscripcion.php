@@ -1014,7 +1014,7 @@ $_SESSION['abrir']       = 'procesos';
                             </tr>
                             <tr>
                                 <td colspan="2" align="center">&nbsp;</td>
-                            </tr>
+                            </tr>                        
                     </table>
                 </div>
             </div>   
