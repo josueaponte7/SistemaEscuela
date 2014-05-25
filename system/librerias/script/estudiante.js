@@ -50,6 +50,7 @@ $(document).ready(function() {
     $('#estatus').select2('val', '1');
     $('#estatus').select2('val', '1');
     $('#estatus').select2("enable", false);
+    
     $('.tooltip_ced').tooltip({
         html: true,
         placement: 'bottom',

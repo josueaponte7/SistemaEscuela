@@ -19,8 +19,8 @@ $resul_serviciosa = $obj_salud->getServicio($d_serviciosa);
 $_SESSION['menu']        = 'registros_servicio_salud';
 $_SESSION['dir_sys']     = 'registros';
 $_SESSION['archivo_sys'] = 'servicio_salud';
-$_SESSION['height']      = '610px';
-$_SESSION['heightifm']   = '570px';
+$_SESSION['height']      = '770px';
+$_SESSION['heightifm']   = '720px';
 $_SESSION['abrir']       = 'registros';
 ?>
 

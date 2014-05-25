@@ -111,8 +111,8 @@ if (isset($_SESSION['archivo_sys']) && isset($_SESSION['dir_sys'])) {
                         var heightifm = '720px';
 
                     } else if (archivo == 'servicio_salud') {
-                        var height = '610px';
-                        var heightifm = '570px';
+                        var height = '770px';
+                        var heightifm = '720px';
 
                     } else if (archivo == 'usuario' || archivo == 'preinscripcion') {
                         var height = '700px';

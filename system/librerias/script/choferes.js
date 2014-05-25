@@ -14,14 +14,21 @@ $(document).ready(function() {
             {"sWidth": "4%", "bSortable": false, "sClass": "center sorting_false", "bSearchable": false}
         ]
     });
+    
+        $('#cod_telefono,#cod_celular').select2();
+//    $('#cod_celular').select2();
+    
+    var letra = ' abcdefghijklmnñopqrstuvwxyzáéíóú';
+    $('#nombre, #apellido').validar(letra);
+
+    var numero = '0123456789';
+    $('#telefono, #celular, #cedula').validar(numero);
+    $('#celular').validar(numero);
+    $('#cedula').validar(numero);
 
     $('#nacionalidad').select2({
         minimumResultsForSearch: -1
-    });
-    
-    $('#cod_telefono').select2();
-    $('#cod_celular').select2();
-
+    });  
     $('#registrar').click(function() {
         $('#registro_choferes').slideDown(2000);
         $('#reporte_choferes').slideUp(2000);
@@ -46,6 +53,7 @@ $(document).ready(function() {
         });
     });
 
+    /**********Para ver los datos en una palnilla para imprimir aqui seria ver_datos_cheferes.php*****************/
     $contextMenu.on("click", "span", function() {
         var url = 'vista/registros/ver_datos_representante.php';
         parent.$.fancybox.open({
@@ -67,6 +75,7 @@ $(document).ready(function() {
         $('.dropdown').hide();
     });
 
+    /**********Generar el listado de reporte en PDF*****************/
     /**Los monta todos***/
     $('#todos').change(function() {
         var TotalRow = TChoferes.fnGetData().length;
@@ -116,6 +125,7 @@ $(document).ready(function() {
         window.open(url);
     });
 
+    /********Proceso de registro*************/
     $('#guardar').click(function() {
         
         if ($('#nacionalidad').val() == 0) {
@@ -238,6 +248,7 @@ $(document).ready(function() {
     });
 
 
+    /********Proceso de modificacion*************/
     $('table#tabla_choferes').on('click', 'img.modificar', function() {
 
         // borra el campo fila
@@ -281,6 +292,8 @@ $(document).ready(function() {
         });
     });
 
+    /********Proceso de eliminacion por construir*************/
+
     $('#salir').click(function() {
         $('#guardar').text('Guardar');
         $('#registro_choferes').slideUp(2000);
@@ -296,15 +309,5 @@ $(document).ready(function() {
         $('#nacionalidad').select2('val', 1);
         $('#guardar').text('Guardar');
     });
-
-    var letra = ' abcdefghijklmnñopqrstuvwxyzáéíóú';
-    $('#nombre').validar(letra);
-    $('#apellido').validar(letra);
-
-    var numero = '0123456789';
-    $('#telefono').validar(numero);
-    $('#celular').validar(numero);
-    $('#cedula').validar(numero);
-
 });
 
