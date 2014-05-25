@@ -102,7 +102,7 @@ $_SESSION['abrir']       = 'registros';
                                     <td>
                                         <input type="checkbox" id="<?php echo $resultado[$i]['cedula']; ?>" name="cedula[]" value="<?php echo $resultado[$i]['cedula']; ?>" />
                                     </td>
-                                    <td><span class="sub-rayar tooltip_ced"><?php echo $resultado[$i]['cedula'] ?></span></td>
+                                    <td><?php echo $resultado[$i]['cedula'] ?></td>
                                     <td><?php echo $resultado[$i]['nombre'] ?></td>
                                     <td><?php echo $resultado[$i]['apellido'] ?></td>
                                     <td><?php echo $resultado[$i]['actividad'] ?></td>
@@ -119,8 +119,8 @@ $_SESSION['abrir']       = 'registros';
                         ?>
                     </tbody>
                 </table>
-                <!-- Menu desplegable al hacer click sobre la cedula --->
 
+                <!-- Menu desplegable al hacer click sobre la cedula --->
                 <button type="button" id="imprimir" class="btn btn-default btn-sm" style="margin-top:5%;margin-left: 25%;display: none;color:#2781D5" >Generar Listado</button>
                 <div id="contextMenu" class="dropdown clearfix">
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:block;position:static;margin-bottom:5px;">

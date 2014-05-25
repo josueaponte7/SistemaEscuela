@@ -39,18 +39,22 @@ $(document).ready(function() {
         ]
     });
 
-    $('#nacionalidad').select2();
-    $('#estado').select2();
-    $('#municipio').select2();
-    $('#id_parroquia').select2();
-    $('#sexo').select2();
-    $('#cod_telefono').select2();
-    $('#cod_celular').select2();
+    $('#nacionalidad').select2({
+        minimumResultsForSearch: -1
+    });
+
+    $('#estado, #municipio, #id_parroquia, #sexo, #cod_telefono, #cod_celular').select2();
     $('#estatus').select2();
     $('#estatus').select2('val', '1');
     $('#estatus').select2('val', '1');
     $('#estatus').select2("enable", false);
-    
+
+    var letra = ' abcdefghijklmnñopqrstuvwxyzáéíóú';
+    $('#nombre, #apellido').validar(letra);
+
+    var numero = '0123456789';
+    $('#telefono, #celular, #cedula').validar(numero);
+
     $('.tooltip_ced').tooltip({
         html: true,
         placement: 'bottom',
@@ -74,8 +78,12 @@ $(document).ready(function() {
         title: 'Eliminar'
     });
 
-    /***Combos **/
+    $('#registrar').click(function() {
+        $('#registro_estudiante').slideDown(2000);
+        $('#reporte_estudiante').slideUp(2000);
+    });
 
+    /***Combos **/
     $('#estado').change(function() {
         var id = $(this).val();
         $('#municipio').find('option:gt(0)').remove().end();
@@ -169,7 +177,6 @@ $(document).ready(function() {
         var message = "Cedula:'" + cedula + "'\n"
         message += "Click:'" + $(this).attr('id') + "'";
 
-
         var accion = $(this).attr('id');
         url = 'vista/registros/ver_datos_representante.php';
         var width = '50%';
@@ -220,11 +227,7 @@ $(document).ready(function() {
         });
     });
 
-    $('#registrar').click(function() {
-        $('#registro_estudiante').slideDown(2000);
-        $('#reporte_estudiante').slideUp(2000);
-    });
-
+    /**Los monta todos***/
     $('#todos').change(function() {
         var TotalRow = TEstudiante.fnGetData().length;
         var nodes = TEstudiante.fnGetNodes();
@@ -239,6 +242,7 @@ $(document).ready(function() {
         }
     });
 
+    /***Monta de uno***/
     $('input:checkbox[name="cedula[]"]').change(function() {
         $('#todos').prop('checked', false);
         var nodes = TEstudiante.fnGetNodes();
@@ -252,7 +256,7 @@ $(document).ready(function() {
         }
     });
 
-
+    /****Imprimi el reporte***/
     $('#imprimir').click(function() {
         var url = '../reportes/reporte_estudiante.php';
         if ($('#todos').is(':checked')) {
@@ -272,7 +276,6 @@ $(document).ready(function() {
         }
         window.open(url);
     });
-
 
     $('table#tbl_repre').on('change', 'input:checkbox[name="repre[]"]', function() {
         if (!$(this).is(':checked')) {
@@ -309,33 +312,43 @@ $(document).ready(function() {
             }
             checkboxValues += $chkbox.val() + ';' + repre + ';' + represen + ",";
         });
+
 //eliminamos la última coma.
         checkboxValues = checkboxValues.substring(0, checkboxValues.length - 1);
         var texto_salida = checkboxValues.replace(/;undefined/g, ";0");
         var $representantes = '<input type="hidden" id="representantes"  value="' + texto_salida + '" name="representantes">';
         $($representantes).appendTo($(this));
-        $('#accion').val($(this).text());
-        var modificar = '<img class="modificar" src="../../imagenes/edit.png" title="Modificar" style="cursor: pointer"  width="18" height="18" alt="Modificar"/>';
-        var eliminar = '<img class="eliminar" src="../../imagenes/delete.png" title="Eliminar" style="cursor: pointer"  width="18" height="18"  alt="Eliminar"/>';
 
-        $('#estatus').select2("enable", true);
-        $.post("../../controlador/Estudiante.php", $("#frmestudiante").serialize(), function(respuesta) {
-            var estatus = $('#estatus').find('option').filter(":selected").text();
-            $('#estatus').select2("enable", false);
-            if (respuesta == 1) {
-                var nacionalidad = $('#nacionalidad').find('option').filter(":selected").text();
-                var cedula = nacionalidad + '-' + $('#cedula').val();
-                var $check_cedula = '<input type="checkbox" name="cedula[] " value="' + cedula + '" />';
-                alert('Registro con Exito');
-                cedula = '<span class="sub-rayar tooltip_ced" data-original-title="" title="">' + cedula + '</span>';
+        //window.parent.$("body").animate({scrollTop:0}, 'slow'); 
+        if ($('#nacionalidad').val() == 0) {
+            /*********window parent para que la validacion llegue a su lugar********/
+            window.parent.scrollTo(0, 300);  
+            $('#nacionalidad').addClass('has-error');
+            //$('#nacionalidad').focus();                    
+        } else {
+            $('#accion').val($(this).text());
+            var modificar = '<img class="modificar" src="../../imagenes/edit.png" title="Modificar" style="cursor: pointer"  width="18" height="18" alt="Modificar"/>';
+            var eliminar = '<img class="eliminar" src="../../imagenes/delete.png" title="Eliminar" style="cursor: pointer"  width="18" height="18"  alt="Eliminar"/>';
 
-                var nombres = $('#nombre').val() + ' ' + $('#apellido').val();
-                TEstudiante.fnAddData([$check_cedula, cedula, nombres, estatus, nombre, modificar, eliminar]);
-                $('table#tbl_repre').css('display', 'none');
-                TTbl_Repre.fnClearTable();
-                $('input[type="text"]').val('');
-            }
-        });
+            $('#estatus').select2("enable", true);
+            $.post("../../controlador/Estudiante.php", $("#frmestudiante").serialize(), function(respuesta) {
+                var estatus = $('#estatus').find('option').filter(":selected").text();
+                $('#estatus').select2("enable", false);
+                if (respuesta == 1) {
+                    var nacionalidad = $('#nacionalidad').find('option').filter(":selected").text();
+                    var cedula = nacionalidad + '-' + $('#cedula').val();
+                    var $check_cedula = '<input type="checkbox" name="cedula[] " value="' + cedula + '" />';
+                    alert('Registro con Exito');
+                    cedula = '<span class="sub-rayar tooltip_ced" data-original-title="" title="">' + cedula + '</span>';
+
+                    var nombres = $('#nombre').val() + ' ' + $('#apellido').val();
+                    TEstudiante.fnAddData([$check_cedula, cedula, nombres, estatus, nombre, modificar, eliminar]);
+                    $('table#tbl_repre').css('display', 'none');
+                    TTbl_Repre.fnClearTable();
+                    $('input[type="text"]').val('');
+                }
+            });
+        }
     });
 
     $('#salir').click(function() {
@@ -345,24 +358,15 @@ $(document).ready(function() {
         $('input:text').val('');
         $('textarea').val('');
         $('#estado,#municipio,#parroquia,#estatus,#sexo,#cod_telefono,#cod_celular,#nivel_inst,#profesion').select2('val', 0);
-        $('#nacionalidad').select2('val',1);
+        $('#nacionalidad').select2('val', 0);
     });
 
     $('#limpiar').click(function() {
         $('input:text').val('');
         $('textarea').val('');
         $('#estado,#municipio,#parroquia,#estatus,#sexo,#cod_telefono,#cod_celular,#nivel_inst,#profesion').select2('val', 0);
-        $('#nacionalidad').select2('val',1);
+        $('#nacionalidad').select2('val', 0);
         $('#guardar').text('Guardar');
     });
-
-    var letra = ' abcdefghijklmnñopqrstuvwxyzáéíóú';
-    $('#nombre').validar(letra);
-    $('#apellido').validar(letra);
-
-    var numero = '0123456789';
-    $('#telefono').validar(numero);
-    $('#celular').validar(numero);
-    $('#cedula').validar(numero);
 
 });

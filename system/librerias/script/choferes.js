@@ -14,10 +14,9 @@ $(document).ready(function() {
             {"sWidth": "4%", "bSortable": false, "sClass": "center sorting_false", "bSearchable": false}
         ]
     });
-    
-        $('#cod_telefono,#cod_celular').select2();
-//    $('#cod_celular').select2();
-    
+
+    $('#cod_telefono,#cod_celular').select2();
+
     var letra = ' abcdefghijklmnñopqrstuvwxyzáéíóú';
     $('#nombre, #apellido').validar(letra);
 
@@ -28,7 +27,8 @@ $(document).ready(function() {
 
     $('#nacionalidad').select2({
         minimumResultsForSearch: -1
-    });  
+    });
+    
     $('#registrar').click(function() {
         $('#registro_choferes').slideDown(2000);
         $('#reporte_choferes').slideUp(2000);
@@ -127,14 +127,14 @@ $(document).ready(function() {
 
     /********Proceso de registro*************/
     $('#guardar').click(function() {
-        
+
         if ($('#nacionalidad').val() == 0) {
             $('#nacionalidad').addClass('has-error');
             $('#nacionalidad').focus();
         } else if ($('#cedula').val() === null || $('#cedula').val().length === 0 || /^\s+$/.test($('#cedula').val())) {
             $('#div_cedula').addClass('has-error');
             $('#cedula').focus();
-        }else if ($('#nombre').val() === null || $('#nombre').val().length === 0 || /^\s+$/.test($('#nombre').val())) {
+        } else if ($('#nombre').val() === null || $('#nombre').val().length === 0 || /^\s+$/.test($('#nombre').val())) {
             $('#div_nombre').addClass('has-error');
             $('#nombre').focus();
         } else if ($('#apellido').val() === null || $('#apellido').val().length === 0 || /^\s+$/.test($('#apellido').val())) {
@@ -178,7 +178,7 @@ $(document).ready(function() {
                 var cedula = parseInt(lastRow[1]) + 1;
 
                 var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
-                
+
                 $.post("../../controlador/Choferes.php", $("#frmchoferes").serialize(), function(respuesta) {
                     if (respuesta == 1) {
                         window.parent.bootbox.alert("Registro con Exito", function() {
@@ -209,7 +209,7 @@ $(document).ready(function() {
 
                         });
                     }
-                });                
+                });
             } else {
                 window.parent.bootbox.confirm({
                     message: '¿Desea Modificar los datos del Registro?',
@@ -300,7 +300,7 @@ $(document).ready(function() {
         $('#reporte_choferes').slideDown(2000);
         $('input[type="text"]').val('');
         $('#cod_telefono,#cod_celular').select2('val', 0);
-        $('#nacionalidad').select2('val', 1);
+        $('#nacionalidad').select2('val', 0);
     });
 
     $('#limpiar').click(function() {
@@ -308,7 +308,7 @@ $(document).ready(function() {
         $('#cod_telefono,#cod_celular').select2('val', 0);
         $('#nacionalidad').select2('val', 0);
         $('#guardar').text('Guardar');
-        
+
     });
 });
 
