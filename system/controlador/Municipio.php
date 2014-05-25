@@ -35,6 +35,8 @@ if (isset($_POST['accion'])) {
         case 'buscarMun':
             $opciones    = array("campos"=>'id_municipio,nombre_municipio',"condicion"=>"id_estado=$id_estado");
             $resultado = $obj->getMunicipio($opciones);
+            $es_array = is_array($resultado) ? TRUE : FALSE;
+            if($es_array === TRUE){
             for ($i = 0; $i < count($resultado); $i++) {
                 $data[] = array(
                     'codigo'      => $resultado[$i]['id_municipio'],
@@ -42,6 +44,9 @@ if (isset($_POST['accion'])) {
                 );
             }
             echo json_encode($data);
+            }  else {
+                echo 0;
+            }
             break;
             
             case 'Modificar':

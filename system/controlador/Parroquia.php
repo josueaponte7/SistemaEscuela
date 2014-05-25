@@ -35,14 +35,18 @@ if (isset($_POST['accion'])) {
         case 'buscarParr':
             $opciones    = array("campos"=>'id_parroquia,nombre_parroquia',"condicion"=>"id_municipio=$id_municipio");
             $resultado = $obj->getParroquia($opciones);
-
-            for ($i = 0; $i < count($resultado); $i++) {
-                $data[] = array(
-                    'codigo'      => $resultado[$i]['id_parroquia'],
-                    'descripcion' => $resultado[$i]['nombre_parroquia']
-                );
+            $es_array = is_array($resultado) ? TRUE : FALSE;
+            if ($es_array === TRUE) {
+                for ($i = 0; $i < count($resultado); $i++) {
+                    $data[] = array(
+                        'codigo'      => $resultado[$i]['id_parroquia'],
+                        'descripcion' => $resultado[$i]['nombre_parroquia']
+                    );
+                }
+                echo json_encode($data);
+            }else{
+                echo 0;
             }
-            echo json_encode($data);
             break;
 
         case 'Modificar':
