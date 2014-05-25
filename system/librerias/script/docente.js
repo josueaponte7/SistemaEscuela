@@ -464,7 +464,7 @@ $(document).ready(function() {
         $('input:text').val('');
         $('textarea').val('');
         $('#estado,#municipio,#parroquia,#estatus,#sexo,#cod_telefono,#cod_celular,#actividad').select2('val', 0);
-        $('#nacionalidad').select2('val',1);
+        $('#nacionalidad').select2('val',0);
         $('#guardar').text('Guardar');
     });
 

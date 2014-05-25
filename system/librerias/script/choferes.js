@@ -292,7 +292,7 @@ $(document).ready(function() {
     $('#limpiar').click(function() {
         $('input[type="text"]').val('');
         $('#cod_telefono,#cod_celular').select2('val', 0);
-        $('#nacionalidad').select2('val', 1);
+        $('#nacionalidad').select2('val', 0);
         $('#guardar').text('Guardar');
     });
 

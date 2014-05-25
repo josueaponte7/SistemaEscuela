@@ -53,7 +53,7 @@ $titulo = "LISTADO DE ESTUDIANTES";
 $pdf->Ln(5);
 $pdf->SetX(60);
 // fuente y tamaño de letra 
-$pdf->SetFont('FreeSerif', 'B', 14);
+$pdf->SetFont('FreeSerif', 'B', 12);
 // añadimos el titulo
 $pdf->Cell(90, 0, $titulo, 0, 0, 'C', 0);
 $pdf->Ln(15);
@@ -84,10 +84,11 @@ $pdf->SetX(10);
 $pdf->SetFillColor(39, 129, 213);
 
 // Titulos de la Cabecera
-$pdf->Cell($w_cedula, $row_height, 'Cedula', 1, 0, 'C', 1);
-$pdf->Cell($w_nombre, $row_height, 'Nombres', 1, 0, 'L', 1);
-$pdf->Cell($w_apellido, $row_height, 'Apellidos', 1, 0, 'L', 1);
-$pdf->Cell($w_repre, $row_height, 'Representante', 1, 1, 'L', 1);
+$pdf->SetFont('FreeSerif', 'B', 11);
+$pdf->MultiCell($w_cedula, $row_height, 'Cedula', 1,  'C',1, 0);
+$pdf->MultiCell($w_nombre, $row_height, 'Nombres', 1,  'L', 1,0);
+$pdf->MultiCell($w_apellido, $row_height, 'Apellidos', 1, 'L', 1,0);
+$pdf->MultiCell($w_repre, $row_height, 'Representante', 1, 'L', 1,1);
 
 
 // Ciclo para crear los registros
@@ -111,7 +112,7 @@ for ($i = 0; $i < count($resultado); $i++) {
         /*         * ****Imagen del logo de las hojas que continua***** */
         $pdf->Image('imagenes/logo.png', 3, 18, 45, 15, 'PNG', FALSE);
         // Tipo de letra negrita tamaño 14
-        $pdf->SetFont('FreeSerif', 'B', 14);
+        $pdf->SetFont('FreeSerif', 'B', 11);
 
         $pdf->SetX(60);
         // Titulo del Reporte width:90 heigth:0 text:$titulo alineacion:C
@@ -121,10 +122,10 @@ for ($i = 0; $i < count($resultado); $i++) {
         // Color Cabecera de la tabla
         $pdf->SetFillColor(39, 129, 213);
         $pdf->SetX(10);
-        $pdf->Cell($w_cedula, $row_height, 'Cedula', 1, 0, 'C', 1);
-        $pdf->Cell($w_nombre, $row_height, 'Nombres', 1, 0, 'L', 1);
-        $pdf->Cell($w_apellido, $row_height, 'Apellidos', 1, 0, 'L', 1);
-        $pdf->Cell($w_repre, $row_height, 'Representante', 1, 1, 'L', 1);
+        $pdf->MultiCell($w_cedula, $row_height, 'Cedula', 1, 'C', 0);
+        $pdf->MultiCell($w_nombre, $row_height, 'Nombres', 1, 'L', 1,0);
+        $pdf->MultiCell($w_apellido, $row_height, 'Apellidos', 1, 'L', 1,0);
+        $pdf->MultiCell($w_repre, $row_height, 'Representante', 1,'L', 1,1);
         $j = 0;
     }
 
@@ -140,21 +141,22 @@ for ($i = 0; $i < count($resultado); $i++) {
       } */
 
     // crear los registros a mostrar
-    $pdf->SetFont('FreeSerif', '', 12);
+    $pdf->SetFont('FreeSerif', '', 10);
     $pdf->SetX(10);
-    $pdf->Cell($w_cedula, $row_height, $cedula, 1, 0, 'C', 1);
-    $pdf->Cell($w_nombre, $row_height, $nombre, 1, 0, 'L', 1);
-    $pdf->Cell($w_apellido, $row_height, $apellido, 1, 0, 'L', 1);
-    $pdf->Cell($w_repre, $row_height, $representante, 1, 1, 'L', 1);
+    $pdf->MultiCell($w_cedula, 10, $cedula, 1,  'C', 1,0);
+    $pdf->MultiCell($w_nombre, 10, $nombre, 1, 'L', 1,0);
+    $pdf->MultiCell($w_apellido, 10, $apellido, 1,'L', 1,0);
+    $pdf->MultiCell($w_repre, 10, $representante, 1,'L', 1,1);
     $j++;
 }
 /* * *************Linea de fin de hoja con la cantidad total de registros********************* */
 $pdf->setCellMargins(0, 0, 0, 0);
-$linea     = '------------------------------------------------------------------------------------------------------------------------------';
+$linea     = '----------------------------------------------------------------------------------------------------------------------------------------------------------------';
 $pdf->Ln();
 $pdf->SetFillColor(255, 255, 255);
-$pdf->Cell(0, 0, $linea, 0, 0, 'L', 1);
-$pdf->Ln(6);
+$pdf->SetX(10);
+$pdf->Cell(0, 0, $linea, 0, 0, 'L', 0);
+$pdf->Ln(5);
 //$pdf->Write(14, 'Registros:' . '' . $h);
 $pdf->SetFont('FreeSerif', '', 10);
 $registros = 'Total de Registros:<span style="color:#FF0000;">' . $total . '</span>';
