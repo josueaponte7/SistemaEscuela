@@ -162,7 +162,7 @@ $(document).ready(function() {
     });
 
     $('#guardar').click(function() {
-        var edificio = $('#edificio').val()
+        var val_correo = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
         //window.parent.$("body").animate({scrollTop:0}, 'slow'); 
         if ($('#nacionalidad').val() == 0) {
             /*********window parent para que la validacion llegue a su lugar********/
@@ -192,7 +192,7 @@ $(document).ready(function() {
             window.parent.scrollTo(0, 300);
             $('#cod_telefono').addClass('has-error');
             $('#cod_telefono').focus();
-        } else if ($('#telefono').val() === null || $('#telefono').val().length === 0 || $('#telefono').val().length < 7 || /^\s+$/.test($('#telefono').val())) {
+        } else if ($('#cod_telefono').val() > 0 && ($('#telefono').val().length === 0 || $('#telefono').val().length < 7)) {
             window.parent.scrollTo(0, 300);
             $('#div_telefono').addClass('has-error');
             $('#telefono').focus();
@@ -246,7 +246,7 @@ $(document).ready(function() {
         } else if ($('#fuente_ingreso').val() === null || $('#fuente_ingreso').val().length === 0 || /^\s+$/.test($('#fuente_ingreso').val())) {
             $('#div_fuente_ingreso').addClass('has-error');
             $('#fuente_ingreso').focus();
-        } else if ($('#email').val() === null || $('#email').val().length === 0 || /^\s+$/.test($('#email').val())) {
+        } else if ($('#email').val().length > 0 && !val_correo.test($('#email').val())) {
             $('#div_email').addClass('has-error');
             $('#email').focus();
         } else {

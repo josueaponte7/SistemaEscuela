@@ -199,7 +199,7 @@ $(document).ready(function() {
             window.parent.scrollTo(0, 300);
             $('#div_fech_naci').addClass('has-error');
             $('#fech_naci').focus();
-        } else if ($('#email').val() === null || $('#email').val().length === 0 || /^\s+$/.test($('#email').val()) || !val_correo.test($('#email').val())) {
+        } else if ($('#email').val().length > 0 && !val_correo.test($('#email').val())) {
             window.parent.scrollTo(0, 300);
             $('#div_email').addClass('has-error');
             $('#email').focus();

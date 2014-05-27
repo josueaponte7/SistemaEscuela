@@ -14,26 +14,36 @@ $(document).ready(function() {
             {"sWidth": "4%", "bSortable": false, "sClass": "center sorting_false", "bSearchable": false}
         ]
     });
-
+    
+    $('#nacionalidad').select2({
+        minimumResultsForSearch: -1
+    })
+            .on('change',function(){
+                if($(this).val() > 0){
+                    $('#cedula').focus();
+                }
+            });
+    $('#cod_telefono,#cod_celular')
+            .select2()
+            .on('change', function() {
+                $('#cod_telefono,#cod_celular,#div_telefono,#div_celular').removeClass('has-error');
+            });
     $('#cod_telefono,#cod_celular').select2();
-
     var letra = ' abcdefghijklmnñopqrstuvwxyzáéíóú';
     $('#nombre, #apellido,#modelo,#color').validar(letra);
 
     var numero = '0123456789';
     $('#telefono, #celular, #cedula').validar(numero);
-    
+
     var placa = '0123456789abcdefghijklmnopqrstuvwxyz';
     $('#placa').validar(placa);
-    
-    
+
+
     var correo = '0123456789abcdefghijklmnopqrstuvwxyz_-.#$&*@';
     $('#email').validar(correo);
+
     
-    $('#nacionalidad').select2({
-        minimumResultsForSearch: -1
-    });
-    
+
     $('#registrar').click(function() {
         $('#registro_choferes').slideDown(2000);
         $('#reporte_choferes').slideUp(2000);
@@ -144,23 +154,26 @@ $(document).ready(function() {
         } else if ($('#apellido').val() === null || $('#apellido').val().length === 0 || $('#apellido').val().length < 2 || /^\s+$/.test($('#apellido').val())) {
             $('#div_apellido').addClass('has-error');
             $('#apellido').focus();
-        } else if ($('#email').val() === null || $('#email').val().length === 0 || /^\s+$/.test($('#email').val()) || !val_correo.test($('#email').val())) {
+        } else if ($('#email').val().length > 0 && !val_correo.test($('#email').val())) {
             $('#div_email').addClass('has-error');
             $('#email').focus();
-        }else  if ($('#cod_telefono').val() == 0) {
-            $('#cod_telefono').addClass('has-error');
-        } else if ($('#telefono').val() === null || $('#telefono').val().length === 0 || $('#telefono').val().length < 7  || /^\s+$/.test($('#telefono').val())) {
+        } else if ($('#cod_telefono').val() == 0 && $('#cod_celular').val() == 0) {
+            window.parent.bootbox.alert("Debe Indicar al menos un Número Télefonico", function() {
+                $('#cod_telefono').addClass('has-error');
+                $('#cod_celular').addClass('has-error');
+                $('#div_telefono').addClass('has-error');
+                $('#div_celular').addClass('has-error');
+            });
+        } else if ($('#cod_telefono').val() > 0 && ($('#telefono').val().length === 0 || $('#telefono').val().length < 7)) {
             $('#div_telefono').addClass('has-error');
             $('#telefono').focus();
-        }else  if ($('#cod_celular').val() == 0) {
-            $('#cod_celular').addClass('has-error');
-        } else if ($('#celular').val() === null || $('#celular').val().length === 0 || $('#celular').val().length < 7 || /^\s+$/.test($('#celular').val())) {
+        } else if ($('#cod_celular').val() > 0 && ($('#celular').val().length === 0 || $('#celular').val().length < 7)) {
             $('#div_celular').addClass('has-error');
             $('#celular').focus();
         } else if ($('#placa').val() === null || $('#placa').val().length === 0 || $('#placa').val().length < 8 || /^\s+$/.test($('#placa').val())) {
             $('#div_placa').addClass('has-error');
             $('#placa').focus();
-        } else if ($('#modelo').val() === null || $('#modelo').val().length === 0  || /^\s+$/.test($('#modelo').val())) {
+        } else if ($('#modelo').val() === null || $('#modelo').val().length === 0 || /^\s+$/.test($('#modelo').val())) {
             $('#div_modelo').addClass('has-error');
             $('#modelo').focus();
         } else if ($('#color').val() === null || $('#color').val().length === 0 || /^\s+$/.test($('#color').val())) {
