@@ -78,16 +78,16 @@ $(document).ready(function() {
                 
                
                 
-                var datos     = respuesta.split('##');
-                var dat_ex =  datos[0].split(';');
-                var id_anio = dat_ex[0];
+                var datos    = respuesta.split(';');
+                var anio_vi = datos[0];
+                
+                $('#tipo_estudiante').val(datos[2]);
                 //Datos inscripcion
-                if(id_anio == 1){
-                    var dat_insc  = datos[0].split(';');
-                    $('#fecha').val(dat_insc[3]);
-                    $('#tipo_estudiante').val(dat_insc[1]);
-                    $('#actividad').select2('val', dat_insc[5]);
-                    $('#area').val(dat_insc[7]);
+                if(anio_vi == 'i'){
+                    $('#fecha').val(datos[3]);
+                   
+                    $('#actividad').select2('val', datos[6]);
+                    $('#area').val(datos[7]);
                     $('#guardar').text('Modificar');
                     var $fila = '<input type="hidden" id="fila"  value="' + fila + '" name="fila">';
                     $($fila).prependTo($('#frminscripcion'));

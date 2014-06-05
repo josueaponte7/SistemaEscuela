@@ -20,9 +20,12 @@ $(document).ready(function() {
 
     var usuario = 'abcdefghijklmnopqrstuvwxyz0123456789';
     var letra = ' abcdefghijklmnñopqrstuvwxyzáéíóú';
+    var clave = '1234567890abcdefghijklmnopqrstuvwxyz';
     $('#usuario').validar(usuario);
     $('#nombre').validar(letra);
     $('#apellido').validar(letra);
+    $('#contrasena').validar(clave);
+
     $('#grupo_usuario').select2();
     $('#estatus').select2();
 
@@ -77,7 +80,7 @@ $(document).ready(function() {
         window.open(url);
     });
 
-    $('#guardar').click(function() {/*1**/
+    $('#guardar').click(function() {
         if ($('#usuario').val() === null || $('#usuario').val().length === 0 || /^\s+$/.test($('#usuario').val())) {
             $('#div_usuario').addClass('has-error');
             $('#usuario').focus();
@@ -90,18 +93,12 @@ $(document).ready(function() {
         } else if ($('#grupo_usuario').val() == 0) {
             $('#grupo_usuario').addClass('has-error');
             $('#grupo_usuario').focus();
-        } else if ($('#contrasena').val().length < 8) {
+        } else if ($(this).text() == 'Guardar' && $('#contrasena').val().length < 6 || $('#contrasena').val().length > 20) {
             $('#div_contrasena').addClass('has-error');
             $('#contrasena').focus();
-        } else if ($('#contrasena').val() === null || $('#contrasena').val().length === 0 || /^\s+$/.test($('#contrasena').val())) {
-            $('#div_contrasena').addClass('has-error');
-            $('#contrasena').focus();
-        } else if ($('#confirmar_contrasena').val() === null || $('#confirmar_contrasena').val().length === 0 || /^\s+$/.test($('#confirmar_contrasena').val())) {
+        } else if ($(this).text() == 'Guardar' && $('#contrasena').val() != $('#confirmar_contrasena').val()) {
             $('#div_confirmar').addClass('has-error');
             $('#confirmar_contrasena').focus();
-        } else if ($('#contrasena').val() != $('#confirmar_contrasena').val()) {
-            $('#div_contrasena').addClass('has-error');
-            $('#div_confirmar').addClass('has-error');
         } else if ($('#estatus').val() == 2) {
             $('#estatus').addClass('has-error');
             $('#estatus').focus();
@@ -160,52 +157,55 @@ $(document).ready(function() {
                     }
                 });
             } else {
-                window.parent.bootbox.confirm({
-                    message: '¿Desea Modificar los datos del Registro?',
-                    buttons: {
-                        'cancel': {
-                            label: 'Cancelar',
-                            className: 'btn-default'
+
+                if ($('#contrasena').val().length > 1 && ($('#contrasena').val().length < 6 || $('#contrasena').val().length > 20)) {
+                    $('#div_contrasena').addClass('has-error');
+                    $('#contrasena').focus();
+                }else if( $('#contrasena').val() != $('#confirmar_contrasena').val()) {
+                    $('#div_confirmar').addClass('has-error');
+                    $('#confirmar_contrasena').focus();
+                } else {
+                    window.parent.bootbox.confirm({
+                        message: '¿Desea Modificar los datos del Registro?',
+                        buttons: {
+                            'cancel': {
+                                label: 'Cancelar',
+                                className: 'btn-default'
+                            },
+                            'confirm': {
+                                label: 'Modificar',
+                                className: 'btn-danger'
+                            }
                         },
-                        'confirm': {
-                            label: 'Modificar',
-                            className: 'btn-danger'
+                        callback: function(result) {
+                            if (result) {
+                                $.post("../../controlador/Usuario.php", $("#frmusuario").serialize(), function(respuesta) {
+                                    if (respuesta == 1) {
+
+                                        // obtener la fila a modificar
+                                        var fila = $("#fila").val();
+
+                                        window.parent.bootbox.alert("Modificacion con Exito", function() {
+
+                                            // obtener el nombre del estado 
+                                            var grupo_usuario = $('#grupo_usuario').find(' option').filter(":selected").text();
+
+                                            // obtener el id del estado
+                                            var id_grupo_usuario = $('#grupo_usuario').find(' option').filter(":selected").val();
+
+                                            // Modificar la fila 1 en la tabla 
+                                            $("#tabla_usuario tbody tr:eq(" + fila + ")").find("td:eq(1)").html($('#usuario').val());
+                                            $("#tabla_usuario tbody tr:eq(" + fila + ")").find("td:eq(2)").html($('#nombre').val());
+                                            $("#tabla_usuario tbody tr:eq(" + fila + ")").find("td:eq(3)").html($('#apellido').val());
+                                            $('input[type="text"]').val('');
+                                            $('textarea').val('');
+                                        });
+                                    }
+                                });
+                            }
                         }
-                    },
-                    callback: function(result) {
-                        if (result) {
-                            $.post("../../controlador/Usuario.php", $("#frmusuario").serialize(), function(respuesta) {
-                                if (respuesta == 1) {
-
-                                    // obtener la fila a modificar
-                                    var fila = $("#fila").val();
-
-                                    window.parent.bootbox.alert("Modificacion con Exito", function() {
-
-                                        // obtener el nombre del estado 
-                                        var grupo_usuario = $('#grupo_usuario').find(' option').filter(":selected").text();
-
-                                        // obtener el id del estado
-                                        var id_grupo_usuario = $('#grupo_usuario').find(' option').filter(":selected").val();
-
-                                        // Modificar la fila 1 en la tabla 
-                                        $("#tabla_usuario tbody tr:eq(" + fila + ")").find("td:eq(1)").html($('#usuario').val());
-                                        $("#tabla_usuario tbody tr:eq(" + fila + ")").find("td:eq(2)").html($('#nombre').val());
-                                        $("#tabla_usuario tbody tr:eq(" + fila + ")").find("td:eq(3)").html($('#apellido').val());
-//                                        $("#tabla_usuario tbody tr:eq(" + fila + ")").find("td:eq(4)").html($('#estatus').val());
-//
-//                                        // Modificar la fila 1 en la tabla 
-//                                        $("#tabla_usuario tbody tr:eq(" + fila + ")").find("td:eq(5)").html(grupo_usuario);
-//                                        $("#tabla_usuario tbody tr:eq(" + fila + ")").find("td:eq(5)").attr('id', id_grupo_usuario);
-
-                                        $('input[type="text"]').val('');
-                                        $('textarea').val('');
-                                    });
-                                }
-                            });
-                        }
-                    }
-                });
+                    });
+                }
             }
         }
 
@@ -244,19 +244,19 @@ $(document).ready(function() {
         $('#apellido').val(apellido);
         $('#registro_usuario').slideDown(2000);
         $('#reporte_usuario').slideUp(2000);
-        
+
         $.post("../../controlador/Usuario.php", {id_usuario: id_usuario, accion: 'BuscarDatos'}, function(respuesta) {
-            var datos = respuesta.split(";");  
+            var datos = respuesta.split(";");
             $('#estatus').select2('val', datos[0]);
             $('#grupo_usuario').select2('val', datos[1]);
-        
 
-        // crear el campo fila y añadir la fila
-        var $fila = '<input type="hidden" id="fila"  value="' + fila + '" name="fila">';
-        $($fila).prependTo($('#frmusuario'));
 
-        var $id_usuario = '<input type="hidden" id="id_usuario"  value="' + id_usuario + '" name="id_usuario">';
-        $($id_usuario).appendTo($('#frmusuario'));
+            // crear el campo fila y añadir la fila
+            var $fila = '<input type="hidden" id="fila"  value="' + fila + '" name="fila">';
+            $($fila).prependTo($('#frmusuario'));
+
+            var $id_usuario = '<input type="hidden" id="id_usuario"  value="' + id_usuario + '" name="id_usuario">';
+            $($id_usuario).appendTo($('#frmusuario'));
         });
     });
 
@@ -298,6 +298,4 @@ $(document).ready(function() {
             }
         });
     });
-
-
 });

@@ -25,6 +25,8 @@ class Usuario extends Seguridad {
     }
 
     public function update($datos) {
+     print_r($datos);
+     exit;
         $usuario       = $datos['usuario'];
         $nombre        = $datos['nombre'];
         $apellido      = $datos['apellido'];
