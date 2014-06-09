@@ -98,8 +98,29 @@ if (isset($_POST['accion'])) {
                  $resultado[0]['placa'] . ';' .
                  $resultado[0]['modelo'] . ';' .
                  $resultado[0]['color'];
+        break;
+        
+        case 'BuscarChofer':
+
+            $cedula = $datos['cedula'];
+
+            $opciones['sql'] = "SELECT 
+                                    ch.nombre,
+                                    ch.apellido,
+                                    au.placa,
+                                    CONCAT_WS('-', (SELECT codigo FROM codigo_telefono WHERE id=ch.cod_telefono),ch.telefono) AS telefono
+                                 FROM chofer AS ch 
+                                 INNER JOIN automovil AS au ON ch.cedula=au.cedula_chofer
+                                 WHERE ch.cedula= $cedula";
+            $resultado       = $obj->getChofer($opciones);
+            echo $resultado[0]['nombre'] . ';' .
+                 $resultado[0]['apellido'] . ';' .
+                 $resultado[0]['placa'] . ';' .
+                 $resultado[0]['telefono'] . ';';
 
             break;
-
+        
+        
+        
     }
 }

@@ -5,8 +5,9 @@
         <group>
             <file>file:/C:/wamp/www/SistemaEscuela/system/controlador/Inscripcion.php</file>
             <file>file:/C:/wamp/www/SistemaEscuela/system/librerias/script/inscripcion.js</file>
+            <file>file:/C:/wamp/www/SistemaEscuela/system/vista/procesos/inscripcion.php</file>
             <file>file:/C:/wamp/www/SistemaEscuela/system/modelo/Inscripcion.php</file>
-            <file>file:/C:/wamp/www/SistemaEscuela/system/modelo/Conexion.php</file>
+            <file>file:/C:/wamp/www/SistemaEscuela/system/librerias/js/formToWizard.js</file>
         </group>
     </open-files>
 </project-private>

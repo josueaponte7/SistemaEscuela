@@ -59,8 +59,7 @@ $(document).ready(function() {
         $('#actividad,#medio').select2('val', 0);
         $('#fecha').val(fecha);
         $('#anio_escolar').val(f.getFullYear());
-        
-        $('#actividad').select2('val',0);
+       
         $('input:checkbox').prop('checked',false);
         $('input:checkbox').prop('disabled',false);
         if (cedula != 0) {
@@ -75,11 +74,9 @@ $(document).ready(function() {
                  
                 $('#cdt_generales').css('color','#FF0000');
                 $('#fil_datos_genereles').fadeIn();
-                
-               
-                
+   
                 var datos    = respuesta.split(';');
-                var anio_vi = datos[0];
+                var anio_vi  = datos[0];
                 
                 $('#tipo_estudiante').val(datos[2]);
                 //Datos inscripcion
@@ -92,187 +89,17 @@ $(document).ready(function() {
                     var $fila = '<input type="hidden" id="fila"  value="' + fila + '" name="fila">';
                     $($fila).prependTo($('#frminscripcion'));
                 }
-                $('#tipo_estudiante').val(dat_ex[2]);
+      
+                
                 // datos representante
-                var dat_repre = datos[1].split(';');
-   
-                $('#madre_f,#madre_pl').prop('disabled',false);
-                $('#padre_f,#padre_pl').prop('disabled',false);
-                
-                $('#cedula_r').val(dat_repre[0]);
-                $('#nombre_r').val(dat_repre[1]);
-                $('#apellido_r').val(dat_repre[2]);
-                $('#parentesco').val(dat_repre[3]);
-                
-                // datos medio trasporte y chofer
-                var dat_medio = datos[2].split(';');
-                $('#medio').select2('val', dat_medio[0]);
-                $('#cedula_cho').val(dat_medio[1]);
+                $('#cedula_r').val(datos[8]);
+                $('#nombre_r').val(datos[9]);
+                $('#apellido_r').val(datos[10]);
+                $('#parentesco').val(datos[11]);
+                $('#medio').select2('val', datos[12]);
+                $('#cedula_cho').val(datos[13]);
                 $('#cedula_cho').trigger('blur');
-                
-                var dat_represents = datos[3].split(';');
-                if (dat_repre[3] == 'Madre' || dat_represents[0] == 1 || dat_represents[1] == 1) {
-                    $('#madre_f,#madre_pl').prop('disabled', true);
-                }
-                if (dat_repre[3] == 'Padre' || dat_represents[0] == 2 || dat_represents[1] == 2) {
-                    $('#padre_f,#padre_pl').prop('disabled', true);
-                }   
-                
-                var datg_padres = datos[4].split(';');
-
-                if(datg_padres[0] == 1){
-                    $('#padre_f').prop('checked',true);
-                }
-                if(datg_padres[1] == 1){
-                    $('#madre_f').prop('checked',true);
-                }
-                if(datg_padres[2] == 1){
-                    $('#padre_pl').prop('checked',true);
-                }
-                if(datg_padres[3] == 1){
-                    $('#madre_pl').prop('checked',true);
-                }
-                if(datg_padres[4] == 1){
-                    $('#padre_al').prop('checked',true);
-                }
-                if(datg_padres[5] == 1){
-                    $('#madre_al').prop('checked',true);
-                }
-                if(datg_padres[6] == 1){
-                    $('#represent_al').prop('checked',true);
-                }
-                if(datg_padres[7] == 1){
-                    $('#padre_fd').prop('checked',datg_padres[8]);
-                }
-                if(datg_padres[8] == 1){
-                    $('#madre_fd').prop('checked',datg_padres[8]);
-                }
-                if(datg_padres[9] == 1){
-                    $('#represent_fd').prop('checked',datg_padres[8]);
-                }
-
-                if(datg_padres[10] == 'ps'){
-                    $('#padre_alf').prop('checked',datg_padres[8]);
-                    $('#padre_anl').prop('disabled',true);
-                }else if(datg_padres[10] == 'pn'){
-                   $('#padre_anl').prop('checked',datg_padres[8]);
-                   $('#padre_alf').prop('disabled',true); 
-                }
-                if(datg_padres[11] == 'ms'){
-                    $('#madre_alf').prop('checked',datg_padres[8]);
-                    $('#madre_anl').prop('disabled',true);
-                }else if(datg_padres[11] == 'mn'){
-                    $('#madre_anl').prop('checked',datg_padres[8]);
-                    $('#madre_alf').prop('disabled',true); 
-                }
-                if(datg_padres[12] == 'rs'){
-                    $('#represent_alf').prop('checked',datg_padres[8]);
-                    $('#represent_anl').prop('disabled',true);
-                }else if(datg_padres[12] == 'rn'){
-                    $('#represent_anl').prop('checked',datg_padres[8]);
-                    $('#represent_alf').prop('disabled',true); 
-                }
-                var np = datg_padres[13];
-                var nm = datg_padres[14];
-                var nr = datg_padres[15];
-                if(datg_padres[13] == ''){
-                    np = 0;
-                }
-                if(datg_padres[14] == ''){
-                    nm = 0;
-                }
-                if(datg_padres[15] == ''){
-                    nr = 0;
-                }
-                $('#padre_nivel').select2('val',np );
-                $('#madre_nivel').select2('val',nm );
-                $('#representante_nivel').select2('val',nr );
-                
-                if(datg_padres[16] == 1){
-                    $('#padre_set').prop('checked',true);
-                }
-                if(datg_padres[17] == 1){
-                    $('#madre_set').prop('checked',true);
-                }
-                if(datg_padres[18] == 1){
-                    $('#padre_see').prop('checked',true);
-                }
-                if(datg_padres[19] == 1){
-                    $('#madre_see').prop('checked',true);
-                }
-                
-                var dtg_if = datos[5].split(',');
-                for(var i=0;i<dtg_if.length;i++){
-                    $('input:checkbox[name="ingreso[]"][value="'+dtg_if[i]+'"]').prop('checked',true);
-                }
-                var dtg_ips = datos[6].split(',');
-                for(var i=0;i<dtg_ips.length;i++){
-                    $('input:checkbox[name="mision[]"][value="'+dtg_ips[i]+'"]').prop('checked',true);
-                }
-                
-               var dtg_v = datos[7].split(';');
-               var ub = dtg_v[0];
-               var tv = dtg_v[1];
-               var ev = dtg_v[2];
-               var ca = dtg_v[4];
-               if(dtg_v[0] == ''){
-                   ub = 0;
-               }
-               if(dtg_v[1] == ''){
-                   tv = 0;
-               }
-               if(dtg_v[0] == ''){
-                   ev = 0;
-               }
-               if(dtg_v[0] == ''){
-                   ca = 0;
-               }
-               $('#ubicacion_vivienda').select2('val',ub);
-               $('#tipo_vivienda').select2('val',tv);
-               $('#estado_vivienda').select2('val',ev);
-               $('#cant_habitacion').val(dtg_v[3]);
-               $('#cama').select2('val',ca);
-    
-               var dtg_t = datos[8].split(',');
-               for(var i=0;i<dtg_t.length;i++){
-                   $('input:checkbox[name="tecnologia[]"][value="'+dtg_t[i]+'"]').prop('checked',true);
-               }
-               
-               var dtg_d = datos[9].split(',');
-               for(var i=0;i<dtg_d.length;i++){
-                   $('input:checkbox[name="diversidad[]"][value="'+dtg_d[i]+'"]').prop('checked',true);
-               }
-               var dtg_e = datos[10].split(',');
-               for(var i=0;i<dtg_e.length;i++){
-                   $('input:checkbox[name="enfermedad[]"][value="'+dtg_e[i]+'"]').prop('checked',true);
-               }
-               
-               var dtg_s = datos[10].split(',');
-               for(var i=0;i<dtg_s.length;i++){
-                   $('input:checkbox[name="servicio[]"][value="'+dtg_s[i]+'"]').prop('checked',true);
-               }
-               
-               var dtg_dz = datos[11].split(',');
-               for(var i=0;i<dtg_dz.length;i++){
-                   $('input:checkbox[name="destreza[]"][value="'+dtg_dz[i]+'"]').prop('checked',true);
-               }
-               
-               var dtg_a = datos[13].split(',');
-               var aa = dtg_a[0];
-               var ar = dtg_a[1];
-               if(dtg_a[0] == ''){
-                   aa = 0;
-               }
-               if(dtg_a[1] == ''){
-                   ar = 0;
-               }
-              $('#alimentacion').select2('val',aa);
-               $('#alimentacion_regular').select2('val',ar);
-
-               var dtg_ay = datos[14].split(',');
-               for(var i=0;i<dtg_ay.length;i++){
-                   $('input:checkbox[name="ayuda[]"][value="'+dtg_ay[i]+'"]').prop('checked',true);
-               }
+                return false;
             });
         }
     });
@@ -365,12 +192,7 @@ $(document).ready(function() {
         }
     });
     
-    $('#cdt_generales.link').on('click',function() {
-        $(this).addClass('activo');
-        $('#rest_generales').fadeIn(1000);
-        $('#datos_repre').slideUp(1500);
-        $('#main').slideDown(1500);
-    });
+   
     var url ="../../controlador/Inscripcion.php";
    
     $("#SignupForm").formToWizard({
@@ -380,6 +202,77 @@ $(document).ready(function() {
         url: url,
         message:'Registro con Exito'
     });
+    
+     $('#cdt_generales.link').on('click',function() {
+        var cedula = $('select#cedula').find('option:selected').val();
+        cedula = cedula.substring(2);
+        $('input:checkbox').prop('checked',false);
+        $('input:checkbox').prop('disabled',false);
+        $('select:not(#cedula)').select2('val',0).prop('disabled',false);
+        $.post(url,{cedula:cedula,'accion':'BuscarDG'},function(respuesta){
+             var datos = respuesta.split(';');
+             if(datos[0] == 1){
+                 $('#padre_f').prop('checked',true).trigger('change');
+             }
+             if(datos[1] == 2){
+                 $('#madre_f').prop('checked',true).trigger('change');
+             }
+             if(datos[2] == 1){
+                 $('#padre_pl').prop('checked',true).trigger('change');
+             }
+             if(datos[3] == 2){
+                 $('#madre_pl').prop('checked',true).trigger('change');
+             }
+             if(datos[4] == 1){
+                 $('#padre_al').prop('checked',true).trigger('change');
+             }
+             if(datos[5] == 2){
+                 $('#madre_al').prop('checked',true).trigger('change');
+             }
+             if(datos[6] == 3){
+                 $('#represent_al').prop('checked',true).trigger('change');
+             }
+             
+             if(datos[7] == 1){
+                 $('#padre_fd').prop('checked',true).trigger('change');
+             }
+             if(datos[8] == 2){
+                 $('#madre_fd').prop('checked',true).trigger('change');
+             }
+             if(datos[9] == 3){
+                 $('#represent_fd').prop('checked',true).trigger('change');
+             }
+             
+             
+            $('input:checkbox[name="dt_padres[padre_alf]"][value="'+datos[10]+'"]').prop('checked',true).trigger('change'); 
+            $('input:checkbox[name="dt_padres[madre_alf]"][value="'+datos[11]+'"]').prop('checked',true).trigger('change'); 
+            $('input:checkbox[name="dt_padres[represent_alf]"][value="'+datos[12]+'"]').prop('checked',true).trigger('change'); 
+           
+            $('#padre_nivel').select2('val',datos[13]);
+            $('#madre_nivel').select2('val',datos[14]);
+            $('#represent_nivel').select2('val',datos[15]);
+            
+            if (datos[16] == 1) {
+                $('#padre_set').prop('checked', true).trigger('change');
+            }
+            if (datos[17] == 2) {
+                $('#madre_set').prop('checked', true).trigger('change');
+            }
+            
+            if (datos[18] == 1) {
+                $('#padre_see').prop('checked', true).trigger('change');
+            }
+            if (datos[19] == 2) {
+                $('#madre_see').prop('checked', true).trigger('change');
+            }
+            
+        });
+        $(this).addClass('activo');
+        $('#rest_generales').fadeIn(1000);
+        $('#datos_repre').slideUp(1500);
+        $('#main').slideDown(1500);
+    });
+    
     
     $('#rest_generales').click(function() {
         var count = $('#main').find("fieldset.paso").length;

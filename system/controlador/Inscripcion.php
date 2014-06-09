@@ -39,9 +39,7 @@ if (isset($_POST['accion'])) {
     
     // Datos Generales
    
-    if (isset($_POST['mision'])) {
-        $datos['mision'] = $_POST['mision'];
-    }
+   
     if (isset($_POST['dt_padres'])) {
         $datos['dt_padres'] = $_POST['dt_padres'];
         if (isset($_POST['cedula'])) {
@@ -54,15 +52,24 @@ if (isset($_POST['accion'])) {
             $datos['id_ingreso']['cedula_estudiante'] = $_POST['cedula'];
         }
     }
-    /*if(isset($_POST['dt']) && $_POST['dt'] == 'dt0'){
-        $datos['dtp'] = $_POST;
-    }*/
-    if(isset($_POST['dt']) && $_POST['dt'] == 'dt2'){
-        $datos['dtv'] = $_POST;
+    
+    if (isset($_POST['mision'])) {
+        $datos['dt_mision'] = '';
+        $datos['mision'] = $_POST['mision'];
     }
-    if(isset($_POST['dt']) && $_POST['dt'] == 'dt3'){
-        $datos['dtdf'] = $_POST;
+
+    if(isset($_POST['ubicacion_vivienda']) && isset($_POST['tipo_vivienda'])){
+        $datos['dt_vivienda']['cedula_estudiante']  = $_POST['cedula'];
+        $datos['dt_vivienda']['ubicacion_vivienda'] = $_POST['ubicacion_vivienda'];
+        $datos['dt_vivienda']['tipo_vivienda']      = $_POST['tipo_vivienda'];
+        $datos['dt_vivienda']['estado_vivienda']    = $_POST['estado_vivienda'];
+        $datos['dt_vivienda']['cama']               = $_POST['cama'];
+        $datos['dt_vivienda']['cant_habitacion']    = $_POST['cant_habitacion'];
+        if (isset($_POST['tecnologia'])) {
+            $datos['dt_vivienda']['tecnologia'] = $_POST['tecnologia'];
+        }
     }
+    
      switch ($accion) {
         case 'Guardar':
             $resultado = $obj->add($datos);
@@ -91,6 +98,10 @@ if (isset($_POST['accion'])) {
         break;
         case 'GuardarDT':
             $resultado = $obj->addDG($datos);
+            echo $resultado;
+        break;
+        case 'BuscarDG':
+            $resultado = $obj->searchDG($datos);
             echo $resultado;
         break;
     }
