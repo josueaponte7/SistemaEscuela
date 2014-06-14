@@ -118,7 +118,9 @@ class Inscripcion extends Preinscripcion
         $tipo_estudiante   = 'Regular';
         $datos_inscripcion = "";
         $anio_es_v         = 'i';
+        $datos_trasporte   = '';
         if ($inscrito == 1) {
+
             $sql['sql'] = "SELECT 
                                     IF(id_anio=(SELECT id_anio FROM anio_escolar ORDER BY id_anio DESC LIMIT 1),'i','v') AS anio_escolar
                                  FROM inscripcion WHERE cedula_estudiante = $cedula[1]";
@@ -154,7 +156,15 @@ class Inscripcion extends Preinscripcion
         } else {
             $tipo_estudiante   = 'Ingreso';
             $datos_inscripcion = "";
-            $anio_es_v         = '';
+            $anio_es_v         = 'n';
+            $fecha_inscripcion = '';
+            $id_anio           = '';
+            $anio_escolar      = '';
+            $id_actividad      = '';
+            $area_descripcion  = '';
+            $id_medio          = '';
+            $cedula_chofer     = '';
+            $datos_inscripcion = $fecha_inscripcion . ';' . $id_anio . ';' . $anio_escolar . ';' . $id_actividad . ';' . $area_descripcion;
         }
 
         $sql_re['sql'] = "SELECT 
@@ -342,21 +352,36 @@ class Inscripcion extends Preinscripcion
     {
         $cedula        = $datos['cedula_estudiante'];
         $sql_re['sql'] = "SELECT * FROM dt_padres WHERE cedula_estudiante=$cedula";
+        $total = $this->numero_filas($sql_re['sql']);
+        $datos = $total;
+        if ($total > 0) {
+            $result_rep   = $this->datos($sql_re);
+            $padres_f     = $result_rep[0]['padre_f'] . ';' . $result_rep[0]['madre_f'];
+            $padres_pl    = $result_rep[0]['padre_pl'] . ';' . $result_rep[0]['madre_pl'];
+            $padres_al    = $result_rep[0]['padre_al'] . ';' . $result_rep[0]['madre_al'] . ';' . $result_rep[0]['represent_al'];
+            $padres_fd    = $result_rep[0]['padre_fd'] . ';' . $result_rep[0]['madre_fd'] . ';' . $result_rep[0]['represent_al'];
+            $padres_alf   = $result_rep[0]['padre_alf'] . ';' . $result_rep[0]['madre_alf'] . ';' . $result_rep[0]['represent_alf'];
+            $padres_nivel = $result_rep[0]['padre_nivel'] . ';' . $result_rep[0]['madre_nivel'] . ';' . $result_rep[0]['represent_nivel'];
+            $padres_set   = $result_rep[0]['padre_set'] . ';' . $result_rep[0]['madre_set'];
+            $padres_see   = $result_rep[0]['padre_see'] . ';' . $result_rep[0]['madre_see'];
+            
+            $sql_re['sql'] = "SELECT id_ingreso FROM dt_ingreso_familiar WHERE cedula_estudiante=$cedula";
+            
+            $result_if  = $this->datos($sql_re);
 
-        $result_rep   = $this->datos($sql_re);
-        $padres_f     = $result_rep[0]['padre_f'] . ';' . $result_rep[0]['madre_f'];
-        $padres_pl    = $result_rep[0]['padre_pl'] . ';' . $result_rep[0]['madre_pl'];
-        $padres_al    = $result_rep[0]['padre_al'] . ';' . $result_rep[0]['madre_al'] . ';' . $result_rep[0]['represent_al'];
-        $padres_fd    = $result_rep[0]['padre_fd'] . ';' . $result_rep[0]['madre_fd'] . ';' . $result_rep[0]['represent_al'];
-        $padres_alf   = $result_rep[0]['padre_alf'] . ';' . $result_rep[0]['madre_alf'] . ';' . $result_rep[0]['represent_alf'];
-        $padres_nivel = $result_rep[0]['padre_nivel'] . ';' . $result_rep[0]['madre_nivel'] . ';' . $result_rep[0]['represent_nivel'];
-        $padres_set = $result_rep[0]['padre_set'] . ';' . $result_rep[0]['madre_set'];
-        $padres_see = $result_rep[0]['padre_see'] . ';' . $result_rep[0]['madre_see'];
-
+            $total_if   = $this->numero_filas($sql_re['sql']);
+            $datos_in   = "";
+            if($total_if > 0){
                 
-        $datos = $padres_f . ';' . $padres_pl . ';' . $padres_al . ';' . $padres_fd . ';' . $padres_alf.';'.$padres_nivel.';'.$padres_set.';'.$padres_see;
-        
-        
+                for ($i = 0; $i < count($result_if); $i++) {
+                    $datos_in .= $result_if[$i]['id_ingreso'].",";
+                }
+                $datos_in = substr($datos_in, 0, -1);
+            }
+            $datos_rep = $padres_f . ';' . $padres_pl . ';' . $padres_al . ';' . $padres_fd . ';' . $padres_alf . ';' . $padres_nivel . ';' . $padres_set . ';' . $padres_see;
+            $datos = $datos_rep.';'.$datos_in;
+        }
+
         echo $datos;
     }
 

@@ -135,10 +135,10 @@ class Conexion {
             if ($row_cnt > 0) {
                 return $row_cnt;
             } else {
-                return FALSE;
+                return 0;
             }
         } else {
-            return FALSE;
+            return 0;
         }
     }
 

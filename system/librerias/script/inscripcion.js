@@ -88,6 +88,9 @@ $(document).ready(function() {
                     $('#guardar').text('Modificar');
                     var $fila = '<input type="hidden" id="fila"  value="' + fila + '" name="fila">';
                     $($fila).prependTo($('#frminscripcion'));
+                    $('#medio').select2('val', datos[12]);
+                    $('#cedula_cho').val(datos[13]);
+                    $('#cedula_cho').trigger('blur');
                 }
       
                 
@@ -96,10 +99,7 @@ $(document).ready(function() {
                 $('#nombre_r').val(datos[9]);
                 $('#apellido_r').val(datos[10]);
                 $('#parentesco').val(datos[11]);
-                $('#medio').select2('val', datos[12]);
-                $('#cedula_cho').val(datos[13]);
-                $('#cedula_cho').trigger('blur');
-                return false;
+                
             });
         }
     });
@@ -208,63 +208,68 @@ $(document).ready(function() {
         cedula = cedula.substring(2);
         $('input:checkbox').prop('checked',false);
         $('input:checkbox').prop('disabled',false);
-        $('select:not(#cedula)').select2('val',0).prop('disabled',false);
+        $('fil_datos_genereles select').select2('val',0).prop('disabled',false);
         $.post(url,{cedula:cedula,'accion':'BuscarDG'},function(respuesta){
-             var datos = respuesta.split(';');
-             if(datos[0] == 1){
-                 $('#padre_f').prop('checked',true).trigger('change');
-             }
-             if(datos[1] == 2){
-                 $('#madre_f').prop('checked',true).trigger('change');
-             }
-             if(datos[2] == 1){
-                 $('#padre_pl').prop('checked',true).trigger('change');
-             }
-             if(datos[3] == 2){
-                 $('#madre_pl').prop('checked',true).trigger('change');
-             }
-             if(datos[4] == 1){
-                 $('#padre_al').prop('checked',true).trigger('change');
-             }
-             if(datos[5] == 2){
-                 $('#madre_al').prop('checked',true).trigger('change');
-             }
-             if(datos[6] == 3){
-                 $('#represent_al').prop('checked',true).trigger('change');
-             }
-             
-             if(datos[7] == 1){
-                 $('#padre_fd').prop('checked',true).trigger('change');
-             }
-             if(datos[8] == 2){
-                 $('#madre_fd').prop('checked',true).trigger('change');
-             }
-             if(datos[9] == 3){
-                 $('#represent_fd').prop('checked',true).trigger('change');
-             }
-             
-             
-            $('input:checkbox[name="dt_padres[padre_alf]"][value="'+datos[10]+'"]').prop('checked',true).trigger('change'); 
-            $('input:checkbox[name="dt_padres[madre_alf]"][value="'+datos[11]+'"]').prop('checked',true).trigger('change'); 
-            $('input:checkbox[name="dt_padres[represent_alf]"][value="'+datos[12]+'"]').prop('checked',true).trigger('change'); 
-           
-            $('#padre_nivel').select2('val',datos[13]);
-            $('#madre_nivel').select2('val',datos[14]);
-            $('#represent_nivel').select2('val',datos[15]);
-            
-            if (datos[16] == 1) {
-                $('#padre_set').prop('checked', true).trigger('change');
-            }
-            if (datos[17] == 2) {
-                $('#madre_set').prop('checked', true).trigger('change');
-            }
-            
-            if (datos[18] == 1) {
-                $('#padre_see').prop('checked', true).trigger('change');
-            }
-            if (datos[19] == 2) {
-                $('#madre_see').prop('checked', true).trigger('change');
-            }
+            if(respuesta != 0){
+                var datos = respuesta.split(';');
+                if(datos[0] == 1){
+                    $('#padre_f').prop('checked',true).trigger('change');
+                }
+                if(datos[1] == 2){
+                    $('#madre_f').prop('checked',true).trigger('change');
+                }
+                if(datos[2] == 1){
+                    $('#padre_pl').prop('checked',true).trigger('change');
+                }
+                if(datos[3] == 2){
+                    $('#madre_pl').prop('checked',true).trigger('change');
+                }
+                if(datos[4] == 1){
+                   $('#padre_al').prop('checked',true).trigger('change');
+                }
+                if(datos[5] == 2){
+                    $('#madre_al').prop('checked',true).trigger('change');
+                }
+                if(datos[6] == 3){
+                    $('#represent_al').prop('checked',true).trigger('change');
+                }
+                if(datos[7] == 1){
+                    $('#padre_fd').prop('checked',true).trigger('change');
+                }
+                if(datos[8] == 2){
+                    $('#madre_fd').prop('checked',true).trigger('change');
+                }
+                if(datos[9] == 3){
+                    $('#represent_fd').prop('checked',true).trigger('change');
+                }
+
+
+                $('input:checkbox[name="dt_padres[padre_alf]"][value="'+datos[10]+'"]').prop('checked',true).trigger('change'); 
+                $('input:checkbox[name="dt_padres[madre_alf]"][value="'+datos[11]+'"]').prop('checked',true).trigger('change'); 
+                $('input:checkbox[name="dt_padres[represent_alf]"][value="'+datos[12]+'"]').prop('checked',true).trigger('change'); 
+
+                $('#padre_nivel').select2('val',datos[13]);
+                $('#madre_nivel').select2('val',datos[14]);
+                $('#represent_nivel').select2('val',datos[15]);
+
+                if (datos[16] == 1) {
+                    $('#padre_set').prop('checked', true).trigger('change');
+                }
+                if (datos[17] == 2) {
+                    $('#madre_set').prop('checked', true).trigger('change');
+                }
+
+                if (datos[18] == 1) {
+                    $('#padre_see').prop('checked', true).trigger('change');
+                }
+                if (datos[19] == 2) {
+                    $('#madre_see').prop('checked', true).trigger('change');
+                }
+                var datos_if = datos[20].split(',');
+                for (var i = 0;i < datos_if.length;i++){
+                    $('input:checkbox[name="id_ingreso[]"][value="'+datos_if[i]+'"]').prop('checked',true); 
+                }
+        }
             
         });
         $(this).addClass('activo');
@@ -323,14 +328,14 @@ $(document).ready(function() {
     
     $('input:checkbox[name^="dt_padres"][name$="_alf]"]').change(function (){
         
-        var id_repre  = $(this).attr('id');
-        var res       = id_repre.split("_");
-        var repre     = res[0];
-        var sufijo    = res[1];
-        var repre_alf = repre + '_alf';
-        var repre_anl = repre + '_anl';
+        var id_repre    = $(this).attr('id');
+        var res         = id_repre.split("_");
+        var repre       = res[0];
+        var sufijo      = res[1];
+        var repre_alf   = repre + '_alf';
+        var repre_anl   = repre + '_anl';
         var repre_nivel = repre + '_nivel';
-        var repre_see = repre + '_see';
+        var repre_see   = repre + '_see';
         if ($(this).is(':checked')) {
             if (sufijo == 'alf') {
                 $('#' + repre_anl).prop('disabled', true).prop('checked', false);
