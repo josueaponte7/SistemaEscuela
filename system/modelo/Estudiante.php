@@ -29,21 +29,28 @@ class Estudiante extends Seguridad {
         $celular      = $datos['celular'];
         $id_parroquia = $datos['id_parroquia'];
         $fech_naci    = $this->formateaBD($fech_naci);
-
-        $sql = "INSERT INTO estudiante(nacionalidad,cedula, nombre, apellido, email, fech_naci, lugar_naci, sexo, id_parroquia, calle, casa, edificio,
+        
+        
+        $condicion = "cedula = '$cedula' AND nacionalidad = $nacionalidad";
+        $total     = $this->totalFilas('estudiante', 'cedula', $condicion);
+        if ($total > 0) {
+            $resultado = 13;
+        } else {
+            $sql = "INSERT INTO estudiante(nacionalidad,cedula, nombre, apellido, email, fech_naci, lugar_naci, sexo, id_parroquia, calle, casa, edificio,
                                        barrio, cod_telefono, telefono, cod_celular, celular,id_estatus)
                      VALUES ('$nacionalidad','$cedula', '$nombre', '$apellido', '$email', '$fech_naci', '$lugar_naci', '$sexo', '$id_parroquia', '$calle',
                              '$casa', '$edificio', '$barrio', '$cod_telefono', '$telefono', '$cod_celular', '$celular',$id_estatus);";
 
-        $resultado = $this->ejecutar($sql);
-        if ($resultado === TRUE) {
-            $representantes = explode(",", $datos['representantes']);
-            for ($i = 0; $i < count($representantes); $i++) {
-                $datos_repre = explode(";", $representantes[$i]);
+            $resultado = $this->ejecutar($sql);
+            if ($resultado === TRUE) {
+                $representantes = explode(",", $datos['representantes']);
+                for ($i = 0; $i < count($representantes); $i++) {
+                    $datos_repre = explode(";", $representantes[$i]);
 
-                $sql = "INSERT INTO estudiante_representante(cedula_estudiante,cedula_representante,parentesco,representante)
+                    $sql = "INSERT INTO estudiante_representante(cedula_estudiante,cedula_representante,parentesco,representante)
                               VALUES ($cedula,$datos_repre[0],$datos_repre[1],$datos_repre[2]);";
-                $this->ejecutar($sql);
+                    $this->ejecutar($sql);
+                }
             }
         }
         return $resultado;

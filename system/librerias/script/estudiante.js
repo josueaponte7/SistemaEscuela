@@ -411,6 +411,16 @@ $(document).ready(function() {
                     $('table#tbl_repre').css('display', 'none');
                     TTbl_Repre.fnClearTable();
                     $('input[type="text"]').val('');
+                } else if (respuesta == 13) {
+                    window.parent.bootbox.alert("La Cédula se encuentra Registrada", function() {
+                        window.parent.scrollTo(0, 300);
+                        $('#div_cedula').addClass('has-error');
+                        $('#cedula').focus().select();
+                    });
+                } else {
+                    window.parent.bootbox.alert("Ocurrio un error comuniquese con informatica", function() {
+
+                    });
                 }
             });
         }
