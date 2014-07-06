@@ -69,7 +69,31 @@ if (isset($_POST['accion'])) {
             $datos['dt_vivienda']['tecnologia'] = $_POST['tecnologia'];
         }
     }
-    
+
+    // Datos Diversidad Funcional
+    if(isset($_POST['alimentacion']) && isset($_POST['alimentacion_regular'])){
+        
+        $datos['dt_diversidad']['cedula_estudiante']    = $_POST['cedula'];
+        $datos['dt_diversidad']['alimentacion']         = $_POST['alimentacion'];
+        $datos['dt_diversidad']['alimentacion_regular'] = $_POST['alimentacion_regular'];
+
+        if(isset($_POST['diversidad'])){
+            $datos['dt_diversidad']['diversidad'] = $_POST['diversidad']; 
+        }
+        if(isset($_POST['enfermedad'])){
+            $datos['dt_diversidad']['enfermedad'] = $_POST['enfermedad']; 
+        }
+        if(isset($_POST['servicio'])){
+            $datos['dt_diversidad']['servicio'] = $_POST['servicio']; 
+        }
+        if(isset($_POST['destreza'])){
+            $datos['dt_diversidad']['destreza'] = $_POST['destreza']; 
+        }
+        if(isset($_POST['ayuda'])){
+            $datos['dt_diversidad']['ayuda'] = $_POST['ayuda']; 
+        }
+    }
+
      switch ($accion) {
         case 'Guardar':
             $resultado = $obj->add($datos);

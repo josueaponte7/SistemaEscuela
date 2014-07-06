@@ -91,10 +91,10 @@
                 $("#step" + (i + 1)).show();  
                 selectStep(i + 1);
                 if (i == count - 1) {
-                    //$("#step" + (count - 1)).hide();
-                    //$("#step0").show();
-                    //$(submmitButtonName).hide();
-                    //selectStep(0);
+                    $("#step" + (count - 1)).hide();
+                    $("#step0").show();
+                    $(submmitButtonName).hide();
+                    selectStep(0);
                 }
                 
             });

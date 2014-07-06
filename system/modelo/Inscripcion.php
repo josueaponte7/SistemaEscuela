@@ -252,7 +252,9 @@ class Inscripcion extends Preinscripcion
                 }
             }
         } else if (isset($datos['dt_vivienda'])) {
-
+            
+            $cedula            = $datos['dt_vivienda']['cedula_estudiante'];
+            
             $tecnologia = $datos['dt_vivienda']['tecnologia'];
             unset($datos['dt_vivienda']['tecnologia']);
 
@@ -265,84 +267,123 @@ class Inscripcion extends Preinscripcion
                 }
             }
 
-            $campos       = implode(',', $fields) . "\n";
+            $campos       = implode(',', $fields);
             $valores      = implode(',', $values);
+            
+            $sql_dv = "DELETE FROM dt_vivienda WHERE cedula_estudiante = $cedula;";
+            $this->ejecutar($sql_dv);
+            
             $sql_vivienda = "INSERT INTO dt_vivienda({$campos})VALUES ({$valores});";
             $this->ejecutar($sql_vivienda);
-
-            $cedula = $datos['dt_vivienda']['cedula_estudiante'];
+            
+            $sql_dtec = "DELETE FROM dt_tecnologia WHERE cedula_estudiante = $cedula;";
+            $this->ejecutar($sql_dtec);
+            
             if (isset($tecnologia)) {
                 foreach ($tecnologia as $valores) {
                     $sql_tec = "INSERT INTO dt_tecnologia(cedula_estudiante,id_tecnologia)VALUES($cedula,$valores);";
                     $this->ejecutar($sql_tec);
                 }
             }
-        } else if ($dt == 'dt3') {
-
-
-            if (isset($datos['dtdf']['diversidad'])) {
-                $sql_ddf    = "DELETE FROM dt_diversidad_funcional WHERE cedula_estudiante = $cedula;";
-                $this->ejecutar($sql_ddf);
-                $diversidad = $datos['dtdf']['diversidad'];
+        } else if (isset($datos['dt_diversidad'])) {
+            
+            $cedula = $datos['dt_diversidad']['cedula_estudiante'];
+            
+            if(isset($datos['dt_diversidad']['diversidad'])){
+                 $diversidad = $datos['dt_diversidad']['diversidad'];
+                unset($datos['dt_diversidad']['diversidad']);
+            }
+           
+            if(isset($datos['dt_diversidad']['enfermedad'])){
+                $enfermedad = $datos['dt_diversidad']['enfermedad'];
+                unset($datos['dt_diversidad']['enfermedad']);
+            }
+            
+            if(isset($datos['dt_diversidad']['servicio'])){
+                $servicio = $datos['dt_diversidad']['servicio'];
+                unset($datos['dt_diversidad']['servicio']);
+            }
+            
+            if(isset($datos['dt_diversidad']['destreza'])){
+                $destreza = $datos['dt_diversidad']['destreza'];
+                unset($datos['dt_diversidad']['destreza']);
+            }
+            
+            if(isset($datos['dt_diversidad']['ayuda'])){
+                $ayuda = $datos['dt_diversidad']['ayuda'];
+                unset($datos['dt_diversidad']['ayuda']);
+            }          
+        
+            foreach ($datos['dt_diversidad'] as $id => $value) {
+                $fields[] = $id;
+                if (is_array($value) && !empty($value[0])) {
+                    $values[] = $value[0];
+                } else {
+                    $values[] = "'" . $value . "'";
+                }
+            }
+            // Alimentcion
+            $campos       = implode(',', $fields);
+            $valores      = implode(',', $values);
+            
+            $sql_dd = "DELETE FROM dt_diversidad WHERE cedula_estudiante = $cedula;";
+            $this->ejecutar($sql_dd);
+            
+            $sql_ddi = "INSERT INTO dt_diversidad({$campos})VALUES ({$valores});";
+            $this->ejecutar($sql_ddi);
+   
+            // Diversidad Funcional
+            $sql_dtec = "DELETE FROM dt_diversidad_funcional WHERE cedula_estudiante = $cedula;";
+            $this->ejecutar($sql_dtec);
+            
+            if (isset($diversidad)) {
                 foreach ($diversidad as $valores) {
-                    $sql_idf = "INSERT INTO dt_diversidad_funcional(cedula_estudiante,id_diversidad)VALUES ($cedula,$valores);";
-                    $this->ejecutar($sql_idf);
+                    $sql_tec = "INSERT INTO dt_diversidad_funcional(cedula_estudiante,id_diversidad)VALUES($cedula,$valores);";
+                    $this->ejecutar($sql_tec);
+                }
+            }
+            
+            // Enfermedades
+            $sql_dtec = "DELETE FROM dt_enfermedad WHERE cedula_estudiante = $cedula;";
+            $this->ejecutar($sql_dtec);
+            
+            if (isset($enfermedad)) {
+                foreach ($enfermedad as $valores) {
+                    $sql_tec = "INSERT INTO dt_enfermedad(cedula_estudiante,id_enfermedades)VALUES($cedula,$valores);";
+                    $this->ejecutar($sql_tec);
+                }
+            }
+            
+            // Servicios 
+            $sql_dtec = "DELETE FROM dt_servicio WHERE cedula_estudiante = $cedula;";
+            $this->ejecutar($sql_dtec);
+            
+            if (isset($servicio)) {
+                foreach ($servicio as $valores) {
+                    $sql_tec = "INSERT INTO dt_servicio(cedula_estudiante,id_servicio)VALUES($cedula,$valores);";
+                    $this->ejecutar($sql_tec);
                 }
             }
 
-            if (isset($datos['dtdf']['enfermedad'])) {
-                $sql_de     = "DELETE FROM dt_enfermedad WHERE cedula_estudiante = $cedula;";
-                $this->ejecutar($sql_de);
-                $diversidad = $datos['dtdf']['enfermedad'];
-                foreach ($diversidad as $valores) {
-                    $sql_ide = "INSERT INTO dt_enfermedad(cedula_estudiante,id_enfermedades)VALUES ($cedula,$valores);";
-                    $this->ejecutar($sql_ide);
+            // Destreza 
+            $sql_dtec = "DELETE FROM dt_destreza WHERE cedula_estudiante = $cedula;";
+            $this->ejecutar($sql_dtec);
+            
+            if (isset($destreza)) {
+                foreach ($destreza as $valores) {
+                    $sql_tec = "INSERT INTO dt_destreza(cedula_estudiante,id_destreza)VALUES($cedula,$valores);";
+                    $this->ejecutar($sql_tec);
                 }
             }
-
-            if (isset($datos['dtdf']['servicio'])) {
-                $sql_dd     = "DELETE FROM dt_servicio WHERE cedula_estudiante = $cedula;";
-                $this->ejecutar($sql_dd);
-                $diversidad = $datos['dtdf']['servicio'];
-                foreach ($diversidad as $valores) {
-                    $sql_idd = "INSERT INTO dt_servicio(cedula_estudiante,id_servicio)VALUES ($cedula,$valores);";
-                    $this->ejecutar($sql_idd);
-                }
-            }
-
-            if (isset($datos['dtdf']['destreza'])) {
-                $sql_dd     = "DELETE FROM dt_destreza WHERE cedula_estudiante = $cedula;";
-                $this->ejecutar($sql_dd);
-                $diversidad = $datos['dtdf']['destreza'];
-                foreach ($diversidad as $valores) {
-                    $sql_idd = "INSERT INTO dt_destreza(cedula_estudiante,id_destreza)VALUES ($cedula,$valores);";
-                    $this->ejecutar($sql_idd);
-                }
-            }
-
-            if (isset($datos['dtdf']['alimentacion']) || $datos['dtdf']['alimentacion_regular']) {
-                $alimentacion   = 0;
-                $alimentacion_r = 0;
-
-                $sql_da = "DELETE FROM dt_alimentacion WHERE cedula_estudiante = $cedula;";
-                $this->ejecutar($sql_da);
-                if (isset($datos['dtdf']['alimentacion'])) {
-                    $alimentacion = $datos['dtdf']['alimentacion'];
-                }
-                if (isset($datos['dtdf']['alimentacion_regular'])) {
-                    $alimentacion_r = $datos['dtdf']['alimentacion_regular'];
-                }
-                $sql_ida = "INSERT INTO dt_alimentacion(cedula_estudiante,id_acceso,id_regular)VALUES ($cedula,$alimentacion,$alimentacion_r);";
-                $this->ejecutar($sql_ida);
-            }
-
-            if (isset($datos['dtdf']['ayuda'])) {
-                $sql_de     = "DELETE FROM dt_ayuda WHERE cedula_estudiante = $cedula;";
-                $this->ejecutar($sql_de);
-                $diversidad = $datos['dtdf']['ayuda'];
-                foreach ($diversidad as $valores) {
-                    $sql_ide = "INSERT INTO dt_ayuda(cedula_estudiante,id_ayuda)VALUES ($cedula,$valores);";
-                    $this->ejecutar($sql_ide);
+            
+            // Ayuda
+            $sql_dtec = "DELETE FROM dt_ayuda WHERE cedula_estudiante = $cedula;";
+            $this->ejecutar($sql_dtec);
+            
+            if (isset($ayuda)) {
+                foreach ($ayuda as $valores) {
+                    $sql_tec = "INSERT INTO dt_ayuda(cedula_estudiante,id_ayuda)VALUES($cedula,$valores);";
+                    $this->ejecutar($sql_tec);
                 }
             }
         }
@@ -352,9 +393,11 @@ class Inscripcion extends Preinscripcion
     {
         $cedula        = $datos['cedula_estudiante'];
         $sql_re['sql'] = "SELECT * FROM dt_padres WHERE cedula_estudiante=$cedula";
-        $total = $this->numero_filas($sql_re['sql']);
-        $datos = $total;
+        $total         = $this->numero_filas($sql_re['sql']);
+        $datos         = $total;
         if ($total > 0) {
+            
+            // Datos Padres Madres 
             $result_rep   = $this->datos($sql_re);
             $padres_f     = $result_rep[0]['padre_f'] . ';' . $result_rep[0]['madre_f'];
             $padres_pl    = $result_rep[0]['padre_pl'] . ';' . $result_rep[0]['madre_pl'];
@@ -365,7 +408,10 @@ class Inscripcion extends Preinscripcion
             $padres_set   = $result_rep[0]['padre_set'] . ';' . $result_rep[0]['madre_set'];
             $padres_see   = $result_rep[0]['padre_see'] . ';' . $result_rep[0]['madre_see'];
             
-            $sql_re['sql'] = "SELECT id_ingreso FROM dt_ingreso_familiar WHERE cedula_estudiante=$cedula";
+            $datos_rep = $padres_f . ';' . $padres_pl . ';' . $padres_al . ';' . $padres_fd . ';' . $padres_alf . ';' . $padres_nivel . ';' . $padres_set . ';' . $padres_see;
+            $datos = $datos_rep;
+            
+             $sql_re['sql'] = "SELECT id_ingreso FROM dt_ingreso_familiar WHERE cedula_estudiante=$cedula";
             
             $result_if  = $this->datos($sql_re);
 
@@ -378,11 +424,157 @@ class Inscripcion extends Preinscripcion
                 }
                 $datos_in = substr($datos_in, 0, -1);
             }
-            $datos_rep = $padres_f . ';' . $padres_pl . ';' . $padres_al . ';' . $padres_fd . ';' . $padres_alf . ';' . $padres_nivel . ';' . $padres_set . ';' . $padres_see;
-            $datos = $datos_rep.';'.$datos_in;
+            $datos = $datos.';'.$datos_in;
+            
+            // Datos Misiones y Programas Sociales
+            
+            $sql_ps['sql'] = "SELECT id_programa FROM dt_programa_social WHERE cedula_estudiante=$cedula";
+            
+            $result_ps  = $this->datos($sql_ps);
+
+            $total_ps   = $this->numero_filas($sql_ps['sql']);
+            $datos_ps   = "";
+            if($total_ps > 0){
+                
+                for ($i = 0; $i < count($result_ps); $i++) {
+                    $datos_ps .= $result_ps[$i]['id_programa'].",";
+                }
+                $datos_ps = substr($datos_ps, 0, -1);
+            }
+            $datos = $datos.';'.$datos_ps;
+
+            // Datos Vivienda
+            $sql_dv['sql'] = "SELECT ubicacion_vivienda,tipo_vivienda,estado_vivienda,cant_habitacion,cama FROM dt_vivienda WHERE cedula_estudiante=$cedula";
+            $total_dv = $this->numero_filas($sql_dv['sql']);
+            //$datos_dv = $total_dv;
+            if ($total_dv > 0) {
+                $result_dv   = $this->datos($sql_dv);
+                $datos_vi     = $result_dv[0]['ubicacion_vivienda'] . ';' . $result_dv[0]['tipo_vivienda'].';'.$result_dv[0]['estado_vivienda'].';'.$result_dv[0]['cant_habitacion'].';'.$result_dv[0]['cama'];
+            }
+            
+            $datos = $datos.';'.$datos_vi;
+            
+            // Datos Tecnologicos
+            
+            $sql_tec['sql'] = "SELECT id_tecnologia FROM dt_tecnologia WHERE cedula_estudiante=$cedula";
+            
+            $result_tec  = $this->datos($sql_tec);
+
+            $total_tec   = $this->numero_filas($sql_tec['sql']);
+            $datos_tec   = "";
+            if($total_tec > 0){
+                
+                for ($i = 0; $i < count($result_tec); $i++) {
+                    $datos_tec .= $result_tec[$i]['id_tecnologia'].",";
+                }
+                $datos_tec = substr($datos_tec, 0, -1);
+            }
+            $datos = $datos.';'.$datos_tec;
+            
+            
+            // Diversidad Funcional
+            
+            $sql_df['sql'] = "SELECT id_diversidad FROM dt_diversidad_funcional WHERE cedula_estudiante=$cedula";
+            
+            $result_df  = $this->datos($sql_df);
+
+            $total_df   = $this->numero_filas($sql_df['sql']);
+            $datos_df   = "";
+            if($total_df > 0){
+                
+                for ($i = 0; $i < count($result_df); $i++) {
+                    $datos_df .= $result_df[$i]['id_diversidad'].",";
+                }
+                $datos_df = substr($datos_df, 0, -1);
+            }
+            
+            $datos = $datos.';'.$datos_df;
+
+            // Datos Enfermedades
+            
+            $sql_de['sql'] = "SELECT id_enfermedades FROM dt_enfermedad WHERE cedula_estudiante=$cedula";
+            
+            $result_de  = $this->datos($sql_de);
+
+            $total_de   = $this->numero_filas($sql_de['sql']);
+            $datos_de   = "";
+            if($total_de > 0){
+                
+                for ($i = 0; $i < count($result_de); $i++) {
+                    $datos_de .= $result_de[$i]['id_enfermedades'].",";
+                }
+                $datos_de = substr($datos_de, 0, -1);
+            }
+            
+            $datos = $datos.';'.$datos_de;
+            
+            // Datos Servicios
+            
+            $sql_ds['sql'] = "SELECT id_servicio FROM dt_servicio WHERE cedula_estudiante=$cedula";
+            
+            $result_ds  = $this->datos($sql_ds);
+
+            $total_ds   = $this->numero_filas($sql_ds['sql']);
+            $datos_ds   = "";
+            if($total_ds > 0){
+                
+                for ($i = 0; $i < count($result_ds); $i++) {
+                    $datos_ds .= $result_ds[$i]['id_servicio'].",";
+                }
+                $datos_ds = substr($datos_ds, 0, -1);
+            }
+            
+            $datos = $datos.';'.$datos_ds;
+            
+            // Datos Servicios
+            
+            $sql_des['sql'] = "SELECT id_destreza FROM dt_destreza WHERE cedula_estudiante=$cedula";
+            
+            $result_des  = $this->datos($sql_des);
+
+            $total_des   = $this->numero_filas($sql_des['sql']);
+            $datos_des   = "";
+            if($total_des > 0){
+                
+                for ($i = 0; $i < count($result_des); $i++) {
+                    $datos_des .= $result_des[$i]['id_destreza'].",";
+                }
+                $datos_des = substr($datos_des, 0, -1);
+            }
+            
+            $datos = $datos.';'.$datos_des;
+            
+             // Datos Alimentacion
+            $sql_da['sql'] = "SELECT alimentacion,alimentacion_regular FROM dt_diversidad WHERE cedula_estudiante=$cedula";
+            $total_da = $this->numero_filas($sql_da['sql']);
+            //$datos_dv = $total_dv;
+            if ($total_da > 0) {
+                $result_da   = $this->datos($sql_da);
+                $datos_va     = $result_da[0]['alimentacion'] . ';' . $result_da[0]['alimentacion_regular'];
+            }
+            
+            $datos = $datos.';'.$datos_va;
+            
+            
+            
+            // Datos Ayuda
+            
+            $sql_day['sql'] = "SELECT id_ayuda FROM dt_ayuda WHERE cedula_estudiante=$cedula";
+            
+            $result_day  = $this->datos($sql_day);
+
+            $total_day   = $this->numero_filas($sql_day['sql']);
+            $datos_day   = "";
+            if($total_day > 0){
+                
+                for ($i = 0; $i < count($result_day); $i++) {
+                    $datos_day .= $result_day[$i]['id_ayuda'].",";
+                }
+                $datos_day = substr($datos_day, 0, -1);
+            }
+            
+            $datos = $datos.';'.$datos_day;
+            echo $datos;
         }
-
-        echo $datos;
     }
-
 }

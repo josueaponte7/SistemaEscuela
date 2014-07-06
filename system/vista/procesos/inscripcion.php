@@ -39,6 +39,7 @@ $_SESSION['abrir']       = 'procesos';
         <script type="text/javascript" src="../../librerias/js/select2.js"></script>
         <script type="text/javascript" src="../../librerias/js/select2_locale_es.js"></script>
         <script type="text/javascript" src="../../librerias/js/tab.js"></script>
+        <script type="text/javascript" src="../../librerias/js/validarcampos.js"></script>
         <script type="text/javascript" src="../../librerias/script/inscripcion.js"></script>
         <style>
             #steps { list-style:none; width:100%; overflow:hidden; margin:0px; padding:0px;}
@@ -221,10 +222,8 @@ $_SESSION['abrir']       = 'procesos';
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
+                                            <td colspan="4">&nbsp;</td>
+
                                         </tr>
                                     </table>
                                 </td>
@@ -714,7 +713,7 @@ $_SESSION['abrir']       = 'procesos';
                                                                                 <th width="179" class="letras">Total de Hab de la Vivienda: </th>
                                                                                 <td width="189">
                                                                                     <div class="form-group">
-                                                                                        <input style="width: 130px !important;" type="text" class="form-control  input-sm" id="cant_habitacion" name="cant_habitacion" placeholder="Total Habitaci&oacute;n"/>
+                                                                                        <input style="width: 130px !important;" type="text" class="form-control  input-sm" id="cant_habitacion" name="cant_habitacion" placeholder="Total Habitaci&oacute;n" maxlength="2"/>
                                                                                     </div>
                                                                                 </td>
                                                                             </tr>

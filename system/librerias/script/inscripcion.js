@@ -17,7 +17,10 @@ $(document).ready(function() {
             {"sWidth": "4%", "bSortable": false, "sClass": "center sorting_false", "bSearchable": false}
         ]
     });
-
+    
+    var letra = '1234567890';
+    $('#cant_habitacion').validar(letra);
+    
     $('#registrar').click(function() {
         $('#registro_inscripcion').slideDown(2000);
         $('#reporte_inscripcion').slideUp(2000);
@@ -48,7 +51,7 @@ $(document).ready(function() {
         $('#fila').remove();
         var fila = $('table#tabla_inscripcion tbody tr').children('td:eq(1):contains("'+cedula+'")').index();
         
-        var f = new Date();
+        var f   = new Date();
         var dia = f.getDate();
         var mes = f.getMonth() + 1;
         var pad = '00';
@@ -210,8 +213,10 @@ $(document).ready(function() {
         $('input:checkbox').prop('disabled',false);
         $('fil_datos_genereles select').select2('val',0).prop('disabled',false);
         $.post(url,{cedula:cedula,'accion':'BuscarDG'},function(respuesta){
+            
             if(respuesta != 0){
                 var datos = respuesta.split(';');
+                //alert(datos.length);
                 if(datos[0] == 1){
                     $('#padre_f').prop('checked',true).trigger('change');
                 }
@@ -243,7 +248,7 @@ $(document).ready(function() {
                     $('#represent_fd').prop('checked',true).trigger('change');
                 }
 
-
+                
                 $('input:checkbox[name="dt_padres[padre_alf]"][value="'+datos[10]+'"]').prop('checked',true).trigger('change'); 
                 $('input:checkbox[name="dt_padres[madre_alf]"][value="'+datos[11]+'"]').prop('checked',true).trigger('change'); 
                 $('input:checkbox[name="dt_padres[represent_alf]"][value="'+datos[12]+'"]').prop('checked',true).trigger('change'); 
@@ -265,11 +270,65 @@ $(document).ready(function() {
                 if (datos[19] == 2) {
                     $('#madre_see').prop('checked', true).trigger('change');
                 }
+                
                 var datos_if = datos[20].split(',');
                 for (var i = 0;i < datos_if.length;i++){
                     $('input:checkbox[name="id_ingreso[]"][value="'+datos_if[i]+'"]').prop('checked',true); 
                 }
-        }
+                
+                // Programa Social
+                var datos_ps = datos[21].split(',');
+                for (var i = 0;i < datos_ps.length;i++){
+                    $('input:checkbox[name="mision[]"][value="'+datos_ps[i]+'"]').prop('checked',true); 
+                }
+               
+                // Datos Vivienda
+                $('#ubicacion_vivienda').select2('val',datos[22]);
+                $('#tipo_vivienda').select2('val',datos[23]);
+                $('#estado_vivienda').select2('val',datos[24]);
+                $('#cant_habitacion').val(datos[25]);
+                $('#cama').select2('val',datos[26]);
+                // Datos Tecnologico
+                var datos_tec = datos[27].split(',');
+                for (var i = 0;i < datos_tec.length;i++){
+                    $('input:checkbox[name="tecnologia[]"][value="'+datos_tec[i]+'"]').prop('checked',true); 
+                }
+                
+                // Datos Diversidad Funcional
+                var datos_df = datos[28].split(',');
+                for (var i = 0;i < datos_df.length;i++){
+                    $('input:checkbox[name="diversidad[]"][value="'+datos_df[i]+'"]').prop('checked',true); 
+                }
+
+                // Datos Enfermedes
+                var datos_de = datos[29].split(',');
+                for (var i = 0;i < datos_de.length;i++){
+                    $('input:checkbox[name="enfermedad[]"][value="'+datos_de[i]+'"]').prop('checked',true); 
+                }
+                
+                // Datos Servicios
+                var datos_ds = datos[30].split(',');
+                for (var i = 0;i < datos_ds.length;i++){
+                    $('input:checkbox[name="servicio[]"][value="'+datos_ds[i]+'"]').prop('checked',true); 
+                }
+                
+                // Datos Destreza
+                var datos_des = datos[31].split(',');
+                for (var i = 0;i < datos_des.length;i++){
+                    $('input:checkbox[name="destreza[]"][value="'+datos_des[i]+'"]').prop('checked',true); 
+                }
+                
+                // Datos Alimentacion
+                $('#alimentacion').select2('val',datos[32]);
+                $('#alimentacion_regular').select2('val',datos[33]);
+                
+                 // Datos Ayuda
+                var datos_day = datos[34].split(',');
+                for (var i = 0;i < datos_day.length;i++){
+                    $('input:checkbox[name="ayuda[]"][value="'+datos_day[i]+'"]').prop('checked',true); 
+                }
+
+            }
             
         });
         $(this).addClass('activo');
