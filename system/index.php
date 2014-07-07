@@ -251,9 +251,10 @@ if($grupo == 2){
                         if($grupo == 1 || $grupo == 3){
                         ?>
     
+<!--                        Descomentar Luego   
                             <li>
                                 <span data-toggle="collapse" data-parent="#accordion" href="#reportes">REPORTES</span>
-                            </li>
+                            </li>-->
                         <?php 
                             }
                         if($grupo == 2){
@@ -307,6 +308,7 @@ if($grupo == 2){
                         }
                         if($grupo == 1 || $grupo == 3){
                     ?>
+                    <!-- Descomentar nuevo
                     <div class="menu_izquierdo panel-title" data-toggle="collapse" data-parent="#accordion" href="#reportes" style="margin-top: 8px;">Reportes</div>
                     <div id="reportes" class="panel-collapse collapse <?php echo $abrir_rep ?>">
                         <div class="panel-body">
@@ -321,6 +323,7 @@ if($grupo == 2){
                             </div>
                         </div>
                     </div>
+                    -->
                     <?php 
                         }
                     if($grupo == 2){
