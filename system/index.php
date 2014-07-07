@@ -1,10 +1,12 @@
 <?php
 session_start();
 $nombres = '';
+
 if (!isset($_SESSION['id_usuario'])) {
     header('location:../');
 } else {
     $nombres = $_SESSION['nombres'];
+    $grupo   = $_SESSION['id_grupo'];
 }
 $menu_activo = '';
 $height      = '700px';
@@ -54,6 +56,12 @@ if (isset($_SESSION['archivo_sys']) && isset($_SESSION['dir_sys'])) {
         $abrir_conf = 'in';
     }
 }
+if($grupo == 2){
+    $abrir_conf = 'in';
+}else if($grupo == 3){
+    $abrir_rep  = 'in';
+}
+
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -63,6 +71,7 @@ if (isset($_SESSION['archivo_sys']) && isset($_SESSION['dir_sys'])) {
         <link href="librerias/css/bootstrap.css" rel="stylesheet" media="screen"/>
         <link href="librerias/css/estilos.css" type="text/css" rel="stylesheet" media="screen" />
         <link href="librerias/css/jquery.fancybox.css"  rel="stylesheet" type="text/css" media="all" >
+        
         <script src="librerias/js/jquery.1.10.js"></script>
         <script type="text/javascript" src="librerias/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="librerias/js/bootbox.min.js"></script>
@@ -244,6 +253,9 @@ if (isset($_SESSION['archivo_sys']) && isset($_SESSION['dir_sys'])) {
             </div>
             <div id="cuerpo">
                 <div id="sidebar-izquierdo">
+                    <?php 
+                    if($grupo == 1){
+                    ?>
                     <div class="menu_izquierdo panel-title" data-toggle="collapse" data-parent="#accordion" href="#registros" style="margin-top: 40px;">Registros</div>
                     <div id="registros" class="panel-collapse collapse <?php echo $abrir_reg ?>">
                         <div class="panel-body">
@@ -259,6 +271,10 @@ if (isset($_SESSION['archivo_sys']) && isset($_SESSION['dir_sys'])) {
                             </div>
                         </div>
                     </div>  
+                    <?php 
+                    }
+                    if($grupo == 1){
+                    ?>
                     <div class="menu_izquierdo panel-title" data-toggle="collapse" data-parent="#accordion" href="#procesos" style="margin-top: 8px;">Procesos</div>
                     <div id="procesos" class="panel-collapse collapse <?php echo $abrir_pro ?>">
                         <div class="panel-body">
@@ -270,6 +286,10 @@ if (isset($_SESSION['archivo_sys']) && isset($_SESSION['dir_sys'])) {
                             </div> 
                         </div>
                     </div>
+                    <?php
+                        }
+                        if($grupo == 1 || $grupo == 3){
+                    ?>
                     <div class="menu_izquierdo panel-title" data-toggle="collapse" data-parent="#accordion" href="#reportes" style="margin-top: 8px;">Reportes</div>
                     <div id="reportes" class="panel-collapse collapse <?php echo $abrir_rep ?>">
                         <div class="panel-body">
@@ -284,6 +304,10 @@ if (isset($_SESSION['archivo_sys']) && isset($_SESSION['dir_sys'])) {
                             </div>
                         </div>
                     </div>
+                    <?php 
+                        }
+                    if($grupo == 2){
+                    ?>
                     <div class="menu_izquierdo panel-title" data-toggle="collapse" data-parent="#accordion" href="#configuracion" style="margin-top: 8px;">Configuraci&oacute;n</div>
                     <div id="configuracion" class="panel-collapse collapse <?php echo $abrir_conf ?>">
                         <div class="panel-body">
@@ -307,6 +331,9 @@ if (isset($_SESSION['archivo_sys']) && isset($_SESSION['dir_sys'])) {
                             </div>
                         </div>
                     </div>
+                    <?php 
+                    }
+                    ?>
                 </div>
                 <div id="sidebar-derecho" style="padding: 35px 25px 0 0">                                    
                     <iframe  align="middle" id="ifrmcuerpo" name="ifrmcuerpo"  frameborder="0" scrolling="no"></iframe>

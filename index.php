@@ -96,7 +96,6 @@ if (isset($_SESSION['archivo_web']) && isset($_SESSION['dir'])) {
                         $.post("system/controlador/Usuario.php", $("#frmusuario").serialize(), function(respuesta) {
                             if (respuesta == 1) {
                                 window.location = 'system/';
-                                //window.location = 'system/';
                             } else {
                                 $().toastmessage('showToast', {
                                     text: 'Usuario o Contrae&ntilde;a Incorrectos',

@@ -25,25 +25,29 @@ class Usuario extends Seguridad {
     }
 
     public function update($datos) {
-     print_r($datos);
-     exit;
+
         $usuario       = $datos['usuario'];
         $nombre        = $datos['nombre'];
         $apellido      = $datos['apellido'];
         $grupo_usuario = $datos['grupo_usuario'];
-        $contrasena    = $datos['contrasena'];
+        $up_contrasena ="";
+        if(strlen($datos['contrasena'])> 0){
+           $contrasena    = $datos['contrasena'];
+           $up_contrasena = "contrasena = MD5('$contrasena'),";
+           
+        }
+        
         $estatus       = $datos['estatus'];
         $id_usuario    = $datos['id_usuario'];
-
-       echo $sql = "UPDATE usuario
+        
+       $sql = "UPDATE usuario
                   SET usuario        = '$usuario',
                       nombre         = '$nombre',
                       apellido       = '$apellido',
-                      contrasena     = 'MD5('$contrasena')',
                       activo         = '$estatus',
+                      $up_contrasena
                       id_grupo       = '$grupo_usuario'
                    WHERE id_usuario  = '$id_usuario';";
-exit;
         $resultado = $this->ejecutar($sql);
         return $resultado;
     }

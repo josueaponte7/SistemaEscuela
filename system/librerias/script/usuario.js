@@ -197,8 +197,9 @@ $(document).ready(function() {
                                             $("#tabla_usuario tbody tr:eq(" + fila + ")").find("td:eq(1)").html($('#usuario').val());
                                             $("#tabla_usuario tbody tr:eq(" + fila + ")").find("td:eq(2)").html($('#nombre').val());
                                             $("#tabla_usuario tbody tr:eq(" + fila + ")").find("td:eq(3)").html($('#apellido').val());
-                                            $('input[type="text"]').val('');
-                                            $('textarea').val('');
+                                            $('input:text,input:password,textarea').val('');
+                                            $('select#estatus,select#grupo_usuario').select2('val',0);
+                                            
                                         });
                                     }
                                 });
