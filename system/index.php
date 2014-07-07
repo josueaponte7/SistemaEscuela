@@ -233,21 +233,38 @@ if($grupo == 2){
                 <img src="imagenes/bg_menu_t.png" style="margin-top: -33px; z-index: 0; height: 50px; width: 882px;"/>
                 <div id="menu_boton">
                     <ul>
-                        <li>
-                            <span data-toggle="collapse" data-parent="#accordion" href="#registros">REGISTROS</span>
-                        </li>
-                        <li>
-                            <span data-toggle="collapse" data-parent="#accordion" href="#procesos">PROCESOS</span>
-                        </li>
-                        <!--                        <li>
-                                                    <span id="">REPORTES</span>
-                                                </li>-->
-                        <li>
-                            <span data-toggle="collapse" data-parent="#accordion" href="#reportes">REPORTES</span>
-                        </li>
+                        <?php 
+                        if($grupo == 1){
+                        ?>
+                            <li>
+                                <span data-toggle="collapse" data-parent="#accordion" href="#registros">REGISTROS</span>
+                            </li>
+                        <?php 
+                        }
+                        if($grupo == 1){
+                        ?>
+                            <li>
+                                <span data-toggle="collapse" data-parent="#accordion" href="#procesos">PROCESOS</span>
+                            </li>
+                        <?php 
+                        }
+                        if($grupo == 1 || $grupo == 3){
+                        ?>
+    
+                            <li>
+                                <span data-toggle="collapse" data-parent="#accordion" href="#reportes">REPORTES</span>
+                            </li>
+                        <?php 
+                            }
+                        if($grupo == 2){
+                        ?>
+                            
                         <li>
                             <span data-toggle="collapse" data-parent="#accordion" href="#configuracion">CONFIGURACI&Oacute;N</span>
                         </li>
+                        <?php 
+                            }
+                        ?>
                     </ul>
                 </div>
             </div>
