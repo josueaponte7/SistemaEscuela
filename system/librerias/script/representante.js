@@ -19,7 +19,11 @@ $(document).ready(function() {
     $('#nacionalidad').select2({
         minimumResultsForSearch: -1
     });
-
+    
+    $('#sexo').select2({
+        minimumResultsForSearch: -1
+    });
+    
     $('#estado, #municipio, #parroquia, #estatus, #nivel_inst, #profesion, #sexo, #cod_telefono, #cod_celular').select2();
 
     var letra = ' abcdefghijklmnñopqrstuvwxyzáéíóú';
@@ -76,7 +80,10 @@ $(document).ready(function() {
     /***Combos **/
     $('#estado').change(function() {
         var id = $(this).val();
+        $('#municipio').select2('val',0);
+        $('#parroquia').select2('val',0);
         $('#municipio').find('option:gt(0)').remove().end();
+        $('#parroquia').find('option:gt(0)').remove().end();
         $.post('../../controlador/Municipio.php', {id_estado: id, accion: 'buscarMun'}, function(respuesta) {
             var option = "";
             $.each(respuesta, function(i, obj) {
@@ -88,6 +95,7 @@ $(document).ready(function() {
 
     $('#municipio').change(function() {
         var id = $(this).val();
+        $('#parroquia').select2('val',0);
         $('#parroquia').find('option:gt(0)').remove().end();
         $.post('../../controlador/Parroquia.php', {id_municipio: id, accion: 'buscarParr'}, function(respuesta) {
             var option = "";
@@ -103,7 +111,7 @@ $(document).ready(function() {
         language: "es",
         format: 'dd/mm/yyyy',
         startDate: "-75y",
-        endDate: "-28y",
+        endDate: "-20y",
         autoclose: true
     }).on('changeDate', function(ev) {
         var edad = calcular_edad($(this).val());
@@ -236,9 +244,9 @@ $(document).ready(function() {
         } else if ($('#estatus').val() == 0) {
             $('#estatus').addClass('has-error');
             window.parent.scrollTo(0, 700);
-        } else if ($('#antecedente').val() === null || $('#antecedente').val().length === 0 || /^\s+$/.test($('#antecedente').val())) {
-            $('#div_antecedente').addClass('has-error');
-            $('#antecedente').focus();
+//        } else if ($('#antecedente').val() === null || $('#antecedente').val().length === 0 || /^\s+$/.test($('#antecedente').val())) {
+//            $('#div_antecedente').addClass('has-error');
+//            $('#antecedente').focus();
         } else if ($('#nivel_inst').val() == 0) {
             $('#nivel_inst').addClass('has-error');
         } else if ($('#profesion').val() == 0) {
@@ -261,12 +269,7 @@ $(document).ready(function() {
             var telefonos = cod_telefono + '-' + $('#telefono').val() + ', ' + cod_celular + '-' + $('#celular').val();
 
             if ($(this).text() == 'Guardar') {
-                // obtener el ultimo codigo del status 
-                var ToltalRow = TRepresentante.fnGetData().length;
-                var lastRow = TRepresentante.fnGetData(ToltalRow - 1);
-                var cedula = parseInt(lastRow[1]) + 1;
 
-//            var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
                 $.post("../../controlador/Representante.php", $("#frmrepresentante").serialize(), function(respuesta) {
                     if (respuesta == 1) {
 
