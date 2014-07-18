@@ -91,19 +91,16 @@ if($grupo == 2){
                 $('#cuerpo').css({'height': height});
 
                 $('div.contenido_men_izq ul > li').click(function() {
-                    var $id = $(this).attr('id');
-                    var ruta = $id.split("_");
-                    var total = ruta.length;
-                    var dir = ruta[0];
+                    var $id     = $(this).attr('id');
+                    var ruta    = $id.split("_");
+                    var total   = ruta.length;
+                    var dir     = ruta[0];
                     var archivo = ruta[1];
+                    var clase   = $(this).attr('class');
+                    
                     if (total == 3) {
                         var archivo = ruta[1] + '_' + ruta[2];
                     }
-
-//                    $(this).animate({
-//                        width: "150"
-//                    });
-
                     var url = './vista/' + dir + '/' + archivo + '.php';
                     if (archivo == 'estudiante') {
                         var height = '1220px';
@@ -142,11 +139,14 @@ if($grupo == 2){
                         var height = '1460px';
                         var heightifm = '1360px';
                     }
-
-                    $('#ifrmcuerpo').attr('src', url);
-                    $('#cuerpo').css('height', height);
-                    $('#ifrmcuerpo').css('height', heightifm);
-                    //$('#cargar').load(url);
+                    if(clase == 'reporte'){
+                        var url = 'vista/reportes/'+$id+'.php?todos=1';
+                        window.open(url);
+                    }else{
+                        $('#ifrmcuerpo').attr('src', url);
+                        $('#cuerpo').css('height', height);
+                        $('#ifrmcuerpo').css('height', heightifm);
+                    }
 
                 });
 
@@ -178,17 +178,6 @@ if($grupo == 2){
                         }
                     });
                 });
-
-//                /*Para los link del menu de arriba*/
-//                $('div#menu_boton ul > li > span').click(function() {
-//                    
-//                    var $archivo = $(this).attr('id');
-//                    var pagina = 'web/'+$archivo+'.php';
-//                    //$('#ifrmcuerpo').attr('src', pagina);
-//                    $('#cuerpo').load(pagina);
-//                });
-
-
             });
         </script> 
 
@@ -305,8 +294,8 @@ if($grupo == 2){
                         </div>
                     </div>
                     <?php
-                        }
-                        if($grupo == 1 || $grupo == 3){
+                    }
+                    if($grupo == 1 || $grupo == 3){
                     ?>
                     
                     <div class="menu_izquierdo panel-title" data-toggle="collapse" data-parent="#accordion" href="#reportes" style="margin-top: 8px;">Reportes</div>
@@ -314,18 +303,16 @@ if($grupo == 2){
                         <div class="panel-body">
                             <div class="contenido_men_izq">
                                 <ul  style="list-style-type:none;">
-                                    <li id="">Estudiante</li>                                                
-                                    <li id="">Docente</li>
-                                    <li id="">Actividad</li>
-                                    <li id="">Estado</li>
-                                    <li id="">Municipio</li>  
+                                    <li id="reporte_estudiante" class="reporte">Estudiante</li>                                                
+                                    <li id="reporte_docente" class="reporte">Docente</li>
+                                    <li id="listado_representante" class="reporte">Representantes</li> 
+                                    <li id="reporte_chofer" class="reporte">Choferes</li> 
                                 </ul>
                             </div>
                         </div>
                     </div>
-                
                     <?php 
-                        }
+                    }
                     if($grupo == 2){
                     ?>
                     <div class="menu_izquierdo panel-title" data-toggle="collapse" data-parent="#accordion" href="#configuracion" style="margin-top: 8px;">Configuraci&oacute;n</div>
