@@ -113,10 +113,15 @@ if (isset($_POST['accion'])) {
                                  INNER JOIN automovil AS au ON ch.cedula=au.cedula_chofer
                                  WHERE ch.cedula= $cedula";
             $resultado       = $obj->getChofer($opciones);
-            echo $resultado[0]['nombre'] . ';' .
-                 $resultado[0]['apellido'] . ';' .
-                 $resultado[0]['placa'] . ';' .
-                 $resultado[0]['telefono'] . ';';
+            $es_array        = is_array($resultado) ? TRUE : FALSE;
+            if($es_array == TRUE){
+                echo $resultado[0]['nombre'] . ';' .
+                     $resultado[0]['apellido'] . ';' .
+                     $resultado[0]['placa'] . ';' .
+                     $resultado[0]['telefono'] . ';';
+            }else{
+                echo 0;
+            }
 
             break;
         

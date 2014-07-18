@@ -95,7 +95,7 @@ if (isset($_POST['accion'])) {
     }
 
      switch ($accion) {
-        case 'Guardar':
+        case 'Inscribir':
             $resultado = $obj->add($datos);
             if ($resultado) {
                 echo 1;

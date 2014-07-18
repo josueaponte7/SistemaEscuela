@@ -103,7 +103,7 @@ if (isset($_SESSION['archivo_web']) && isset($_SESSION['dir'])) {
                                     stayTime: 2000,
                                     type: 'error',
                                     close    : function () {
-                                        $('#usuario').val('');
+                                        $('#usuario').val('').focus();
                                         $('#contrasena').val('');
                                     }
                                 });

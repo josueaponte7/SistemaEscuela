@@ -147,8 +147,7 @@ class Inscripcion extends Preinscripcion
                                 i.id_medio,
                                 i.cedula_chofer
                                FROM inscripcion AS i 
-                               INNER JOIN chofer AS c ON i.cedula_chofer=c.cedula
-                               WHERE cedula_estudiante=$cedula[1]";
+                               WHERE i.cedula_estudiante=$cedula[1]";
 
                 $result            = $this->datos($sql);
                 $fecha_inscripcion = $result[0]['fecha_inscripcion'];
@@ -247,6 +246,11 @@ class Inscripcion extends Preinscripcion
                 $sql_ii     = "INSERT INTO dt_ingreso_familiar(cedula_estudiante,id_ingreso)VALUES $valores;";
                 $this->ejecutar($sql_ii);
             }
+            if($result_insert){
+                $sql = "UPDATE inscripcion SET paso1 = 1 WHERE cedula_estudiante = '$cedula';";
+                $result_del = $this->ejecutar($sql);
+                echo 1;
+            }
         } else if (isset($datos['dt_mision'])) { // Guardar Segundo paso
             $cedula = $datos['cedula_estudiante'];
 
@@ -254,9 +258,23 @@ class Inscripcion extends Preinscripcion
                 $mision = $datos['mision'];
                 $sql_dp = "DELETE FROM dt_programa_social WHERE cedula_estudiante = $cedula;";
                 $this->ejecutar($sql_dp);
+                $valor_program = 0;
                 foreach ($mision as $valores) {
                     $sql_pro = "INSERT INTO dt_programa_social(cedula_estudiante,id_programa)VALUES ($cedula,$valores);";
-                    $this->ejecutar($sql_pro);
+                    $resul = $this->ejecutar($sql_pro);
+                    if(!$resul){
+                        $sql_dp = "DELETE FROM dt_programa_social WHERE cedula_estudiante = $cedula;";
+                        $this->ejecutar($sql_dp);
+                        break;
+                        
+                    }else{
+                        $valor_program = 1;
+                    }
+                }
+                if($valor_program ==1){
+                    $sql = "UPDATE inscripcion SET paso2 = 1 WHERE cedula_estudiante = '$cedula';";
+                    $result_del = $this->ejecutar($sql);
+                    echo 1;
                 }
             }
         } else if (isset($datos['dt_vivienda'])) {
@@ -555,7 +573,7 @@ class Inscripcion extends Preinscripcion
              // Datos Alimentacion
             $sql_da['sql'] = "SELECT alimentacion,alimentacion_regular FROM dt_diversidad WHERE cedula_estudiante=$cedula";
             $total_da = $this->numero_filas($sql_da['sql']);
-            //$datos_dv = $total_dv;
+            $datos_va = '';
             if ($total_da > 0) {
                 $result_da   = $this->datos($sql_da);
                 $datos_va     = $result_da[0]['alimentacion'] . ';' . $result_da[0]['alimentacion_regular'];

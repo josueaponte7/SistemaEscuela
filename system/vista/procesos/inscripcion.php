@@ -25,6 +25,7 @@ $_SESSION['abrir']       = 'procesos';
         <title>Inscripcion</title>
         <meta http-equiv="Content-Type"  content="text/html; charset=UTF-8"> 
         <link href="../../librerias/css/bootstrap.css" rel="stylesheet" media="screen"/>
+        <link href="../../librerias/css/bootstrap-theme.css" rel="stylesheet" media="screen"/>
         <link href="../../librerias/css/dataTables.css" rel="stylesheet" media="screen"/>
         <link href="../../librerias/css/estilos.css" rel="stylesheet" media="screen"/>
         <link href="../../../librerias/css/jquery.toastmessage.css" rel="stylesheet" media="screen"/>
@@ -216,7 +217,7 @@ $_SESSION['abrir']       = 'procesos';
                                         <tr height="60">
                                             <td height="68" class="letras">&Aacute;rea:</td>
                                             <td colspan="4">
-                                                <div class="form-group">
+                                                <div id="div_actividad" class="form-group">
                                                     <textarea name="area" rows="2"  class="form-control input-sm"  id="area" placeholder="&Aacute;rea"></textarea>
                                                 </div>
                                             </td>
@@ -298,8 +299,8 @@ $_SESSION['abrir']       = 'procesos';
                                                             </td>
                                                             <td width="67" class="letras"> C&eacute;dula: </td>
                                                             <td width="252">
-                                                                <div class="form-group">
-                                                                    <input type="text" style="width: 250px !important;" class="form-control input-sm" id="cedula_cho" name="cedula_cho" placeholder="Cédula"/>
+                                                                <div id="div_cedula_cho" class="form-group">
+                                                                    <input type="text" style="width: 250px !important;" disabled="disabled" class="form-control input-sm" id="cedula_cho" name="cedula_cho" placeholder="Cédula"/>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -340,10 +341,10 @@ $_SESSION['abrir']       = 'procesos';
                                             </tr>
                                             <tr>
                                                 <td align="center">
-                                                    <div id="botones">
-                                                        <input type="hidden" name="accion" value="Guardar" id="accion"/>
+                                                    <div id="botones">                                                        
+                                                        <input type="hidden" name="accion" value="Inscribir" id="accion"/>
                                                         <input type="hidden" name="dt" id="dt" value=""/>
-                                                        <button type="button" id="guardar" class="btn btn-primary btn-sm">Guardar</button>
+                                                        <button type="button" id="guardar" class="btn btn-primary btn-sm">Inscribir</button>
                                                         <button type="button" id="limpiar" class="btn btn-primary btn-sm">Limpiar</button>
                                                         <button type="button" id="salir" class="btn btn-primary btn-sm">Salir</button> 
                                                     </div>
@@ -371,9 +372,10 @@ $_SESSION['abrir']       = 'procesos';
                                             <td>
                                                 <div id="main" style="display:none">
                                                     <div id="SignupForm">
-                                                        <fieldset class="paso">
+                                                        <!-- Inicio Datos Misiones -->
+                                                        <fieldset id="pa_ma_rep" class="paso">
                                                             <legend class="letras_titulosGe">Padre, Madre o Representante</legend>
-                                                            <table>
+                                                            <table border="0">
                                                                 <tr>
                                                                     <td height="50">
                                                                         <table style="width:100%" border="0">
@@ -592,6 +594,9 @@ $_SESSION['abrir']       = 'procesos';
                                                                 </tr>
                                                             </table>
                                                         </fieldset>
+                                                        <!-- Fin Datos Padre Madre Representante -->
+                                                        
+                                                        <!-- Inicio Datos Misiones -->
                                                         <fieldset class="paso">
                                                             <legend class="letras_titulosGe">Misiones</legend>
                                                             <table style="width:100%">
