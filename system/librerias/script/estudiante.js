@@ -86,7 +86,12 @@ $(document).ready(function() {
     /***Combos **/
     $('#estado').change(function() {
         var id = $(this).val();
+		$('#municipio').select2('val',0);
         $('#municipio').find('option:gt(0)').remove().end();
+		
+		$('#id_parroquia').select2('val',0);
+        $('#id_parroquia').find('option:gt(0)').remove().end();
+		
         $.post('../../controlador/Municipio.php', {estado: id, accion: 'buscarMun'}, function(respuesta) {
             var option = "";
             $.each(respuesta, function(i, obj) {
@@ -98,6 +103,7 @@ $(document).ready(function() {
 
     $('#municipio').change(function() {
         var id = $(this).val();
+		$('#id_parroquia').select2('val',0);
         $('#id_parroquia').find('option:gt(0)').remove().end();
         $.post('../../controlador/Parroquia.php', {id_municipio: id, accion: 'buscarParr'}, function(respuesta) {
             var option = "";
@@ -403,14 +409,18 @@ $(document).ready(function() {
                     var nacionalidad = $('#nacionalidad').find('option').filter(":selected").text();
                     var cedula = nacionalidad + '-' + $('#cedula').val();
                     var $check_cedula = '<input type="checkbox" name="cedula[] " value="' + cedula + '" />';
-                    alert('Registro con Exito');
-                    cedula = '<span class="sub-rayar tooltip_ced" data-original-title="" title="">' + cedula + '</span>';
+                   window.parent.bootbox.alert("Registro con Exito", function() {
+						cedula = '<span class="sub-rayar tooltip_ced" data-original-title="" title="">' + cedula + '</span>';
 
-                    var nombres = $('#nombre').val() + ' ' + $('#apellido').val();
-                    TEstudiante.fnAddData([$check_cedula, cedula, nombres, estatus, nombre, modificar, eliminar]);
-                    $('table#tbl_repre').css('display', 'none');
-                    TTbl_Repre.fnClearTable();
-                    $('input[type="text"]').val('');
+						var nombres = $('#nombre').val() + ' ' + $('#apellido').val();
+						TEstudiante.fnAddData([$check_cedula, cedula, nombres, estatus, nombre, modificar, eliminar]);
+						$('table#tbl_repre').css('display', 'none');
+						TTbl_Repre.fnClearTable();
+						$('input[type="text"]').val('');
+						$('select').select2('val',0);
+						$('#municipio').find('option:gt(0)').remove().end();
+						$('#id_parroquia').find('option:gt(0)').remove().end();
+					});
                 } else if (respuesta == 13) {
                     window.parent.bootbox.alert("La Cédula se encuentra Registrada", function() {
                         window.parent.scrollTo(0, 300);

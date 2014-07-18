@@ -139,25 +139,31 @@ $(document).ready(function() {
         if (accion == 'Guardar') {
             $.post("../../controlador/Inscripcion.php", $('#frminscripcion').serialize(), function(respuesta) {
                 $('#cedula_r,#tipo_estudiante').prop('disabled', true);
-                
-                window.parent.bootbox.alert("Registro con Exito", function() {
-                    var cedula = $('#cedula').find('option:selected').val();
-                    var $check = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
-                    var dat_c = $('#cedula').find('option:selected').text();
-                    var dat_n = dat_c.split(' ');
+                if(respuesta == 1){
+                    window.parent.bootbox.alert("Registro con Exito", function() {
+                        var cedula = $('#cedula').find('option:selected').val();
+                        var $check = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
+                        var dat_c = $('#cedula').find('option:selected').text();
+                        var dat_n = dat_c.split(' ');
 
-                    delete dat_n[0];
-                    var nombre = dat_n.join(' ');
-                    var tipo = $('#tipo_estudiante').val();
-                    var anio = $('#anio_escolar').val();
-                    var fecha = $('#fecha').val();
-                    var actividad = $('#actividad').find('option:selected').text();
+                        delete dat_n[0];
+                        var nombre = dat_n.join(' ');
+                        var tipo = $('#tipo_estudiante').val();
+                        var anio = $('#anio_escolar').val();
+                        var fecha = $('#fecha').val();
+                        var actividad = $('#actividad').find('option:selected').text();
 
-                    var modificar = '<img class="modificar" src="../../imagenes/edit.png" title="Modificar" style="cursor: pointer"  width="18" height="18" alt="Modificar"/>';
-                    var eliminar = '<img class="eliminar" src="../../imagenes/delete.png" title="Eliminar" style="cursor: pointer"  width="18" height="18"  alt="Eliminar"/>';
+                        var modificar = '<img class="modificar" src="../../imagenes/edit.png" title="Modificar" style="cursor: pointer"  width="18" height="18" alt="Modificar"/>';
+                        var eliminar = '<img class="eliminar" src="../../imagenes/delete.png" title="Eliminar" style="cursor: pointer"  width="18" height="18"  alt="Eliminar"/>';
 
-                    TInscripcion.fnAddData([$check, cedula, nombre, tipo, anio, actividad, fecha, modificar, eliminar]);
-                });
+                        TInscripcion.fnAddData([$check, cedula, nombre, tipo, anio, actividad, fecha, modificar, eliminar]);
+
+                    });
+                 }else{
+                     window.parent.bootbox.alert("Ocurrio un error comuniquese con informatica", function() {
+
+                        });
+                 }
             });
         } else {
             window.parent.bootbox.confirm({
