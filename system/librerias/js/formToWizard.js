@@ -110,6 +110,12 @@
                         }
                     });
                 }else{
+                    var fin = count - 1 ;
+                    if(i == fin){
+                        
+                    }
+                    var msg
+                    
                     window.parent.bootbox.confirm({
                         message: '¿Desea guardar la información?',
                         buttons: {

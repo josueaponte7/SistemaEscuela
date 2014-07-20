@@ -590,7 +590,9 @@ $_SESSION['abrir']       = 'procesos';
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td width="688" align="center">&nbsp;</td>
+                                                                    <td width="688" align="center">&nbsp;
+                                                                        <input type="hidden" name="paso1" id="paso1" value="0" />
+                                                                    </td>
                                                                 </tr>
                                                             </table>
                                                         </fieldset>
@@ -634,10 +636,19 @@ $_SESSION['abrir']       = 'procesos';
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td align="center">&nbsp;</td>
+                                                                    <td align="center">
+                                                                        <input type="hidden" name="paso2" id="paso2" value="0" />
+                                                                        &nbsp;
+                                                                    </td>
                                                                 </tr>
                                                             </table>
                                                         </fieldset>
+                                                        
+                                                        
+                                                        <!-- Fin Datos Misiones -->
+                                                        
+                                                        <!-- Inicio Datos Vivienda -->
+
                                                         <fieldset class="paso">
                                                             <legend class="letras_titulosGe">Vivienda</legend>
                                                             <table align="center" style="width:100%">
@@ -788,9 +799,18 @@ $_SESSION['abrir']       = 'procesos';
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td>&nbsp;</td>
+                                                                    <td>
+                                                                        <input type="hidden" name="paso3" id="paso3" value="0" />
+                                                                        &nbsp;
+                                                                    </td>
                                                                 </tr>
                                                             </table>
+                                                            
+                                                            
+                                                        <!-- Fin Datos Vivienda -->
+                                                        
+                                                        <!-- Inicio Datos Diversidad Funcional -->
+ 
                                                         </fieldset>
                                                         <fieldset class="paso">
                                                             <legend class="letras_titulosGe">Diversidad Funcional</legend>
@@ -1005,6 +1025,11 @@ $_SESSION['abrir']       = 'procesos';
                                                                             }
                                                                             ?>  
                                                                         </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <input type="hidden" name="paso4" id="paso4" value="0" />
                                                                     </td>
                                                                 </tr>
                                                             </table>

@@ -125,7 +125,7 @@ if($grupo == 2){
                         var heightifm = '540px';
 
                     }
-                    else if (archivo == 'programa_social') {
+                    else if (archivo == 'programa_social' || archivo == 'profesion') {
                         var height = '880px';
                         var heightifm = '830px';
 
@@ -326,7 +326,8 @@ if($grupo == 2){
                                     <li id="configuracion_status_docente">Status de Docentes</li>
                                     <li id="configuracion_status_chofer">Status de Choferes</li>
                                     <li id="configuracion_grupo_usuario">Grupos de Usuarios</li>     
-                                    <li id="configuracion_programa_social">Programas Sociales</li>                                     
+                                    <li id="configuracion_programa_social">Programas Sociales</li>
+                                    <li id="configuracion_profesion">Profesi&oacute;n</li>
                                     <li id="configuracion_actividad">Actividades</li>
                                     <li id="configuracion_anio_escolar">A&ntilde;o Escolar</li>
                                     <li id="configuracion_tipo_enfermedades">Tipo de Enfermedades</li>

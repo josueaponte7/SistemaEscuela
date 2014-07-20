@@ -300,7 +300,7 @@ class Inscripcion extends Preinscripcion
             $this->ejecutar($sql_dv);
             
             $sql_vivienda = "INSERT INTO dt_vivienda({$campos})VALUES ({$valores});";
-            $this->ejecutar($sql_vivienda);
+            $resul_vi = $this->ejecutar($sql_vivienda);
             
             $sql_dtec = "DELETE FROM dt_tecnologia WHERE cedula_estudiante = $cedula;";
             $this->ejecutar($sql_dtec);
@@ -311,6 +311,13 @@ class Inscripcion extends Preinscripcion
                     $this->ejecutar($sql_tec);
                 }
             }
+            
+            if($resul_vi){
+                $sql_p3 = "UPDATE inscripcion SET paso3 = 1 WHERE cedula_estudiante = '$cedula';";
+                $result_del = $this->ejecutar($sql_p3);
+                echo 1;
+            }
+            
         } else if (isset($datos['dt_diversidad'])) {
             
             $cedula = $datos['dt_diversidad']['cedula_estudiante'];
@@ -356,7 +363,7 @@ class Inscripcion extends Preinscripcion
             $this->ejecutar($sql_dd);
             
             $sql_ddi = "INSERT INTO dt_diversidad({$campos})VALUES ({$valores});";
-            $this->ejecutar($sql_ddi);
+            $resul_di = $this->ejecutar($sql_ddi);
    
             // Diversidad Funcional
             $sql_dtec = "DELETE FROM dt_diversidad_funcional WHERE cedula_estudiante = $cedula;";
@@ -370,8 +377,8 @@ class Inscripcion extends Preinscripcion
             }
             
             // Enfermedades
-            $sql_dtec = "DELETE FROM dt_enfermedad WHERE cedula_estudiante = $cedula;";
-            $this->ejecutar($sql_dtec);
+            $sql_dten = "DELETE FROM dt_enfermedad WHERE cedula_estudiante = $cedula;";
+            $this->ejecutar($sql_dten);
             
             if (isset($enfermedad)) {
                 foreach ($enfermedad as $valores) {
@@ -381,8 +388,8 @@ class Inscripcion extends Preinscripcion
             }
             
             // Servicios 
-            $sql_dtec = "DELETE FROM dt_servicio WHERE cedula_estudiante = $cedula;";
-            $this->ejecutar($sql_dtec);
+            $sql_dtse = "DELETE FROM dt_servicio WHERE cedula_estudiante = $cedula;";
+            $this->ejecutar($sql_dtse);
             
             if (isset($servicio)) {
                 foreach ($servicio as $valores) {
@@ -392,8 +399,8 @@ class Inscripcion extends Preinscripcion
             }
 
             // Destreza 
-            $sql_dtec = "DELETE FROM dt_destreza WHERE cedula_estudiante = $cedula;";
-            $this->ejecutar($sql_dtec);
+            $sql_dtde = "DELETE FROM dt_destreza WHERE cedula_estudiante = $cedula;";
+            $this->ejecutar($sql_dtde);
             
             if (isset($destreza)) {
                 foreach ($destreza as $valores) {
@@ -403,8 +410,8 @@ class Inscripcion extends Preinscripcion
             }
             
             // Ayuda
-            $sql_dtec = "DELETE FROM dt_ayuda WHERE cedula_estudiante = $cedula;";
-            $this->ejecutar($sql_dtec);
+            $sql_dtay = "DELETE FROM dt_ayuda WHERE cedula_estudiante = $cedula;";
+            $this->ejecutar($sql_dtay);
             
             if (isset($ayuda)) {
                 foreach ($ayuda as $valores) {
@@ -412,47 +419,81 @@ class Inscripcion extends Preinscripcion
                     $this->ejecutar($sql_tec);
                 }
             }
+            
+            if($resul_di){
+                $sql = "UPDATE inscripcion SET paso4 = 1 WHERE cedula_estudiante = '$cedula';";
+                $result_del = $this->ejecutar($sql);
+                echo 1;
+            }
         }
     }
 
     public function searchDG($datos)
     {
         $cedula        = $datos['cedula_estudiante'];
-        $sql_re['sql'] = "SELECT * FROM dt_padres WHERE cedula_estudiante=$cedula";
-        $total         = $this->numero_filas($sql_re['sql']);
-        $datos         = $total;
-        if ($total > 0) {
-            
-            // Datos Padres Madres 
-            $result_rep   = $this->datos($sql_re);
-            $padres_f     = $result_rep[0]['padre_f'] . ';' . $result_rep[0]['madre_f'];
-            $padres_pl    = $result_rep[0]['padre_pl'] . ';' . $result_rep[0]['madre_pl'];
-            $padres_al    = $result_rep[0]['padre_al'] . ';' . $result_rep[0]['madre_al'] . ';' . $result_rep[0]['represent_al'];
-            $padres_fd    = $result_rep[0]['padre_fd'] . ';' . $result_rep[0]['madre_fd'] . ';' . $result_rep[0]['represent_al'];
-            $padres_alf   = $result_rep[0]['padre_alf'] . ';' . $result_rep[0]['madre_alf'] . ';' . $result_rep[0]['represent_alf'];
-            $padres_nivel = $result_rep[0]['padre_nivel'] . ';' . $result_rep[0]['madre_nivel'] . ';' . $result_rep[0]['represent_nivel'];
-            $padres_set   = $result_rep[0]['padre_set'] . ';' . $result_rep[0]['madre_set'];
-            $padres_see   = $result_rep[0]['padre_see'] . ';' . $result_rep[0]['madre_see'];
-            
-            $datos_rep = $padres_f . ';' . $padres_pl . ';' . $padres_al . ';' . $padres_fd . ';' . $padres_alf . ';' . $padres_nivel . ';' . $padres_set . ';' . $padres_see;
-            $datos = $datos_rep;
-            
-             $sql_re['sql'] = "SELECT id_ingreso FROM dt_ingreso_familiar WHERE cedula_estudiante=$cedula";
-            
-            $result_if  = $this->datos($sql_re);
+        
+        $sql_ins['sql'] = "SELECT 
+                                IFNULL(i.paso1,0) AS paso1,
+				IFNULL(i.paso2,0) AS paso2,
+				IFNULL(i.paso3,0) AS paso3,
+				IFNULL(i.paso4,0) AS paso4
+                               FROM inscripcion AS i 
+                               WHERE i.cedula_estudiante=$cedula";
+        
+        
+        $result_insc  = $this->datos($sql_ins);
+        $pas1 = (boolean)$result_insc[0]['paso1'];
+        $pas2 = (boolean)$result_insc[0]['paso2'];
+        $pas3 = (boolean)$result_insc[0]['paso3'];
+        $pas4 = (boolean)$result_insc[0]['paso4'];
+        
+        $datos = "";
+        // Paso 1
+        if ($pas1 == TRUE) {
+            $datos = '1//';
+            $sql_re['sql'] = "SELECT * FROM dt_padres WHERE cedula_estudiante=$cedula";
+            $total         = $this->numero_filas($sql_re['sql']);
+                        
+            if ($total > 0) {
 
-            $total_if   = $this->numero_filas($sql_re['sql']);
-            $datos_in   = "";
-            if($total_if > 0){
-                
-                for ($i = 0; $i < count($result_if); $i++) {
-                    $datos_in .= $result_if[$i]['id_ingreso'].",";
+                // Datos Padres Madres 
+                $result_rep   = $this->datos($sql_re);
+                $padres_f     = $result_rep[0]['padre_f'] . ';' . $result_rep[0]['madre_f'];
+                $padres_pl    = $result_rep[0]['padre_pl'] . ';' . $result_rep[0]['madre_pl'];
+                $padres_al    = $result_rep[0]['padre_al'] . ';' . $result_rep[0]['madre_al'] . ';' . $result_rep[0]['represent_al'];
+                $padres_fd    = $result_rep[0]['padre_fd'] . ';' . $result_rep[0]['madre_fd'] . ';' . $result_rep[0]['represent_al'];
+                $padres_alf   = $result_rep[0]['padre_alf'] . ';' . $result_rep[0]['madre_alf'] . ';' . $result_rep[0]['represent_alf'];
+                $padres_nivel = $result_rep[0]['padre_nivel'] . ';' . $result_rep[0]['madre_nivel'] . ';' . $result_rep[0]['represent_nivel'];
+                $padres_set   = $result_rep[0]['padre_set'] . ';' . $result_rep[0]['madre_set'];
+                $padres_see   = $result_rep[0]['padre_see'] . ';' . $result_rep[0]['madre_see'];
+
+                $datos_rep = $padres_f . ';' . $padres_pl . ';' . $padres_al . ';' . $padres_fd . ';' . $padres_alf . ';' . $padres_nivel . ';' . $padres_set . ';' . $padres_see;
+                $datos_p1     = $datos_rep;
+
+                $sql_re['sql'] = "SELECT id_ingreso FROM dt_ingreso_familiar WHERE cedula_estudiante=$cedula";
+
+                $result_if = $this->datos($sql_re);
+
+                $total_if = $this->numero_filas($sql_re['sql']);
+                $datos_in = "";
+                if ($total_if > 0) {
+
+                    for ($i = 0; $i < count($result_if); $i++) {
+                        $datos_in .= $result_if[$i]['id_ingreso'] . ",";
+                    }
+                    $datos_in = substr($datos_in, 0, -1);
                 }
-                $datos_in = substr($datos_in, 0, -1);
+                $datos = $datos.$datos_p1 . ';' . $datos_in.'##';
             }
-            $datos = $datos.';'.$datos_in;
             
-            // Datos Misiones y Programas Sociales
+        }else{
+            $datos = '0//##';        
+        }
+        
+        // Datos Misiones y Programas Sociales
+        
+        if($pas2 == TRUE){
+            $datos = $datos.'2//';
             
             $sql_ps['sql'] = "SELECT id_programa FROM dt_programa_social WHERE cedula_estudiante=$cedula";
             
@@ -467,9 +508,16 @@ class Inscripcion extends Preinscripcion
                 }
                 $datos_ps = substr($datos_ps, 0, -1);
             }
-            $datos = $datos.';'.$datos_ps;
-
-            // Datos Vivienda
+            $datos = $datos.$datos_ps.'##';
+        }else{
+            $datos = $datos.'0//##';
+        }
+        
+        // Datos Vivienda
+        if($pas3 == TRUE){
+            
+            $datos = $datos.'3//';
+            
             $sql_dv['sql'] = "SELECT ubicacion_vivienda,tipo_vivienda,estado_vivienda,cant_habitacion,cama FROM dt_vivienda WHERE cedula_estudiante=$cedula";
             $total_dv = $this->numero_filas($sql_dv['sql']);
             //$datos_dv = $total_dv;
@@ -478,7 +526,7 @@ class Inscripcion extends Preinscripcion
                 $datos_vi     = $result_dv[0]['ubicacion_vivienda'] . ';' . $result_dv[0]['tipo_vivienda'].';'.$result_dv[0]['estado_vivienda'].';'.$result_dv[0]['cant_habitacion'].';'.$result_dv[0]['cama'];
             }
             
-            $datos = $datos.';'.$datos_vi;
+            $datos = $datos.$datos_vi;
             
             // Datos Tecnologicos
             
@@ -495,9 +543,15 @@ class Inscripcion extends Preinscripcion
                 }
                 $datos_tec = substr($datos_tec, 0, -1);
             }
-            $datos = $datos.';'.$datos_tec;
+            $datos = $datos.';'.$datos_tec.'##';
             
-            
+        }else{
+            $datos = $datos.'0//##';
+        }
+        
+        // Diversidad Funcional
+        if($pas4 == TRUE){
+            $datos = $datos.'4//';
             // Diversidad Funcional
             
             $sql_df['sql'] = "SELECT id_diversidad FROM dt_diversidad_funcional WHERE cedula_estudiante=$cedula";
@@ -514,8 +568,8 @@ class Inscripcion extends Preinscripcion
                 $datos_df = substr($datos_df, 0, -1);
             }
             
-            $datos = $datos.';'.$datos_df;
-
+            $datos = $datos.$datos_df;
+            
             // Datos Enfermedades
             
             $sql_de['sql'] = "SELECT id_enfermedades FROM dt_enfermedad WHERE cedula_estudiante=$cedula";
@@ -533,6 +587,7 @@ class Inscripcion extends Preinscripcion
             }
             
             $datos = $datos.';'.$datos_de;
+            
             
             // Datos Servicios
             
@@ -552,7 +607,8 @@ class Inscripcion extends Preinscripcion
             
             $datos = $datos.';'.$datos_ds;
             
-            // Datos Servicios
+            
+            // Datos Destreza
             
             $sql_des['sql'] = "SELECT id_destreza FROM dt_destreza WHERE cedula_estudiante=$cedula";
             
@@ -570,7 +626,8 @@ class Inscripcion extends Preinscripcion
             
             $datos = $datos.';'.$datos_des;
             
-             // Datos Alimentacion
+            
+            // Datos Alimentacion
             $sql_da['sql'] = "SELECT alimentacion,alimentacion_regular FROM dt_diversidad WHERE cedula_estudiante=$cedula";
             $total_da = $this->numero_filas($sql_da['sql']);
             $datos_va = '';
@@ -580,8 +637,6 @@ class Inscripcion extends Preinscripcion
             }
             
             $datos = $datos.';'.$datos_va;
-            
-            
             
             // Datos Ayuda
             
@@ -600,7 +655,11 @@ class Inscripcion extends Preinscripcion
             }
             
             $datos = $datos.';'.$datos_day;
-            echo $datos;
+            
+        }else{
+            $datos = $datos.'0//';
         }
+        
+        echo $datos;
     }
 }
