@@ -11,6 +11,7 @@ $resultado       = $obj_repre->getRepresentantes($datos);
         <title>jQuery Modal Contact Demo</title>
         <meta name="author" content="Jake Rocheleau">
         <link href="../../librerias/css/bootstrap.css" rel="stylesheet" media="screen"/>
+        <link href="../../librerias/css/bootstrap-theme.css" rel="stylesheet" media="screen"/>
         <link href="../../librerias/css/dataTables.css" rel="stylesheet" media="screen"/>
         <link rel="stylesheet" type="text/css" href="../../librerias/css/select2.css"/>
         <link rel="stylesheet" type="text/css" href="../../librerias/css/select2-bootstrap.css"/>
@@ -93,22 +94,31 @@ $resultado       = $obj_repre->getRepresentantes($datos);
                 });
                 
                 
-               /* $(".parentesco").change(function() {
-                    var valor = $(this).val();
-                    alert($(this).index());
-                    if(valor ==1 || valor == 2){
-                        $('select.parentesco option[value="'+valor+'"]').prop('disabled',true);
-                    }else{
-                        $('select.parentesco option[value="1"]').prop('disabled',false);
-                    }
+               $(".parentesco").change(function() {
+                   
+                    var nodes = TReporterepre.fnGetNodes();
+                    var este  = $(this);
+                    var sel_madre  = $('select.parentesco option:selected[value="1"]',nodes).val();
+                    var sel_padre  = $('select.parentesco option:selected[value="2"]',nodes).val();
+                    var sel_sele = este.val();
                     
-                })*/
+                    var madre_count = $('select.parentesco option:selected[value="1"]',nodes).length;
+                    var padre_count = $('select.parentesco option:selected[value="2"]',nodes).length;
+                    if(madre_count > 1 && sel_madre == sel_sele){
+                        bootbox.alert("Solo puede selecionar una madre");
+                        este.select2('val',0);
+                    }
+                    if(padre_count > 1 && sel_padre == sel_sele){
+                        bootbox.alert("Solo puede selecionar un padre");
+                        este.select2('val',0);
+                    }
+                });
                 
                 
                 $('#asignar_rep').click(function() {
                     var nodes = TReporterepre.fnGetNodes();
-                    var countCheck = $('input:checkbox[name="repre[]"]:checked', nodes).length;
-                    var countRadio = $('input:radio[name="representant"]:checked', nodes).length;
+                    var countCheck  = $('input:checkbox[name="repre[]"]:checked', nodes).length;
+                    var countRadio  = $('input:radio[name="representant"]:checked', nodes).length;
                     var countSelect = $('select[name="parentesco[]"] option:gt(0):selected', nodes).length;
                     if (countCheck == 0) {
                         alert("Seleccione minimo un Representante");
@@ -120,14 +130,14 @@ $resultado       = $obj_repre->getRepresentantes($datos);
                         alert('Selecione todos los parentescos');
                     } else {
                         var $iframe = window.parent.frames[0].$('body');
-                        var checkboxValues = [];
+                        //var checkboxValues = [];
                         $('input:checkbox:checked', nodes).each(function() {
                             var $chkbox = $(this);
                             var $actualrow = $chkbox.closest('tr');
-                            var $clonedRow = $actualrow.clone();
+                            var $clonedRow = $actualrow.clone(true);
 
-                            $clonedRow.find("select").each(function(i) {
-                                this.selectedIndex = $actualrow.find("select")[i].selectedIndex;
+                            $clonedRow.find("select.parentesco",nodes).each(function(i) {
+                                this.selectedIndex = $actualrow.find("select.parentesco",nodes)[i].selectedIndex;
                             });
                             //.TTbl_Repre.fnAddData([codigo, estado, $('#nombre_municipio').val(), modificar, eliminar]);
                             $($clonedRow).prependTo($iframe.find('table#tbl_repre tbody'));

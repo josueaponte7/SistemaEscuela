@@ -39,11 +39,13 @@ $(document).ready(function() {
         ]
     });
 
-    $('#nacionalidad').select2({
+    $('#nacionalidad,#sexo').select2({
         minimumResultsForSearch: -1
     });
-
-    $('#estado, #municipio, #id_parroquia, #sexo, #cod_telefono, #cod_celular').select2();
+    
+    //$('.parentesco').select2();
+    
+    $('#estado, #municipio, #id_parroquia, #cod_telefono, #cod_celular').select2();
     $('#estatus').select2();
     $('#estatus').select2('val', '1');
     $('#estatus').select2('val', '1');
@@ -86,12 +88,11 @@ $(document).ready(function() {
     /***Combos **/
     $('#estado').change(function() {
         var id = $(this).val();
-		$('#municipio').select2('val',0);
+        $('#municipio').select2('val', 0);
         $('#municipio').find('option:gt(0)').remove().end();
-		
-		$('#id_parroquia').select2('val',0);
+        $('#id_parroquia').select2('val', 0);
         $('#id_parroquia').find('option:gt(0)').remove().end();
-		
+
         $.post('../../controlador/Municipio.php', {estado: id, accion: 'buscarMun'}, function(respuesta) {
             var option = "";
             $.each(respuesta, function(i, obj) {
@@ -103,7 +104,7 @@ $(document).ready(function() {
 
     $('#municipio').change(function() {
         var id = $(this).val();
-		$('#id_parroquia').select2('val',0);
+        $('#id_parroquia').select2('val', 0);
         $('#id_parroquia').find('option:gt(0)').remove().end();
         $.post('../../controlador/Parroquia.php', {id_municipio: id, accion: 'buscarParr'}, function(respuesta) {
             var option = "";
@@ -209,7 +210,7 @@ $(document).ready(function() {
     });
 
     $(document).keyup(function(event) {
-        if (event.which == 27) {
+        if (event.which == 27) {// Tecla escape
             $('.dropdown').hide();
         }
     });
@@ -285,12 +286,35 @@ $(document).ready(function() {
     });
 
     $('table#tbl_repre').on('change', 'input:checkbox[name="repre[]"]', function() {
-        if (!$(this).is(':checked')) {
-            var padre = $(this).closest('tr').remove();
+        var este = $(this);
+        var padre = este.closest('tr');
+        var chk_counre = $('input:checkbox[name="repre[]"]:checked').length;
+        alert(chk_counre);
+        if (!este.is(':checked')) {
+            window.parent.bootbox.confirm({
+                        message: 'Si Desmarca esta opción Eliminara el representante<br/>¿Desea Continuar?',
+                        buttons: {
+                            'cancel': {
+                                label: 'No',
+                                className: 'btn-default'
+                            },
+                            'confirm': {
+                                label: 'Si',
+                                className: 'btn-danger'
+                            }
+                        },
+                        callback: function(result) {
+                            if (result) {
+                                padre.remove();
+                            }else{
+                                este.prop('checked',true);
+                            }
+                        }
+                    });
         }
     });
 
-    $('table#tbl_repre').on('change', 'input:radio[name="representant"]', function() {
+    /*****$('table#tbl_repre').on('change', 'input:radio[name="representant"]', function() {
         var $chkbox = $(this);
         $('input:checkbox[name="repre[]"]:checked').prop('disabled', false);
         $('input:radio[name="representant"]:checked').prop('checked', false);
@@ -300,10 +324,11 @@ $(document).ready(function() {
             var $clonedRow = $actualrow.children('td');
             $clonedRow.find('input:checkbox[name="repre[]"]:checked').prop('disabled', true);
         }
-    });
+    });******/
 
     $('#guardar').click(function() {
-        $('#representantes').remove();
+        
+       $('#representantes').remove();
         var checkboxValues = "";
         var selectValues = "";
         var radioValues = "";
@@ -326,13 +351,18 @@ $(document).ready(function() {
         var $representantes = '<input type="hidden" id="representantes"  value="' + texto_salida + '" name="representantes">';
         $($representantes).appendTo($(this));
 
+        var $cod_telefono = $('#cod_telefono').find('option').filter(':selected').val();
+        var $cod_celular  = $('#cod_celular').find('option').filter(':selected').val();
         //window.parent.$("body").animate({scrollTop:0}, 'slow'); 
+        var val_correo = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
+        var mar_represen = $('input:checkbox[name="repre[]"]:checked').length;
+
         if ($('#nacionalidad').val() == 0) {
             /*********window parent para que la validacion llegue a su lugar********/
             window.parent.scrollTo(0, 300);
             $('#nacionalidad').addClass('has-error');
             //$('#nacionalidad').focus();
-        } else if ($('#cedula').val() === null || $('#cedula').val().length === 0 || /^\s+$/.test($('#cedula').val())) {
+        } else if ($('#cedula').val() === null || $('#cedula').val().length < 6 || /^\s+$/.test($('#cedula').val())) {
             window.parent.scrollTo(0, 300);
             $('#div_cedula').addClass('has-error');
             $('#cedula').focus();
@@ -351,19 +381,15 @@ $(document).ready(function() {
             window.parent.scrollTo(0, 300);
             $('#div_fech_naci').addClass('has-error');
             $('#fech_naci').focus();
-        }  else if ($('#telefono').val() === null || $('#telefono').val().length === 0 || /^\s+$/.test($('#telefono').val())) {
+        } else if ($cod_telefono > 0 && $('#telefono').val().length < 7) {
             window.parent.scrollTo(0, 300);
             $('#div_telefono').addClass('has-error');
             $('#telefono').focus();
-        } else if ($('#cod_celular').val() == 0) {
-            window.parent.scrollTo(0, 600);
-            $('#cod_celular').addClass('has-error');
-            $('#cod_celular').focus();
-        } else if ($('#celular').val() === null || $('#celular').val().length === 0 || /^\s+$/.test($('#celular').val())) {
+        } else if ($cod_celular > 0 && $('#celular').val().length < 7) {
             window.parent.scrollTo(0, 600);
             $('#div_celular').addClass('has-error');
             $('#celular').focus();
-        } else if ($('#email').val() === null || $('#email').val().length === 0 || /^\s+$/.test($('#email').val())) {
+        } else if ($('#email').val().length > 0 && !val_correo.test($('#email').val())) {
             window.parent.scrollTo(0, 300);
             $('#div_email').addClass('has-error');
             $('#email').focus();
@@ -388,14 +414,12 @@ $(document).ready(function() {
             window.parent.scrollTo(0, 700);
             $('#div_casa').addClass('has-error');
             $('#casa').focus();
-        } else if ($('#edificio').val() === null || $('#edificio').val().length === 0 || /^\s+$/.test($('#edificio').val())) {
-            window.parent.scrollTo(0, 700);
-            $('#div_edificio').addClass('has-error');
-            $('#edificio').focus();
         } else if ($('#barrio').val() === null || $('#barrio').val().length === 0 || /^\s+$/.test($('#barrio').val())) {
             window.parent.scrollTo(0, 700);
             $('#div_barrio').addClass('has-error');
             $('#barrio').focus();
+        }else if(mar_represen ==0){
+            window.parent.bootbox.alert("Debe asignar al menos un representante");
         } else {
             $('#accion').val($(this).text());
             var modificar = '<img class="modificar" src="../../imagenes/edit.png" title="Modificar" style="cursor: pointer"  width="18" height="18" alt="Modificar"/>';
@@ -409,18 +433,18 @@ $(document).ready(function() {
                     var nacionalidad = $('#nacionalidad').find('option').filter(":selected").text();
                     var cedula = nacionalidad + '-' + $('#cedula').val();
                     var $check_cedula = '<input type="checkbox" name="cedula[] " value="' + cedula + '" />';
-                   window.parent.bootbox.alert("Registro con Exito", function() {
-						cedula = '<span class="sub-rayar tooltip_ced" data-original-title="" title="">' + cedula + '</span>';
+                    window.parent.bootbox.alert("Registro con Exito", function() {
+                        cedula = '<span class="sub-rayar tooltip_ced" data-original-title="" title="">' + cedula + '</span>';
 
-						var nombres = $('#nombre').val() + ' ' + $('#apellido').val();
-						TEstudiante.fnAddData([$check_cedula, cedula, nombres, estatus, nombre, modificar, eliminar]);
-						$('table#tbl_repre').css('display', 'none');
-						TTbl_Repre.fnClearTable();
-						$('input[type="text"]').val('');
-						$('select').select2('val',0);
-						$('#municipio').find('option:gt(0)').remove().end();
-						$('#id_parroquia').find('option:gt(0)').remove().end();
-					});
+                        var nombres = $('#nombre').val() + ' ' + $('#apellido').val();
+                        TEstudiante.fnAddData([$check_cedula, cedula, nombres, estatus, nombre, modificar, eliminar]);
+                        $('table#tbl_repre').css('display', 'none');
+                        TTbl_Repre.fnClearTable();
+                        $('input[type="text"]').val('');
+                        $('select').select2('val', 0);
+                        $('#municipio').find('option:gt(0)').remove().end();
+                        $('#id_parroquia').find('option:gt(0)').remove().end();
+                    });
                 } else if (respuesta == 13) {
                     window.parent.bootbox.alert("La Cédula se encuentra Registrada", function() {
                         window.parent.scrollTo(0, 300);
@@ -428,9 +452,7 @@ $(document).ready(function() {
                         $('#cedula').focus().select();
                     });
                 } else {
-                    window.parent.bootbox.alert("Ocurrio un error comuniquese con informatica", function() {
-
-                    });
+                    window.parent.bootbox.alert("Ocurrio un error comuniquese con informatica");
                 }
             });
         }
