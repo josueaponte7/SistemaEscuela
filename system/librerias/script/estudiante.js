@@ -134,6 +134,7 @@ $(document).ready(function() {
     var $contextMenu = $contextMenuEst;
     var cedula = '';
     var url = '';
+    
     $("table#tabla_estudiante").on("click", "span.sub-rayar", function(e) {
         $('.dropdown').hide();
         $contextMenu = $contextMenuEst;

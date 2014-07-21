@@ -11,9 +11,8 @@ $obj_rep   = new Representante();
 $datos['sql'] = "SELECT  
                     CONCAT_WS('-' ,(SELECT nombre FROM nacionalidad WHERE id_nacionalidad = re.nacionalidad),re.cedula) AS cedula,  
                     CONCAT_WS(' ',re.nombre,re.apellido) AS nombres,
-                    CONCAT_WS(', ', 
-                    CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = re.cod_telefono),re.telefono),
-                    CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = re.cod_celular),re.celular)) AS telefonos,
+	            CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = re.cod_telefono),re.telefono) AS telefono,
+	            CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = re.cod_celular),re.celular) AS celular,
                     (SELECT er.nombre FROM estatus_representante er WHERE re.id_estatus = er.id_estatus) AS estatus
                    FROM representante re WHERE condicion = 1 ;";
 $resultado    = $obj_rep->getRepresentantes($datos);
@@ -99,12 +98,23 @@ $_SESSION['abrir']       = 'registros';
                         $es_array                = is_array($resultado) ? TRUE : FALSE;
                         if ($es_array === TRUE) {
                             for ($i = 0; $i < count($resultado); $i++) {
+                                $telefonos = "";
+                                $telefono = $resultado[$i]['telefono'];
+                                $celular  = $resultado[$i]['celular'];
+                                
+                                if(isset($telefono) && !isset($celular)){
+                                    $telefonos .=$telefono;
+                                }else if(isset($celular) && !isset($telefono)){
+                                    $telefonos .= $celular;
+                                }else if(isset($telefono) && isset($celular)){
+                                    $telefonos .= $telefono.','.$celular;
+                                } 
                                 ?>
                                 <tr>
                                     <td><input type="checkbox" name="cedula[]" value="<?php echo $resultado[$i]['cedula'] ?>" /></td>
                                     <td><span class="sub-rayar tooltip_ced"><?php echo $resultado[$i]['cedula'] ?></span></td>
                                     <td><?php echo $resultado[$i]['nombres'] ?></td>
-                                    <td><?php echo $resultado[$i]['telefonos'] ?></td>
+                                    <td><?php echo $telefonos ?></td>
                                     <td><?php echo $resultado[$i]['estatus'] ?></td>
                                     <td style="text-align: center">
                                         <img class="modificar" src="../../imagenes/edit.png" title="Modificar" style="cursor: pointer"  width="18" height="18" alt="Modificar"/>
@@ -417,7 +427,7 @@ $_SESSION['abrir']       = 'registros';
                             </tr>
                             <tr height="35">
                                 <td class="letras">
-                                    Fuente Ingreso
+                                    Ingreso Familiar
                                 </td>
                                 <td>
                                     <div id="div_fuente_ingreso" cclass="form-group">

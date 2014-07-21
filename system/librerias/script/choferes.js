@@ -30,13 +30,13 @@ $(document).ready(function() {
             });
     $('#cod_telefono,#cod_celular').select2();
     var letra = ' abcdefghijklmnñopqrstuvwxyzáéíóú';
-    $('#nombre, #apellido,#modelo,#color').validar(letra);
+    $('#nombre, #apellido,#color').validar(letra);
 
     var numero = '0123456789';
     $('#telefono, #celular, #cedula').validar(numero);
 
     var placa = '0123456789abcdefghijklmnopqrstuvwxyz';
-    $('#placa').validar(placa);
+    $('#placa,#modelo').validar(placa);
 
 
     var correo = '0123456789abcdefghijklmnopqrstuvwxyz_-.#$&*@';
@@ -157,17 +157,13 @@ $(document).ready(function() {
         } else if ($('#email').val().length > 0 && !val_correo.test($('#email').val())) {
             $('#div_email').addClass('has-error');
             $('#email').focus();
-        } else if ($('#cod_telefono').val() == 0 && $('#cod_celular').val() == 0) {
-            window.parent.bootbox.alert("Debe Indicar al menos un Número Télefonico", function() {
-                $('#cod_telefono').addClass('has-error');
-                $('#cod_celular').addClass('has-error');
-                $('#div_telefono').addClass('has-error');
-                $('#div_celular').addClass('has-error');
-            });
-        } else if ($('#cod_telefono').val() > 0 && ($('#telefono').val().length === 0 || $('#telefono').val().length < 7)) {
+        } else if ($('#cod_telefono').val() > 0 && ($('#telefono').val().length < 7 )) {
             $('#div_telefono').addClass('has-error');
             $('#telefono').focus();
-        } else if ($('#cod_celular').val() > 0 && ($('#celular').val().length === 0 || $('#celular').val().length < 7)) {
+        } else if ($('#cod_celular').val() == 0) {
+            $('#cod_celular').addClass('has-error');
+            $('#cod_celular').focus();
+        } else if ($('#celular').val().length < 7 ) {
             $('#div_celular').addClass('has-error');
             $('#celular').focus();
         } else if ($('#placa').val() === null || $('#placa').val().length === 0 || $('#placa').val().length < 8 || /^\s+$/.test($('#placa').val())) {
@@ -193,12 +189,6 @@ $(document).ready(function() {
 
             if ($(this).text() == 'Guardar') {
 
-                // obtener el ultimo codigo del status 
-                var ToltalRow = TChoferes.fnGetData().length;
-                var lastRow = TChoferes.fnGetData(ToltalRow - 1);
-                var cedula = parseInt(lastRow[1]) + 1;
-
-                var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
 
                 $.post("../../controlador/Choferes.php", $("#frmchoferes").serialize(), function(respuesta) {
                     if (respuesta == 1) {
