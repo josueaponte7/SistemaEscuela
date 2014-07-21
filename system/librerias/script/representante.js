@@ -133,7 +133,17 @@ $(document).ready(function() {
             }
         }
     });
-
+    
+    
+     /**Los monta todos***/
+    $('#cod_telefono,#cod_celular').change(function() {
+        var valor = $(this).val();
+        if(valor > 0){
+            $('#cod_telefono,#cod_celular,#div_telefono,#div_celular').removeClass('has-error')
+        }
+    });
+    
+    
     /***Monta de uno***/
     $('table#tabla_representante').on('change', 'input:checkbox[name="cedula[]"]', function() {
         $('#todos').prop('checked', false);
@@ -171,7 +181,8 @@ $(document).ready(function() {
 
     $('#guardar').click(function() {
         var val_correo = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
-        //window.parent.$("body").animate({scrollTop:0}, 'slow'); 
+        var $cod_telefono = $('#cod_telefono').find('option').filter(':selected').val();
+        var $cod_celular  = $('#cod_celular').find('option').filter(':selected').val();
         if ($('#nacionalidad').val() == 0) {
             /*********window parent para que la validacion llegue a su lugar********/
             window.parent.scrollTo(0, 300);
@@ -196,19 +207,20 @@ $(document).ready(function() {
             window.parent.scrollTo(0, 300);
             $('#div_fech_naci').addClass('has-error');
             $('#fech_naci').focus();
-        } else if ($('#cod_telefono').val() == 0) {
-            window.parent.scrollTo(0, 300);
-            $('#cod_telefono').addClass('has-error');
-            $('#cod_telefono').focus();
-        } else if ($('#cod_telefono').val() > 0 && ($('#telefono').val().length === 0 || $('#telefono').val().length < 7)) {
+         
+        }else if ($('#cod_telefono').val() == 0 && $('#cod_celular').val() == 0) {
+            window.parent.scrollTo(0, 400);
+            window.parent.bootbox.alert("Debe Indicar al menos un Número Télefonico", function() {
+                $('#cod_telefono').addClass('has-error');
+                $('#cod_celular').addClass('has-error');
+                $('#div_telefono').addClass('has-error');
+                $('#div_celular').addClass('has-error');
+            });	
+        } else if ($cod_telefono > 0 && $('#telefono').val().length < 7) {
             window.parent.scrollTo(0, 300);
             $('#div_telefono').addClass('has-error');
             $('#telefono').focus();
-        } else if ($('#cod_celular').val() == 0) {
-            window.parent.scrollTo(0, 600);
-            $('#cod_celular').addClass('has-error');
-            $('#cod_celular').focus();
-        } else if ($('#celular').val() === null || $('#celular').val().length === 0 || $('#celular').val().length < 7 || /^\s+$/.test($('#celular').val())) {
+        } else if ($cod_celular > 0 && $('#celular').val().length < 7) {
             window.parent.scrollTo(0, 600);
             $('#div_celular').addClass('has-error');
             $('#celular').focus();
@@ -244,9 +256,6 @@ $(document).ready(function() {
         } else if ($('#estatus').val() == 0) {
             $('#estatus').addClass('has-error');
             window.parent.scrollTo(0, 700);
-//        } else if ($('#antecedente').val() === null || $('#antecedente').val().length === 0 || /^\s+$/.test($('#antecedente').val())) {
-//            $('#div_antecedente').addClass('has-error');
-//            $('#antecedente').focus();
         } else if ($('#nivel_inst').val() == 0) {
             $('#nivel_inst').addClass('has-error');
         } else if ($('#profesion').val() == 0) {
