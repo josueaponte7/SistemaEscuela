@@ -133,7 +133,21 @@ $(document).ready(function() {
             }
         }
     });
-
+    
+    
+     /**Los monta todos***/
+    $('#cod_telefono,#cod_celular').change(function() {
+        var valor = $(this).val();
+        var id    = $(this).attr('id');
+        var id1   = id.split('_');
+        if(valor > 0){
+            $('#cod_telefono,#cod_celular,#div_telefono,#div_celular').removeClass('has-error');
+        }else{
+            $('#'+id1[1]).val('');
+        }
+    });
+    
+    
     /***Monta de uno***/
     $('table#tabla_representante').on('change', 'input:checkbox[name="cedula[]"]', function() {
         $('#todos').prop('checked', false);
@@ -171,7 +185,8 @@ $(document).ready(function() {
 
     $('#guardar').click(function() {
         var val_correo = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
-        //window.parent.$("body").animate({scrollTop:0}, 'slow'); 
+        var $cod_telefono = $('#cod_telefono').find('option').filter(':selected').val();
+        var $cod_celular  = $('#cod_celular').find('option').filter(':selected').val();
         if ($('#nacionalidad').val() == 0) {
             /*********window parent para que la validacion llegue a su lugar********/
             window.parent.scrollTo(0, 300);
@@ -196,19 +211,20 @@ $(document).ready(function() {
             window.parent.scrollTo(0, 300);
             $('#div_fech_naci').addClass('has-error');
             $('#fech_naci').focus();
-        } else if ($('#cod_telefono').val() == 0) {
-            window.parent.scrollTo(0, 300);
-            $('#cod_telefono').addClass('has-error');
-            $('#cod_telefono').focus();
-        } else if ($('#cod_telefono').val() > 0 && ($('#telefono').val().length === 0 || $('#telefono').val().length < 7)) {
+         
+        }else if ($('#cod_telefono').val() == 0 && $('#cod_celular').val() == 0) {
+            window.parent.scrollTo(0, 400);
+            window.parent.bootbox.alert("Debe Indicar al menos un Número Télefonico", function() {
+                $('#cod_telefono').addClass('has-error');
+                $('#cod_celular').addClass('has-error');
+                $('#div_telefono').addClass('has-error');
+                $('#div_celular').addClass('has-error');
+            });	
+        } else if ($cod_telefono > 0 && $('#telefono').val().length < 7) {
             window.parent.scrollTo(0, 300);
             $('#div_telefono').addClass('has-error');
             $('#telefono').focus();
-        } else if ($('#cod_celular').val() == 0) {
-            window.parent.scrollTo(0, 600);
-            $('#cod_celular').addClass('has-error');
-            $('#cod_celular').focus();
-        } else if ($('#celular').val() === null || $('#celular').val().length === 0 || $('#celular').val().length < 7 || /^\s+$/.test($('#celular').val())) {
+        } else if ($cod_celular > 0 && $('#celular').val().length < 7) {
             window.parent.scrollTo(0, 600);
             $('#div_celular').addClass('has-error');
             $('#celular').focus();
@@ -233,10 +249,6 @@ $(document).ready(function() {
             window.parent.scrollTo(0, 700);
             $('#div_casa').addClass('has-error');
             $('#casa').focus();
-        } else if ($('#edificio').val().length > 0   && $('#edificio').val().length < 2 ) {
-            window.parent.scrollTo(0, 700);
-            $('#div_edificio').addClass('has-error');
-            $('#edificio').focus();
         } else if ($('#barrio').val() === null || $('#barrio').val().length === 0 || $('#barrio').val().length < 5 || /^\s+$/.test($('#barrio').val())) {
             window.parent.scrollTo(0, 700);
             $('#div_barrio').addClass('has-error');
@@ -244,9 +256,6 @@ $(document).ready(function() {
         } else if ($('#estatus').val() == 0) {
             $('#estatus').addClass('has-error');
             window.parent.scrollTo(0, 700);
-//        } else if ($('#antecedente').val() === null || $('#antecedente').val().length === 0 || /^\s+$/.test($('#antecedente').val())) {
-//            $('#div_antecedente').addClass('has-error');
-//            $('#antecedente').focus();
         } else if ($('#nivel_inst').val() == 0) {
             $('#nivel_inst').addClass('has-error');
         } else if ($('#profesion').val() == 0) {
@@ -262,11 +271,20 @@ $(document).ready(function() {
 
             // Imagenes de modificar y eliminar
             var modificar = '<img class="modificar" src="../../imagenes/edit.png" title="Modificar" style="cursor: pointer"  width="18" height="18" alt="Modificar"/>';
-            var eliminar = '<img class="eliminar" src="../../imagenes/delete.png" title="Eliminar" style="cursor: pointer"  width="18" height="18"  alt="Eliminar"/>';
+            var eliminar  = '<img class="eliminar" src="../../imagenes/delete.png" title="Eliminar" style="cursor: pointer"  width="18" height="18"  alt="Eliminar"/>';
 
             var cod_telefono = $('#cod_telefono').find(' option').filter(":selected").text();
-            var cod_celular = $('#cod_celular').find(' option').filter(":selected").text();
-            var telefonos = cod_telefono + '-' + $('#telefono').val() + ', ' + cod_celular + '-' + $('#celular').val();
+            var cod_celular  = $('#cod_celular').find(' option').filter(":selected").text();
+            
+            
+            var telefonos = "";
+            if($cod_telefono > 0 && $cod_celular == 0){
+                telefonos += cod_telefono + '-' + $('#telefono').val();
+            }else if($cod_telefono == 0 && $cod_celular > 0){
+                telefonos += cod_celular + '-' + $('#celular').val();
+            }else if($cod_telefono > 0 && $cod_celular > 0){
+               telefonos += cod_telefono + '-' + $('#telefono').val() + ', ' + cod_celular + '-' + $('#celular').val(); 
+            }
 
             if ($(this).text() == 'Guardar') {
 
@@ -491,9 +509,10 @@ $(document).ready(function() {
         $('#reporte_representante').slideDown(2000);
         $('input:text').val('');
         $('textarea').val('');
-        $('#estado,#municipio,#parroquia,#estatus,#sexo,#cod_telefono,#cod_celular,#nivel_inst,#profesion').select2('val', 0);
-        $('#nacionalidad').select2('val', 0);
+        $('#nacionalidad,#estado,#municipio,#parroquia,#estatus,#sexo,#cod_telefono,#cod_celular,#nivel_inst,#profesion').select2('val', 0);
+        
         $('#guardar').text('Guardar');
+        $('#limpiar').trigger('click');
     });
 
     $('#limpiar').click(function() {
@@ -501,6 +520,8 @@ $(document).ready(function() {
         $('textarea').val('');
         $('#estado,#municipio,#parroquia,#estatus,#sexo,#cod_telefono,#cod_celular,#nivel_inst,#profesion').select2('val', 0);
         $('#nacionalidad').select2('val', 0);
+        $('#municipio').find('option:gt(0)').remove().end();
+        $('#parroquia').find('option:gt(0)').remove().end();
         $('#guardar').text('Guardar');
         $('div').removeClass('has-error');
     });

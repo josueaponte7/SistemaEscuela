@@ -5,24 +5,27 @@ require_once './tcpdf/spa.php';
 require_once './tcpdf/MyClass.php';
 
 $campos['condicion'] = 1;
-$cedula_condicion    = 'es.cedula';
-if (isset($_GET['cedula'])) {
-
-    $id                  = $_GET['cedula'];
-    $campos['condicion'] = " $cedula_condicion IN($id)";
+$id_estatus_condicion = 'e.id_estatus'; 
+if(isset($_GET['id_estatus'])){
+    $id_estatus = $_GET['id_estatus'];
+    $campos['condicion'] = "e.id_estatus < 3";
 }
 
-$obj    = new Preinscripcion();
-$campos['sql'] = "SELECT CONCAT_WS('-' ,(SELECT nombre FROM nacionalidad WHERE id_nacionalidad = es.nacionalidad),es.cedula) AS cedula,
-                    es.nombre,
-                    es.apellido,
-                    CONCAT_WS('-',ct.codigo, es.telefono) AS telefono
-                    FROM estudiante es
-                    INNER JOIN codigo_telefono ct ON (es.cod_telefono = ct.id)
-                    WHERE " . $campos['condicion'] . "
-                  ORDER BY es.cedula;";
-$resultado    = $obj->datos($campos);
-$total     = $obj->totalFilas('estudiante', 'cedula');
+$obj = new Preinscripcion();
+$campos['sql'] = "SELECT 
+                    LPAD(pr.num_registro, 8, '0') AS num_registro,
+                    CONCAT_WS('-' ,(SELECT nombre FROM nacionalidad WHERE id_nacionalidad = pr.nacionalidad),pr.cedula) AS cedula,
+                    CONCAT_WS(' ',e.nombre,e.apellido) AS nombres,
+                    se.sexo,
+                    CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = e.cod_telefono),e.telefono) AS telefonos,
+                    DATE_FORMAT(CURRENT_DATE,'%d/%m/%Y' ) AS fecha_actual
+                    FROM pre_inscripcion pr
+                    INNER JOIN estudiante AS e ON(pr.cedula = e.cedula)
+                    INNER JOIN sexo se ON (e.sexo = se.id_sexo)
+                    WHERE e.id_estatus < 3";
+$resultado  = $obj->datos($campos);
+
+$total     = $obj->totalFilas('estudiante AS e', 'e.id_estatus','e.id_estatus < 3');
 
 $pdf = new MyClass("P", "mm", "A4", true, 'UTF-8', false);
 
@@ -44,7 +47,7 @@ $pdf->Image('imagenes/logo.png', 3, 18, 45, 15, 'PNG', FALSE);
 
 
 // titulo del listado
-$titulo = "LISTADO DE LA PREINSCRIPCION";
+$titulo = "LISTADO DE LA PRE-INSCRITOS";
 $pdf->Ln(5);
 $pdf->SetX(60);
 // fuente y tamaño de letra 
@@ -65,34 +68,41 @@ $backup_group = "";
 
 
 // width de las filas 
+$w_num_registro   = 40;
+$w_cedula   = 27;
+$w_nombres   = 45;
+$w_sexo = 25;
+$w_telefonos = 30;
+$w_fecha_actual = 32;
 
-$w_cedula   = 40;
-$w_nombre   = 50;
-$w_apellido = 50;
-$w_telef = 50;
 
 
 // Mover a la derecha 
-$pdf->SetX(10);
+$pdf->SetX(7);
 
 // Color Cabecera de la tabla
 $pdf->SetFillColor(39, 129, 213);
 
 // Titulos de la Cabecera
+$pdf->Cell($w_num_registro, $row_height, 'Número Registro', 1, 0, 'C', 1);
 $pdf->Cell($w_cedula, $row_height, 'Cedula', 1, 0, 'C', 1);
-$pdf->Cell($w_nombre, $row_height, 'Nombres', 1, 0, 'L', 1);
-$pdf->Cell($w_apellido, $row_height, 'Apellidos', 1, 0, 'L', 1);
-$pdf->Cell($w_telef, $row_height, 'Telefono', 1, 1, 'L', 1);
+$pdf->Cell($w_nombres, $row_height, 'Nombres', 1, 0, 'L', 1);
+$pdf->Cell($w_sexo, $row_height, 'Sexo', 1, 0, 'L', 1);
+$pdf->Cell($w_telefonos, $row_height, 'Teléfonos', 1, 0, 'L', 1);
+$pdf->Cell($w_fecha_actual, $row_height, 'Fecha Actual', 1, 1, 'L', 1);
 
 
 // Ciclo para crear los registros
 for ($i = 0; $i < count($resultado); $i++) {
 
     // Asignarle variables a los registros
+    $num_registro    = $resultado[$i]['num_registro'];
     $cedula    = $resultado[$i]['cedula'];
-    $nombre   = $resultado[$i]['nombre'];
-    $apellido  = $resultado[$i]['apellido'];
-    $telefono = $resultado[$i]['telefono'];
+    $nombres   = $resultado[$i]['nombres'];
+    $sexo = $resultado[$i]['sexo'];
+    $telefonos = $resultado[$i]['telefonos'];
+    $fecha_actual = $resultado[$i]['fecha_actual'];
+    
 
     // verificar que la variable $j no si es mayor se hace un salto de pagina
     if ($j > $max) {
@@ -115,11 +125,13 @@ for ($i = 0; $i < count($resultado); $i++) {
 
         // Color Cabecera de la tabla
         $pdf->SetFillColor(39, 129, 213);
-        $pdf->SetX(10);
+        $pdf->SetX(7);
+        $pdf->Cell($w_num_registro, $row_height, 'Número Registro', 1, 0, 'C', 1);
         $pdf->Cell($w_cedula, $row_height, 'Cedula', 1, 0, 'C', 1);
-        $pdf->Cell($w_nombre, $row_height, 'Nombres', 1, 0, 'L', 1);
-        $pdf->Cell($w_apellido, $row_height, 'Apellidos', 1, 0, 'L', 1);
-        $pdf->Cell($w_telef, $row_height, 'Telefono', 1, 1, 'L', 1);
+        $pdf->Cell($w_nombres, $row_height, 'Nombres', 1, 0, 'L', 1);
+        $pdf->Cell($w_sexo, $row_height, 'Sexo', 1, 0, 'L', 1);
+        $pdf->Cell($w_telefonos, $row_height, 'Teléfono', 1, 0, 'L', 1);
+        $pdf->Cell($w_fecha_actual, $row_height, 'Fecha Actual', 1, 1, 'L', 1);
         $j = 0;
     }
 
@@ -136,11 +148,13 @@ for ($i = 0; $i < count($resultado); $i++) {
 
     // crear los registros a mostrar
     $pdf->SetFont('FreeSerif', '', 12);
-    $pdf->SetX(10);
+    $pdf->SetX(7);
+    $pdf->Cell($w_num_registro, $row_height, $num_registro, 1, 0, 'C', 1);
     $pdf->Cell($w_cedula, $row_height, $cedula, 1, 0, 'C', 1);
-    $pdf->Cell($w_nombre, $row_height, $nombre, 1, 0, 'L', 1);
-    $pdf->Cell($w_apellido, $row_height, $apellido, 1, 0, 'L', 1);
-    $pdf->Cell($w_telef, $row_height, $telefono, 1, 1, 'L', 1);
+    $pdf->Cell($w_nombres, $row_height, $nombres, 1, 0, 'L', 1);
+    $pdf->Cell($w_sexo, $row_height, $sexo, 1, 0, 'L', 1);
+    $pdf->Cell($w_telefonos, $row_height, $telefonos, 1, 0, 'L', 1);
+    $pdf->Cell($w_fecha_actual, $row_height, $fecha_actual, 1, 1, 'L', 1);
     $j++;
 }
 /* * *************Linea de fin de hoja con la cantidad total de registros********************* */

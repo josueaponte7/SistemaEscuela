@@ -174,6 +174,9 @@ $(document).ready(function() {
     /********Proceso de registro**************/
     $('#guardar').click(function() {
         var val_correo = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
+        
+        var $cod_telefono = $('#cod_telefono').find('option').filter(':selected').val();
+  
         //window.parent.$("body").animate({scrollTop:0}, 'slow'); 
         if ($('#nacionalidad').val() == 0) {
             /*********window parent para que la validacion llegue a su lugar********/
@@ -203,11 +206,7 @@ $(document).ready(function() {
             window.parent.scrollTo(0, 300);
             $('#div_email').addClass('has-error');
             $('#email').focus();
-        } else if ($('#cod_telefono').val() == 0) {
-            window.parent.scrollTo(0, 300);
-            $('#cod_telefono').addClass('has-error');
-            $('#cod_telefono').focus();
-        }  else if ($('#telefono').val() === null || $('#telefono').val().length === 0 || $('#telefono').val().length < 7 || /^\s+$/.test($('#telefono').val())) {
+        } else if ($('#cod_telefono').val() > 0 && $('#telefono').val().length < 7) {
             window.parent.scrollTo(0, 300);
             $('#div_telefono').addClass('has-error');
             $('#telefono').focus();
@@ -215,7 +214,7 @@ $(document).ready(function() {
             window.parent.scrollTo(0, 600);
             $('#cod_celular').addClass('has-error');
             $('#cod_celular').focus();
-        } else if ($('#celular').val() === null || $('#celular').val().length === 0 || $('#celular').val().length < 7 || /^\s+$/.test($('#celular').val())) {
+        } else if ($('#celular').val().length < 7 ) {
             window.parent.scrollTo(0, 600);
             $('#div_celular').addClass('has-error');
             $('#celular').focus();
@@ -261,18 +260,13 @@ $(document).ready(function() {
             var eliminar = '<img class="eliminar" src="../../imagenes/delete.png" title="Eliminar" style="cursor: pointer"  width="18" height="18"  alt="Eliminar"/>';
 
             if ($(this).text() == 'Guardar') {
-                // obtener el ultimo codigo del status 
-                var ToltalRow = TDocente.fnGetData().length;
-                var lastRow = TDocente.fnGetData(ToltalRow - 1);
-                var cedula = parseInt(lastRow[1]) + 1;
-
-                var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
+                
 
                 $.post("../../controlador/Docente.php", $("#frmdocente").serialize(), function(respuesta) {
                     if (respuesta == 1) {
 
                         // obtener el nombre del sexo
-                        var sexo = $('#sexo').find(' option').filter(":selected").text();
+                        /*var sexo = $('#sexo').find(' option').filter(":selected").text();
 
                         // obtener el nombre del estado 
                         var estado = $('#estado').find(' option').filter(":selected").text();
@@ -284,7 +278,7 @@ $(document).ready(function() {
                         var parroquia = $('#parroquia').find(' option').filter(":selected").text();
 
                         // obtener el nombre del estatus
-                        var estatus = $('#estatus').find(' option').filter(":selected").text();
+                        var estatus = $('#estatus').find(' option').filter(":selected").text();*/
 
                         // obtener el nombre de la actividad
 //                        var actividad = $('#actividad').find(' option').filter(":selected").text();
@@ -297,8 +291,15 @@ $(document).ready(function() {
                             // Agregar los datos a la tabla
                             var nacionalidad = $('#nacionalidad').find(' option').filter(":selected").text();
                             var cedula = nacionalidad + '-' + $('#cedula').val();
-
-                            var newRow = TDocente.fnAddData([$check_cedula, cedula, $('#nombre').val(), $('#apellido').val(), actividad, modificar, eliminar]);
+                            
+                            
+                            var nacionalidad = $('#nacionalidad').find(' option').filter(":selected").text();
+                            var cedula = nacionalidad + '-' + $('#cedula').val();
+                            var nombres = $('#nombre').val() + ' ' + $('#apellido').val();
+                            var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
+                            
+                            
+                            var newRow = TDocente.fnAddData([$check_cedula, cedula, nombres, $('#apellido').val(), actividad, modificar, eliminar]);
 
                             // Agregar el id a la fila estado
                             var oSettings = TDocente.fnSettings();
@@ -465,17 +466,14 @@ $(document).ready(function() {
         $('#guardar').text('Guardar');
         $('#registro_docente').slideUp(2000);
         $('#reporte_docente').slideDown(2000);
-        $('input:text').val('');
-        $('textarea').val('');
-        $('#estado,#municipio,#parroquia,#estatus,#sexo,#cod_telefono,#cod_celular,#actividad').select2('val', 0);
-        $('#municipio,#parroquia').find('option:gt(0)').remove().end();
-        $('#nacionalidad').select2('val', 0);
+        $('#limpiar').trigger('click');
     });
 
     $('#limpiar').click(function() {
         $('input:text').val('');
-        $('textarea').val('');
-        $('#estado,#municipio,#parroquia,#estatus,#sexo,#cod_telefono,#cod_celular,#actividad').select2('val', 0);
+        $('textarea').val('');        
+        $('select').select2('val', 0);
+        $('select,div').removeClass('has-error');
         $('#municipio,#parroquia').find('option:gt(0)').remove().end();
         $('#nacionalidad').select2('val', 0);
         $('#guardar').text('Guardar');

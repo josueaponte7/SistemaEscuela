@@ -131,20 +131,47 @@ $resultado       = $obj_repre->getRepresentantes($datos);
                     } else {
                         var $iframe = window.parent.frames[0].$('body');
                         //var checkboxValues = [];
+                        $iframe.find('#tbl_repre').dataTable().fnClearTable();
                         $('input:checkbox:checked', nodes).each(function() {
                             var $chkbox = $(this);
+                           
                             var $actualrow = $chkbox.closest('tr');
-                            var $clonedRow = $actualrow.clone(true);
-
-                            $clonedRow.find("select.parentesco",nodes).each(function(i) {
-                                this.selectedIndex = $actualrow.find("select.parentesco",nodes)[i].selectedIndex;
-                            });
-                            //.TTbl_Repre.fnAddData([codigo, estado, $('#nombre_municipio').val(), modificar, eliminar]);
-                            $($clonedRow).prependTo($iframe.find('table#tbl_repre tbody'));
+                            
+                            var checkbox = '<input type="checkbox" name="repre[]" value="'+$chkbox.val()+'" checked/>';
+                            var nombre = $actualrow.find('td:eq(2)').text();
+                            var parentesco = $actualrow.find('td:eq(3)').find('select').find('option').filter(':selected').text();
+                            
+                            var ra_marcado = $actualrow.find('td:eq(4)').find('input:radio[name="representant"]:checked').length;
+                            
+                            var marcado = '';
+                            if(ra_marcado > 0){
+                                var marcado = 'checked';
+                                
+                            }
+                            var cedula = '<span class="datos">'+$chkbox.val()+'</span>';
+                            var radio = '<input  type="radio" class="representant" name="representant" value="1" '+marcado+'/>';
+                            var newRow = $iframe.find('#tbl_repre').dataTable().fnAddData([checkbox,cedula, nombre, parentesco, radio]);
+                            
+                            
+                             // Agregar el id a la fila estado
+                             /*if(ra_marcado > 0){
+                                var oSettings = $iframe.find('#tbl_repre').dataTable().fnSettings();
+                                var nTr = oSettings.aoData[ newRow[0] ].nTr;
+                                $('tr', nTr).setAttribute("style", "color:#FF0000");
+                                
+                            }*/
+                            
+                            //newRow[i].cells[3].setAttribute("style", "color:#FF0000;");
+                            
+                            //$($clonedRow).prependTo($iframe.find('table#tbl_repre tbody'));
                             $iframe.find('table#tbl_repre').css('display', 'block');
 
                         });
-                        $iframe.find('table#tbl_repre tbody tr:last ').remove();
+                        
+                        var radio_marcado = $iframe.find('table#tbl_repre tbody tr td').find('input:radio:checked');
+                        radio_marcado.closest('tr').css('color','#FF0000');
+   
+                        //$iframe.find('table#tbl_repre tbody tr:last ').remove();
                         window.parent.$.fancybox.close();
                     }
                 });

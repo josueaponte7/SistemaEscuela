@@ -251,13 +251,22 @@ $(document).ready(function() {
         
         var cedula = $('select#cedula').find('option:selected').val();
         cedula = cedula.substring(2);
-        $('#rest_generales').trigger('click');
+        
+        $('div#main input:checkbox').prop('checked', false);
+        $('div#main input:checkbox').prop('disabled', false);
+        $('div#main select').select2('val',0);
+        $('#SignupForm').find('form').css('display', 'none');
+        $("#step0").show();
+        $("#steps li").removeClass("current");
+        $("#stepDesc0").addClass("current");
+        
+        
         if ($('#guardar').val() == 'Inscribir') {
             alert('No puede cargar los datos generalessin haber inscrito en alumno');
         } else {
             $(this).addClass('activo');
             $('#rest_generales').fadeIn(1000);
-            $('#datos_repre').slideUp(1500);
+            //$('#datos_repre').slideUp(1500);
             $('#main').slideDown(1500);
 
 
@@ -417,7 +426,7 @@ $(document).ready(function() {
 
 
     $('#rest_generales').click(function() {
-        var count = $('#main').find("fieldset.paso").length;
+        //var count = $('#main').find("fieldset.paso").length;
         $('div#main input:checkbox').prop('checked', false);
         $('div#main input:checkbox').prop('disabled', false);
         $('div#main select').select2('val',0);
@@ -435,7 +444,7 @@ $(document).ready(function() {
 
 
     $('#salir').click(function() {
-        $('#guardar').text('Guardar');
+        $('#guardar').text('Inscribir');
         $('#registro_inscripcion').slideUp(2000);
         $('#reporte_inscripcion').slideDown(2000);
         $('input:text').val('');
