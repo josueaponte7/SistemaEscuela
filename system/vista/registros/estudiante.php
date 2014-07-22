@@ -67,6 +67,9 @@ $_SESSION['abrir']       = 'registros';
                 position: absolute;
                 display:none;
             }
+            .datos{
+                cursor: pointer;
+            }
         </style>
     </head>
     <body>  
@@ -385,7 +388,7 @@ $_SESSION['abrir']       = 'registros';
                                                 <th>Representante</th>
                                             </tr>
                                         </thead>
-                                        <tbody>        
+                                        <tbody>         
                                         </tbody>
                                     </table>
                                 </td>

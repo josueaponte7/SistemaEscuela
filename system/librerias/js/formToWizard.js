@@ -66,7 +66,8 @@
                 texto = options.finalize;
                 glyphicon = 'glyphicon-ok';
             }
-
+            $("#" + stepName + "commands").append("<button  type='button' id='' class='next btn btn-primary btn-sm'> Limpiar </button>");
+            $("#" + stepName + "commands").append("<button  type='button' id='' class='next btn btn-primary btn-sm'> Salir</button>");
             $("#" + stepName + "commands").append("<button style='float:right;' type='button' id='" + stepName + "Next' class='next btn btn-primary btn-sm'> " + texto + " <span class='glyphicon " + glyphicon + "'></span></button>");
             $("#" + stepName + "Next").on("click", function(e) {
 

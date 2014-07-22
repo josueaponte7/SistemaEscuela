@@ -157,6 +157,7 @@ $(document).ready(function() {
         return false;
     });
 
+    
     $contextMenuEst.on("click", "span", function() {
 
         var accion = $(this).attr('id');
@@ -235,7 +236,14 @@ $(document).ready(function() {
             'helpers': {overlay: {closeClick: false}}
         });
     });
-
+    
+    
+    $('table#tbl_repre tbody').on("click",'tr td span.datos',  function() {
+       
+        alert($(this).text());
+    });
+    
+    
     /**Los monta todos***/
     $('#todos').change(function() {
         var TotalRow = TEstudiante.fnGetData().length;

@@ -131,7 +131,7 @@ $(document).ready(function() {
             $("input:checkbox[name='cedula[]']:checked", nodes).each(function() {
                 var $chkbox = $(this);
                 var $actualrow = $chkbox.closest('tr');
-                var cedula = $actualrow.find('td:eq(1)').text()
+                var cedula = $actualrow.find('td:eq(1)').text();
                 checkboxValues += cedula.substr(2) + ',';
             });
             checkboxValues = checkboxValues.substring(0, checkboxValues.length - 1);

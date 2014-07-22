@@ -13,8 +13,8 @@ $obj_datos   = new Representante();
 $_SESSION['menu']        = 'procesos_inscripcion';
 $_SESSION['dir_sys']     = 'procesos';
 $_SESSION['archivo_sys'] = 'inscripcion';
-$_SESSION['height']      = '1460px';
-$_SESSION['heightifm']   = '1360px';
+$_SESSION['height']      = '1920px';
+$_SESSION['heightifm']   = '1820px';
 $_SESSION['abrir']       = 'procesos';
 
 ?>
@@ -344,9 +344,9 @@ $_SESSION['abrir']       = 'procesos';
                                                     <div id="botones">                                                        
                                                         <input type="hidden" name="accion" value="Inscribir" id="accion"/>
                                                         <input type="hidden" name="dt" id="dt" value=""/>
-                                                        <button type="button" id="guardar" class="btn btn-primary btn-sm">Inscribir</button>
+                                                        <!--<button type="button" id="guardar" class="btn btn-primary btn-sm">Inscribir</button>
                                                         <button type="button" id="limpiar" class="btn btn-primary btn-sm">Limpiar</button>
-                                                        <button type="button" id="salir" class="btn btn-primary btn-sm">Salir</button> 
+                                                        <button type="button" id="salir" class="btn btn-primary btn-sm">Salir</button>--> 
                                                     </div>
                                                 </td>
                                             </tr>

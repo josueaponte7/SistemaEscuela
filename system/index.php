@@ -136,8 +136,8 @@ if($grupo == 2){
                         var height = '700px';
                         var heightifm = '540px';
                     } else if (archivo == 'inscripcion') {
-                        var height = '1460px';
-                        var heightifm = '1360px';
+                        var height = '1820px';
+                        var heightifm = '1720px';
                     }
                     if(clase == 'reporte'){
                         var url = 'vista/reportes/'+$id+'.php?todos=1';
@@ -239,11 +239,10 @@ if($grupo == 2){
                         }
                         if($grupo == 1 || $grupo == 3){
                         ?>
-    
-<!--                        Descomentar Luego   
+ 
                             <li>
                                 <span data-toggle="collapse" data-parent="#accordion" href="#reportes">REPORTES</span>
-                            </li>-->
+                            </li>
                         <?php 
                             }
                         if($grupo == 2){
@@ -303,6 +302,8 @@ if($grupo == 2){
                         <div class="panel-body">
                             <div class="contenido_men_izq">
                                 <ul  style="list-style-type:none;">
+                                    <li id="reporte_inscripcion" class="reporte">Inscripci&oacute;n</li>
+                                    <li id="reporte_preinscripcion" class="reporte">Pre-Inscripci&oacute;n</li> 
                                     <li id="reporte_estudiante" class="reporte">Estudiante</li>                                                
                                     <li id="reporte_docente" class="reporte">Docente</li>
                                     <li id="listado_representante" class="reporte">Representantes</li> 
