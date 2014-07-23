@@ -2,7 +2,8 @@
 require_once '../modelo/Inscripcion.php';
 
 $obj = new Inscripcion();
-
+print_r($_POST);
+exit;
 if (isset($_POST['accion'])) {
     $accion = $_POST['accion'];
     if (isset($_POST['cedula'])) {
@@ -16,12 +17,18 @@ if (isset($_POST['accion'])) {
     }
     if (isset($_POST['id_anio'])) {
         $datos['id_anio'] = $_POST['id_anio'];
+    }else if(isset($_POST['h_id_anio'])){
+        $datos['id_anio'] = $_POST['h_id_anio'];
     }   
     if (isset($_POST['actividad'])) {
         $datos['id_actividad'] = $_POST['actividad'];
+    }else if(isset($_POST['h_id_actividad'])){
+        $datos['id_actividad'] = $_POST['h_id_actividad'];
     }
     if (isset($_POST['area'])) {
         $datos['area'] = $_POST['area'];
+    }else if(isset($_POST['h_area'])){
+         $datos['area'] = $_POST['h_area'];
     }
     if (isset($_POST['cedula_r'])) {
         $datos['cedula_representante'] = $_POST['cedula_r'];
@@ -95,7 +102,7 @@ if (isset($_POST['accion'])) {
     }
 
      switch ($accion) {
-        case 'Inscribir':
+        case 'GuardarDT':
             $resultado = $obj->add($datos);
             if ($resultado) {
                 echo 1;

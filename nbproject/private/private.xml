@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
@@ -12,3 +13,16 @@
         </group>
     </open-files>
 </project-private>
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/var/www/SistemaEscuela/system/vista/registros/estudiante.php</file>
+            <file>file:/var/www/SistemaEscuela/system/vista/registros/reporte_representante.php</file>
+            <file>file:/var/www/SistemaEscuela/system/librerias/script/estudiante.js</file>
+        </group>
+    </open-files>
+</project-private>
+>>>>>>> fa107c8222733a2a3afbdcc0d977dcd1da4f1949

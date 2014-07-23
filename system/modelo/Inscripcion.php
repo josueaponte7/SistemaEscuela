@@ -13,19 +13,20 @@ class Inscripcion extends Preinscripcion
 
     public function add($datos)
     {
-        $dat                  = explode('-', $datos['cedula_estudiante']);
-        $cedula               = $dat[1];
+        $cedula = $datos['cedula_estudiante'];
+
         $id_anio              = $datos['id_anio'];
         $id_actividad         = $datos['id_actividad'];
         $area                 = $datos['area'];
         $cedula_representante = $datos['cedula_representante'];
         $id_medio             = $datos['id_medio'];
+        
         $cedula_chofer = "";
         if(isset($datos['cedula_chofer'])){
           $cedula_chofer        = $datos['cedula_chofer'];   
         }
        
-        $id_tipo              = $datos['id_tipo'];
+        //$id_tipo              = $datos['id_tipo'];
         $tipo                 = $datos['tipo_estudiante'];
         
         
@@ -36,9 +37,9 @@ class Inscripcion extends Preinscripcion
         $resultado_del = $this->ejecutar($sql_del);
 
         if ($resultado_del) {
-            $sql       = "INSERT INTO inscripcion(cedula_estudiante,fecha_inscripcion,id_anio,id_actividad,area_descripcion,cedula_representante,id_medio,tipo,cedula_chofer)
+            echo $sql       = "INSERT INTO inscripcion(cedula_estudiante,fecha_inscripcion,id_anio,id_actividad,area_descripcion,cedula_representante,id_medio,tipo,cedula_chofer)
                     VALUES ($cedula,CURRENT_DATE,$id_anio,$id_actividad,'$area',$cedula_representante,$id_medio,'$tipo','$cedula_chofer');";
-            $resultado = $this->ejecutar($sql);
+            exit;$resultado = $this->ejecutar($sql);
 
             if ($resultado) {
                 $sql1       = "INSERT INTO historial_inscripcion(cedula_estudiante,fecha_inscripcion,id_anio,id_actividad,area_descripcion,cedula_representante,id_medio,cedula_chofer)
