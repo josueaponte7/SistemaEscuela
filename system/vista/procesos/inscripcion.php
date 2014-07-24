@@ -129,6 +129,7 @@ $_SESSION['abrir']       = 'procesos';
                 <div class="panel-body">
                     <form id="frminscripcion" name="frminscripcion">
                         <table width="711" border="0" align="center">
+
                             <tr>
                                 <td width="79" height="50" class="letras">Estudiante:</td>
                                 <td width="741"> 
@@ -184,6 +185,7 @@ $_SESSION['abrir']       = 'procesos';
                                             <td>
                                                 <div class="form-group">
                                                     <input type="hidden" id="id_tipo" name="id_tipo" value="" />
+                                                    <input type="hidden" id="inscrito" name="inscrito" value="0" />
                                                     <input disabled="disabled" type="text" class="form-control  input-sm" id="tipo_estudiante" name="tipo_estudiante"  placeholder="Tipo de Estudiante"/>
                                                 </div>
                                             </td>

@@ -35,6 +35,7 @@ $(document).ready(function() {
             {"sWidth": "15%", "sClass": "center"},
             {"sWidth": "45%", "sClass": "center"},
             {"sWidth": "20%", "sClass": "center"},
+            {"sWidth": "20%", "sClass": "center"},
             {"sWidth": "2%", "sClass": "center"}
         ]
     });
@@ -43,11 +44,8 @@ $(document).ready(function() {
         minimumResultsForSearch: -1
     });
     
-    //$('.parentesco').select2();
-    
     $('#estado, #municipio, #id_parroquia, #cod_telefono, #cod_celular').select2();
     $('#estatus').select2();
-    $('#estatus').select2('val', '1');
     $('#estatus').select2('val', '1');
     $('#estatus').select2("enable", false);
 
@@ -239,11 +237,13 @@ $(document).ready(function() {
     
     
     $('table#tbl_repre tbody').on("click",'tr td span.datos',  function() {
-       
-        alert($(this).text());
+        //alert($(this).text());
     });
     
-    
+    $('table#tbl_repre tbody').on("change","tr td input:radio[name='representant']",  function() {
+        $('table#tbl_repre tbody tr').css('color','#000000');
+        $(this).closest('tr').css('color','#FF0000');
+    });
     /**Los monta todos***/
     $('#todos').change(function() {
         var TotalRow = TEstudiante.fnGetData().length;
@@ -298,10 +298,9 @@ $(document).ready(function() {
         var este = $(this);
         var padre = este.closest('tr');
         var chk_counre = $('input:checkbox[name="repre[]"]:checked').length;
-        alert(chk_counre);
         if (!este.is(':checked')) {
             window.parent.bootbox.confirm({
-                        message: 'Si Desmarca esta opción Eliminara el representante<br/>¿Desea Continuar?',
+                        message: '¿Desea Eliminar el Representante?',
                         buttons: {
                             'cancel': {
                                 label: 'No',
@@ -346,8 +345,8 @@ $(document).ready(function() {
             var $chkbox = $(this);
             var $actualrow = $chkbox.closest('tr');
             var $clonedRow = $actualrow.find('td');
-            var repre = $clonedRow.find("select").find('option:selected').val();
-            var represen = $clonedRow.find("input:radio[name='representant']:checked").val();
+            var repre      = $clonedRow.eq('3').attr('id');
+            var represen   = $clonedRow.find("input:radio[name='representant']:checked").val();
             if (represen == 1) {
                 nombre = $actualrow.find('td:eq(2)').text();
             }
@@ -471,17 +470,15 @@ $(document).ready(function() {
         $('#guardar').text('Guardar');
         $('#registro_estudiante').slideUp(2000);
         $('#reporte_estudiante').slideDown(2000);
-        $('input:text').val('');
-        $('textarea').val('');
-        $('#estado,#municipio,#id_parroquia,#estatus,#sexo,#cod_telefono,#cod_celular,#nivel_inst,#profesion').select2('val', 0);
-        $('#nacionalidad').select2('val', 0);
+        $('#limpiar').trigger('click');
     });
 
     $('#limpiar').click(function() {
+        TTbl_Repre.fnClearTable();
+        $('table#tbl_repre').css('display', 'none');
         $('input:text').val('');
         $('textarea').val('');
-        $('#estado,#municipio,#id_parroquia,#estatus,#sexo,#cod_telefono,#cod_celular,#nivel_inst,#profesion').select2('val', 0);
-        $('#nacionalidad').select2('val', 0);
+        $('select').select2('val', 0);
         $('#guardar').text('Guardar');
     });
 

@@ -37,6 +37,7 @@ $resul              = $obj_pre->datos($datos);
         <title>Pre-Inscripci&oacute;n</title>
         <meta http-equiv="Content-Type"  content="text/html; charset=UTF-8"> 
         <link href="../../librerias/css/bootstrap.css" rel="stylesheet" media="screen"/>
+        <link href="../../librerias/css/bootstrap-theme.css" rel="stylesheet" media="screen"/>
         <link href="../../librerias/css/dataTables.css" rel="stylesheet" media="screen"/>
         <link href="../../librerias/css/datepicker3.css" rel="stylesheet" media="screen"/> 
         <link href="../../librerias/css/select2.css" rel="stylesheet" type="text/css" />

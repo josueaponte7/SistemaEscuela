@@ -150,7 +150,7 @@ if (isset($_SESSION['archivo_web']) && isset($_SESSION['dir'])) {
                 -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
                 -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
                 box-shadow: 0 1px 2px rgba(0,0,0,.15);
-                margin-top: 220px;
+                margin-top: 170px;
             }
             .login {
                 margin-left: 65px;

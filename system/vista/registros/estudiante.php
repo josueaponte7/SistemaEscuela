@@ -384,6 +384,7 @@ $_SESSION['abrir']       = 'registros';
                                                 <th>&nbsp;</th>
                                                 <th>Cedula</th>
                                                 <th>Nombre</th>
+                                                <th>Tel&eacute;fono</th>
                                                 <th>Parentesco</th>
                                                 <th>Representante</th>
                                             </tr>
