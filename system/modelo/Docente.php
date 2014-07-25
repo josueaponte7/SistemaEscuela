@@ -101,7 +101,18 @@ class Docente extends Seguridad
         $resultado = $this->ejecutar($sql);
         return $resultado;
     }
+    
+    public function delete($datos)
+    {
 
+        $dat_cedula = explode('-', $datos['cedula']);
+        $cedula     = $dat_cedula[1];
+
+        $sql = "UPDATE docente SET  condicion = 0 WHERE cedula = $cedula;";
+
+        $resultado = $this->ejecutar($sql);
+        return $resultado;
+    }
     public function estatusDoce($where = 1)
     {
         $where = ' WHERE ' . $where;

@@ -12,7 +12,9 @@ $d_serviciosa['sql'] = "SELECT sp.id_servicio, sp.servicio,
                         CONCAT_WS('-',ct.codigo, sp.telefono) AS telefono, ts.tiposervicio 
                         FROM servicio_publico sp 
                         INNER JOIN codigo_telefono ct ON (sp.cod_telefono = ct.id) 
-                        INNER JOIN tiposervicio ts ON (sp.id_tiposervicio = ts.id_tiposervicio) ORDER BY sp.id_servicio";
+                        INNER JOIN tiposervicio ts ON (sp.id_tiposervicio = ts.id_tiposervicio) 
+                        WHERE sp.condicion=1
+                        ORDER BY sp.id_servicio";
 
 $resul_serviciosa = $obj_salud->getServicio($d_serviciosa);
 
@@ -31,6 +33,7 @@ $_SESSION['abrir']       = 'registros';
         <meta http-equiv="Content-Type"  content="text/html; charset=UTF-8"> 
         <link href="../../librerias/css/estilos.css" rel="stylesheet" media="screen"/>  
         <link href="../../librerias/css/bootstrap.css" rel="stylesheet" media="screen"/>
+        <link href="../../librerias/css/bootstrap-theme.css" rel="stylesheet" media="screen"/>
         <link href="../../librerias/css/dataTables.css" rel="stylesheet" media="screen"/>
         <link href="../../librerias/css/datepicker3.css" rel="stylesheet" media="screen"/> 
         <link rel="stylesheet" type="text/css" href="../../librerias/css/select2.css"/>
@@ -63,7 +66,7 @@ $_SESSION['abrir']       = 'registros';
                 <table style="width:100%;" border="0" class="dataTable" id="tabla_salud" align="center">
                     <thead>
                         <tr class="letras">
-                            <th style="margin-left: 20px !important;" width="81">
+                            <th style="padding-left: 21px !important;" width="81">
                                 <input type="checkbox" name="todos" id="todos" value="todos" />
                             </th>
                             <th style="width: 35%">Codigo</th>

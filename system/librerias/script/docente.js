@@ -37,7 +37,19 @@ $(document).ready(function() {
         $('#registro_docente').slideDown(2000);
         $('#reporte_docente').slideUp(2000);
     });
-
+    
+    
+    $('.modificar').tooltip({
+        html: true,
+        placement: 'top',
+        title: 'Modificar'
+    });
+    $('.eliminar').tooltip({
+        html: true,
+        placement: 'top',
+        title: 'Eliminar'
+    });
+    
     $('.tooltip_ced').tooltip({
         html: true,
         placement: 'bottom',
@@ -461,6 +473,48 @@ $(document).ready(function() {
         });
     });
 
+// proceso de eliminacion
+    $('table#tabla_docente').on('click', 'img.eliminar', function() {
+        $('#cedula').val(cedula);
+        var padre = $(this).closest('tr');
+
+        // obtener la fila clickeada
+        var nRow = $(this).parents('tr')[0];
+
+        window.parent.bootbox.confirm({
+            message: '¿Desea Eliminar el Registro?',
+            buttons: {
+                'cancel': {
+                    label: 'Cancelar',
+                    className: 'btn-default'
+                },
+                'confirm': {
+                    label: 'Eliminar',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function(result) {
+                if (result) {
+
+                    var cedula = padre.children('td:eq(1)').text();
+                    $.post("../../controlador/Docente.php", {'accion': 'Eliminar', 'cedula': cedula}, function(respuesta) {
+                        if (respuesta == 1) {
+
+                            window.parent.bootbox.alert("Eliminacion con Exito", function() {
+                                //borra la fila de la tabla
+                                TDocente.fnDeleteRow(nRow);
+
+                                $('input[type="text"]').val('');
+                            });
+
+
+                        }
+                    });
+                }
+            }
+        });
+
+    });
 
     $('#salir').click(function() {
         $('#guardar').text('Guardar');

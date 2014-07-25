@@ -8,9 +8,9 @@ $(document).ready(function() {
         "aoColumns": [
             {"sClass": "center", "sWidth": "4%", "bSortable": false, "bSearchable": false},
             {"sClass": "center", "sWidth": "10%"},
-            {"sClass": "center", "sWidth": "30%"},
-            {"sClass": "center", "sWidth": "30%"},
-            {"sClass": "center", "sWidth": "30%"},
+            {"sClass": "center", "sWidth": "40%"},
+            {"sClass": "center", "sWidth": "40%"},
+            {"sClass": "center", "sWidth": "10%"},
             {"sWidth": "4%", "bSortable": false, "sClass": "center sorting_false", "bSearchable": false},
             {"sWidth": "4%", "bSortable": false, "sClass": "center sorting_false", "bSearchable": false}
         ]
@@ -18,13 +18,26 @@ $(document).ready(function() {
 
 
     $('#tiposervicio,#estado,#municipio,#parroquia,#cod_telefono').select2();
-        
+
+
+    $('.modificar').tooltip({
+        html: true,
+        placement: 'top',
+        title: 'Modificar'
+    });
+    $('.eliminar').tooltip({
+        html: true,
+        placement: 'top',
+        title: 'Eliminar'
+    });
+
+
     var numero = '0123456789';
     $('#telefono').validar(numero);
     $('#celular').validar(numero);
     $('#cedula').validar(numero);
 
-     /**Los monta todos***/
+    /**Los monta todos***/
     $('#todos').change(function() {
         var TotalRow = TServiciosalud.fnGetData().length;
         var nodes = TServiciosalud.fnGetNodes();
@@ -71,8 +84,8 @@ $(document).ready(function() {
         }
         window.open(url);
     });
-    
-    
+
+
     $('#registrar').click(function() {
         $('#registro_salud').slideDown(2000);
         $('#reporte_salud').slideUp(2000);
@@ -119,10 +132,11 @@ $(document).ready(function() {
         } else if ($('#parroquia').val() == 0) {
             $('#parroquia').addClass('has-error');
         } else if ($('#cod_telefono').val() == 0) {
-            $('#cod_telefono').addClass('has-error'); 
+            $('#cod_telefono').addClass('has-error');
         } else if ($('#telefono').val() === null || $('#telefono').val().length === 0 || /^\s+$/.test($('#telefono').val())) {
-            $('#div_telefono').addClass('has-error');    
-            $('#telefono').focus();;    
+            $('#div_telefono').addClass('has-error');
+            $('#telefono').focus();
+            ;
         } else {
 
 
@@ -278,8 +292,51 @@ $(document).ready(function() {
             $($id_servicio).appendTo($('#frmservicio_salud'));
         });
     });
+    
+    
+    // proceso de eliminacion
+    
+    $('table#tabla_salud').on('click', 'img.eliminar', function() {
+        $('#id_estado').remove();
+        var padre = $(this).closest('tr');
+
+        // obtener la fila clickeada
+        var nRow = $(this).parents('tr')[0];
+
+        window.parent.bootbox.confirm({
+            message: '¿Desea Eliminar el Registro?',
+            buttons: {
+                'cancel': {
+                    label: 'Cancelar',
+                    className: 'btn-default'
+                },
+                'confirm': {
+                    label: 'Eliminar',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function(result) {
+                if (result) {
+//                    var id_estado = padre.children('td:eq(0)').text();
+                    var id_estado = padre.children('td:eq(1)').text();
+                    $.post("../../controlador/ServicioSalud.php", {'accion': 'Eliminar', 'id_estado': id_estado}, function(respuesta) {
+                        if (respuesta == 1) {
+
+                            window.parent.bootbox.alert("Eliminacion con Exito", function() {
+                                //borra la fila de la tabla
+                                TEstado.fnDeleteRow(nRow);
+
+                                $('input[type="text"]').val('');
+                            });
 
 
+                        }
+                    });
+                }
+            }
+        });
+
+    });
     $('#salir').click(function() {
         $('#limpiar').trigger('click');
         $('#registro_salud').slideUp(2000);

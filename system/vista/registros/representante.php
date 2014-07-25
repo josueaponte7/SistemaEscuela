@@ -11,10 +11,10 @@ $obj_rep   = new Representante();
 $datos['sql'] = "SELECT  
                     CONCAT_WS('-' ,(SELECT nombre FROM nacionalidad WHERE id_nacionalidad = re.nacionalidad),re.cedula) AS cedula,  
                     CONCAT_WS(' ',re.nombre,re.apellido) AS nombres,
-	            CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = re.cod_telefono),re.telefono) AS telefono,
-	            CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = re.cod_celular),re.celular) AS celular,
+	            IF(cod_telefono='',0,CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = cod_telefono),telefono)) AS telefono, 
+                    IF(cod_celular='',0,CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = cod_celular),celular)) AS celular,
                     (SELECT er.nombre FROM estatus_representante er WHERE re.id_estatus = er.id_estatus) AS estatus
-                   FROM representante re WHERE condicion = 1 ;";
+                   FROM representante re WHERE condicion = 1;";
 $resultado    = $obj_rep->getRepresentantes($datos);
 
 $_SESSION['menu']        = 'registros_representante';
@@ -102,12 +102,12 @@ $_SESSION['abrir']       = 'registros';
                                 $telefono = $resultado[$i]['telefono'];
                                 $celular  = $resultado[$i]['celular'];
                                 
-                                if(isset($telefono) && !isset($celular)){
-                                    $telefonos .=$telefono;
-                                }else if(isset($celular) && !isset($telefono)){
-                                    $telefonos .= $celular;
-                                }else if(isset($telefono) && isset($celular)){
-                                    $telefonos .= $telefono.','.$celular;
+                                if($telefono != 0 && $celular == 0){
+                                    $telefonos =$telefono;
+                                }else if($celular != 0 && $telefono == 0){
+                                    $telefonos = $celular;
+                                }else if($telefono != 0 && $celular != 0){
+                                    $telefonos = $telefono.','.$celular;
                                 } 
                                 ?>
                                 <tr>

@@ -7,12 +7,12 @@ $d_servicio['campos'] = 'tp.id_tiposervicio,  tp.tiposervicio';
 $resul_servicio       = $obj_tipoSer->getTipo($d_servicio);
 
 
-$_SESSION['menu']        = 'configuracion_tipo_servicio';
-$_SESSION['dir_sys']     = 'configuracion';
+$_SESSION['menu']        = 'mantenimiento_tipo_servicio';
+$_SESSION['dir_sys']     = 'mantenimiento';
 $_SESSION['archivo_sys'] = 'tipo_servicio';
 $_SESSION['height']      = '700px';
 $_SESSION['heightifm']   = '540px';
-$_SESSION['abrir']       = 'configuracion';
+$_SESSION['abrir']       = 'mantenimiento';
 ?>
 
 <!DOCTYPE html>
@@ -21,6 +21,7 @@ $_SESSION['abrir']       = 'configuracion';
         <title>Servicio Publico</title>
         <meta http-equiv="Content-Type"  content="text/html; charset=UTF-8"> 
         <link href="../../librerias/css/bootstrap.css" rel="stylesheet" media="screen"/>
+		<link href="../../librerias/css/bootstrap-theme.css" rel="stylesheet" media="screen"/>
         <link href="../../librerias/css/dataTables.css" rel="stylesheet" media="screen"/>
         <link href="../../librerias/css/estilos.css" rel="stylesheet" media="screen"/> 
 

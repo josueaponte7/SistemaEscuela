@@ -5,7 +5,7 @@ class Conexion {
     private static $_server   = 'localhost';
     private static $_user     = 'root';
     private static $_password = '';
-    protected $bd             = 'proyecto_yajaira';
+    protected $bd             = 'sis_escuela';
     private $_sql             = '';
     private $_state_conn      = FALSE;
 

@@ -13,8 +13,9 @@ $datos['sql'] = "SELECT
                     doc.nombre,
                     doc.apellido,
                     (SELECT ac.actividad FROM actividad ac WHERE doc.id_actividad = ac.id_actividad ) AS actividad
-                    FROM docente AS doc;";
+                    FROM docente AS doc WHERE condicion = 1;";
 $resultado    = $obj_docen->getDocente($datos);
+
 
 $_SESSION['menu']        = 'registros_docente';
 $_SESSION['dir_sys']     = 'registros';
