@@ -16,7 +16,6 @@ $datos['sql'] = "SELECT
                     FROM docente AS doc WHERE condicion = 1;";
 $resultado    = $obj_docen->getDocente($datos);
 
-
 $_SESSION['menu']        = 'registros_docente';
 $_SESSION['dir_sys']     = 'registros';
 $_SESSION['archivo_sys'] = 'docente';
@@ -100,7 +99,7 @@ $_SESSION['abrir']       = 'registros';
                         if ($es_array === TRUE) {
                             for ($i = 0; $i < count($resultado); $i++) {
                                 ?>
-                                <tr>
+                                <tr class="letras">
                                     <td>
                                         <input type="checkbox" id="<?php echo $resultado[$i]['cedula']; ?>" name="cedula[]" value="<?php echo $resultado[$i]['cedula']; ?>" />
                                     </td>

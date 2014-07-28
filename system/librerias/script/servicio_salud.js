@@ -318,13 +318,13 @@ $(document).ready(function() {
             callback: function(result) {
                 if (result) {
 //                    var id_estado = padre.children('td:eq(0)').text();
-                    var id_estado = padre.children('td:eq(1)').text();
-                    $.post("../../controlador/ServicioSalud.php", {'accion': 'Eliminar', 'id_estado': id_estado}, function(respuesta) {
+                    var id_servicio = padre.children('td:eq(1)').text();
+                    $.post("../../controlador/ServicioSalud.php", {'accion': 'Eliminar', 'id_servicio': id_servicio}, function(respuesta) {
                         if (respuesta == 1) {
 
                             window.parent.bootbox.alert("Eliminacion con Exito", function() {
                                 //borra la fila de la tabla
-                                TEstado.fnDeleteRow(nRow);
+                                TServiciosalud.fnDeleteRow(nRow);
 
                                 $('input[type="text"]').val('');
                             });

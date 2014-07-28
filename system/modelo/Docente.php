@@ -113,6 +113,7 @@ class Docente extends Seguridad
         $resultado = $this->ejecutar($sql);
         return $resultado;
     }
+	
     public function estatusDoce($where = 1)
     {
         $where = ' WHERE ' . $where;

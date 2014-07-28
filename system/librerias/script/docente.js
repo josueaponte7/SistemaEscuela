@@ -311,7 +311,7 @@ $(document).ready(function() {
                             var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
                             
                             
-                            var newRow = TDocente.fnAddData([$check_cedula, cedula, nombres, $('#apellido').val(), actividad, modificar, eliminar]);
+                            var newRow = TDocente.fnAddData([$check_cedula, cedula, $('#nombre').val(), $('#apellido').val(), actividad, modificar, eliminar]);
 
                             // Agregar el id a la fila estado
                             var oSettings = TDocente.fnSettings();
@@ -402,12 +402,12 @@ $(document).ready(function() {
 
         // borra el campo fila
         $('#fila').remove();
-        var padre = $(this).closest('tr');
-        var cedula_c = padre.children('td:eq(1)').text();
+        var padre      = $(this).closest('tr');
+        var cedula_c   = padre.children('td:eq(1)').text();
         var dat_cedula = cedula_c.split('-');
-        var cedula = dat_cedula[1];
-        var nombre = padre.children('td:eq(2)').html();
-        var apellido = padre.children('td:eq(3)').html();
+        var cedula     = dat_cedula[1];
+        var nombre     = padre.children('td:eq(2)').html();
+        var apellido   = padre.children('td:eq(3)').html();
 
         // obtener la fila a modificar
         var fila = padre.index();

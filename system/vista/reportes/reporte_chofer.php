@@ -4,7 +4,7 @@ require_once '../../modelo/Choferes.php';
 require_once './tcpdf/spa.php';
 require_once './tcpdf/MyClass.php';
 
-$campos['condicion'] = 1;
+$campos['condicion'] = 1 .' AND condicion=1';
 $cedula_condicion    = 'ch.cedula';
 if (isset($_GET['cedula'])) {
 
@@ -16,9 +16,8 @@ $obj      = new Choferes();
 $campos['sql'] = "SELECT 
                          CONCAT_WS('-' ,(SELECT nombre FROM nacionalidad WHERE id_nacionalidad = ch.nacionalidad),ch.cedula) AS cedula,
                          CONCAT_WS(' ',ch.nombre,ch.apellido) AS nombres,
-                         CONCAT_WS(', ', 
-                         CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = ch.cod_telefono),ch.telefono),
-                         CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = ch.cod_celular),ch.celular)) AS telefonos
+                         IF(cod_telefono='',0,CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = cod_telefono),telefono)) AS telefono, 
+                         IF(cod_celular='',0,CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = cod_celular),celular)) AS celular
                         FROM chofer AS ch
                     WHERE " . $campos['condicion'] . "
                   ORDER BY ch.cedula;";
@@ -81,7 +80,7 @@ $pdf->SetFillColor(39, 129, 213);
 // Titulos de la Cabecera
 $pdf->Cell($w_cedula, $row_height, 'Cedula', 1, 0, 'C', 1);
 $pdf->Cell($w_nombres, $row_height, 'Nombres', 1, 0, 'L', 1);
-$pdf->Cell($w_telefonos, $row_height, 'Teléfonos', 1, 1, 'L', 1);
+$pdf->Cell($w_telefonos, $row_height, 'Teléfonos', 1, 1, 'C', 1);
 
 
 // Ciclo para crear los registros
@@ -90,7 +89,17 @@ for ($i = 0; $i < count($resultado); $i++) {
     // Asignarle variables a los registros
     $cedula    = $resultado[$i]['cedula'];
     $nombres   = $resultado[$i]['nombres'];
-    $telefonos  = $resultado[$i]['telefonos'];
+    $telefono  = $resultado[$i]['telefono'];
+    $celular   = $resultado[$i]['celular'];
+    
+    
+    if ($telefono != 0 && $celular == 0) {
+        $telefonos = $telefono;
+    } else if ($celular != 0 && $telefono == 0) {
+        $telefonos = $celular;
+    } else if ($telefono != 0 && $celular != 0) {
+        $telefonos = $telefono . ',' . $celular;
+    }
 
     // verificar que la variable $j no si es mayor se hace un salto de pagina
     if ($j > $max) {
@@ -116,7 +125,7 @@ for ($i = 0; $i < count($resultado); $i++) {
         $pdf->SetX(10);
         $pdf->Cell($w_cedula, $row_height, 'Cedula', 1, 0, 'C', 1);
         $pdf->Cell($w_nombres, $row_height, 'Nombres', 1, 0, 'L', 1);
-        $pdf->Cell($w_telefonos, $row_height, 'Telefonos', 1, 1, 'L', 1);
+        $pdf->Cell($w_telefonos, $row_height, 'Telefonos', 1, 1, 'C', 1);
         $j = 0;
     }
 
@@ -136,7 +145,7 @@ for ($i = 0; $i < count($resultado); $i++) {
     $pdf->SetX(18);
     $pdf->Cell($w_cedula, $row_height, $cedula, 1, 0, 'C', 1);
     $pdf->Cell($w_nombres, $row_height, $nombres, 1, 0, 'L', 1);
-    $pdf->Cell($w_telefonos, $row_height, $telefonos, 1, 1, 'L', 1);
+    $pdf->Cell($w_telefonos, $row_height, $telefonos, 1, 1, 'C', 1);
     $j++;
 }
 /* * *************Linea de fin de hoja con la cantidad total de registros********************* */

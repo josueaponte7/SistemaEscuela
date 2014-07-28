@@ -1,8 +1,9 @@
 <?php
-
+ini_set('max_execution_time', 1);
 require_once '../modelo/Estudiante.php';
 $obj = new Estudiante();
-
+print_r($_POST);
+exit;
 if (isset($_POST['accion'])) {
     $accion = $_POST['accion'];
     if (isset($_POST['nacionalidad'])) {
@@ -28,10 +29,10 @@ if (isset($_POST['accion'])) {
     }
     if (isset($_POST['lugar_naci'])) {
         $datos['lugar_naci'] = $_POST['lugar_naci'];
-    }   
+    }
     if (isset($_POST['sexo'])) {
         $datos['sexo'] = $_POST['sexo'];
-    }  
+    }
     if (isset($_POST['calle'])) {
         $datos['calle'] = $_POST['calle'];
     }
@@ -59,10 +60,10 @@ if (isset($_POST['accion'])) {
     if (isset($_POST['id_parroquia'])) {
         $datos['id_parroquia'] = $_POST['id_parroquia'];
     }
-    if(isset($_POST['representantes'])){
+    if (isset($_POST['representantes'])) {
         $datos['representantes'] = $_POST['representantes'];
     }
-    if(isset($_POST['cedula_representante'])){
+    if (isset($_POST['cedula_representante'])) {
         $datos['cedula_representante'] = $_POST['cedula_representante'];
     }
     switch ($accion) {
@@ -82,18 +83,25 @@ if (isset($_POST['accion'])) {
                 echo 1;
             }
         break;
-
         case 'Eliminar':
             $resultado = $obj->delete($datos);
             if ($resultado) {
                 echo 1;
             }
-       break;
-       case 'UpRepre':
+        break;
+        case 'UpRepre':
             $resultado = $obj->UpRepre($datos);
             if ($resultado) {
                 echo 1;
             }
-       break;
+        break;
+        case 'Buscar':
+            $resultado = $obj->getEstudiante($datos);
+            echo $resultado;
+        break;
+        case 'BuscarRep':
+            $resultado = $obj->getRepresentante($datos);
+            echo $resultado;
+        break;
     }
 }

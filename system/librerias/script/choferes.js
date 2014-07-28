@@ -8,8 +8,8 @@ $(document).ready(function() {
         "aoColumns": [
             {"sClass": "center", "sWidth": "4%", "bSortable": false, "bSearchable": false},
             {"sClass": "center", "sWidth": "15%"},
-            {"sClass": "center", "sWidth": "25%"},
-            {"sClass": "center", "sWidth": "28%"},
+            {"sClass": "center", "sWidth": "70%"},
+            {"sClass": "center", "sWidth": "8%"},
             {"sWidth": "4%", "bSortable": false, "sClass": "center sorting_false", "bSearchable": false},
             {"sWidth": "4%", "bSortable": false, "sClass": "center sorting_false", "bSearchable": false}
         ]
@@ -319,6 +319,8 @@ $(document).ready(function() {
                 }
             }
         });
+		});
+				
         $('#salir').click(function() {
             $('#guardar').text('Guardar');
             $('#registro_choferes').slideUp(2000);
@@ -326,13 +328,14 @@ $(document).ready(function() {
             $('input[type="text"]').val('');
             $('#cod_telefono,#cod_celular').select2('val', 0);
             $('#nacionalidad').select2('val', 0);
-        });
+        });		
+		
         $('#limpiar').click(function() {
             $('input[type="text"]').val('');
             $('#cod_telefono,#cod_celular').select2('val', 0);
             $('#nacionalidad').select2('val', 0);
             $('#guardar').text('Guardar');
-        });
-    });
+        });		
+    
 });
 

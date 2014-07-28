@@ -88,5 +88,15 @@ class Seguridad extends Conexion
             header("location:../../");
         }
     }
+    public function activeError($mostrar = TRUE)
+    {
+   
+        ini_set('error_reporting', E_ALL | E_STRICT);
+        ini_set('log_errors', TRUE);
+        ini_set('html_errors', TRUE);
+        ini_set('display_errors',TRUE);
+        ini_set("error_log", "/tmp/php-error.log");
+        error_log( "Hello, errors!" );
+    }
 
 }

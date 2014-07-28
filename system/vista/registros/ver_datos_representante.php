@@ -22,9 +22,8 @@ $campos['sql'] = "SELECT
                     DATE_FORMAT(re.fech_naci,'%d-%m-%Y') AS fech_naci,
                     (YEAR(CURDATE())-YEAR(re.fech_naci))-(RIGHT(CURDATE(),5)<RIGHT(re.fech_naci,5)) AS edad,
                     re.lugar_naci,
-                    CONCAT_WS(', ', 
-                    CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = re.cod_telefono),re.telefono),
-                    CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = re.cod_celular),re.celular)) AS telefonos,
+                    IF(cod_telefono='',0,CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = cod_telefono),telefono)) AS telefono, 
+                    IF(cod_celular='',0,CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = cod_celular),celular)) AS celular,
                     e.nombre_estado,
                     m.nombre_municipio,
                     p.nombre_parroquia,
@@ -42,6 +41,17 @@ $campos['sql'] = "SELECT
   fclose($fp) ; */
 
 $resultado = $obj_rep->getRepresentantes($campos);
+
+$telefono = $resultado[0]['telefono'];
+$celular  = $resultado[0]['celular'];
+
+if ($telefono != 0 && $celular == 0) {
+    $telefonos = $telefono;
+} else if ($celular != 0 && $telefono == 0) {
+    $telefonos = $celular;
+} else if ($telefono != 0 && $celular != 0) {
+    $telefonos = $telefono . ',' . $celular;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,6 +61,7 @@ $resultado = $obj_rep->getRepresentantes($campos);
         <title>jQuery Modal Contact Demo</title>
         <meta name="author" content="Jake Rocheleau">
         <link href="../../librerias/css/bootstrap.css" rel="stylesheet" media="screen"/>
+        <link href="../../librerias/css/bootstrap-theme.css" rel="stylesheet" media="screen"/>
         <script type="text/javascript" src="../../librerias/js/jquery.1.10.js"></script>
         <script type="text/javascript" src="../../librerias/js/bootstrap.js"></script>
 
@@ -84,7 +95,7 @@ $resultado = $obj_rep->getRepresentantes($campos);
                     <table width="97%" border="0" align="center" style="width:100%">
                         <tr>
                             <th width="137" height="37"> Telefonos:</th>
-                            <td width="336"><?php echo $resultado[0]['telefonos'] ?></td>
+                            <td width="336"><?php echo $telefonos ?></td>
                             <th width="58" height="41">Correo:</th>
                             <td width="223"><?php echo $resultado[0]['email'] ?></td>
                         </tr>

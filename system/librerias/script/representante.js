@@ -62,6 +62,7 @@ $(document).ready(function() {
             left: e.pageX,
             top: e.pageY
         });
+        return false;
     });
 
     $contextMenu.on("click", "span", function() {
@@ -84,7 +85,19 @@ $(document).ready(function() {
         });
         $('.dropdown').hide();
     });
+    
+    $(document).keyup(function(event) {
+        if (event.which == 27) {// Tecla escape
+            $('.dropdown').hide();
+        }
+    });
 
+    $(document).click(function() {
+        $('.dropdown').hide();
+    });
+    
+    
+    
     $('#registrar').click(function() {
         $('#registro_erepresentante').slideDown(2000);
         $('#reporte_representante').slideUp(2000);

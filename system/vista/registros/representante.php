@@ -80,7 +80,7 @@ $_SESSION['abrir']       = 'registros';
             <div style="width: 95%;margin-left: auto;margin-right: auto">
                 <table style="width:100%;" border="0" class="dataTable" id="tabla_representante" align="center">
                     <thead>
-                        <tr>
+                        <tr class="letras">
                             <th style="margin-left: 20px !important;" width="81">
                                 <input type="checkbox" name="todos" id="todos" value="todos" />
                             </th>
@@ -98,7 +98,7 @@ $_SESSION['abrir']       = 'registros';
                         $es_array                = is_array($resultado) ? TRUE : FALSE;
                         if ($es_array === TRUE) {
                             for ($i = 0; $i < count($resultado); $i++) {
-                                $telefonos = "";
+                                
                                 $telefono = $resultado[$i]['telefono'];
                                 $celular  = $resultado[$i]['celular'];
                                 
@@ -110,7 +110,7 @@ $_SESSION['abrir']       = 'registros';
                                     $telefonos = $telefono.','.$celular;
                                 } 
                                 ?>
-                                <tr>
+                                <tr class="letras">
                                     <td><input type="checkbox" name="cedula[]" value="<?php echo $resultado[$i]['cedula'] ?>" /></td>
                                     <td><span class="sub-rayar tooltip_ced"><?php echo $resultado[$i]['cedula'] ?></span></td>
                                     <td><?php echo $resultado[$i]['nombres'] ?></td>
