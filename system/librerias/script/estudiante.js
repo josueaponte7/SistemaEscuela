@@ -464,8 +464,9 @@ $(document).ready(function() {
                     }
                 });
             }else{
+                $('#estatus').select2("enable", true);
                 $.post("../../controlador/Estudiante.php", $("#frmestudiante").serialize(), function(respuesta) {
-                    
+                    $('#estatus').select2("enable", false);
                 });
             }
         }
@@ -540,7 +541,18 @@ $(document).ready(function() {
                     }
                     var radio  = '<input  type="radio" class="representant" name="representant" value="1" '+marcado+'/>';
 
-                    TTbl_Repre.fnAddData([checkbox,clave.cedula, clave.nombres,clave.telefonos, clave.parentesco, radio]);
+                    var newRow =  TTbl_Repre.fnAddData([checkbox,clave.cedula, clave.nombres,clave.telefonos, clave.parentesco, radio]);
+                    
+                    var oSettings = TTbl_Repre.fnSettings();
+                    var nTr       = oSettings.aoData[ newRow[0] ].nTr;
+                    $('td', nTr)[4].setAttribute( 'id', clave.id_parentesco );
+                    
+                    if(clave.representante > 0){
+                       //var theNode = $('#tbl_repre').dataTable().aoData[addId[0]].nTr;
+                       var theNode = oSettings.aoData[newRow[0]].nTr;
+                       nTr.setAttribute('style','color:red');
+                    }
+                    
                 });
                 $('table#tbl_repre').css('display', 'block');
             },'json');

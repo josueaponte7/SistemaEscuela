@@ -216,6 +216,7 @@ class Estudiante extends Seguridad
                 'cedula'        => $result_re[$i]['cedula_representante'],
                 'nombres'       => $result_re[$i]['nombres'],
                 'telefonos'     => $telefonos,
+                'id_parentesco' => $result_re[$i]['parentesco'],
                 'parentesco'    => $parentesco,
                 'representante' => $result_re[$i]['representante']
             );
@@ -223,4 +224,64 @@ class Estudiante extends Seguridad
         
         return json_encode($datos_re);
     }
+    
+    public function update($datos)
+    {
+        
+        $cedula       = $datos['cedula'];
+        $nombre       = $datos['nombre'];
+        $apellido     = $datos['apellido'];
+        $email        = $datos['email'];
+        $id_estatus   = $datos['id_estatus'];
+        $fech_naci    = $datos['fech_naci'];
+        $lugar_naci   = $datos['lugar_naci'];
+        $sexo         = $datos['sexo'];
+        $calle        = $datos['calle'];
+        $casa         = $datos['casa'];
+        $edificio     = $datos['edificio'];
+        $barrio       = $datos['barrio'];
+        $cod_telefono = $datos['cod_telefono'];
+        $telefono     = $datos['telefono'];
+        $cod_celular  = $datos['cod_celular'];
+        $celular      = $datos['celular'];
+        $id_parroquia = $datos['id_parroquia'];
+        $fech_naci    = $this->formateaBD($fech_naci);
+        
+        $sql = "UPDATE estudiante
+                SET
+                    nombre = '$nombre',
+                    apellido = '$apellido',
+                    email = '$email',
+                    fech_naci = '$fech_naci',
+                    lugar_naci = '$lugar_naci',
+                    sexo = '$sexo',
+                    calle = '$calle',
+                    casa = '$casa',
+                    edificio = '$edificio',
+                    barrio = '$barrio',
+                    cod_telefono = '$cod_telefono',
+                    telefono = '$telefono',
+                    cod_celular = '$cod_celular',
+                    celular = '$celular',
+                    id_parroquia = '$id_parroquia',
+                    id_estatus = '$id_estatus'
+                WHERE cedula=$cedula;";
+
+        $resultado = $this->ejecutar($sql);
+            if ($resultado === TRUE) {
+                $representantes = explode(",", $datos['representantes']);
+                $sql_del = "DELETE FROM estudiante_representante WHERE cedula_estudiante=$cedula;";
+                $this->ejecutar($sql_del);
+                for ($i = 0; $i < count($representantes); $i++) {
+                    $datos_repre = explode(";", $representantes[$i]);
+
+                    $sql = "INSERT INTO estudiante_representante(cedula_estudiante,cedula_representante,parentesco,representante)
+                              VALUES ($cedula,$datos_repre[0],$datos_repre[1],$datos_repre[2]);";
+                    $this->ejecutar($sql);
+                }
+            }
+        
+        return $resultado;
+    }
+
 }
