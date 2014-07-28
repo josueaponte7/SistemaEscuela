@@ -2,8 +2,7 @@
 ini_set('max_execution_time', 1);
 require_once '../modelo/Estudiante.php';
 $obj = new Estudiante();
-print_r($_POST);
-exit;
+
 if (isset($_POST['accion'])) {
     $accion = $_POST['accion'];
     if (isset($_POST['nacionalidad'])) {

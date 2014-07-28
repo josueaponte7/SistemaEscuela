@@ -213,12 +213,12 @@ class Estudiante extends Seguridad
             
             
             $datos_re[] = array(
-                                'cedula'=>$result_re[$i]['cedula_representante'],
-                                'nombres'=>$result_re[$i]['nombres'],
-                                'telefonos'=>$telefonos,
-                                'parentesco'=>$parentesco,
-                                'representante'=>$result_re[$i]['representante']
-                                );
+                'cedula'        => $result_re[$i]['cedula_representante'],
+                'nombres'       => $result_re[$i]['nombres'],
+                'telefonos'     => $telefonos,
+                'parentesco'    => $parentesco,
+                'representante' => $result_re[$i]['representante']
+            );
         }
         
         return json_encode($datos_re);

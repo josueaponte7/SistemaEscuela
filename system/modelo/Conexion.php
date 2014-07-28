@@ -4,7 +4,7 @@ class Conexion {
 
     private static $_server   = 'localhost';
     private static $_user     = 'root';
-    private static $_password = '';
+    private static $_password = '123456';
     protected $bd             = 'sis_escuela';
     private $_sql             = '';
     private $_state_conn      = FALSE;
