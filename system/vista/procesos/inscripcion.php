@@ -16,7 +16,6 @@ $_SESSION['archivo_sys'] = 'inscripcion';
 $_SESSION['height']      = '1920px';
 $_SESSION['heightifm']   = '1820px';
 $_SESSION['abrir']       = 'procesos';
-
 ?>
 
 <!DOCTYPE html>
@@ -128,8 +127,9 @@ $_SESSION['abrir']       = 'procesos';
             <div class="panel panel-default" style="width : 97%;margin: auto;height: auto;position: relative;">
                 <div class="panel-heading letras_titulos">Datos de Inscripci&oacute;n del Estudiante</div>
                 <div class="panel-body">
-                    <table width="711" border="0" align="center">
-                        <form id="frminscripcion" name="frminscripcion">
+                    <form id="frminscripcion" name="frminscripcion">
+                        <table width="711" border="0" align="center">
+
                             <tr>
                                 <td width="79" height="50" class="letras">Estudiante:</td>
                                 <td width="741"> 
@@ -140,7 +140,7 @@ $_SESSION['abrir']       = 'procesos';
                                         $datos['campos']    = "CONCAT_WS('-' ,(SELECT nombre FROM nacionalidad WHERE id_nacionalidad = es.nacionalidad),es.cedula) AS cedula,CONCAT_WS(' ',CONCAT_WS('-' ,(SELECT nombre FROM nacionalidad WHERE id_nacionalidad = es.nacionalidad),es.cedula),es.nombre, es.apellido) AS datos";
                                         $datos['condicion'] = "id_estatus >= 2";
                                         $resul              = $obj_inscrip->datos($datos);
-                                        $es_array         = is_array($resul) ? TRUE : FALSE;
+                                        $es_array           = is_array($resul) ? TRUE : FALSE;
                                         if ($es_array === TRUE) {
                                             for ($i = 0; $i < count($resul); $i++) {
                                                 ?>
@@ -164,15 +164,15 @@ $_SESSION['abrir']       = 'procesos';
                             <tr>
                                 <td colspan="2" align="center">
                                     <table style="width:100%" border="0">
-                                        <?php 
-                                            $hoy = date("d-m-Y");  
-                                            $datos            = array();
-                                            $datos['campos']  = 'id_anio,anio_escolar';
-                                            $datos['ordenar'] = 'id_anio DESC';
-                                            $datos['limite']  = '1';
-                                            $resul            = $obj_anioes->getAnio($datos);
-                                            $id_anio          = $resul[0]['id_anio'];
-                                            $anio_escolar     = $resul[0]['anio_escolar'];
+                                        <?php
+                                        $hoy              = date("d-m-Y");
+                                        $datos            = array();
+                                        $datos['campos']  = 'id_anio,anio_escolar';
+                                        $datos['ordenar'] = 'id_anio DESC';
+                                        $datos['limite']  = '1';
+                                        $resul            = $obj_anioes->getAnio($datos);
+                                        $id_anio          = $resul[0]['id_anio'];
+                                        $anio_escolar     = $resul[0]['anio_escolar'];
                                         ?>
                                         <tr>
                                             <td class="letras"> Fech Inscripci&oacute;n: </td>
@@ -185,6 +185,7 @@ $_SESSION['abrir']       = 'procesos';
                                             <td>
                                                 <div class="form-group">
                                                     <input type="hidden" id="id_tipo" name="id_tipo" value="" />
+                                                    <input type="hidden" id="inscrito" name="inscrito" value="0" />
                                                     <input disabled="disabled" type="text" class="form-control  input-sm" id="tipo_estudiante" name="tipo_estudiante"  placeholder="Tipo de Estudiante"/>
                                                 </div>
                                             </td>
@@ -203,7 +204,7 @@ $_SESSION['abrir']       = 'procesos';
                                                     <select name="actividad" class="form-control input-sm select2" id="actividad">
                                                         <option value="0">Seleccione</option>
                                                         <?php
-                                                        $resultado = $obj_inscrip->actividad();
+                                                        $resultado        = $obj_inscrip->actividad();
                                                         for ($i = 0; $i < count($resultado); $i++) {
                                                             ?>
                                                             <option value="<?php echo $resultado[$i]['id_actividad']; ?>"><?php echo $resultado[$i]['actividad']; ?></option>
@@ -597,7 +598,7 @@ $_SESSION['abrir']       = 'procesos';
                                                             </table>
                                                         </fieldset>
                                                         <!-- Fin Datos Padre Madre Representante -->
-                                                        
+
                                                         <!-- Inicio Datos Misiones -->
                                                         <fieldset class="paso">
                                                             <legend class="letras_titulosGe">Misiones</legend>
@@ -643,10 +644,10 @@ $_SESSION['abrir']       = 'procesos';
                                                                 </tr>
                                                             </table>
                                                         </fieldset>
-                                                        
-                                                        
+
+
                                                         <!-- Fin Datos Misiones -->
-                                                        
+
                                                         <!-- Inicio Datos Vivienda -->
 
                                                         <fieldset class="paso">
@@ -805,12 +806,12 @@ $_SESSION['abrir']       = 'procesos';
                                                                     </td>
                                                                 </tr>
                                                             </table>
-                                                            
-                                                            
-                                                        <!-- Fin Datos Vivienda -->
-                                                        
-                                                        <!-- Inicio Datos Diversidad Funcional -->
- 
+
+
+                                                            <!-- Fin Datos Vivienda -->
+
+                                                            <!-- Inicio Datos Diversidad Funcional -->
+
                                                         </fieldset>
                                                         <fieldset class="paso">
                                                             <legend class="letras_titulosGe">Diversidad Funcional</legend>
@@ -837,7 +838,7 @@ $_SESSION['abrir']       = 'procesos';
                                                                                     <div class="checkbox">
                                                                                         <label>
                                                                                             <input  type="checkbox" name="diversidad[]" value="<?php echo $resul_naci[$i]['id_diversidad']; ?>" />
-                                                                                             &nbsp;&nbsp;<?php echo $tipo_diversidad; ?>
+                                                                                            &nbsp;&nbsp;<?php echo $tipo_diversidad; ?>
                                                                                             &nbsp;&nbsp;&nbsp;&nbsp;
                                                                                         </label>
                                                                                     </div>
@@ -1044,7 +1045,8 @@ $_SESSION['abrir']       = 'procesos';
                             <tr>
                                 <td colspan="2" align="center">&nbsp;</td>
                             </tr>                        
-                    </table>
+                        </table>
+                    </form>
                 </div>
             </div>   
         </div>

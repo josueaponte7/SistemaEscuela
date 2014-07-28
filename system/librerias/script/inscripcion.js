@@ -444,7 +444,7 @@ $(document).ready(function() {
 
 
     $('#salir').click(function() {
-        $('#guardar').text('Inscribir');
+        //$('#guardar').text('Inscribir');
         $('#registro_inscripcion').slideUp(2000);
         $('#reporte_inscripcion').slideDown(2000);
         $('input:text').val('');

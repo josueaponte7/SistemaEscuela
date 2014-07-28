@@ -24,7 +24,7 @@
         steps.each(function(i) {
             //$(this).wrap("<div id='step" + i + "'></div>");
             $(this).append("<p id='step" + i + "commands'></p>");
-            $(this).wrap("<form id='step" + i + "' name='step" + i + "'></form>");
+            $(this).wrap("<div id='step" + i + "' name='step" + i + "'></div>");
             // 2
             var name = $(this).find("legend").html();
             $("#steps").append("<li id='stepDesc" + i + "' ><span>" + name + "</span></li>");
@@ -65,8 +65,8 @@
             if (i == count - 1) {
                 texto = options.finalize;
                 glyphicon = 'glyphicon-ok';
-                $("#" + stepName + "commands").append("<button  type='button' style='margin-left:30%;' id='p_limpiar' class='btn btn-default btn-sm'>Limpiar</button>");
-                $("#" + stepName + "commands").append("<button  type='button' style='margin-left:2%;'  id='p_salir' class='btn btn-default btn-sm'>Salir</button>");
+                //$("#" + stepName + "commands").append("<button  type='button' style='margin-left:30%;' id='p_limpiar' class='btn btn-default btn-sm'>Limpiar</button>");
+                //$("#" + stepName + "commands").append("<button  type='button' style='margin-left:2%;'  id='p_salir' class='btn btn-default btn-sm'>Salir</button>");
             }
 
             $("#" + stepName + "commands").append("<button style='float:right;' type='button' id='" + stepName + "Next' class='next btn btn-primary btn-sm'> " + texto + " <span class='glyphicon " + glyphicon + "'></span></button>");
@@ -103,6 +103,10 @@
                                 $("#step" + (i + 1)).show();
                                 selectStep(i + 1);
                                 if (i == count - 1) {
+
+                                    $('#registro_inscripcion').slideUp(2000);
+                                    $('#reporte_inscripcion').slideDown(2000);
+                                    $('input:text').val('');
                                     $("#step" + (count - 1)).hide();
                                     $("#step0").show();
                                     $(submmitButtonName).hide();
@@ -112,10 +116,12 @@
                         }
                     });
                 } else {
+                    $('input:hidden[id^=paso]').val(0);
                     var fin = count - 1;
                     if (i == fin) {
-
+                        
                     }
+                    
                     var msg
                     var $actividad = $('#actividad').find('option').filter(':selected').val();
                     var $actividad = $('#actividad').find('option').filter(':selected').val();
@@ -133,15 +139,6 @@
                         $('#div_cedula_cho').addClass('has-error');
                         $('#cedula_cho').focus();
                     } else {
-                         $('#h_id_actividad').remove();
-                         $('#h_id_anio').remove();
-                         var id_anio = $('#id_anio').val();
-                         var area = $('#area').val();
-
-                         var $id_actividad = '<input type="hidden" name="h_id_actividad" id="h_id_actividad" value="' + $actividad + '"/>';
-                         var $id_anio      = '<input type="hidden" name="h_id_anio" id="h_id_anio" value="' + id_anio + '"/>';
-                         var $area         = '<input type="hidden" name="h_area" id="h_area" value="' + area + '"/>';
-                        $("#" + stepName).append($id_anio, $id_actividad, $area);
                         
                         window.parent.bootbox.confirm({
                             message: '¿Desea guardar la información?',
@@ -157,20 +154,52 @@
                             },
                             callback: function(result) {
                                 if (result) {
-                                    
-                                    $.post(options.url, $("#" + stepName).serialize(), function(respuesta) {
+                                    var paso_num = i+1;
+                                    var paso = 'paso'+paso_num;
+                                    $('#'+paso).val(1);
+                                    $('#cedula_r,#tipo_estudiante').prop('disabled', false);
+                                    $.post(options.url, $("#frminscripcion").serialize(), function(respuesta) {
+                                        $('#cedula_r,#tipo_estudiante').prop('disabled', true);
                                         $("#" + stepName + 'input:hidden#cedula').remove();
                                         $("#" + stepName + '#accion').remove();
                                         if (respuesta == 1) {
                                             window.parent.bootbox.alert("Datos guardados con Exito", function() {
+                                                
+                                                var $inscrito = $('#inscrito').val();
+                                                
+                                                var cedula = $('#cedula').find('option:selected').val();
+                                                var $check = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
+                                                var dat_c = $('#cedula').find('option:selected').text();
+                                                var dat_n = dat_c.split(' ');
+
+                                                delete dat_n[0];
+                                                var nombre = dat_n.join(' ');
+                                                var tipo = $('#tipo_estudiante').val();
+                                                var anio = $('#anio_escolar').val();
+                                                var fecha = $('#fecha').val();
+                                                var actividad = $('#actividad').find('option:selected').text();
+
+                                                var modificar = '<img class="modificar" src="../../imagenes/edit.png" title="Modificar" style="cursor: pointer"  width="18" height="18" alt="Modificar"/>';
+                                                var eliminar = '<img class="eliminar" src="../../imagenes/delete.png" title="Eliminar" style="cursor: pointer"  width="18" height="18"  alt="Eliminar"/>';
+                                                
+                                                if($inscrito == 0){
+                                                    $('#inscrito').val(1)
+                                                    $('#tabla_inscripcion').dataTable().fnAddData([$check, cedula, nombre, tipo, anio, actividad, fecha, modificar, eliminar]);
+                                                }
+                                                
                                                 $("#" + stepName).hide();
                                                 $("#step" + (i + 1)).show();
                                                 selectStep(i + 1);
                                                 if (i == count - 1) {
+                                                    $('#registro_inscripcion').slideUp(2000);
+                                                    $('#reporte_inscripcion').slideDown(2000);
+                                                    $('input:text').val('');
                                                     $("#step" + (count - 1)).hide();
                                                     $("#step0").show();
                                                     $(submmitButtonName).hide();
                                                     selectStep(0);
+                                                    $('#inscrito').val(0);
+                                                    
                                                 }
                                             });
                                         } else {
