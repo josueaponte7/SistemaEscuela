@@ -1,16 +1,15 @@
 <?php
-$cedula       = $_GET['cedula'];
+$cedula       = substr($_GET['cedula'],2);
 
 require_once '../../modelo/Estudiante.php';
 
 $obj_estu  = new Estudiante();
 
-$datos_es['sql'] = "SELECT
+ $datos_es['sql'] = "SELECT
                         CONCAT_WS('-', (SELECT nombre FROM nacionalidad WHERE id_nacionalidad= e.nacionalidad),e.cedula) AS cedula,
                         CONCAT_WS(' ',e.nombre,e.apellido) AS nombres,
-                        CONCAT_WS(' / ',
-                        CONCAT_WS('-',(SELECT codigo FROM codigo_telefono  WHERE id=e.cod_telefono),e.telefono),
-                        CONCAT_WS('-',(SELECT codigo FROM codigo_telefono  WHERE id=e.cod_celular),e.celular)) AS telefonos,
+                        IF(cod_telefono='',0,CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = cod_telefono),telefono)) AS telefono, 
+			IF(cod_celular='',0,CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = cod_celular),celular)) AS celular,
                         DATE_FORMAT(e.fech_naci,'%d-%m-%Y') AS fecha,
                         CURDATE(), (YEAR(CURDATE())-YEAR(e.fech_naci)) - (RIGHT(CURDATE(),5)<RIGHT(e.fech_naci,5)) AS edad,
                         e.email,
@@ -28,7 +27,17 @@ $datos_es['sql'] = "SELECT
                     WHERE e.cedula = $cedula";
 
 $alumno = $obj_estu->datos($datos_es);
+$telefono = $alumno[0]['telefono'];
+$celular  = $alumno[0]['celular'];
 
+$telefonos = "";
+if ($telefono != 0 && $celular == 0) {
+    $telefonos = $telefono;
+} else if ($celular != 0 && $telefono == 0) {
+    $telefonos = $celular;
+} else if ($telefono != 0 && $celular != 0) {
+    $telefonos = $telefono . '/' . $celular;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -67,7 +76,7 @@ $alumno = $obj_estu->datos($datos_es);
               <table width="97%" border="0" align="center" style="width:100%">
                 <tr>
                   <th width="137" height="37"> Telefonos:</th>
-                  <td width="336"><?php echo $alumno[0]['telefonos']?></td>
+                  <td width="336"><?php echo $telefonos; ?></td>
                   <th width="58" height="41">Correo:</th>
                   <td width="223"><?php echo $alumno[0]['email']?></td>
                 </tr>

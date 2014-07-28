@@ -7,12 +7,13 @@ require_once '../../modelo/Choferes.php';
 $obj_parro            = new Parroquia();
 $obj_chof             = new Seguridad();
 $obj_cho              = new Choferes();
-$d_choferes['campos'] = "CONCAT_WS('-' ,(SELECT nombre FROM nacionalidad WHERE id_nacionalidad = ch.nacionalidad),ch.cedula) AS cedula,
-                         CONCAT_WS(' ',ch.nombre,ch.apellido) AS nombres,
-                         CONCAT_WS(', ', 
-                         CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = ch.cod_telefono),ch.telefono),
-                         CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = ch.cod_celular),ch.celular)) AS telefonos";
-$resul_choferes       = $obj_cho->getChofer($d_choferes);
+$datos['sql'] = "SELECT  
+                            CONCAT_WS('-' ,(SELECT nombre FROM nacionalidad WHERE id_nacionalidad = ch.nacionalidad),ch.cedula) AS cedula,
+                            CONCAT_WS(' ',ch.nombre,ch.apellido) AS nombres,
+                            IF(cod_telefono='',0,CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = cod_telefono),telefono)) AS telefono, 
+                            IF(cod_celular='',0,CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = cod_celular),celular)) AS celular
+                         FROM chofer ch WHERE condicion = 1";
+$resul_choferes       = $obj_cho->getChofer($datos);
 
 
 $_SESSION['menu']        = 'registros_choferes';
@@ -93,6 +94,17 @@ $_SESSION['abrir']       = 'registros';
                         $es_array                = is_array($resul_choferes) ? TRUE : FALSE;
                         if ($es_array === TRUE) {
                             for ($i = 0; $i < count($resul_choferes); $i++) {
+                                
+                                $telefono = $resul_choferes[$i]['telefono'];
+                                $celular  = $resul_choferes[$i]['celular'];
+                                
+                                if($telefono != 0 && $celular == 0){
+                                    $telefonos =$telefono;
+                                }else if($celular != 0 && $telefono == 0){
+                                    $telefonos = $celular;
+                                }else if($telefono != 0 && $celular != 0){
+                                    $telefonos = $telefono.','.$celular;
+                                } 
                                 ?>
                                 <tr class="letras">
                                     <td>
@@ -100,7 +112,7 @@ $_SESSION['abrir']       = 'registros';
                                     </td>
                                     <td><?php echo $resul_choferes[$i]['cedula'] ?></td>
                                     <td><?php echo $resul_choferes[$i]['nombres']; ?></td>
-                                    <td><?php echo $resul_choferes[$i]['telefonos']; ?></td>
+                                    <td><?php echo $telefonos; ?></td>
                                     <td style="text-align: center">
                                         <img class="modificar" src="../../imagenes/edit.png" title="Modificar" style="cursor: pointer"  width="18" height="18" alt="Modificar"/>
                                     </td>
@@ -247,8 +259,6 @@ $_SESSION['abrir']       = 'registros';
                                         <input type="text" class="form-control  input-sm" id="placa" name="placa" placeholder="Placa" maxlength="8"/>
                                     </div>
                                 </td>
-                            </tr>
-                            <tr height="35">
                                 <td class="letras"> Modelo </td>
                                 <td>
                                     <div id="div_modelo" class="form-group">
@@ -263,6 +273,8 @@ $_SESSION['abrir']       = 'registros';
                                         <input type="text" class="form-control input-sm" id="color" name="color" placeholder="Color">
                                     </div>
                                 </td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
                             </tr>
                             <tr>
                                 <td colspan="4" align="center"> 

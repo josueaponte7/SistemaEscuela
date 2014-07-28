@@ -31,7 +31,20 @@ $(document).ready(function() {
 
     var numero = '0123456789';
     $('#telefono, #celular, #cedula, #fuente_ingreso').validar(numero);
-
+    
+    
+    $('.modificar').tooltip({
+        html: true,
+        placement: 'top',
+        title: 'Modificar'
+    });
+    $('.eliminar').tooltip({
+        html: true,
+        placement: 'top',
+        title: 'Eliminar'
+    });
+    
+    
     $('.tooltip_ced').tooltip({
         html: true,
         placement: 'bottom',
@@ -49,6 +62,7 @@ $(document).ready(function() {
             left: e.pageX,
             top: e.pageY
         });
+        return false;
     });
 
     $contextMenu.on("click", "span", function() {
@@ -71,7 +85,19 @@ $(document).ready(function() {
         });
         $('.dropdown').hide();
     });
+    
+    $(document).keyup(function(event) {
+        if (event.which == 27) {// Tecla escape
+            $('.dropdown').hide();
+        }
+    });
 
+    $(document).click(function() {
+        $('.dropdown').hide();
+    });
+    
+    
+    
     $('#registrar').click(function() {
         $('#registro_erepresentante').slideDown(2000);
         $('#reporte_representante').slideUp(2000);
@@ -268,7 +294,8 @@ $(document).ready(function() {
             $('#email').focus();
         } else {
             $('#accion').val($(this).text());
-
+            
+            var nombres = $('#nombre').val() + ' ' + $('#apellido').val();
             // Imagenes de modificar y eliminar
             var modificar = '<img class="modificar" src="../../imagenes/edit.png" title="Modificar" style="cursor: pointer"  width="18" height="18" alt="Modificar"/>';
             var eliminar  = '<img class="eliminar" src="../../imagenes/delete.png" title="Eliminar" style="cursor: pointer"  width="18" height="18"  alt="Eliminar"/>';
@@ -300,7 +327,7 @@ $(document).ready(function() {
 
                             var nacionalidad = $('#nacionalidad').find(' option').filter(":selected").text();
                             var cedula = nacionalidad + '-' + $('#cedula').val();
-                            var nombres = $('#nombre').val() + ' ' + $('#apellido').val();
+                            
                             var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
 
 //                    alert('Registro con Exito');
@@ -364,7 +391,8 @@ $(document).ready(function() {
                                         var id_estatus = $('#estatus').find(' option').filter(":selected").val();
                                         //var actividad = $('#actividad').find('option:selected').text();
 
-                                        // Modificar la fila 1 en la tabla                                       
+                                        // Modificar la fila 1 en la 
+                                        $("#tabla_representante tbody tr:eq(" + fila + ")").find("td:eq(2)").html(nombres);                                       
                                         $("#tabla_representante tbody tr:eq(" + fila + ")").find("td:eq(3)").html(telefonos);
                                         //$("#tabla_docente tbody tr:eq(" + fila + ")").find("td.eq(4)").html(actividad);
 
@@ -503,6 +531,50 @@ $(document).ready(function() {
         });
 
     });
+    
+    // proceso de eliminacion
+    $('table#tabla_docente').on('click', 'img.eliminar', function() {
+        $('#cedula').val(cedula);
+        var padre = $(this).closest('tr');
+
+        // obtener la fila clickeada
+        var nRow = $(this).parents('tr')[0];
+
+        window.parent.bootbox.confirm({
+            message: '¿Desea Eliminar el Registro?',
+            buttons: {
+                'cancel': {
+                    label: 'Cancelar',
+                    className: 'btn-default'
+                },
+                'confirm': {
+                    label: 'Eliminar',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function(result) {
+                if (result) {
+
+                    var cedula = padre.children('td:eq(1)').text();
+                    $.post("../../controlador/Docente.php", {'accion': 'Eliminar', 'cedula': cedula}, function(respuesta) {
+                        if (respuesta == 1) {
+
+                            window.parent.bootbox.alert("Eliminacion con Exito", function() {
+                                //borra la fila de la tabla
+                                TDocente.fnDeleteRow(nRow);
+
+                                $('input[type="text"]').val('');
+                            });
+
+
+                        }
+                    });
+                }
+            }
+        });
+
+    });
+
 
     $('#salir').click(function() {
         $('#registro_erepresentante').slideUp(2000);

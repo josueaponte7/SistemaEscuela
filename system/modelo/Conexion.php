@@ -4,8 +4,8 @@ class Conexion {
 
     private static $_server   = 'localhost';
     private static $_user     = 'root';
-    private static $_password = '123456';
-    protected $bd             = 'proyecto_yajaira';
+    private static $_password = '';
+    protected $bd             = 'sis_escuela';
     private $_sql             = '';
     private $_state_conn      = FALSE;
 

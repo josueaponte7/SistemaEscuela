@@ -16,6 +16,7 @@ $abrir       = 'registros';
 $abrir_reg   = 'in';
 $abrir_pro   = '';
 $abrir_rep   = '';
+$abrir_mant  = '';
 $abrir_conf  = '';
 
 $nosotros = 'NOSOTROS';
@@ -49,7 +50,13 @@ if (isset($_SESSION['archivo_sys']) && isset($_SESSION['dir_sys'])) {
         $abrir_pro  = '';
         $abrir_rep  = 'in';
         $abrir_conf = '';
-    } else if ($abrir == 'configuracion') {
+    } else if ($abrir == 'mantenimiento') {
+        $abrir_reg  = '';
+        $abrir_pro  = '';
+        $abrir_rep  = '';
+        $abrir_mant = 'in';
+        $abrir_conf = '';
+    }else if ($abrir == 'configuracion') {
         $abrir_reg  = '';
         $abrir_pro  = '';
         $abrir_rep  = '';
@@ -244,10 +251,14 @@ if($grupo == 2){
                                 <span data-toggle="collapse" data-parent="#accordion" href="#reportes">REPORTES</span>
                             </li>
                         <?php 
-                            }
+                        }
+                        ?>
+                            <li>
+                                <span data-toggle="collapse" data-parent="#accordion" href="#mantenimiento">Mantenimiento</span>
+                            </li>
+                        <?php
                         if($grupo == 2){
                         ?>
-                            
                         <li>
                             <span data-toggle="collapse" data-parent="#accordion" href="#configuracion">CONFIGURACI&Oacute;N</span>
                         </li>
@@ -272,7 +283,6 @@ if($grupo == 2){
                                     <li id="registros_docente">Docentes</li>
                                     <li id="registros_choferes">Choferes</li>
                                     <li id="registros_servicio_salud">Servicios de Salud</li>
-                                    <!--                                    <li id="registros_datos_generales" >Datos Generales</li>-->
                                 </ul>
                             </div>
                         </div>
@@ -314,6 +324,30 @@ if($grupo == 2){
                     </div>
                     <?php 
                     }
+                    ?>
+                    <div class="menu_izquierdo panel-title" data-toggle="collapse" data-parent="#accordion" href="#mantenimiento" style="margin-top: 8px;">Mantenimiento</div>
+                    <div id="mantenimiento" class="panel-collapse collapse <?php echo $abrir_mant ?>">
+                        <div class="panel-body">
+                            <div class="contenido_men_izq">
+                                <ul  style="list-style-type:none;">
+                                    <li id="mantenimiento_status_representante">Status de Representantes</li>
+                                    <li id="mantenimiento_status_estudiante">Status de Estudiantes</li>                                    
+                                    <li id="mantenimiento_status_docente">Status de Docentes</li>
+                                    <li id="mantenimiento_status_chofer">Status de Choferes</li>     
+                                    <li id="mantenimiento_programa_social">Programas Sociales</li>
+                                    <li id="mantenimiento_profesion">Profesi&oacute;n</li>
+                                    <li id="mantenimiento_actividad">Actividades</li>
+                                    <li id="mantenimiento_anio_escolar">A&ntilde;o Escolar</li>
+                                    <li id="mantenimiento_tipo_enfermedades">Tipo de Enfermedades</li>
+                                    <li id="mantenimiento_tipo_servicio">Tipos de Servicio P&uacute;blico</li>
+                                    <li id="mantenimiento_estado">Estados</li>
+                                    <li id="mantenimiento_municipio">Municipios</li>
+                                    <li id="mantenimiento_parroquia">Parroquias</li>  
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <?php 
                     if($grupo == 2){
                     ?>
                     <div class="menu_izquierdo panel-title" data-toggle="collapse" data-parent="#accordion" href="#configuracion" style="margin-top: 8px;">Configuraci&oacute;n</div>
@@ -321,21 +355,11 @@ if($grupo == 2){
                         <div class="panel-body">
                             <div class="contenido_men_izq">
                                 <ul  style="list-style-type:none;">
-                                    <li id="configuracion_usuario">Usuarios</li>
-                                    <li id="configuracion_status_representante">Status de Representantes</li>
-                                    <li id="configuracion_status_estudiante">Status de Estudiantes</li>                                    
-                                    <li id="configuracion_status_docente">Status de Docentes</li>
-                                    <li id="configuracion_status_chofer">Status de Choferes</li>
-                                    <li id="configuracion_grupo_usuario">Grupos de Usuarios</li>     
-                                    <li id="configuracion_programa_social">Programas Sociales</li>
-                                    <li id="configuracion_profesion">Profesi&oacute;n</li>
-                                    <li id="configuracion_actividad">Actividades</li>
-                                    <li id="configuracion_anio_escolar">A&ntilde;o Escolar</li>
-                                    <li id="configuracion_tipo_enfermedades">Tipo de Enfermedades</li>
-                                    <li id="configuracion_tipo_servicio">Tipos de Servicio P&uacute;blico</li>
-                                    <li id="configuracion_estado">Estados</li>
-                                    <li id="configuracion_municipio">Municipios</li>
-                                    <li id="configuracion_parroquia">Parroquias</li>                                         
+									<li id="configuracion_grupo_usuario">Grupos de Usuarios</li>                                                                      
+                                    <li id="configuracion_privilegios">Privilegios</li>
+									<li id="configuracion_usuario">Usuarios</li>  
+									<li id="configuracion_menu">Menu</li>
+									<li id="configuracion_submenu">Sub Menu</li>
                                 </ul>
                             </div>
                         </div>
@@ -350,58 +374,8 @@ if($grupo == 2){
             </div>
             <div id="pie">
                 <img src="imagenes/bg_footer.jpg" style="height: 100px; width: 1027px; float: left;"/>
-                <div id="borde_negro">
-                    <!--                    <div id="contenido1">
-                                            <a href="#">
-                                                <img src="imagenes/logo_f.png"/>
-                                            </a>
-                                            <div id="menu_contenido1">
-                                                <ul style="list-style-type:none;">
-                                                    <li>
-                                                        <a href="#">nosotros</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">noticias</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">galerias</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">contactenos</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">iniciar sesi&oacute;n</a>
-                                                    </li>                                
-                                                </ul>
-                                            </div>
-                                        </div>-->
-                    <!--                    <div id="contenido2">
-                                            <h1 style="color: #fff;">cont&aacute;ctenos</h1>
-                                            <form role="form" autocomplete="off">
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control input-sm" id="nombre_contacto" name="nombre_contacto" placeholder="Nombre y Apellido">
-                                                </div>
-                                                <div class="form-group">
-                                                    <input type="email" class="form-control input-sm" id="email_contacto" name="email_contacto" placeholder="Correo Electronico">
-                                                </div>
-                                                <div class="form-group">
-                                                    <textarea class="form-control input-sm" rows="5" id="mensaje_contacto" name="mensaje_contacto" placeholder="Mensaje"></textarea>
-                                                </div>
-                                                <input type="button" style="background-image: url('imagenes/boton_enviar.png');" value="Enviar"  name="enviar" id="enviar"/>
-                                                <span class="requiere">*</span>
-                                            </form>
-                                        </div>-->
+                <div id="borde_negro"> 
                     <div id="contenido3" >
-                        <!--                        <h1 style="color: #fff;">estamos en las redes sociales</h1>
-                                                <img style="margin-left: 100px;" alt="" src="imagenes/facebook.png"/>
-                                                <img alt="" src="imagenes/twitter.png"/>
-                                                <h1 style="color: #fff; width: 350px; height: 5px; float: left; margin-left: -22px;">
-                                                    llame a nuestros
-                                                    <i style="font-family: Arial,'OpenSans',Tahoma,Geneva,sans-serif; font-size: 11px;">tel&eacute;fonos:</i>
-                                                </h1>
-                                                <div id="telf">
-                                                    <span style="margin-left: 76px;"> (0243) 235.56.72</span>
-                                                </div>-->
                         <div class="derechos">
                             Copyright &COPY; 2014 Escuela T&eacute;cnica Robinsoniana y Zamorana para la Diversidad Funcional San Carlos
                             <br>
@@ -411,7 +385,6 @@ if($grupo == 2){
                     </div>
                 </div>  
             </div>
-            <!--            <div id="separacion_pie"></div>-->
         </div>        
     </body>
 </html>        

@@ -1,7 +1,8 @@
 <?php
 require_once '../../modelo/Representante.php';
 $obj_repre       = new Representante();
-$datos['campos'] = "cedula,CONCAT_WS(' ',nombre,apellido) AS nombres,sexo";
+$datos['campos'] = "cedula,CONCAT_WS(' ',nombre,apellido) AS nombres,sexo,IF(cod_telefono='',0,CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = cod_telefono),telefono)) AS telefono, 
+IF(cod_celular='',0,CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = cod_celular),celular)) AS celular";
 $resultado       = $obj_repre->getRepresentantes($datos);
 ?>
 <!DOCTYPE html>
@@ -130,48 +131,40 @@ $resultado       = $obj_repre->getRepresentantes($datos);
                         alert('Selecione todos los parentescos');
                     } else {
                         var $iframe = window.parent.frames[0].$('body');
+                        var TEstuRepre = $iframe.find('#tbl_repre').dataTable();
                         //var checkboxValues = [];
-                        $iframe.find('#tbl_repre').dataTable().fnClearTable();
+                        TEstuRepre.fnClearTable();
                         $('input:checkbox:checked', nodes).each(function() {
-                            var $chkbox = $(this);
-                           
-                            var $actualrow = $chkbox.closest('tr');
                             
-                            var checkbox = '<input type="checkbox" name="repre[]" value="'+$chkbox.val()+'" checked/>';
-                            var nombre = $actualrow.find('td:eq(2)').text();
-                            var parentesco = $actualrow.find('td:eq(3)').find('select').find('option').filter(':selected').text();
-                            
-                            var ra_marcado = $actualrow.find('td:eq(4)').find('input:radio[name="representant"]:checked').length;
+                            var $chkbox       = $(this);          
+                            var $actualrow    = $chkbox.closest('tr');
+                            var checkbox      = '<input type="checkbox" name="repre[]" value="'+$chkbox.val()+'" checked/>';
+                            var telefonos     = $actualrow.find('td:eq(1)').attr('id');
+                            var nombre        = $actualrow.find('td:eq(2)').text();
+                            var parentesco    = $actualrow.find('td:eq(3)').find('select').find('option').filter(':selected').text();
+                            var id_parentesco = $actualrow.find('td:eq(3)').find('select').find('option').filter(':selected').val();
+                            var ra_marcado    = $actualrow.find('td:eq(4)').find('input:radio[name="representant"]:checked').length;
                             
                             var marcado = '';
                             if(ra_marcado > 0){
                                 var marcado = 'checked';
-                                
                             }
                             var cedula = '<span class="datos">'+$chkbox.val()+'</span>';
-                            var radio = '<input  type="radio" class="representant" name="representant" value="1" '+marcado+'/>';
-                            var newRow = $iframe.find('#tbl_repre').dataTable().fnAddData([checkbox,cedula, nombre, parentesco, radio]);
+                            var radio  = '<input  type="radio" class="representant" name="representant" value="1" '+marcado+'/>';
+                            var newRow = TEstuRepre.fnAddData([checkbox,cedula, nombre,telefonos, parentesco, radio]);
+                            
+                            // Agregar el id a la fila tblrepresentante en alumno en la cuarta columna
+                            var oSettings = TEstuRepre.fnSettings();
+                            var nTr       = oSettings.aoData[ newRow[0] ].nTr;
+                            $('td', nTr)[4].setAttribute( 'id', id_parentesco );
                             
                             
-                             // Agregar el id a la fila estado
-                             /*if(ra_marcado > 0){
-                                var oSettings = $iframe.find('#tbl_repre').dataTable().fnSettings();
-                                var nTr = oSettings.aoData[ newRow[0] ].nTr;
-                                $('tr', nTr).setAttribute("style", "color:#FF0000");
-                                
-                            }*/
-                            
-                            //newRow[i].cells[3].setAttribute("style", "color:#FF0000;");
-                            
-                            //$($clonedRow).prependTo($iframe.find('table#tbl_repre tbody'));
-                            $iframe.find('table#tbl_repre').css('display', 'block');
 
                         });
-                        
+                        $iframe.find('table#tbl_repre').css('display', 'block');
                         var radio_marcado = $iframe.find('table#tbl_repre tbody tr td').find('input:radio:checked');
                         radio_marcado.closest('tr').css('color','#FF0000');
    
-                        //$iframe.find('table#tbl_repre tbody tr:last ').remove();
                         window.parent.$.fancybox.close();
                     }
                 });
@@ -199,10 +192,21 @@ $resultado       = $obj_repre->getRepresentantes($datos);
                         <tbody>
                             <?php
                             for ($i = 0; $i < count($resultado); $i++) {
+                                    //$telefonos = "";
+                                    $telefono = $resultado[$i]['telefono'];
+                                    $celular  = $resultado[$i]['celular'];
+
+                                    if($telefono != 0 && $celular == 0){
+                                        $telefonos =$telefono;
+                                    }else if($celular != 0 && $telefono == 0){
+                                        $telefonos = $celular;
+                                    }else if($telefono != 0 && $celular != 0){
+                                        $telefonos = $telefono.','.$celular;
+                                    } 
                                 ?>
                                 <tr>
                                     <td id="<?php echo $resultado[$i]['sexo'] ?>"><input type="checkbox" name="repre[]" value="<?php echo $resultado[$i]['cedula'] ?>" /></td>
-                                    <td><?php echo $resultado[$i]['cedula'] ?></td>
+                                    <td id="<?php echo $telefonos; ?>"><?php echo $resultado[$i]['cedula'] ?></td>
                                     <td><?php echo $resultado[$i]['nombres'] ?></td>
                                     <td>
                                         <select disabled="disabled" style="width: 150px;" name="parentesco[]" class="parentesco">

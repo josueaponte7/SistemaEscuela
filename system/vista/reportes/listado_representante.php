@@ -31,7 +31,7 @@ class MyClass extends TCPDF
 }
 
 
-$campos['condicion'] = 1;
+$campos['condicion'] = 1 .' AND condicion=1';
 $cedula_condicion = 're.cedula'; 
 if(isset($_GET['cedulas'])){
 
@@ -43,12 +43,11 @@ $obj = new Representante();
 $campos['sql'] = "SELECT 
                     CONCAT_WS('-' ,(SELECT nombre FROM nacionalidad WHERE id_nacionalidad = re.nacionalidad),re.cedula) AS cedula,
                     CONCAT_WS(' ',re.nombre,re.apellido) AS nombres,
-                    CONCAT_WS(', ', 
-                    CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = re.cod_telefono),re.telefono),
-                    CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = re.cod_celular),re.celular)) AS telefonos,
+                    IF(cod_telefono='',0,CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = cod_telefono),telefono)) AS telefono, 
+                    IF(cod_celular='',0,CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = cod_celular),celular)) AS celular,
                     (select er.nombre from estatus_representante er where re.id_estatus = er.id_estatus) AS estatus
                   FROM representante re
-                  WHERE ".$campos['condicion']."
+                  WHERE ".$campos['condicion']. "
                   ORDER BY re.cedula";
 
 $resultado  = $obj->getRepresentantes($campos);
@@ -119,10 +118,20 @@ $pdf->Cell($w_estatus, $row_height, 'Status', 1, 1, 'L', 1);
 for ($i = 0; $i < count($resultado); $i++) {
 
     // Asignarle variables a los registros
-    $cedula    = $resultado[$i]['cedula'];
-    $nombres   = $resultado[$i]['nombres'];
-    $telefonos = $resultado[$i]['telefonos'];
-    $estatus   = $resultado[$i]['estatus'];
+    $cedula   = $resultado[$i]['cedula'];
+    $nombres  = $resultado[$i]['nombres'];
+    $telefono = $resultado[$i]['telefono'];
+    $celular  = $resultado[$i]['celular'];
+    $estatus  = $resultado[$i]['estatus'];
+    
+    if ($telefono != 0 && $celular == 0) {
+        $telefonos = $telefono;
+    } else if ($celular != 0 && $telefono == 0) {
+        $telefonos = $celular;
+    } else if ($telefono != 0 && $celular != 0) {
+        $telefonos = $telefono . ',' . $celular;
+    }
+
 
     // verificar que la variable $j no si es mayor se hace un salto de pagina
     if ($j > $max) {

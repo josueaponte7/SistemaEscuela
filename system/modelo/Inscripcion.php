@@ -1,5 +1,5 @@
 <?php
-
+ini_set('max_execution_time', 1);
 $path = dirname(__FILE__);
 require_once "$path/Preinscripcion.php";
 
@@ -493,6 +493,11 @@ class Inscripcion extends Preinscripcion
 
 
         if (isset($datos['dt_vivienda'])) {
+
+
+            $cedula = $datos['dt_vivienda']['cedula_estudiante'];
+
+
 
             $cedula = $datos['dt_vivienda']['cedula_estudiante'];
 

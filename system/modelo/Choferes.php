@@ -85,7 +85,17 @@ class Choferes extends Seguridad {
         
     }
     
-    
+    public function delete($datos)
+    {
+
+        $dat_cedula = explode('-', $datos['cedula']);
+        $cedula     = $dat_cedula[1];
+
+        $sql = "UPDATE chofer SET  condicion = 0 WHERE cedula = $cedula;";
+
+        $resultado = $this->ejecutar($sql);
+        return $resultado;
+    }
 
         public function getChofer($opciones)
     {
@@ -96,6 +106,7 @@ class Choferes extends Seguridad {
         }else{
             $sql = $opciones['sql'];
         }
+        
         $resultado = $this->consultar_array($sql);
         return $resultado;
     }

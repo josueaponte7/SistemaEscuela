@@ -164,6 +164,7 @@ class Representante extends Seguridad
         } else {
             $this->_sql = $opciones['sql'];
         }
+        
         $resultado = $this->consultar_array($this->_sql);
         return $resultado;
     }

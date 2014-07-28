@@ -11,10 +11,10 @@ $obj_rep   = new Representante();
 $datos['sql'] = "SELECT  
                     CONCAT_WS('-' ,(SELECT nombre FROM nacionalidad WHERE id_nacionalidad = re.nacionalidad),re.cedula) AS cedula,  
                     CONCAT_WS(' ',re.nombre,re.apellido) AS nombres,
-	            CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = re.cod_telefono),re.telefono) AS telefono,
-	            CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = re.cod_celular),re.celular) AS celular,
+	            IF(cod_telefono='',0,CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = cod_telefono),telefono)) AS telefono, 
+                    IF(cod_celular='',0,CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = cod_celular),celular)) AS celular,
                     (SELECT er.nombre FROM estatus_representante er WHERE re.id_estatus = er.id_estatus) AS estatus
-                   FROM representante re WHERE condicion = 1 ;";
+                   FROM representante re WHERE condicion = 1;";
 $resultado    = $obj_rep->getRepresentantes($datos);
 
 $_SESSION['menu']        = 'registros_representante';
@@ -80,7 +80,7 @@ $_SESSION['abrir']       = 'registros';
             <div style="width: 95%;margin-left: auto;margin-right: auto">
                 <table style="width:100%;" border="0" class="dataTable" id="tabla_representante" align="center">
                     <thead>
-                        <tr>
+                        <tr class="letras">
                             <th style="margin-left: 20px !important;" width="81">
                                 <input type="checkbox" name="todos" id="todos" value="todos" />
                             </th>
@@ -98,19 +98,19 @@ $_SESSION['abrir']       = 'registros';
                         $es_array                = is_array($resultado) ? TRUE : FALSE;
                         if ($es_array === TRUE) {
                             for ($i = 0; $i < count($resultado); $i++) {
-                                $telefonos = "";
+                                
                                 $telefono = $resultado[$i]['telefono'];
                                 $celular  = $resultado[$i]['celular'];
                                 
-                                if(isset($telefono) && !isset($celular)){
-                                    $telefonos .=$telefono;
-                                }else if(isset($celular) && !isset($telefono)){
-                                    $telefonos .= $celular;
-                                }else if(isset($telefono) && isset($celular)){
-                                    $telefonos .= $telefono.','.$celular;
+                                if($telefono != 0 && $celular == 0){
+                                    $telefonos =$telefono;
+                                }else if($celular != 0 && $telefono == 0){
+                                    $telefonos = $celular;
+                                }else if($telefono != 0 && $celular != 0){
+                                    $telefonos = $telefono.','.$celular;
                                 } 
                                 ?>
-                                <tr>
+                                <tr class="letras">
                                     <td><input type="checkbox" name="cedula[]" value="<?php echo $resultado[$i]['cedula'] ?>" /></td>
                                     <td><span class="sub-rayar tooltip_ced"><?php echo $resultado[$i]['cedula'] ?></span></td>
                                     <td><?php echo $resultado[$i]['nombres'] ?></td>

@@ -4,7 +4,7 @@ require_once '../../modelo/Docente.php';
 require_once './tcpdf/spa.php';
 require_once './tcpdf/MyClass.php';
 
-$campos['condicion'] = 1;
+$campos['condicion'] = 1 .' AND condicion=1';
 $cedula_condicion    = 'doc.cedula';
 if (isset($_GET['cedula'])) {
 

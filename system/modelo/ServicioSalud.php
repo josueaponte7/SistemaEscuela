@@ -45,7 +45,17 @@ class ServicioSalud extends Seguridad {
         $resultado = $this->ejecutar($sql);
         return $resultado;
     }
+    
+    public function delete($datos)
+    {
 
+        $id_servicio = $datos['id_servicio'];
+        $sql = "UPDATE servicio_publico SET  condicion = 0 WHERE id_servicio = $id_servicio;";
+
+        $resultado = $this->ejecutar($sql);
+        return $resultado;
+    }
+    
     public function getServicio($opciones) {
         if (empty($opciones['sql'])) {
             $default  = array('campos' => '*', 'condicion' => '1', 'ordenar' => '1', 'limite' => 200);

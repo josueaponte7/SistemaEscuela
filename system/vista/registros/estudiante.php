@@ -141,7 +141,7 @@ $_SESSION['abrir']       = 'registros';
                 <div id="contextMenuRep" class="dropdown clearfix">
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:block;position:static;margin-bottom:5px;">
                         <li><span id="v_datos_r">Ver Representante</span></li>
-                        <li><span id="m_repre">Modificar Representante</span></li>
+                        <!--<li><span id="m_repre">Modificar Representante</span></li>-->
                     </ul>
                 </div>
             </div>
@@ -384,6 +384,7 @@ $_SESSION['abrir']       = 'registros';
                                                 <th>&nbsp;</th>
                                                 <th>Cedula</th>
                                                 <th>Nombre</th>
+                                                <th>Tel&eacute;fono</th>
                                                 <th>Parentesco</th>
                                                 <th>Representante</th>
                                             </tr>

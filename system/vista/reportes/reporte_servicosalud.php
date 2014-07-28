@@ -31,7 +31,7 @@ class MyClass extends TCPDF
 
 }
 
-$campos['condicion'] = 1;
+$campos['condicion'] = 1 .' AND condicion=1';
 $id_condicion        = 'sp.id_servicio';
 if (isset($_GET['id'])) {
     $id                  = $_GET['id'];
@@ -39,7 +39,7 @@ if (isset($_GET['id'])) {
 }
 
 $obj           = new ServicioSalud();
-$campos['sql'] = "SELECT sp.id_servicio, 
+ $campos['sql'] = "SELECT sp.id_servicio, 
                          sp.servicio, 
                         CONCAT_WS('-',ct.codigo, sp.telefono) AS telefono, 
                         ts.tiposervicio 
