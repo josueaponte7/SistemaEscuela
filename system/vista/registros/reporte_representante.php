@@ -158,6 +158,9 @@ $resultado       = $obj_repre->getRepresentantes($datos);
                             var nTr       = oSettings.aoData[ newRow[0] ].nTr;
                             $('td', nTr)[4].setAttribute( 'id', id_parentesco );
                             
+                            if(ra_marcado > 0){
+                               nTr.setAttribute('style','color:red');
+                            }
                             
 
                         });

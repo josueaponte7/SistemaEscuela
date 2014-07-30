@@ -182,8 +182,8 @@ $(document).ready(function() {
     });
 
     $contextMenuRep.on("click", "span", function() {
-        var message = "Cedula:'" + cedula + "'\n"
-        message += "Click:'" + $(this).attr('id') + "'";
+        /*var message = "Cedula:'" + cedula + "'\n"
+        message += "Click:'" + $(this).attr('id') + "'";*/
 
         var accion = $(this).attr('id');
         url = 'vista/registros/ver_datos_representante.php';
@@ -345,7 +345,7 @@ $(document).ready(function() {
             var $chkbox = $(this);
             var $actualrow = $chkbox.closest('tr');
             var $clonedRow = $actualrow.find('td');
-            var repre      = $clonedRow.eq('3').attr('id');
+            var repre      = $clonedRow.eq('4').attr('id');
             var represen   = $clonedRow.find("input:radio[name='representant']:checked").val();
             if (represen == 1) {
                 nombre = $actualrow.find('td:eq(2)').text();
@@ -430,12 +430,13 @@ $(document).ready(function() {
             window.parent.bootbox.alert("Debe asignar al menos un representante");
         } else {
             $('#accion').val($(this).text());
+            var estatus = $('#estatus').find('option').filter(":selected").text();
             var modificar = '<img class="modificar" src="../../imagenes/edit.png" title="Modificar" style="cursor: pointer"  width="18" height="18" alt="Modificar"/>';
             var eliminar = '<img class="eliminar" src="../../imagenes/delete.png" title="Eliminar" style="cursor: pointer"  width="18" height="18"  alt="Eliminar"/>';
             if($(this).text() == 'Guardar'){
                 $('#estatus').select2("enable", true);
                 $.post("../../controlador/Estudiante.php", $("#frmestudiante").serialize(), function(respuesta) {
-                    var estatus = $('#estatus').find('option').filter(":selected").text();
+                    
                     $('#estatus').select2("enable", false);
                     if (respuesta == 1) {
                         var nacionalidad = $('#nacionalidad').find('option').filter(":selected").text();
@@ -464,25 +465,62 @@ $(document).ready(function() {
                     }
                 });
             }else{
-                $('#estatus').select2("enable", true);
-                $.post("../../controlador/Estudiante.php", $("#frmestudiante").serialize(), function(respuesta) {
-                    $('#estatus').select2("enable", false);
+                
+                
+                window.parent.bootbox.confirm({
+                    message: '¿Desea Modificar los datos del Registro?',
+                    buttons: {
+                        'cancel': {
+                            label: 'Cancelar',
+                            className: 'btn-default'
+                        },
+                        'confirm': {
+                            label: 'Modificar',
+                            className: 'btn-danger'
+                        }
+                    },
+                    callback: function(result) {
+                        if (result) {
+                            $('#estatus').select2("enable", true);
+                            $.post("../../controlador/Estudiante.php", $("#frmestudiante").serialize(), function(respuesta) {
+                                if (respuesta == 1) {
+
+                                    // obtener la fila a modificar
+                                    var fila = parseInt($('#fila').val());
+
+                                    window.parent.bootbox.alert("Modificacion con Exito", function() {
+                                        // Modificar la fila 1 en la tabla 
+                                        TEstudiante.fnUpdate( estatus, fila, 3 ); 
+                                        TEstudiante.fnUpdate( nombre, fila, 4 ); 
+
+                                    });
+
+                                }
+                            });
+                        }
+                    }
                 });
+       
             }
         }
     });
     $('table#tabla_estudiante').on('click', 'img.modificar', function() {
         // borra el campo fila
+ 
         $('#fila').remove();
         var padre     = $(this).closest('tr');
         var cedula_c  = padre.children('td:eq(1)').text();
         cedula_c      = cedula_c.trim();
         var nac       = cedula_c.substring(0,1);
         var cedula    = cedula_c.substring(2);
-
         
         // obtener la fila a modificar
-        var fila = padre.index();
+        var rowIndex = TEstudiante.fnGetPosition( padre[0] );
+
+        // crear el campo fila y añadir la fila
+        var $fila = '<input type="hidden" id="fila"  value="' + rowIndex + '" name="fila">';
+        $($fila).prependTo($('#frmestudiante'));
+    
         $.post("../../controlador/Estudiante.php",{cedula:cedula,accion:'Buscar'}, function(respuesta) {
             var nac_v = 0;
             if(nac = 'V'){
@@ -548,8 +586,6 @@ $(document).ready(function() {
                     $('td', nTr)[4].setAttribute( 'id', clave.id_parentesco );
                     
                     if(clave.representante > 0){
-                       //var theNode = $('#tbl_repre').dataTable().aoData[addId[0]].nTr;
-                       var theNode = oSettings.aoData[newRow[0]].nTr;
                        nTr.setAttribute('style','color:red');
                     }
                     
