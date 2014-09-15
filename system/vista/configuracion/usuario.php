@@ -188,7 +188,7 @@ $_SESSION['abrir']       = 'configuracion';
                                 <td class="letras"> Status </td>
                                 <td>
                                     <div class="form-group">
-                                        <select  name="estatus" class="form-control input-sm" id="estatus">
+                                        <select  name="estatus" class="form-control input-sm select2" id="estatus">
                                             <option value="2">Seleccione</option>
                                             <option value="1">Activo</option>
                                             <option value="0">Inactivo</option>

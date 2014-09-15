@@ -38,6 +38,22 @@ class Seguridad extends Conexion
         $resultado = $this->consultar_array($sql);
         return $resultado;
     }
+    
+    public function Menu($where = 1)
+    {
+        $where     = ' WHERE ' . $where;
+        $sql       = "SELECT  id_menu,  nombre_menu FROM menu " . $where;
+        $resultado = $this->consultar_array($sql);
+        return $resultado;
+    }
+    
+    public function SubMenu($where = 1)
+    {
+        $where     = ' WHERE ' . $where;
+        $sql       = "SELECT  id_submenu,  nombre_submenu FROM sub_menu " . $where;
+        $resultado = $this->consultar_array($sql);
+        return $resultado;
+    }
 
     public function codNacionalidad($where = 1)
     {

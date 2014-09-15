@@ -20,12 +20,86 @@ $(document).ready(function() {
 
     var letra = '1234567890';
     $('#cant_habitacion').validar(letra);
-
-    $('#registrar').click(function() {
+    
+     $('#registrar').click(function() {
         $('#registro_inscripcion').slideDown(2000);
         $('#reporte_inscripcion').slideUp(2000);
     });
+	
+	$('.modificar').tooltip({
+        html: true,
+        placement: 'top',
+        title: 'Modificar'
+    });
+    
+    $('.eliminar').tooltip({
+        html: true,
+        placement: 'top',
+        title: 'Eliminar'
+    });
+    
+    
+    $('.tooltip_ced').tooltip({
+        html: true,
+        placement: 'bottom',
+        title: 'Click para ver opciones'
+    });
 
+    var $contextMenu = $("#contextMenu");
+    var cedula = '';
+    var url = '';
+    $("table#tabla_inscripcion").on("click", "span.sub-rayar", function(e) {
+        $('.dropdown').hide();
+        cedula = $(this).text().substr('id');
+        $contextMenu.css({
+            display: "block",
+            left: e.pageX,
+            top: e.pageY
+        });
+        return false;
+    });
+
+    $contextMenu.on("click", "span", function() {
+        var accion = $(this).attr('id');
+        if (accion == 'v_const') {
+            url = '../reportes/constancia_inscripcion.php?cedula='+cedula;
+            window.open(url);
+        }else if(accion == 'v_const_estu'){
+            url = '../reportes/constancia_estudio.php?cedula='+cedula;
+            window.open(url);           
+        }else{
+            url = 'vista/procesos/ver_datos_inscripcion.php';
+            parent.$.fancybox.open({
+                'autoScale': false,
+                height: '680px',
+                'href': url + '?cedula=' + cedula,
+                'type': 'iframe',
+                'hideOnContentClick': false,
+                'transitionIn': 'fade',
+                'transitionOut': 'fade',
+                'openSpeed': 500,
+                'closeSpeed': 500,
+                'openEffect': 'elastic',
+                'closeEffect': 'elastic',
+                //'scrolling':'yes',
+                overflow: scroll,
+                'helpers': {overlay: {closeClick: false}}
+            });
+        }
+        $('.dropdown').hide();
+        
+    });
+    
+    $(document).keyup(function(event) {
+        if (event.which == 27) {// Tecla escape
+            $('.dropdown').hide();
+        }
+    });
+
+    $(document).click(function() {
+        $('.dropdown').hide();
+    });    
+    
     $('#cedula').select2();
     //$('#tipo_estudainte').select2();
     //$('#anio_escolar').select2();
@@ -41,6 +115,56 @@ $(document).ready(function() {
     $('#cama').select2();
     $('#alimentacion').select2();
     $('#alimentacion_regular').select2();
+    
+    
+        /**Los monta todos reporte***/
+    $('#todos').change(function() {
+        var TotalRow = TInscripcion.fnGetData().length;
+        var nodes    = TInscripcion.fnGetNodes();
+        if (TotalRow > 0) {
+            if ($(this).is(':checked')) {
+                $("input:checkbox[name='cedula[]']", nodes).prop('checked', true);
+                $('#imprimir').fadeIn(500);
+            } else {
+                $("input:checkbox[name='cedula[]']", nodes).prop('checked', false);
+                $('#imprimir').fadeOut(500);
+            }
+        }
+    });
+
+    /***Monta de uno del reporte***/
+    $('table#tabla_inscripcion').on('change', 'input:checkbox[name="cedula[]"]', function() {
+        $('#todos').prop('checked', false);
+        var nodes = TInscripcion.fnGetNodes();
+        var count = $("input:checkbox[name='cedula[]']:checked", nodes).length;
+        if ($(this).is(':checked')) {
+            $('#imprimir').fadeIn(500);
+        } else {
+            if (count == 0) {
+                $('#imprimir').fadeOut(500);
+            }
+        }
+    });
+
+    /****Imprimi el reporte***/
+    $('#imprimir').click(function() {
+        var url = '../reportes/reporte_inscripcion.php';
+        if ($('#todos').is(':checked')) {
+            url = url + '?todos=1';
+        } else if ($('input:checkbox[name="cedula[]"]').is(':checked')) {
+            var checkboxValues = "";
+            var nodes = TInscripcion.fnGetNodes();
+            $("input:checkbox[name='cedula[]']:checked", nodes).each(function() {
+                var $chkbox = $(this);
+                var $actualrow = $chkbox.closest('tr');
+                var cedula = $actualrow.find('td:eq(1)').text()
+                checkboxValues += cedula.substr(2) + ',';
+            });
+            checkboxValues = checkboxValues.substring(0, checkboxValues.length - 1);
+            url = url + '?cedula=' + checkboxValues;
+        }
+        window.open(url);
+    });
 
 
     $('#cedula').change(function() {
@@ -101,7 +225,6 @@ $(document).ready(function() {
                     }
 
                 }
-
 
                 // datos representante
                 $('#cedula_r').val(datos[8]);
@@ -175,6 +298,9 @@ $(document).ready(function() {
                     $('#cedula_r,#tipo_estudiante').prop('disabled', true);
                     if (respuesta == 1) {
                         window.parent.bootbox.alert("Registro con Exito", function() {
+                            
+                            cedula = '<span class="sub-rayar tooltip_ced" data-original-title="" title="">' + cedula + '</span>';
+                            
                             var cedula = $('#cedula').find('option:selected').val();
                             var $check = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
                             var dat_c = $('#cedula').find('option:selected').text();

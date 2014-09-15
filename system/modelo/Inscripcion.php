@@ -381,7 +381,23 @@ class Inscripcion extends Preinscripcion
         $resultado = $this->consultar_array($sql);
         return $resultado;
     }
-
+    
+    public function getDatosConst($cedula)
+    {
+        $datos['sql'] = "SELECT
+                         CONCAT_WS('-' ,(SELECT nombre FROM nacionalidad WHERE id_nacionalidad = e.nacionalidad),e.cedula) AS cedula,
+                         CONCAT_WS(' ',e.nombre,e.apellido) AS nombre,
+                         i.tipo,
+                         (SELECT anio_escolar FROM anio_escolar WHERE id_anio=i.id_anio) AS anio,
+                         (SELECT actividad FROM actividad WHERE id_actividad=i.id_actividad) AS actividad,
+                         DATE_FORMAT(fecha_inscripcion,'%d-%m-%Y') AS fecha_inscripcion
+                         FROM inscripcion AS i
+                         INNER JOIN estudiante AS e ON i.cedula_estudiante=e.cedula
+                         WHERE i.cedula_estudiante=$cedula";
+        $resultado    = $this->datos($datos);
+        return $resultado;
+    }
+    
     public function getInscritos()
     {
         $datos['sql'] = "SELECT
@@ -396,7 +412,21 @@ class Inscripcion extends Preinscripcion
         $resultado    = $this->datos($datos);
         return $resultado;
     }
-
+    
+    
+    public function getInscritosReport($opciones)
+    {
+        if (!isset($opciones['sql'])) {
+            $default  = array('campos' => '*', 'condicion' => '1', 'ordenar' => '1', 'limite' => 200);
+            $opciones = array_merge($default, $opciones);
+            $sql      = "SELECT {$opciones['campos']} FROM docente doc  WHERE {$opciones['condicion']} ORDER BY {$opciones['ordenar']} LIMIT {$opciones['limite']} ";
+        } else {
+            $sql = $opciones['sql'];
+        }
+        $resultado = $this->consultar_array($sql);
+        return $resultado;
+    }
+    
     public function getDatos($datos)
     {
 

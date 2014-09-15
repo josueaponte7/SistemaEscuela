@@ -181,7 +181,14 @@ $(document).ready(function() {
             var eliminar = '<img class="eliminar" src="../../imagenes/delete.png" title="Eliminar" style="cursor: pointer"  width="18" height="18"  alt="Eliminar"/>';
             var cod_telefono = $('#cod_telefono').find(' option').filter(":selected").text();
             var cod_celular = $('#cod_celular').find(' option').filter(":selected").text();
-            var telefonos = cod_telefono + '-' + $('#telefono').val() + ', ' + cod_celular + '-' + $('#celular').val();
+            var telefonos = '';
+            if(cod_telefono > 0){
+                telefonos += cod_telefono + '-' + $('#telefono').val()
+            }
+            if(cod_celular > 0){
+                 telefonos = cod_celular + '-' + $('#celular').val()
+            }
+            
             if ($(this).text() == 'Guardar') {
 
                 $.post("../../controlador/Choferes.php", $("#frmchoferes").serialize(), function(respuesta) {
@@ -197,7 +204,7 @@ $(document).ready(function() {
                             var nTr = oSettings.aoData[ newRow[0] ].nTr;
                             $('input[type="text"]').val('');
                             $('#cod_telefono,#cod_celular').select2('val', 0);
-                            $('#nacionalidad').select2('val', 1);
+                            $('#nacionalidad').select2('val', 0);
                         });
                     } else if (respuesta == 13) {
                         window.parent.bootbox.alert("La Cédula se encuentra Registrada", function() {
@@ -236,7 +243,9 @@ $(document).ready(function() {
                                         $("#tabla_choferes tbody tr:eq(" + fila + ")").find("td:eq(3)").html(telefonos);
                                         $('input[type="text"]').val('');
                                         $('#cod_telefono,#cod_celular').select2('val', 0);
-                                        $('#nacionalidad').select2('val', 1);
+                                        $('#nacionalidad').select2('val', 0);
+                                        
+                                        $('#guardar').text('Guardar');
                                     });
                                 }
                             });
@@ -278,12 +287,14 @@ $(document).ready(function() {
             // crear el campo fila y añadir la fila
             var $fila = '<input type="hidden" id="fila"  value="' + fila + '" name="fila">';
             $($fila).prependTo($('#frmchoferes'));
-            var $cedula = '<input type="hidden" id="cedula"  value="' + cedula + '" name="cedula">';
-            $($cedula).appendTo($('#frmchoferes'));
+            
+//            var $cedula = '<input type="hidden" id="cedula"  value="' + cedula + '" name="cedula">';
+//            $($cedula).appendTo($('#frmchoferes'));
         });
     });
+    
+    
     /********Proceso de eliminacion por construir*************/
-
     // proceso de eliminacion
     $('table#tabla_choferes').on('click', 'img.eliminar', function() {
         $('#cedula').val(cedula);

@@ -11,9 +11,8 @@ $(document).ready(function() {
             {"sClass": "center", "sWidth": "10%"},
             {"sClass": "center", "sWidth": "30%"},
             {"sClass": "center", "sWidth": "8%"},
-            {"sClass": "center", "sWidth": "35%"},
-            {"sClass": "center", "sWidth": "20%"},
-            {"sWidth": "4%", "bSortable": false, "sClass": "center sorting_false", "bSearchable": false}
+            {"sClass": "center", "sWidth": "30%"},
+            {"sClass": "center", "sWidth": "35%"}            
         ]
     });
 
@@ -45,7 +44,7 @@ $(document).ready(function() {
     });
 
     $contextMenu.on("click", "span", function() {
-        var url = 'vista/registros/ver_datos_representante.php';
+        var url = 'vista/procesos/ver_datos_preinscripcion.php';
         parent.$.fancybox.open({
             'autoScale': false,
             height: '680px',
@@ -165,7 +164,7 @@ $(document).ready(function() {
                         var nombres       = $('#nombre').val();
                         var telefono      = $('#telefono').val();
                         var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
-                        var newRow = TPreinscrip.fnAddData([$check_cedula, $('#num_registro').val(), cedula, nombres, $('#sexo').val(), telefono, fecha,modificar]);
+                        var newRow = TPreinscrip.fnAddData([$check_cedula, $('#num_registro').val(), cedula, nombres, $('#sexo').val(), telefono, fecha]);
                         
                         // Agregar el id a la fila estado
                         var oSettings = TPreinscrip.fnSettings();

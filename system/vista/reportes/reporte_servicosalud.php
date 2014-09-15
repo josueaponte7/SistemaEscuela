@@ -31,7 +31,7 @@ class MyClass extends TCPDF
 
 }
 
-$campos['condicion'] = 1 .' AND condicion=1';
+
 $id_condicion        = 'sp.id_servicio';
 if (isset($_GET['id'])) {
     $id                  = $_GET['id'];
@@ -46,11 +46,10 @@ $obj           = new ServicioSalud();
                         FROM servicio_publico sp 
                         INNER JOIN codigo_telefono ct ON (sp.cod_telefono = ct.id) 
                         INNER JOIN tiposervicio ts ON (sp.id_tiposervicio = ts.id_tiposervicio)
-                    WHERE " . $campos['condicion'] . "
                   ORDER BY sp.id_servicio;";
 
 $resultado = $obj->getServicio($campos);
-$total     = $obj->totalFilas('servicio_publico AS sp', 'sp.id_servicio',$campos['condicion']);
+$total     = $obj->totalFilas('servicio_publico AS sp', 'sp.id_servicio');
 
 $pdf = new MyClass("L", "mm", "A4", true, 'UTF-8', false);
 

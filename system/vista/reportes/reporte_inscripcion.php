@@ -7,12 +7,12 @@ require_once './tcpdf/MyClass.php';
 $campos['condicion'] = 1;
 $cedula_condicion = 'i.cedula_estudiante'; 
 if(isset($_GET['cedula'])){
-    $cedula_estudiante = $_GET['cedula_estudiante'];
+    $cedula_estudiante = $_GET['cedula'];
     $campos['condicion'] = " $cedula_condicion IN($cedula_estudiante)";
 }
 
 $obj = new Inscripcion();
-$campos['sql'] = "SELECT
+$opciones['sql'] = "SELECT
                     CONCAT_WS('-' ,(SELECT nombre FROM nacionalidad WHERE id_nacionalidad = e.nacionalidad),e.cedula) AS cedula,
                     CONCAT_WS(' ',e.nombre,e.apellido) AS nombre,
                     i.tipo,
@@ -24,10 +24,10 @@ $campos['sql'] = "SELECT
                     WHERE " . $campos['condicion'] . "
                     ORDER BY i.cedula_estudiante";
 
-$resultado  = $obj->getInscritos($campos);
+$resultado  = $obj->getInscritosReport($opciones);
 
 //total de registros a mostrar en el reporte
-$total     = $obj->totalFilas('inscripcion AS i', 'i.cedula_estudiante',$campos['condicion']);
+$total = count($resultado);
 
 $pdf = new MyClass("P", "mm", "A4", true, 'UTF-8', false);
 
@@ -53,13 +53,14 @@ $titulo = "LISTADO DE INSCRIPCIÓN";
 $pdf->Ln(5);
 $pdf->SetX(60);
 // fuente y tamaño de letra 
-$pdf->SetFont('FreeSerif', 'B', 12);
+//////$pdf->SetFont('FreeSerif', 'B', 12);
+//$pdf->SetFont('FreeSerif', '', 12);
 // añadimos el titulo
+$pdf->SetFont('Times','B',12);
 $pdf->Cell(90, 0, $titulo, 0, 0, 'C', 0);
 $pdf->Ln(15);
 
 /* * ********************************** */
-
 
 
 $j            = 0;
@@ -72,8 +73,8 @@ $backup_group = "";
 // width de las filas 
 
 $w_cedula   = 25;
-$w_nombre   = 38;
-$w_tipo = 30;
+$w_nombre   = 50;
+$w_tipo = 35;
 $w_anio = 25;
 $w_actividad = 25;
 $w_fecha_inscripcion= 35;
@@ -85,7 +86,7 @@ $pdf->SetX(10);
 $pdf->SetFillColor(39, 129, 213);
 
 // Titulos de la Cabecera
-$pdf->SetFont('FreeSerif', 'B', 11);
+
 $pdf->MultiCell($w_cedula, $row_height, 'Cédula', 1,  'C',1, 0);
 $pdf->MultiCell($w_nombre, $row_height, 'Estudiante', 1,  'L', 1,0);
 $pdf->MultiCell($w_tipo, $row_height, 'Tipo Estudiante', 1, 'L', 1,0);
@@ -95,7 +96,7 @@ $pdf->MultiCell($w_fecha_inscripcion, $row_height, 'Fecha Inscripción', 1, 'L',
 
 
 // Ciclo para crear los registros
-for ($i = 0; $i < count($resultado); $i++) {
+for ($i = 0; $i < $total; $i++) {
 
     // Asignarle variables a los registros
     $cedula    = $resultado[$i]['cedula'];
@@ -117,7 +118,7 @@ for ($i = 0; $i < count($resultado); $i++) {
         /*         * ****Imagen del logo de las hojas que continua***** */
         $pdf->Image('imagenes/logo.png', 3, 18, 45, 15, 'PNG', FALSE);
         // Tipo de letra negrita tamaño 14
-        $pdf->SetFont('FreeSerif', 'B', 11);
+        $pdf->SetFont('Times', '', 10);
 
         $pdf->SetX(60);
         // Titulo del Reporte width:90 heigth:0 text:$titulo alineacion:C
@@ -137,7 +138,7 @@ for ($i = 0; $i < count($resultado); $i++) {
     }
 
     $pdf->SetFillColor(255, 255, 255);
-    $pdf->SetFont('FreeSerif', '', 12);
+    $pdf->SetFont('Times', '', 12);
     if ($i % 2 != 0) {
         $pdf->SetFillColor(204, 205, 206);
     }
@@ -148,7 +149,7 @@ for ($i = 0; $i < count($resultado); $i++) {
       } */
 
     // crear los registros a mostrar
-    $pdf->SetFont('FreeSerif', '', 10);
+    $pdf->SetFont('Times', '', 10);
     $pdf->SetX(10);
     $pdf->MultiCell($w_cedula, 10, $cedula, 1,  'C', 1,0);
     $pdf->MultiCell($w_nombre, 10, $nombre, 1, 'L', 1,0);
@@ -167,7 +168,7 @@ $pdf->SetX(10);
 $pdf->Cell(0, 0, $linea, 0, 0, 'L', 0);
 $pdf->Ln(5);
 //$pdf->Write(14, 'Registros:' . '' . $h);
-$pdf->SetFont('FreeSerif', '', 10);
+$pdf->SetFont('Times', '', 10);
 $registros = 'Total de Registros:<span style="color:#FF0000;">' . $total . '</span>';
 $pdf->writeHTML($registros, true, false, true, false, 'R');
 $pdf->Output('listado_inscripcion.pdf', 'I');

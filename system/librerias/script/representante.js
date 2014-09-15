@@ -199,10 +199,10 @@ $(document).ready(function() {
             $("input:checkbox[name='cedula[]']:checked", nodes).each(function() {
                 var $chkbox = $(this);
                 var $actualrow = $chkbox.closest('tr');
-                var cedulas = $actualrow.find('td:eq(1)').text()
+                var cedulas = $actualrow.find('td:eq(1)').text();
                 checkboxValues += cedulas.substr(2) + ',';
-
             });
+            
             checkboxValues = checkboxValues.substring(0, checkboxValues.length - 1);
             url = url + '?cedulas=' + checkboxValues;
         }
@@ -301,8 +301,7 @@ $(document).ready(function() {
             var eliminar  = '<img class="eliminar" src="../../imagenes/delete.png" title="Eliminar" style="cursor: pointer"  width="18" height="18"  alt="Eliminar"/>';
 
             var cod_telefono = $('#cod_telefono').find(' option').filter(":selected").text();
-            var cod_celular  = $('#cod_celular').find(' option').filter(":selected").text();
-            
+            var cod_celular  = $('#cod_celular').find(' option').filter(":selected").text();            
             
             var telefonos = "";
             if($cod_telefono > 0 && $cod_celular == 0){
@@ -333,7 +332,6 @@ $(document).ready(function() {
 //                    alert('Registro con Exito');
                             var newRow = TRepresentante.fnAddData([$check_cedula, cedula, nombres, telefonos, estatus, modificar, eliminar]);
 
-
                             // Agregar el id a la fila estado
                             var oSettings = TRepresentante.fnSettings();
                             var nTr = oSettings.aoData[ newRow[0] ].nTr;
@@ -342,7 +340,7 @@ $(document).ready(function() {
                             $('input[type="text"]').val('');
                             $('textarea').val('');
                             $('#estado,#municipio,#parroquia,#estatus,#sexo,#cod_telefono,#cod_celular,#nivel_inst,#profesion').select2('val', 0);
-                            $('#nacionalidad').select2('val', 1);
+                            $('#nacionalidad').select2('val', 0);
                         });
                     }else if (respuesta == 13) {
                         window.parent.bootbox.alert("La Cédula se encuentra Registrada", function() {
@@ -403,7 +401,9 @@ $(document).ready(function() {
                                         $('input[type="text"]').val('');
                                         $('textarea').val('');
                                         $('#estado,#municipio,#parroquia,#estatus,#sexo,#cod_telefono,#cod_celular,#nivel_inst,#profesion').select2('val', 0);
-                                        $('#nacionalidad').select2('val', 1);
+                                        $('#nacionalidad').select2('val', 0);
+                                        
+                                        $('#guardar').text('Guardar');
                                     });
                                 }
                             });
@@ -482,11 +482,8 @@ $(document).ready(function() {
 
             // crear el campo fila y añadir la fila
             var $fila = '<input type="hidden" id="fila"  value="' + fila + '" name="fila">';
-            $($fila).prependTo($('#frmrepresentante'));
-
-            var $cedula = '<input type="hidden" id="cedula"  value="' + cedula + '" name="cedula">';
-            $($cedula).appendTo($('#frmrepresentante'));
-        });
+            $($fila).prependTo($('#frmrepresentante'));  
+        });        
     });
 
     // modificar las funciones de eliminar
@@ -520,7 +517,7 @@ $(document).ready(function() {
                                 //borra la fila de la tabla
                                 TRepresentante.fnDeleteRow(nRow);
 
-                                $('input[type="text"]').val('');
+                                $('input[type="text"]').val('');                                
                             });
 
 
@@ -530,55 +527,12 @@ $(document).ready(function() {
             }
         });
 
-    });
-    
-    // proceso de eliminacion
-    $('table#tabla_docente').on('click', 'img.eliminar', function() {
-        $('#cedula').val(cedula);
-        var padre = $(this).closest('tr');
-
-        // obtener la fila clickeada
-        var nRow = $(this).parents('tr')[0];
-
-        window.parent.bootbox.confirm({
-            message: '¿Desea Eliminar el Registro?',
-            buttons: {
-                'cancel': {
-                    label: 'Cancelar',
-                    className: 'btn-default'
-                },
-                'confirm': {
-                    label: 'Eliminar',
-                    className: 'btn-danger'
-                }
-            },
-            callback: function(result) {
-                if (result) {
-
-                    var cedula = padre.children('td:eq(1)').text();
-                    $.post("../../controlador/Docente.php", {'accion': 'Eliminar', 'cedula': cedula}, function(respuesta) {
-                        if (respuesta == 1) {
-
-                            window.parent.bootbox.alert("Eliminacion con Exito", function() {
-                                //borra la fila de la tabla
-                                TDocente.fnDeleteRow(nRow);
-
-                                $('input[type="text"]').val('');
-                            });
-
-
-                        }
-                    });
-                }
-            }
-        });
-
-    });
-
+    }); 
 
     $('#salir').click(function() {
         $('#registro_erepresentante').slideUp(2000);
         $('#reporte_representante').slideDown(2000);
+        $('select').removeClass('has-error');
         $('input:text').val('');
         $('textarea').val('');
         $('#nacionalidad,#estado,#municipio,#parroquia,#estatus,#sexo,#cod_telefono,#cod_celular,#nivel_inst,#profesion').select2('val', 0);
@@ -592,6 +546,7 @@ $(document).ready(function() {
         $('textarea').val('');
         $('#estado,#municipio,#parroquia,#estatus,#sexo,#cod_telefono,#cod_celular,#nivel_inst,#profesion').select2('val', 0);
         $('#nacionalidad').select2('val', 0);
+        $('select').removeClass('has-error');
         $('#municipio').find('option:gt(0)').remove().end();
         $('#parroquia').find('option:gt(0)').remove().end();
         $('#guardar').text('Guardar');

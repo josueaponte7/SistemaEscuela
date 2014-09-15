@@ -67,7 +67,7 @@ if (isset($_POST['accion'])) {
     }
     switch ($accion) {
         case 'Guardar':
-            $resultado = $obj->add($datos);
+            $resultado = (int)$obj->add($datos);
             if ($resultado == 1) {
                 echo 1;
             } else if ($resultado == 13) {

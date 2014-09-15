@@ -3,6 +3,7 @@ require_once '../../modelo/Representante.php';
 $obj_repre       = new Representante();
 $datos['campos'] = "cedula,CONCAT_WS(' ',nombre,apellido) AS nombres,sexo,IF(cod_telefono='',0,CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = cod_telefono),telefono)) AS telefono, 
 IF(cod_celular='',0,CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = cod_celular),celular)) AS celular";
+$datos['condicion'] ='condicion = 1';
 $resultado       = $obj_repre->getRepresentantes($datos);
 ?>
 <!DOCTYPE html>
@@ -157,17 +158,17 @@ $resultado       = $obj_repre->getRepresentantes($datos);
                             var oSettings = TEstuRepre.fnSettings();
                             var nTr       = oSettings.aoData[ newRow[0] ].nTr;
                             $('td', nTr)[4].setAttribute( 'id', id_parentesco );
+
+                            if(ra_marcado > 0){
+                                nTr.setAttribute('style','color:#FF0000');
+                            }
                             
                             if(ra_marcado > 0){
                                nTr.setAttribute('style','color:red');
-                            }
-                            
+                            }   
 
                         });
                         $iframe.find('table#tbl_repre').css('display', 'block');
-                        var radio_marcado = $iframe.find('table#tbl_repre tbody tr td').find('input:radio:checked');
-                        radio_marcado.closest('tr').css('color','#FF0000');
-   
                         window.parent.$.fancybox.close();
                     }
                 });
@@ -194,6 +195,8 @@ $resultado       = $obj_repre->getRepresentantes($datos);
                         </thead>
                         <tbody>
                             <?php
+                            $es_array                = is_array($resultado) ? TRUE : FALSE;
+                        if ($es_array === TRUE) {
                             for ($i = 0; $i < count($resultado); $i++) {
                                     //$telefonos = "";
                                     $telefono = $resultado[$i]['telefono'];
@@ -205,7 +208,8 @@ $resultado       = $obj_repre->getRepresentantes($datos);
                                         $telefonos = $celular;
                                     }else if($telefono != 0 && $celular != 0){
                                         $telefonos = $telefono.','.$celular;
-                                    } 
+                                    }
+                            
                                 ?>
                                 <tr>
                                     <td id="<?php echo $resultado[$i]['sexo'] ?>"><input type="checkbox" name="repre[]" value="<?php echo $resultado[$i]['cedula'] ?>" /></td>
@@ -225,6 +229,7 @@ $resultado       = $obj_repre->getRepresentantes($datos);
                                 </tr>
                                 <?php
                             }
+                        }
                             ?>
 
                         </tbody>

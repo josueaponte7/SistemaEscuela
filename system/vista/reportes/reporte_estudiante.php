@@ -4,8 +4,9 @@ require_once '../../modelo/Estudiante.php';
 require_once './tcpdf/spa.php';
 require_once './tcpdf/MyClass.php';
 
-$campos['condicion'] = 1;
+$campos['condicion'] = 1 .' AND e.condicion=1';
 $cedula_condicion = 'e.cedula'; 
+
 if(isset($_GET['cedula'])){
     $cedula = $_GET['cedula'];
     $campos['condicion'] = " $cedula_condicion IN($cedula)";
@@ -23,11 +24,12 @@ $campos['sql'] = "SELECT
                     INNER JOIN representante AS r ON(er.cedula_representante=r.cedula AND er.representante=1)
                     WHERE " . $campos['condicion'] . "
                     ORDER BY e.cedula";
-
 $resultado  = $obj->getEstudianterepre($campos);
 
 //total de registros a mostrar en el reporte
-$total     = $obj->totalFilas('estudiante AS e', 'e.cedula',$campos['condicion']);
+//$total     = $obj->totalFilas('estudiante AS e', 'e.cedula',$campos['condicion']);
+
+$total = count($resultado);
 
 $pdf = new MyClass("P", "mm", "A4", true, 'UTF-8', false);
 

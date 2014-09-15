@@ -17,7 +17,7 @@ $d_estudianterep ['sql'] = "SELECT
                             FROM estudiante_representante AS er
                             INNER JOIN estudiante AS e ON(er.cedula_estudiante=e.cedula AND er.representante=1)
                             INNER JOIN representante AS r ON(er.cedula_representante=r.cedula AND er.representante=1)
-                            INNER JOIN estatus_estudiante ee ON e.id_estatus=ee.id_estatus";
+                            INNER JOIN estatus_estudiante ee ON e.id_estatus=ee.id_estatus AND e.condicion=1";
 
 $resul_estudiante = $obj_estudi->getEstudianterepre($d_estudianterep);
 
@@ -34,13 +34,13 @@ $_SESSION['abrir']       = 'registros';
     <head>
         <title>Estudiante</title>
         <meta http-equiv="Content-Type"  content="text/html; charset=UTF-8"> 
-        <link href="../../librerias/css/bootstrap.css" rel="stylesheet" media="screen"/>
-        <link href="../../librerias/css/bootstrap-theme.css" rel="stylesheet" media="screen"/>
-        <link href="../../librerias/css/dataTables.css" rel="stylesheet" media="screen"/>
-        <link href="../../librerias/css/datepicker3.css" rel="stylesheet" media="screen"/> 
-        <link href="../../librerias/css/select2.css" rel="stylesheet" type="text/css" />
+        <link href="../../librerias/css/bootstrap.css"         rel="stylesheet" media="screen"/>
+        <link href="../../librerias/css/bootstrap-theme.css"   rel="stylesheet" media="screen"/>
+        <link href="../../librerias/css/dataTables.css"        rel="stylesheet" media="screen"/>
+        <link href="../../librerias/css/datepicker3.css"       rel="stylesheet" media="screen"/> 
+        <link href="../../librerias/css/select2.css"           rel="stylesheet" type="text/css" />
         <link href="../../librerias/css/select2-bootstrap.css" rel="stylesheet" type="text/css" />
-        <link href="../../librerias/css/estilos.css" rel="stylesheet" media="screen"/>
+        <link href="../../librerias/css/estilos.css"           rel="stylesheet" media="screen"/>
 
         <script type="text/javascript" src="../../librerias/js/jquery.1.10.js"></script>
         <script type="text/javascript" src="../../librerias/js/dataTables.js"></script>
@@ -49,7 +49,6 @@ $_SESSION['abrir']       = 'registros';
         <script type="text/javascript" src="../../librerias/js/validarcampos.js"></script>
         <script type="text/javascript" src="../../librerias/js/bootstrap-datepicker.js"></script>
         <script type="text/javascript" src="../../librerias/js/bootstrap-datepicker.es.js"></script>       
-
         <script type="text/javascript" src="../../librerias/js/select2.js"></script>
         <script type="text/javascript" src="../../librerias/js/select2_locale_es.js"></script> 
         <script type="text/javascript" src="../../librerias/script/estudiante.js"></script> 

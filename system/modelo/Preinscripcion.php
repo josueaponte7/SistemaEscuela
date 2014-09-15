@@ -31,5 +31,20 @@ class Preinscripcion extends Estudiante {
         }
         return $resultado;
     }
+    
+     public function getPreinscricion($opciones = array())
+    {
+
+        if (!isset($opciones['sql'])) {
+            $default    = array('campos' => '*', 'condicion' => '1', 'ordenar' => '1', 'limite' => 200);
+            $opciones   = array_merge($default, $opciones);
+            $this->_sql = "SELECT {$opciones['campos']} FROM pre_inscripcion pr WHERE {$opciones['condicion']} ORDER BY {$opciones['ordenar']} LIMIT {$opciones['limite']}";
+        } else {
+            $this->_sql = $opciones['sql'];
+        }
+        
+        $resultado = $this->consultar_array($this->_sql);
+        return $resultado;
+    }
 
 }

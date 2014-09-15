@@ -25,7 +25,10 @@ $campos['sql'] = "SELECT
                     WHERE e.id_estatus < 3";
 $resultado  = $obj->datos($campos);
 
-$total     = $obj->totalFilas('estudiante AS e', 'e.id_estatus','e.id_estatus < 3');
+//$total     = $obj->totalFilas('estudiante AS e', 'e.id_estatus','e.id_estatus < 3');
+
+//total de registros a mostrar en el reporte
+$total = count($resultado);
 
 $pdf = new MyClass("P", "mm", "A4", true, 'UTF-8', false);
 

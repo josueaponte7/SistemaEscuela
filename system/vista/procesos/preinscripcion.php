@@ -27,7 +27,7 @@ $_SESSION['abrir']       = 'procesos';
 
 $datos              = array();
 $datos['campos']    = "CONCAT_WS('-' ,(SELECT nombre FROM nacionalidad WHERE id_nacionalidad = es.nacionalidad),es.cedula) AS cedula,CONCAT_WS(' ',CONCAT_WS('-' ,(SELECT nombre FROM nacionalidad WHERE id_nacionalidad = es.nacionalidad),es.cedula),es.nombre, es.apellido) AS datos";
-$datos['condicion'] = "id_estatus < 3";
+$datos['condicion'] = "id_estatus < 3 AND condicion=1";
 $resul              = $obj_pre->datos($datos);
 ?>
 
@@ -94,8 +94,7 @@ $resul              = $obj_pre->datos($datos);
                             <th width="150">Nombres</th>
                             <th width="150">Sexo</th>
                             <th width="150">Tel&eacute;fono</th>
-                            <th width="150">Fecha</th>
-                            <th style="width: 5%;text-align: center">Modificar</th>
+                            <th width="150">Fecha</th>                            
                         </tr>
                     </thead>
 
@@ -116,10 +115,6 @@ $resul              = $obj_pre->datos($datos);
                                     <td><?php echo $resultado[$i]['sexo'] ?></td>
                                     <td><?php echo $resultado[$i]['telefonos'] ?></td>
                                     <td><?php echo $resultado[$i]['fecha_actual'] ?></td>
-                                    <td style="text-align: center">
-                                        <img class="modificar" src="../../imagenes/edit.png" title="Modificar" style="cursor: pointer"  width="18" height="18" alt="Modificar"/>
-                                    </td>
-                                    
                                 </tr>
                                 <?php
                             }

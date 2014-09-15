@@ -22,7 +22,11 @@ $campos['sql'] = "SELECT
                     WHERE " . $campos['condicion'] . "
                   ORDER BY doc.cedula;";
 $resultado    = $obj->getDocente($campos);
-$total     = $obj->totalFilas('docente AS doc', 'doc.cedula',$campos['condicion']);
+
+//total de registros a mostrar en el reporte
+$total = count($resultado);
+
+//$total     = $obj->totalFilas('docente AS doc', 'doc.cedula',$campos['condicion']);
 
 $pdf = new MyClass("P", "mm", "A4", true, 'UTF-8', false);
 
@@ -48,7 +52,7 @@ $titulo = "LISTADO DE DOCENTES";
 $pdf->Ln(5);
 $pdf->SetX(60);
 // fuente y tamaño de letra 
-$pdf->SetFont('FreeSerif', 'B', 14);
+$pdf->SetFont('FreeSerif', 'B', 12);
 // añadimos el titulo
 $pdf->Cell(90, 0, $titulo, 0, 0, 'C', 0);
 $pdf->Ln(15);
@@ -155,4 +159,3 @@ $pdf->SetFont('FreeSerif', '', 10);
 $registros = 'Total de Registros:<span style="color:#FF0000;">' . $total . '</span>';
 $pdf->writeHTML($registros, true, false, true, false, 'R');
 $pdf->Output('listado_docentes.pdf', 'I');
-

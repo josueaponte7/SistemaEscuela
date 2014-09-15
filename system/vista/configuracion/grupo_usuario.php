@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../../modelo/GrupoUsuario.php';;
+require_once '../../modelo/GrupoUsuario.php';
 $obj_grupoUsu = new GrupoUsuario();
 
 $d_grupoUsu['campos'] = 'gu.id_grupo,  gu.nombre_grupo';

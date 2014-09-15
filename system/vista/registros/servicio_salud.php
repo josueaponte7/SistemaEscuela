@@ -13,7 +13,6 @@ $d_serviciosa['sql'] = "SELECT sp.id_servicio, sp.servicio,
                         FROM servicio_publico sp 
                         INNER JOIN codigo_telefono ct ON (sp.cod_telefono = ct.id) 
                         INNER JOIN tiposervicio ts ON (sp.id_tiposervicio = ts.id_tiposervicio) 
-                        WHERE sp.condicion=1
                         ORDER BY sp.id_servicio";
 
 $resul_serviciosa = $obj_salud->getServicio($d_serviciosa);

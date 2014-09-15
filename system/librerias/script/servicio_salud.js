@@ -16,9 +16,7 @@ $(document).ready(function() {
         ]
     });
 
-
     $('#tiposervicio,#estado,#municipio,#parroquia,#cod_telefono').select2();
-
 
     $('.modificar').tooltip({
         html: true,
@@ -30,7 +28,6 @@ $(document).ready(function() {
         placement: 'top',
         title: 'Eliminar'
     });
-
 
     var numero = '0123456789';
     $('#telefono').validar(numero);
@@ -171,7 +168,6 @@ $(document).ready(function() {
                 $.post("../../controlador/ServicioSalud.php", $("#frmservicio_salud").serialize(), function(respuesta) {
                     if (respuesta == 1) {
 
-
                         window.parent.bootbox.alert("Registro con Exito", function() {
                             // Agregar los datos a la tabla
                             var newRow = TServiciosalud.fnAddData([$check_servicio, codigo, $('#servicio').val(), tiposervicio, telefono, modificar, eliminar]);
@@ -181,6 +177,18 @@ $(document).ready(function() {
 
                             $('input[type="text"]').val('');
                             $('#tiposervicio,#estado,#municipio,#parroquia,#cod_telefono,#cod_celular').select2('val', 0);
+                            $('#municipio').find('option:gt(0)').remove().end();
+                            $('#parroquia').find('option:gt(0)').remove().end();
+                        });
+                    }else if (respuesta == 13) {
+                        window.parent.bootbox.alert("El Centro Salud ya esta Registrado", function() {
+                            window.parent.scrollTo(0, 300);
+                            $('#div_servicio').addClass('has-error');
+                            $('#servicio').focus().select();
+                        });
+                    }else {
+                        window.parent.bootbox.alert("Ocurrio un error comuniquese con informatica", function() {
+
                         });
                     }
                 });
@@ -219,6 +227,10 @@ $(document).ready(function() {
 
                                         $('input[type="text"]').val('');
                                         $('#tiposervicio,#estado,#municipio,#parroquia,#cod_telefono,#cod_celular').select2('val', 0);
+                                        $('#municipio').find('option:gt(0)').remove().end();
+                                        $('#parroquia').find('option:gt(0)').remove().end();
+                                        
+                                        $('#guardar').text('Guardar');
                                     });
                                 }
                             });
@@ -232,6 +244,7 @@ $(document).ready(function() {
     $('table#tabla_salud').on('click', 'img.modificar', function() {
 
         // borra el campo fila
+        $('#id_servicio').remove();
         $('#fila').remove();
         var padre = $(this).closest('tr');
         var id_servicio = padre.children('td:eq(1)').text();
@@ -244,7 +257,6 @@ $(document).ready(function() {
         var fila = padre.index();
 
         $('#guardar').text('Modificar');
-
 
 //        $('#cedula').val(cedula).prop('disabled',true);
         $('#servicio').val(servicio);
@@ -297,7 +309,7 @@ $(document).ready(function() {
     // proceso de eliminacion
     
     $('table#tabla_salud').on('click', 'img.eliminar', function() {
-        $('#id_estado').remove();
+        $('#id_servicio').remove();
         var padre = $(this).closest('tr');
 
         // obtener la fila clickeada

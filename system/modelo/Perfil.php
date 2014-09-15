@@ -9,18 +9,31 @@ class Perfil extends Seguridad {
     }
 
     public function add($datos) {
-        $nombre_usuario       = $datos['nombre_usuario'];
-        $nombre               = $datos['nombre'];
-        $apellido             = $datos['apellido'];
-        $email                = $datos['email'];
-        $grupo_usuario        = $datos['grupo_usuario'];
-        $contrasena           = $datos['contrasena'];
-        $confirmar_contrasena = $datos['confirmar_contrasena'];
 
-       echo  $sql             = "INSERT INTO perfil(nombre_usuario, nombre, apellido, email, grupo_usuario, contrasena, confirmar_contrasena)VALUES ('$nombre_usuario','$nombre', '$apellido', '$email', '$grupo_usuario', MD5('$contrasena'), '$confirmar_contrasena');";
+       $id_perfil = $datos['id_perfil'];
+       $id_grupo  = $datos['grupo_usuario'];
+       $menu_comb = $datos['menu_comb'];
+       $sub_menu  = $datos['sub_menu'];
+       $registrar = $datos['registrar'];
+       $modificar = $datos['modificar'];
+       $eliminar  = $datos['eliminar'];
+       $consultar = $datos['consultar'];
+       $imprimir  = $datos['imprimir'];
+       
+       echo  $sql             = "INSERT INTO perfil(id_perfil,id_grupo,id_submenu,registrar,modificar,eliminar,consultar,imprimir)
+               VALUES($id_perfil,$id_grupo,$sub_menu,$registrar,$modificar,$eliminar,$consultar,$imprimir);";
        exit;
        $resultado       = $this->ejecutar($sql);
         return $resultado;
     }
+    
+    public function getPerfil($opciones=array()) {
+
+        $default = array('campos'=> '*','condicion' => '1','ordenar'   => '1','limite'    => 200);
+        $opciones = array_merge($default, $opciones);
+        $sql = "SELECT {$opciones['campos']} FROM perfil  WHERE {$opciones['condicion']} ORDER BY {$opciones['ordenar']} LIMIT {$opciones['limite']} ";
+        $resultado = $this->consultar_array($sql);
+        return $resultado;
+    } 
 
 }

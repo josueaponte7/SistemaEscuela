@@ -56,19 +56,18 @@ if (isset($_SESSION['archivo_sys']) && isset($_SESSION['dir_sys'])) {
         $abrir_rep  = '';
         $abrir_mant = 'in';
         $abrir_conf = '';
-    }else if ($abrir == 'configuracion') {
+    } else if ($abrir == 'configuracion') {
         $abrir_reg  = '';
         $abrir_pro  = '';
         $abrir_rep  = '';
         $abrir_conf = 'in';
     }
 }
-if($grupo == 2){
+if ($grupo == 2) {
     $abrir_conf = 'in';
-}else if($grupo == 3){
-    $abrir_rep  = 'in';
+} else if ($grupo == 3) {
+    $abrir_rep = 'in';
 }
-
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -78,7 +77,7 @@ if($grupo == 2){
         <link href="librerias/css/bootstrap.css" rel="stylesheet" media="screen"/>
         <link href="librerias/css/estilos.css" type="text/css" rel="stylesheet" media="screen" />
         <link href="librerias/css/jquery.fancybox.css"  rel="stylesheet" type="text/css" media="all" >
-        
+
         <script src="librerias/js/jquery.1.10.js"></script>
         <script type="text/javascript" src="librerias/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="librerias/js/bootbox.min.js"></script>
@@ -98,13 +97,13 @@ if($grupo == 2){
                 $('#cuerpo').css({'height': height});
 
                 $('div.contenido_men_izq ul > li').click(function() {
-                    var $id     = $(this).attr('id');
-                    var ruta    = $id.split("_");
-                    var total   = ruta.length;
-                    var dir     = ruta[0];
+                    var $id = $(this).attr('id');
+                    var ruta = $id.split("_");
+                    var total = ruta.length;
+                    var dir = ruta[0];
                     var archivo = ruta[1];
-                    var clase   = $(this).attr('class');
-                    
+                    var clase = $(this).attr('class');
+
                     if (total == 3) {
                         var archivo = ruta[1] + '_' + ruta[2];
                     }
@@ -127,7 +126,7 @@ if($grupo == 2){
                         var height = '770px';
                         var heightifm = '720px';
 
-                    } else if (archivo == 'usuario' || archivo == 'preinscripcion') {
+                    } else if (archivo == 'usuario' || archivo == 'preinscripcion' || archivo == 'menu' || archivo == 'sub_menu' || archivo == 'perfil') {
                         var height = '700px';
                         var heightifm = '540px';
 
@@ -146,10 +145,10 @@ if($grupo == 2){
                         var height = '1820px';
                         var heightifm = '1720px';
                     }
-                    if(clase == 'reporte'){
-                        var url = 'vista/reportes/'+$id+'.php?todos=1';
+                    if (clase == 'reporte') {
+                        var url = 'vista/reportes/' + $id + '.php?todos=1';
                         window.open(url);
-                    }else{
+                    } else {
                         $('#ifrmcuerpo').attr('src', url);
                         $('#cuerpo').css('height', height);
                         $('#ifrmcuerpo').css('height', heightifm);
@@ -229,100 +228,100 @@ if($grupo == 2){
                 <img src="imagenes/bg_menu_t.png" style="margin-top: -33px; z-index: 0; height: 50px; width: 882px;"/>
                 <div id="menu_boton">
                     <ul>
-                        <?php 
-                        if($grupo == 1){
-                        ?>
+                        <?php
+                        if ($grupo == 1) {
+                            ?>
                             <li>
                                 <span data-toggle="collapse" data-parent="#accordion" href="#registros">REGISTROS</span>
                             </li>
-                        <?php 
+                            <?php
                         }
-                        if($grupo == 1){
-                        ?>
+                        if ($grupo == 1) {
+                            ?>
                             <li>
                                 <span data-toggle="collapse" data-parent="#accordion" href="#procesos">PROCESOS</span>
                             </li>
-                        <?php 
+                            <?php
                         }
-                        if($grupo == 1 || $grupo == 3){
-                        ?>
- 
+                        if ($grupo == 1 || $grupo == 3) {
+                            ?>
+
                             <li>
                                 <span data-toggle="collapse" data-parent="#accordion" href="#reportes">REPORTES</span>
                             </li>
-                        <?php 
+                            <?php
                         }
                         ?>
-                            <li>
-                                <span data-toggle="collapse" data-parent="#accordion" href="#mantenimiento">Mantenimiento</span>
-                            </li>
-                        <?php
-                        if($grupo == 2){
-                        ?>
                         <li>
-                            <span data-toggle="collapse" data-parent="#accordion" href="#configuracion">CONFIGURACI&Oacute;N</span>
+                            <span data-toggle="collapse" data-parent="#accordion" href="#mantenimiento">MANTENIMIENTO</span>
                         </li>
-                        <?php 
-                            }
+                        <?php
+                        if ($grupo == 2) {
+                            ?>
+                            <li>
+                                <span data-toggle="collapse" data-parent="#accordion" href="#configuracion">CONFIGURACI&Oacute;N</span>
+                            </li>
+                            <?php
+                        }
                         ?>
                     </ul>
                 </div>
             </div>
             <div id="cuerpo">
                 <div id="sidebar-izquierdo">
-                    <?php 
-                    if($grupo == 1){
-                    ?>
-                    <div class="menu_izquierdo panel-title" data-toggle="collapse" data-parent="#accordion" href="#registros" style="margin-top: 40px;">Registros</div>
-                    <div id="registros" class="panel-collapse collapse <?php echo $abrir_reg ?>">
-                        <div class="panel-body">
-                            <div class="contenido_men_izq">
-                                <ul  style="list-style-type:none;">
-                                    <li id="registros_representante">Representantes</li>
-                                    <li id="registros_estudiante" >Estudiantes</li>                                   
-                                    <li id="registros_docente">Docentes</li>
-                                    <li id="registros_choferes">Choferes</li>
-                                    <li id="registros_servicio_salud">Servicios de Salud</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>  
-                    <?php 
-                    }
-                    if($grupo == 1){
-                    ?>
-                    <div class="menu_izquierdo panel-title" data-toggle="collapse" data-parent="#accordion" href="#procesos" style="margin-top: 8px;">Procesos</div>
-                    <div id="procesos" class="panel-collapse collapse <?php echo $abrir_pro ?>">
-                        <div class="panel-body">
-                            <div class="contenido_men_izq">
-                                <ul  style="list-style-type:none;">
-                                    <li id="procesos_preinscripcion">Pre-Inscripci&oacute;n</li>
-                                    <li id="procesos_inscripcion">Inscripci&oacute;n</li>                                   
-                                </ul>
-                            </div> 
-                        </div>
-                    </div>
                     <?php
+                    if ($grupo == 1) {
+                        ?>
+                        <div class="menu_izquierdo panel-title" data-toggle="collapse" data-parent="#accordion" href="#registros" style="margin-top: 40px;">Registros</div>
+                        <div id="registros" class="panel-collapse collapse <?php echo $abrir_reg ?>">
+                            <div class="panel-body">
+                                <div class="contenido_men_izq">
+                                    <ul  style="list-style-type:none;">
+                                        <li id="registros_representante">Representantes</li>
+                                        <li id="registros_estudiante" >Estudiantes</li>                                   
+                                        <li id="registros_docente">Docentes</li>
+                                        <li id="registros_choferes">Choferes</li>
+                                        <li id="registros_servicio_salud">Servicios de Salud</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>  
+                        <?php
                     }
-                    if($grupo == 1 || $grupo == 3){
-                    ?>
-                    
-                    <div class="menu_izquierdo panel-title" data-toggle="collapse" data-parent="#accordion" href="#reportes" style="margin-top: 8px;">Reportes</div>
-                    <div id="reportes" class="panel-collapse collapse <?php echo $abrir_rep ?>">
-                        <div class="panel-body">
-                            <div class="contenido_men_izq">
-                                <ul  style="list-style-type:none;">
-                                    <li id="reporte_inscripcion" class="reporte">Inscripci&oacute;n</li>
-                                    <li id="reporte_preinscripcion" class="reporte">Pre-Inscripci&oacute;n</li> 
-                                    <li id="reporte_estudiante" class="reporte">Estudiante</li>                                                
-                                    <li id="reporte_docente" class="reporte">Docente</li>
-                                    <li id="listado_representante" class="reporte">Representantes</li> 
-                                    <li id="reporte_chofer" class="reporte">Choferes</li> 
-                                </ul>
+                    if ($grupo == 1) {
+                        ?>
+                        <div class="menu_izquierdo panel-title" data-toggle="collapse" data-parent="#accordion" href="#procesos" style="margin-top: 8px;">Procesos</div>
+                        <div id="procesos" class="panel-collapse collapse <?php echo $abrir_pro ?>">
+                            <div class="panel-body">
+                                <div class="contenido_men_izq">
+                                    <ul  style="list-style-type:none;">
+                                        <li id="procesos_preinscripcion">Pre-Inscripci&oacute;n</li>
+                                        <li id="procesos_inscripcion">Inscripci&oacute;n</li>                                   
+                                    </ul>
+                                </div> 
                             </div>
                         </div>
-                    </div>
-                    <?php 
+                        <?php
+                    }
+                    if ($grupo == 1 || $grupo == 3) {
+                        ?>
+
+                        <div class="menu_izquierdo panel-title" data-toggle="collapse" data-parent="#accordion" href="#reportes" style="margin-top: 8px;">Reportes</div>
+                        <div id="reportes" class="panel-collapse collapse <?php echo $abrir_rep ?>">
+                            <div class="panel-body">
+                                <div class="contenido_men_izq">
+                                    <ul  style="list-style-type:none;">
+                                        <li id="reporte_inscripcion" class="reporte">Inscripci&oacute;n</li>
+                                        <li id="reporte_preinscripcion" class="reporte">Pre-Inscripci&oacute;n</li> 
+                                        <li id="reporte_estudiante" class="reporte">Estudiante</li>                                                
+                                        <li id="reporte_docente" class="reporte">Docente</li>
+                                        <li id="listado_representante" class="reporte">Representantes</li> 
+                                        <li id="reporte_chofer" class="reporte">Choferes</li> 
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
                     }
                     ?>
                     <div class="menu_izquierdo panel-title" data-toggle="collapse" data-parent="#accordion" href="#mantenimiento" style="margin-top: 8px;">Mantenimiento</div>
@@ -347,24 +346,24 @@ if($grupo == 2){
                             </div>
                         </div>
                     </div>
-                    <?php 
-                    if($grupo == 2){
-                    ?>
-                    <div class="menu_izquierdo panel-title" data-toggle="collapse" data-parent="#accordion" href="#configuracion" style="margin-top: 8px;">Configuraci&oacute;n</div>
-                    <div id="configuracion" class="panel-collapse collapse <?php echo $abrir_conf ?>">
-                        <div class="panel-body">
-                            <div class="contenido_men_izq">
-                                <ul  style="list-style-type:none;">
-									<li id="configuracion_grupo_usuario">Grupos de Usuarios</li>                                                                      
-                                    <li id="configuracion_privilegios">Privilegios</li>
-									<li id="configuracion_usuario">Usuarios</li>  
-									<li id="configuracion_menu">Menu</li>
-									<li id="configuracion_submenu">Sub Menu</li>
-                                </ul>
+                    <?php
+                    if ($grupo == 2) {
+                        ?>
+                        <div class="menu_izquierdo panel-title" data-toggle="collapse" data-parent="#accordion" href="#configuracion" style="margin-top: 8px;">Configuraci&oacute;n</div>
+                        <div id="configuracion" class="panel-collapse collapse <?php echo $abrir_conf ?>">
+                            <div class="panel-body">
+                                <div class="contenido_men_izq">
+                                    <ul  style="list-style-type:none;">
+                                        <li id="configuracion_grupo_usuario">Grupos de Usuarios</li> 
+                                        <li id="configuracion_usuario">Usuarios</li>
+                                        <li id="configuracion_menu">Men&uacute;</li>
+                                        <li id="configuracion_sub_menu">Sub Men&uacute;</li>
+                                        <li id="configuracion_perfil">Perfil</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <?php 
+                        <?php
                     }
                     ?>
                 </div>

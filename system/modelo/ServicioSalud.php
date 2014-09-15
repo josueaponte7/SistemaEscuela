@@ -25,7 +25,7 @@ class ServicioSalud extends Seguridad {
         return $resultado;
     }
 
-    public function update($datos) {
+    public function update ($datos){
 
         $id_servicio  = $datos['id_servicio'];
         $servicio     = $datos['servicio'];
@@ -50,7 +50,7 @@ class ServicioSalud extends Seguridad {
     {
 
         $id_servicio = $datos['id_servicio'];
-        $sql = "UPDATE servicio_publico SET  condicion = 0 WHERE id_servicio = $id_servicio;";
+        $sql = "DELETE FROM servicio_publico WHERE id_servicio = '$id_servicio';";
 
         $resultado = $this->ejecutar($sql);
         return $resultado;

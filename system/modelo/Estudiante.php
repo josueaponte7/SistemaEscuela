@@ -39,7 +39,7 @@ class Estudiante extends Seguridad
         if ($total > 0) {
             $resultado = 13;
         } else {
-            $sql = "INSERT INTO estudiante(nacionalidad,cedula, nombre, apellido, email, fech_naci, lugar_naci, sexo, id_parroquia, calle, casa, edificio,
+       $sql = "INSERT INTO estudiante(nacionalidad,cedula, nombre, apellido, email, fech_naci, lugar_naci, sexo, id_parroquia, calle, casa, edificio,
                                        barrio, cod_telefono, telefono, cod_celular, celular,id_estatus)
                      VALUES ('$nacionalidad','$cedula', '$nombre', '$apellido', '$email', '$fech_naci', '$lugar_naci', '$sexo', '$id_parroquia', '$calle',
                              '$casa', '$edificio', '$barrio', '$cod_telefono', '$telefono', '$cod_celular', '$celular',$id_estatus);";
@@ -50,8 +50,9 @@ class Estudiante extends Seguridad
                 for ($i = 0; $i < count($representantes); $i++) {
                     $datos_repre = explode(";", $representantes[$i]);
 
-                    $sql = "INSERT INTO estudiante_representante(cedula_estudiante,cedula_representante,parentesco,representante)
+                   $sql = "INSERT INTO estudiante_representante(cedula_estudiante,cedula_representante,parentesco,representante)
                               VALUES ($cedula,$datos_repre[0],$datos_repre[1],$datos_repre[2]);";
+          
                     $this->ejecutar($sql);
                 }
             }
@@ -137,7 +138,8 @@ class Estudiante extends Seguridad
                           WHERE cedula=$cedula";
         $result = $this->datos($sql_es);
         $da= $result[0];
-        $dat =   $da['nombre'].';'
+        $dat =   $da['nacionalidad'].';'
+                .$da['nombre'].';'
                 .$da['apellido'].';'
                 .$da['sexo'].';'
                 .$da['fech_naci'].';'
@@ -281,6 +283,18 @@ class Estudiante extends Seguridad
                 }
             }
         
+        return $resultado;
+    }
+    
+    public function delete($datos)
+    {
+
+        $dat_cedula = explode('-', $datos['cedula']);
+        $cedula     = $dat_cedula[1];
+
+        $sql = "UPDATE estudiante SET  condicion = 0 WHERE cedula = $cedula;";
+
+        $resultado = $this->ejecutar($sql);
         return $resultado;
     }
 

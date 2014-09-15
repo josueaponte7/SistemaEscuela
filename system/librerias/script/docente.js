@@ -302,14 +302,13 @@ $(document).ready(function() {
                         window.parent.bootbox.alert("Registro con Exito", function() {
                             // Agregar los datos a la tabla
                             var nacionalidad = $('#nacionalidad').find(' option').filter(":selected").text();
-                            var cedula = nacionalidad + '-' + $('#cedula').val();
-                            
+                            var cedula = nacionalidad + '-' + $('#cedula').val();                            
                             
                             var nacionalidad = $('#nacionalidad').find(' option').filter(":selected").text();
                             var cedula = nacionalidad + '-' + $('#cedula').val();
                             var nombres = $('#nombre').val() + ' ' + $('#apellido').val();
-                            var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
                             
+                            var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';                            
                             
                             var newRow = TDocente.fnAddData([$check_cedula, cedula, $('#nombre').val(), $('#apellido').val(), actividad, modificar, eliminar]);
 
@@ -324,7 +323,7 @@ $(document).ready(function() {
                             $('textarea').val('');
                             $('#estado,#municipio,#parroquia,#estatus,#sexo,#cod_telefono,#cod_celular').select2('val', 0);
                             $('#municipio,#parroquia').find('option:gt(0)').remove().end();
-                            $('#nacionalidad').select2('val', 1);
+                            $('#nacionalidad').select2('val', 0);
                         });
                     } else if (respuesta == 13) {
                         window.parent.bootbox.alert("La Cédula se encuentra Registrada", function() {
@@ -386,7 +385,9 @@ $(document).ready(function() {
                                         $('textarea').val('');
                                         $('#estado,#municipio,#parroquia,#estatus,#sexo,#cod_telefono,#cod_celular,#actividad').select2('val', 0);
                                         $('#municipio,#parroquia').find('option:gt(0)').remove().end();
-                                        $('#nacionalidad').select2('val', 1);
+                                        $('#nacionalidad').select2('val', 0);
+                                        
+                                        $('#guardar').text('Guardar');
                                     });
                                 }
                             });
@@ -468,8 +469,8 @@ $(document).ready(function() {
             var $fila = '<input type="hidden" id="fila"  value="' + fila + '" name="fila">';
             $($fila).prependTo($('#frmdocente'));
 
-            var $cedula = '<input type="hidden" id="cedula"  value="' + cedula + '" name="cedula">';
-            $($cedula).appendTo($('#frmdocente'));
+//            var $cedula = '<input type="hidden" id="cedula"  value="' + cedula + '" name="cedula">';
+//            $($cedula).appendTo($('#frmdocente'));
         });
     });
 

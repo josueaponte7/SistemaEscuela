@@ -4,7 +4,7 @@ require_once '../../modelo/Choferes.php';
 require_once './tcpdf/spa.php';
 require_once './tcpdf/MyClass.php';
 
-$campos['condicion'] = 1 .' AND condicion=1';
+$campos['condicion'] = 1 . ' AND condicion=1';
 $cedula_condicion    = 'ch.cedula';
 if (isset($_GET['cedula'])) {
 
@@ -12,7 +12,7 @@ if (isset($_GET['cedula'])) {
     $campos['condicion'] = " $cedula_condicion IN($id)";
 }
 
-$obj      = new Choferes();
+$obj           = new Choferes();
 $campos['sql'] = "SELECT 
                          CONCAT_WS('-' ,(SELECT nombre FROM nacionalidad WHERE id_nacionalidad = ch.nacionalidad),ch.cedula) AS cedula,
                          CONCAT_WS(' ',ch.nombre,ch.apellido) AS nombres,
@@ -22,7 +22,7 @@ $campos['sql'] = "SELECT
                     WHERE " . $campos['condicion'] . "
                   ORDER BY ch.cedula;";
 $resultado     = $obj->getChofer($campos);
-$total     = $obj->totalFilas('chofer AS ch', 'ch.cedula',$campos['condicion']);
+$total         = $obj->totalFilas('chofer AS ch', 'ch.cedula', $campos['condicion']);
 
 $pdf = new MyClass("P", "mm", "A4", true, 'UTF-8', false);
 
@@ -66,7 +66,7 @@ $backup_group = "";
 
 // width de las filas 
 
-$w_cedula   = 50;
+$w_cedula    = 50;
 $w_nombres   = 60;
 $w_telefonos = 60;
 
@@ -87,12 +87,12 @@ $pdf->Cell($w_telefonos, $row_height, 'Teléfonos', 1, 1, 'C', 1);
 for ($i = 0; $i < count($resultado); $i++) {
 
     // Asignarle variables a los registros
-    $cedula    = $resultado[$i]['cedula'];
-    $nombres   = $resultado[$i]['nombres'];
-    $telefono  = $resultado[$i]['telefono'];
-    $celular   = $resultado[$i]['celular'];
-    
-    
+    $cedula   = $resultado[$i]['cedula'];
+    $nombres  = $resultado[$i]['nombres'];
+    $telefono = $resultado[$i]['telefono'];
+    $celular  = $resultado[$i]['celular'];
+
+
     if ($telefono != 0 && $celular == 0) {
         $telefonos = $telefono;
     } else if ($celular != 0 && $telefono == 0) {

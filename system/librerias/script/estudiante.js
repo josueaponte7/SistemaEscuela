@@ -43,7 +43,7 @@ $(document).ready(function() {
     $('#nacionalidad,#sexo').select2({
         minimumResultsForSearch: -1
     });
-    
+
     $('#estado, #municipio, #id_parroquia, #cod_telefono, #cod_celular').select2();
     $('#estatus').select2();
     $('#estatus').select2('val', '1');
@@ -132,7 +132,7 @@ $(document).ready(function() {
     var $contextMenu = $contextMenuEst;
     var cedula = '';
     var url = '';
-    
+
     $("table#tabla_estudiante").on("click", "span.sub-rayar", function(e) {
         $('.dropdown').hide();
         $contextMenu = $contextMenuEst;
@@ -155,7 +155,7 @@ $(document).ready(function() {
         return false;
     });
 
-    
+
     $contextMenuEst.on("click", "span", function() {
 
         var accion = $(this).attr('id');
@@ -183,7 +183,7 @@ $(document).ready(function() {
 
     $contextMenuRep.on("click", "span", function() {
         /*var message = "Cedula:'" + cedula + "'\n"
-        message += "Click:'" + $(this).attr('id') + "'";*/
+         message += "Click:'" + $(this).attr('id') + "'";*/
 
         var accion = $(this).attr('id');
         url = 'vista/registros/ver_datos_representante.php';
@@ -234,18 +234,19 @@ $(document).ready(function() {
             'helpers': {overlay: {closeClick: false}}
         });
     });
-    
-    
-    $('table#tbl_repre tbody').on("click",'tr td span.datos',  function() {
+
+
+    $('table#tbl_repre tbody').on("click", 'tr td span.datos', function() {
         //alert($(this).text());
     });
-    
-    $('table#tbl_repre tbody').on("change","tr td input:radio[name='representant']",  function() {
-        $('table#tbl_repre tbody tr').css('color','#000000');
-        $(this).closest('tr').css('color','#FF0000');
+
+    $('table#tbl_repre tbody').on("change", "tr td input:radio[name='representant']", function() {
+        $('table#tbl_repre tbody tr').css('color', '#000000');
+        $(this).closest('tr').css('color', '#FF0000');
     });
+    
     /**Los monta todos***/
-    $('#todos').change(function() {
+    $('#todos').on('change',function() {
         var TotalRow = TEstudiante.fnGetData().length;
         var nodes = TEstudiante.fnGetNodes();
         if (TotalRow > 0) {
@@ -288,6 +289,7 @@ $(document).ready(function() {
                 cedula = cedula.trim();
                 checkboxValues += cedula.substr(2) + ',';
             });
+            
             checkboxValues = checkboxValues.substring(0, checkboxValues.length - 1);
             url = url + '?cedula=' + checkboxValues;
         }
@@ -300,55 +302,57 @@ $(document).ready(function() {
         var chk_counre = $('input:checkbox[name="repre[]"]:checked').length;
         if (!este.is(':checked')) {
             window.parent.bootbox.confirm({
-                        message: '¿Desea Eliminar el Representante?',
-                        buttons: {
-                            'cancel': {
-                                label: 'No',
-                                className: 'btn-default'
-                            },
-                            'confirm': {
-                                label: 'Si',
-                                className: 'btn-danger'
-                            }
-                        },
-                        callback: function(result) {
-                            if (result) {
-                                padre.remove();
-                            }else{
-                                este.prop('checked',true);
-                            }
-                        }
-                    });
+                message: '¿Desea Eliminar el Representante?',
+                buttons: {
+                    'cancel': {
+                        label: 'No',
+                        className: 'btn-default'
+                    },
+                    'confirm': {
+                        label: 'Si',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function(result) {
+                    if (result) {
+                        padre.remove();
+                    } else {
+                        este.prop('checked', true);
+                    }
+                }
+            });
         }
     });
 
     /*****$('table#tbl_repre').on('change', 'input:radio[name="representant"]', function() {
-        var $chkbox = $(this);
-        $('input:checkbox[name="repre[]"]:checked').prop('disabled', false);
-        $('input:radio[name="representant"]:checked').prop('checked', false);
-        $(this).prop('checked', true);
-        if ($(this).is(':checked')) {
-            var $actualrow = $chkbox.closest('tr');
-            var $clonedRow = $actualrow.children('td');
-            $clonedRow.find('input:checkbox[name="repre[]"]:checked').prop('disabled', true);
-        }
-    });******/
+     var $chkbox = $(this);
+     $('input:checkbox[name="repre[]"]:checked').prop('disabled', false);
+     $('input:radio[name="representant"]:checked').prop('checked', false);
+     $(this).prop('checked', true);
+     if ($(this).is(':checked')) {
+     var $actualrow = $chkbox.closest('tr');
+     var $clonedRow = $actualrow.children('td');
+     $clonedRow.find('input:checkbox[name="repre[]"]:checked').prop('disabled', true);
+     }
+     });******/
 
     $('#guardar').click(function() {
-        
-       $('#representantes').remove();
+
+        $('#representantes').remove();
         var checkboxValues = "";
         var selectValues = "";
         var radioValues = "";
         var nombre = "";
+        var ced_repre = "";
         $('input:checkbox[name="repre[]"]:checked').each(function() {
             var $chkbox = $(this);
             var $actualrow = $chkbox.closest('tr');
             var $clonedRow = $actualrow.find('td');
-            var repre      = $clonedRow.eq('4').attr('id');
-            var represen   = $clonedRow.find("input:radio[name='representant']:checked").val();
+            var repre = $clonedRow.eq('4').attr('id');
+            var represen = $clonedRow.find("input:radio[name='representant']:checked").val();
             if (represen == 1) {
-                nombre = $actualrow.find('td:eq(2)').text();
+                ced_repre = $actualrow.find('td:eq(1)').text();
+                nombre    = $actualrow.find('td:eq(2)').text();
             }
             checkboxValues += $chkbox.val() + ';' + repre + ';' + represen + ",";
         });
@@ -360,7 +364,7 @@ $(document).ready(function() {
         $($representantes).appendTo($(this));
 
         var $cod_telefono = $('#cod_telefono').find('option').filter(':selected').val();
-        var $cod_celular  = $('#cod_celular').find('option').filter(':selected').val();
+        var $cod_celular = $('#cod_celular').find('option').filter(':selected').val();
         //window.parent.$("body").animate({scrollTop:0}, 'slow'); 
         var val_correo = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
         var mar_represen = $('input:checkbox[name="repre[]"]:checked').length;
@@ -426,31 +430,42 @@ $(document).ready(function() {
             window.parent.scrollTo(0, 700);
             $('#div_barrio').addClass('has-error');
             $('#barrio').focus();
-        }else if(mar_represen ==0){
+        } else if (mar_represen == 0) {
             window.parent.bootbox.alert("Debe asignar al menos un representante");
         } else {
             $('#accion').val($(this).text());
             var estatus = $('#estatus').find('option').filter(":selected").text();
             var modificar = '<img class="modificar" src="../../imagenes/edit.png" title="Modificar" style="cursor: pointer"  width="18" height="18" alt="Modificar"/>';
             var eliminar = '<img class="eliminar" src="../../imagenes/delete.png" title="Eliminar" style="cursor: pointer"  width="18" height="18"  alt="Eliminar"/>';
-            if($(this).text() == 'Guardar'){
+           
+           var nombres = $('#nombre').val() + ' ' + $('#apellido').val(); 
+           
+            if ($(this).text() == 'Guardar') {
+                
                 $('#estatus').select2("enable", true);
                 $.post("../../controlador/Estudiante.php", $("#frmestudiante").serialize(), function(respuesta) {
-                    
+
                     $('#estatus').select2("enable", false);
                     if (respuesta == 1) {
+                        
                         var nacionalidad = $('#nacionalidad').find('option').filter(":selected").text();
                         var cedula = nacionalidad + '-' + $('#cedula').val();
-                        var $check_cedula = '<input type="checkbox" name="cedula[] " value="' + cedula + '" />';
+                        var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
+
                         window.parent.bootbox.alert("Registro con Exito", function() {
                             cedula = '<span class="sub-rayar tooltip_ced" data-original-title="" title="">' + cedula + '</span>';
+                            
+                            var represe = '<span id="'+ced_repre+'" class="sub-rayar representante" data-original-title="" title="">'+nombre+'</span>';
+                            
+                            
+                            TEstudiante.fnAddData([$check_cedula, cedula, nombres, estatus, represe, modificar, eliminar]);
 
-                            var nombres = $('#nombre').val() + ' ' + $('#apellido').val();
-                            TEstudiante.fnAddData([$check_cedula, cedula, nombres, estatus, nombre, modificar, eliminar]);
                             $('table#tbl_repre').css('display', 'none');
                             TTbl_Repre.fnClearTable();
+
                             $('input[type="text"]').val('');
-                            $('select').select2('val', 0);
+                            $('textarea').val('');
+                            $('select').not('#estatus').select2('val', 0);
                             $('#municipio').find('option:gt(0)').remove().end();
                             $('#id_parroquia').find('option:gt(0)').remove().end();
                         });
@@ -464,9 +479,8 @@ $(document).ready(function() {
                         window.parent.bootbox.alert("Ocurrio un error comuniquese con informatica");
                     }
                 });
-            }else{
-                
-                
+            } else {
+
                 window.parent.bootbox.confirm({
                     message: '¿Desea Modificar los datos del Registro?',
                     buttons: {
@@ -483,15 +497,28 @@ $(document).ready(function() {
                         if (result) {
                             $('#estatus').select2("enable", true);
                             $.post("../../controlador/Estudiante.php", $("#frmestudiante").serialize(), function(respuesta) {
+                                $('#estatus').select2("enable", false);
                                 if (respuesta == 1) {
 
                                     // obtener la fila a modificar
                                     var fila = parseInt($('#fila').val());
 
                                     window.parent.bootbox.alert("Modificacion con Exito", function() {
+
                                         // Modificar la fila 1 en la tabla 
-                                        TEstudiante.fnUpdate( estatus, fila, 3 ); 
-                                        TEstudiante.fnUpdate( nombre, fila, 4 ); 
+                                        TEstudiante.fnUpdate(nombres, fila, 2);
+                                        TEstudiante.fnUpdate(estatus, fila, 3);
+                                        TEstudiante.fnUpdate(nombre, fila, 4);
+
+                                        $('table#tbl_repre').css('display', 'none');
+                                        TTbl_Repre.fnClearTable();
+
+                                        $('input[type="text"]').val('');
+                                        $('textarea').val('');
+                                        $('select').not('#estatus').select2('val', 0);
+                                        $('#municipio').find('option:gt(0)').remove().end();
+                                        $('#id_parroquia').find('option:gt(0)').remove().end();
+                                        $('#guardar').text('Guardar');
 
                                     });
 
@@ -500,117 +527,159 @@ $(document).ready(function() {
                         }
                     }
                 });
-       
+
             }
         }
     });
     $('table#tabla_estudiante').on('click', 'img.modificar', function() {
         // borra el campo fila
- 
+
         $('#fila').remove();
-        var padre     = $(this).closest('tr');
-        var cedula_c  = padre.children('td:eq(1)').text();
-        cedula_c      = cedula_c.trim();
-        var nac       = cedula_c.substring(0,1);
-        var cedula    = cedula_c.substring(2);
-        
+        var padre = $(this).closest('tr');
+        var cedula_c = padre.children('td:eq(1)').text();
+        cedula_c = cedula_c.trim();
+        //var nac = cedula_c.substring(0, 1);
+        //var cedula = cedula_c.substring(2);
+        var dat_cedula = cedula_c.split('-');
+        var cedula = dat_cedula[1];
+
         // obtener la fila a modificar
-        var rowIndex = TEstudiante.fnGetPosition( padre[0] );
+        var rowIndex = TEstudiante.fnGetPosition(padre[0]);
 
         // crear el campo fila y añadir la fila
         var $fila = '<input type="hidden" id="fila"  value="' + rowIndex + '" name="fila">';
         $($fila).prependTo($('#frmestudiante'));
-    
-        $.post("../../controlador/Estudiante.php",{cedula:cedula,accion:'Buscar'}, function(respuesta) {
-            var nac_v = 0;
-            if(nac = 'V'){
-                 nac_v = 1;
-            }else{
-                nac_v = 2;
-            }
-            var datos = respuesta.split(';');
-            $('#nacionalidad').select2('val',nac_v);
+
+        $.post("../../controlador/Estudiante.php", {cedula: cedula, accion: 'Buscar'}, function(respuesta) {
+//            var nac_v = 0;
+//            if (nac = 'V') {
+//                nac_v = 1;
+//            } else {
+//                nac_v = 2;
+//            }
+            var datos = respuesta.split(';');    
+            //$('#nacionalidad').select2('val', nac_v);
+            $('#nacionalidad').select2('val', datos[0]);
             $('#cedula').val(cedula);
-            $('#nombre').val(datos[0]);
-            $('#apellido').val(datos[1]);
-            $('#sexo').select2('val',datos[2]);
-            $('#fech_naci').val(datos[3]);            
-            $('#edad').val(datos[4]);
-            
-            $('#cod_telefono').select2('val',datos[5]);
-            $('#telefono').val(datos[6]);
-            $('#cod_celular').select2('val',datos[7]);
-            $('#celular').val(datos[8]);
-            
-            $('#email').val(datos[9]);            
-            $('#estatus').select2('val',datos[10]);
-            $('#lugar_naci').val(datos[11]);  
-            $('#estado').select2('val',datos[12]);
-       
-            $.post('../../controlador/Municipio.php', {estado: datos[12], accion: 'buscarMun'}, function(respuesta) {
+            $('#nombre').val(datos[1]);
+            $('#apellido').val(datos[2]);
+            $('#sexo').select2('val', datos[3]);
+            $('#fech_naci').val(datos[4]);
+            $('#edad').val(datos[5]);
+
+            $('#cod_telefono').select2('val', datos[6]);
+            $('#telefono').val(datos[7]);
+            $('#cod_celular').select2('val', datos[8]);
+            $('#celular').val(datos[9]);
+
+            $('#email').val(datos[10]);
+            $('#estatus').select2('val', datos[11]);
+            $('#lugar_naci').val(datos[12]);
+            $('#estado').select2('val', datos[13]);
+
+            $.post('../../controlador/Municipio.php', {estado: datos[13], accion: 'buscarMun'}, function(respuesta) {
                 var option = "";
                 $.each(respuesta, function(i, obj) {
                     option += "<option value=" + obj.codigo + ">" + obj.descripcion + "</option>";
                 });
                 $('#municipio').append(option);
-                $('#municipio').select2('val',datos[13]);
+                $('#municipio').select2('val', datos[14]);
             }, 'json');
 
-            $.post('../../controlador/Parroquia.php', {id_municipio: datos[13], accion: 'buscarParr'}, function(respuesta) {
+            $.post('../../controlador/Parroquia.php', {id_municipio: datos[14], accion: 'buscarParr'}, function(respuesta) {
                 var option = "";
                 $.each(respuesta, function(i, obj) {
                     option += "<option value=" + obj.codigo + ">" + obj.descripcion + "</option>";
                 });
+
                 $('#id_parroquia').append(option);
-                $('#id_parroquia').select2('val',datos[14]);
+                $('#id_parroquia').select2('val', datos[15]);
             }, 'json');
-            
-            $('#calle').val(datos[15]);
-            $('#casa').val(datos[16]);
-            $('#edicifio').val(datos[17]);
-            $('#barrio').val(datos[18]);
-            
-            $.post("../../controlador/Estudiante.php",{cedula:cedula,accion:'BuscarRep'}, function(res_rep) {
-                $.each(res_rep,function (i,clave){
-                    var checkbox = '<input type="checkbox" name="repre[]" value="'+clave.cedula+'" checked/>';
+
+            $('#calle').val(datos[16]);
+            $('#casa').val(datos[17]);
+            $('#edicifio').val(datos[18]);
+            $('#barrio').val(datos[19]);
+
+            $.post("../../controlador/Estudiante.php", {cedula: cedula, accion: 'BuscarRep'}, function(res_rep) {
+                $.each(res_rep, function(i, clave) {
+                    var checkbox = '<input type="checkbox" name="repre[]" value="' + clave.cedula + '" checked/>';
                     var marcado = '';
-                    if(clave.representante > 0){
+                    if (clave.representante > 0) {
                         var marcado = 'checked';
                     }
-                    var radio  = '<input  type="radio" class="representant" name="representant" value="1" '+marcado+'/>';
+                    var radio = '<input  type="radio" class="representant" name="representant" value="1" ' + marcado + '/>';
 
-                    var newRow =  TTbl_Repre.fnAddData([checkbox,clave.cedula, clave.nombres,clave.telefonos, clave.parentesco, radio]);
-                    
+                    var newRow = TTbl_Repre.fnAddData([checkbox, clave.cedula, clave.nombres, clave.telefonos, clave.parentesco, radio]);
+
                     var oSettings = TTbl_Repre.fnSettings();
-                    var nTr       = oSettings.aoData[ newRow[0] ].nTr;
-                    $('td', nTr)[4].setAttribute( 'id', clave.id_parentesco );
-                    
-                    if(clave.representante > 0){
-                       nTr.setAttribute('style','color:red');
+                    var nTr = oSettings.aoData[ newRow[0] ].nTr;
+                    $('td', nTr)[4].setAttribute('id', clave.id_parentesco);
+
+                    if (clave.representante > 0) {
+                        nTr.setAttribute('style', 'color:#FF0000');
                     }
-                    
                 });
                 $('table#tbl_repre').css('display', 'block');
-            },'json');
-            
-            
+            }, 'json');
+
             $('#guardar').text('Modificar');
             $('#registro_estudiante').slideDown(2000);
             $('#reporte_estudiante').slideUp(2000);
-        ///$('#limpiar').trigger('click');
-            
+            ///$('#limpiar').trigger('click');
+
         });
-        
+
     });
-    
+
+    // modificar las funciones de eliminar
     $('table#tabla_estudiante').on('click', 'img.eliminar', function() {
-        alert('eeeeee'); 
+        $('#cedula').val(cedula);
+        var padre = $(this).closest('tr');
+
+        // obtener la fila clickeada
+        var nRow = $(this).parents('tr')[0];
+
+        window.parent.bootbox.confirm({
+            message: '¿Desea Eliminar el Registro?',
+            buttons: {
+                'cancel': {
+                    label: 'Cancelar',
+                    className: 'btn-default'
+                },
+                'confirm': {
+                    label: 'Eliminar',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function(result) {
+                if (result) {
+
+                    var cedula = padre.children('td:eq(1)').find('span').text();
+                    $.post("../../controlador/Estudiante.php", {'accion': 'Eliminar', 'cedula': cedula}, function(respuesta) {
+                        if (respuesta == 1) {
+
+                            window.parent.bootbox.alert("Eliminacion con Exito", function() {
+                                //borra la fila de la tabla
+                                TEstudiante.fnDeleteRow(nRow);
+
+                                $('input[type="text"]').val('');
+                            });
+
+
+                        }
+                    });
+                }
+            }
+        });
+
     });
-    
+
     $('#salir').click(function() {
         $('#guardar').text('Guardar');
         $('#registro_estudiante').slideUp(2000);
         $('#reporte_estudiante').slideDown(2000);
+        $('select').removeClass('has-error');
         $('#limpiar').trigger('click');
     });
 
@@ -619,7 +688,8 @@ $(document).ready(function() {
         $('table#tbl_repre').css('display', 'none');
         $('input:text').val('');
         $('textarea').val('');
-        $('select').select2('val', 0);
+        $('select').removeClass('has-error');
+        $('select').not('#estatus').select2('val', 0);
         $('#guardar').text('Guardar');
     });
 

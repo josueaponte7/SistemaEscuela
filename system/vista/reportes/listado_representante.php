@@ -33,8 +33,8 @@ class MyClass extends TCPDF
 
 $campos['condicion'] = 1 .' AND condicion=1';
 $cedula_condicion = 're.cedula'; 
-if(isset($_GET['cedulas'])){
 
+if(isset($_GET['cedulas'])){
     $id = $_GET['cedulas'];
     $campos['condicion'] = " $cedula_condicion IN($id)";
 }
@@ -51,7 +51,11 @@ $campos['sql'] = "SELECT
                   ORDER BY re.cedula";
 
 $resultado  = $obj->getRepresentantes($campos);
-$total     = $obj->totalFilas('representante AS re', 're.cedula',$campos['condicion']);
+
+//total de registros a mostrar en el reporte
+$total = count($resultado);
+
+//$total     = $obj->totalFilas('representante AS re', 're.cedula',$campos['condicion']);
 
 $pdf = new MyClass("L", "mm", "A4", true, 'UTF-8', false);
 
