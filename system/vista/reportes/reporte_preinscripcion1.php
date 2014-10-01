@@ -6,12 +6,8 @@ require_once './tcpdf/MyClass.php';
 
 $campos['condicion'] = 1;
 $id_estatus_condicion = 'e.id_estatus'; 
-
-$codicion = "pr.cedula = e.cedula";
-
 if(isset($_GET['cedula'])){
-   $cedula = $_GET['cedula'];
-   $codicion = " pr.cedula IN($cedula)";
+    $cedula = $_GET['cedula'];
 }
 
 $obj = new Preinscripcion();
@@ -20,13 +16,12 @@ $campos['sql'] = "SELECT
                     CONCAT_WS('-' ,(SELECT nombre FROM nacionalidad WHERE id_nacionalidad = pr.nacionalidad),pr.cedula) AS cedula,
                     CONCAT_WS(' ',e.nombre,e.apellido) AS nombres,
                     se.sexo,
-                    IF(cod_telefono='',0,CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = cod_telefono),telefono)) AS telefono, 
-                    IF(cod_celular='',0,CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = cod_celular),celular)) AS celular,
+                    CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = e.cod_telefono),e.telefono) AS telefonos,
                     DATE_FORMAT(CURRENT_DATE,'%d/%m/%Y' ) AS fecha_actual
                     FROM pre_inscripcion pr
                     INNER JOIN estudiante AS e ON(pr.cedula = e.cedula)
                     INNER JOIN sexo se ON (e.sexo = se.id_sexo)
-                    WHERE e.id_estatus < 3 AND $codicion";
+                    WHERE e.id_estatus < 3 AND pr.cedula=$cedula";
 $resultado  = $obj->datos($campos);
 
 //$total     = $obj->totalFilas('estudiante AS e', 'e.id_estatus','e.id_estatus < 3');
@@ -79,7 +74,7 @@ $w_num_registro   = 40;
 $w_cedula   = 27;
 $w_nombres   = 45;
 $w_sexo = 25;
-$w_telefono = 30;
+$w_telefonos = 30;
 $w_fecha_actual = 32;
 
 
@@ -95,7 +90,7 @@ $pdf->Cell($w_num_registro, $row_height, 'Número Registro', 1, 0, 'C', 1);
 $pdf->Cell($w_cedula, $row_height, 'Cedula', 1, 0, 'C', 1);
 $pdf->Cell($w_nombres, $row_height, 'Nombres', 1, 0, 'L', 1);
 $pdf->Cell($w_sexo, $row_height, 'Sexo', 1, 0, 'L', 1);
-$pdf->Cell($w_telefono, $row_height, 'Teléfonos', 1, 0, 'L', 1);
+$pdf->Cell($w_telefonos, $row_height, 'Teléfonos', 1, 0, 'L', 1);
 $pdf->Cell($w_fecha_actual, $row_height, 'Fecha Actual', 1, 1, 'L', 1);
 
 
@@ -107,18 +102,9 @@ for ($i = 0; $i < count($resultado); $i++) {
     $cedula    = $resultado[$i]['cedula'];
     $nombres   = $resultado[$i]['nombres'];
     $sexo = $resultado[$i]['sexo'];
-    $telefono = $resultado[$i]['telefono'];
-    $celular  = $resultado[$i]['celular'];
+    $telefonos = $resultado[$i]['telefonos'];
     $fecha_actual = $resultado[$i]['fecha_actual'];
     
-    if ($telefono != 0 && $celular == 0) {
-        $telefono = $telefono;
-    } else if ($celular != 0 && $telefono == 0) {
-        $telefono = $celular;
-    } else if ($telefono != 0 && $celular != 0) {
-        $telefono = $telefono . ',' . $celular;
-    }
-
 
     // verificar que la variable $j no si es mayor se hace un salto de pagina
     if ($j > $max) {
@@ -146,7 +132,7 @@ for ($i = 0; $i < count($resultado); $i++) {
         $pdf->Cell($w_cedula, $row_height, 'Cedula', 1, 0, 'C', 1);
         $pdf->Cell($w_nombres, $row_height, 'Nombres', 1, 0, 'L', 1);
         $pdf->Cell($w_sexo, $row_height, 'Sexo', 1, 0, 'L', 1);
-        $pdf->Cell($w_telefono, $row_height, 'Teléfonos', 1, 0, 'L', 1);
+        $pdf->Cell($w_telefonos, $row_height, 'Teléfono', 1, 0, 'L', 1);
         $pdf->Cell($w_fecha_actual, $row_height, 'Fecha Actual', 1, 1, 'L', 1);
         $j = 0;
     }
@@ -169,7 +155,7 @@ for ($i = 0; $i < count($resultado); $i++) {
     $pdf->Cell($w_cedula, $row_height, $cedula, 1, 0, 'C', 1);
     $pdf->Cell($w_nombres, $row_height, $nombres, 1, 0, 'L', 1);
     $pdf->Cell($w_sexo, $row_height, $sexo, 1, 0, 'L', 1);
-    $pdf->Cell($w_telefono, $row_height, $telefono, 1, 0, 'L', 1);
+    $pdf->Cell($w_telefonos, $row_height, $telefonos, 1, 0, 'L', 1);
     $pdf->Cell($w_fecha_actual, $row_height, $fecha_actual, 1, 1, 'L', 1);
     $j++;
 }

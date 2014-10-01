@@ -48,6 +48,7 @@ $(document).ready(function() {
     var $contextMenu = $("#contextMenu");
     var cedula = '';
     var url = '';
+    
     $("table#tabla_inscripcion").on("click", "span.sub-rayar", function(e) {
         $('.dropdown').hide();
         cedula = $(this).text().substr('id');
@@ -204,12 +205,13 @@ $(document).ready(function() {
 
                 var datos = respuesta.split(';');
                 var anio_vi = datos[0];
-
+                
+                $('#inscrito').val(datos[0]);
                 $('#tipo_estudiante').val(datos[2]);
                 //Datos inscripcion
                 if (anio_vi == 'i') {
                     $('#fecha').val(datos[3]);
-                    $('#inscrito').val(datos[0]);
+                    
                     $('#actividad').select2('val', datos[6]);
                     $('#area').val(datos[7]);
                     $('#guardar').text('Modificar');
@@ -297,12 +299,15 @@ $(document).ready(function() {
                 $.post("../../controlador/Inscripcion.php", $('#frminscripcion').serialize(), function(respuesta) {
                     $('#cedula_r,#tipo_estudiante').prop('disabled', true);
                     if (respuesta == 1) {
+                        
+                        
                         window.parent.bootbox.alert("Registro con Exito", function() {
                             
-                            cedula = '<span class="sub-rayar tooltip_ced" data-original-title="" title="">' + cedula + '</span>';
                             
-                            var cedula = $('#cedula').find('option:selected').val();
-                            var $check = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
+                            
+                            var cedula_che = $('#cedula').find('option:selected').val();
+                            var cedula = '<span class="sub-rayar tooltip_ced" data-original-title="" title="">' + cedula_che + '</span>';
+                            var $check = '<input type="checkbox" name="cedula[]" value="' + cedula_che + '" />';
                             var dat_c = $('#cedula').find('option:selected').text();
                             var dat_n = dat_c.split(' ');
 

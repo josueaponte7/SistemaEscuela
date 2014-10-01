@@ -166,9 +166,12 @@
                                             window.parent.bootbox.alert("Datos guardados con Exito", function() {
                                                 
                                                 var $inscrito = $('#inscrito').val();
+                            
                                                 
-                                                var cedula = $('#cedula').find('option:selected').val();
-                                                var $check = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
+                                                var cedula_che = $('#cedula').find('option:selected').val();
+                                                var cedula = '<span class="sub-rayar tooltip_ced" data-original-title="" title="">' + cedula_che + '</span>';
+                                                
+                                                var $check = '<input type="checkbox" name="cedula[]" value="' + cedula_che + '" />';
                                                 var dat_c = $('#cedula').find('option:selected').text();
                                                 var dat_n = dat_c.split(' ');
 
@@ -182,7 +185,7 @@
                                                 var modificar = '<img class="modificar" src="../../imagenes/edit.png" title="Modificar" style="cursor: pointer"  width="18" height="18" alt="Modificar"/>';
                                                 var eliminar = '<img class="eliminar" src="../../imagenes/delete.png" title="Eliminar" style="cursor: pointer"  width="18" height="18"  alt="Eliminar"/>';
                                                 
-                                                if($inscrito == 0){
+                                                if($inscrito == 'n'){
                                                     $('#inscrito').val(1)
                                                     $('#tabla_inscripcion').dataTable().fnAddData([$check, cedula, nombre, tipo, anio, actividad, fecha, modificar, eliminar]);
                                                 }

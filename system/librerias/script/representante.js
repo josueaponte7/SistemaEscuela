@@ -42,8 +42,7 @@ $(document).ready(function() {
         html: true,
         placement: 'top',
         title: 'Eliminar'
-    });
-    
+    });    
     
     $('.tooltip_ced').tooltip({
         html: true,
@@ -94,8 +93,7 @@ $(document).ready(function() {
 
     $(document).click(function() {
         $('.dropdown').hide();
-    });
-    
+    });    
     
     
     $('#registrar').click(function() {

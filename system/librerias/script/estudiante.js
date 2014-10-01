@@ -261,7 +261,7 @@ $(document).ready(function() {
     });
 
     /***Monta de uno***/
-    $('input:checkbox[name="cedula[]"]').change(function() {
+    $('table#tabla_estudiante').on('change', 'input:checkbox[name="cedula[]"]', function() {
         $('#todos').prop('checked', false);
         var nodes = TEstudiante.fnGetNodes();
         var count = $("input:checkbox[name='cedula[]']:checked", nodes).length;

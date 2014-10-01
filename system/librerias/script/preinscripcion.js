@@ -12,17 +12,11 @@ $(document).ready(function() {
             {"sClass": "center", "sWidth": "30%"},
             {"sClass": "center", "sWidth": "8%"},
             {"sClass": "center", "sWidth": "30%"},
-            {"sClass": "center", "sWidth": "35%"}            
+            {"sClass": "center", "sWidth": "35%"}
         ]
     });
 
-    $('#cedula').select2({'width':'250'});
-
-    $('#registrar').click(function() {
-        $('#registro_preinscrip').slideDown(2000);
-        $('#reporte_preinscrip').slideUp(2000);
-    });
-
+    $('#cedula').select2({'width': '250'});
 
     $('.tooltip_ced').tooltip({
         html: true,
@@ -32,6 +26,7 @@ $(document).ready(function() {
 
     var $contextMenu = $("#contextMenu");
     var cedula = '';
+    //var url = '';
 
     $("table#tabla_preinscrip").on("click", "span.sub-rayar", function(e) {
         $('.dropdown').hide();
@@ -41,6 +36,7 @@ $(document).ready(function() {
             left: e.pageX,
             top: e.pageY
         });
+        return false;
     });
 
     $contextMenu.on("click", "span", function() {
@@ -64,10 +60,25 @@ $(document).ready(function() {
         $('.dropdown').hide();
     });
 
-    /**Los monta todos reporte***/
-    $('#todos').change(function() {
+    $(document).keyup(function(event) {
+        if (event.which == 27) {// Tecla escape
+            $('.dropdown').hide();
+        }
+    });
+
+    $(document).click(function() {
+        $('.dropdown').hide();
+    });
+
+    $('#registrar').click(function() {
+        $('#registro_preinscrip').slideDown(2000);
+        $('#reporte_preinscrip').slideUp(2000);
+    });
+
+    /**Los monta todos***/
+    $('#todos').on('change', function() {
         var TotalRow = TPreinscrip.fnGetData().length;
-        var nodes    = TPreinscrip.fnGetNodes();
+        var nodes = TPreinscrip.fnGetNodes();
         if (TotalRow > 0) {
             if ($(this).is(':checked')) {
                 $("input:checkbox[name='cedula[]']", nodes).prop('checked', true);
@@ -79,7 +90,7 @@ $(document).ready(function() {
         }
     });
 
-    /***Monta de uno del reporte***/
+    /***Monta de uno***/
     $('table#tabla_preinscrip').on('change', 'input:checkbox[name="cedula[]"]', function() {
         $('#todos').prop('checked', false);
         var nodes = TPreinscrip.fnGetNodes();
@@ -93,6 +104,7 @@ $(document).ready(function() {
         }
     });
 
+
     /****Imprimi el reporte***/
     $('#imprimir').click(function() {
         var url = '../reportes/reporte_preinscripcion.php';
@@ -104,7 +116,7 @@ $(document).ready(function() {
             $("input:checkbox[name='cedula[]']:checked", nodes).each(function() {
                 var $chkbox = $(this);
                 var $actualrow = $chkbox.closest('tr');
-                var cedula = $actualrow.find('td:eq(1)').text()
+                var cedula = $actualrow.find('td:eq(2)').text();
                 checkboxValues += cedula.substr(2) + ',';
             });
             checkboxValues = checkboxValues.substring(0, checkboxValues.length - 1);
@@ -114,61 +126,72 @@ $(document).ready(function() {
     });
 
     $('#cedula').change(function() {
-       var cedula = $(this).val();
-       if(cedula != 0){
-        $.post("../../controlador/Preinscripcion.php", {cedula: cedula, accion: 'Buscar'}, function(respuesta) {
-            if (respuesta != 0) {
-                var datos = respuesta.split(';');
-                $('#num_registro').val(datos[0]);
-                $('#nombre').val(datos[1]);
-                $('#fech_naci').val(datos[2]);
-                $('#edad').val(datos[4]);
-                $('#sexo').val(datos[3]);
-                $('#telefono').val(datos[5]);
-                $('#celular').val(datos[6]);
-            }else{
-                
-            }
-        });
-    }
+        var cedula = $(this).val();
+        if (cedula != 0) {
+            $.post("../../controlador/Preinscripcion.php", {cedula: cedula, accion: 'Buscar'}, function(respuesta) {
+                if (respuesta != 0) {
+                    var datos = respuesta.split(';');
+                    $('#num_registro').val(datos[0]);
+                    $('#nombre').val(datos[1]);
+                    $('#fech_naci').val(datos[2]);
+                    $('#edad').val(datos[4]);
+                    $('#sexo').val(datos[3]);
+                    $('#telefono').val(datos[5]);
+                    $('#celular').val(datos[6]);
+                } else {
+
+                }
+            });
+        }
     });
 
     $('#guardar').click(function() {
 
         $('#accion').val($(this).text());
         // Imagenes de modificar y eliminar
-        var modificar = '<img class="modificar" src="../../imagenes/edit.png" title="Modificar" style="cursor: pointer"  width="18" height="18" alt="Modificar"/>';
+        // var modificar = '<img class="modificar" src="../../imagenes/edit.png" title="Modificar" style="cursor: pointer"  width="18" height="18" alt="Modificar"/>';
+
         if ($(this).text() == 'Guardar') {
             // obtener el ultimo codigo del status 
-           
-            $('#num_registro').attr('disabled',false);
+
+            var telefonos = $('#telefono').val() + ' ' + $('#celular').val();
+            var nombres = $('#nombre').val();
+            
+
+            $('#num_registro').attr('disabled', false);
             $.post("../../controlador/Preinscripcion.php", $("#formpreinscripcion").serialize(), function(respuesta) {
-                $('#num_registro').attr('disabled',true);
+                $('#num_registro').attr('disabled', true);
                 if (respuesta == 1) {
 
                     window.parent.bootbox.alert("Registro con Exito", function() {
+                        var nacionalidad = $('#nacionalidad').find('option').filter(":selected").text();
+                        var cedula_check = nacionalidad + '-' + $('#cedula').val();
+                        var cedula       = $('#cedula').val();
+                        cedula = '<span class="sub-rayar tooltip_ced" data-original-title="" title="">' + cedula + '</span>';
+                        var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula_check + '" />';
+                        //var cedula = $('#cedula').find('option:selected').val();
 
                         // Agregar los datos a la tabla
-                        
-                        var f   = new Date();
-                        var dia =  f.getDate();
-                        var mes = f.getMonth() +1;
+
+                        var f = new Date();
+                        var dia = f.getDate();
+                        var mes = f.getMonth() + 1;
                         var pad = '00';
                         var dia = (pad + dia).slice(-pad.length);
                         var mes = (pad + mes).slice(-pad.length);
-                        var fecha = dia+ "/" + mes + "/" + f.getFullYear();
-                        
-                        
-                        
-                        var cedula        = $('#cedula').val();
-                        var nombres       = $('#nombre').val();
-                        var telefono      = $('#telefono').val();
-                        var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
-                        var newRow = TPreinscrip.fnAddData([$check_cedula, $('#num_registro').val(), cedula, nombres, $('#sexo').val(), telefono, fecha]);
-                        
+                        var fecha = dia + "/" + mes + "/" + f.getFullYear();
+
+                        //var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
+                        //var newRow = TPreinscrip.fnAddData([$check_cedula, $('#num_registro').val(), cedula, nombres, $('#sexo').val(), telefono, fecha]);
+
+                        TPreinscrip.fnAddData([$check_cedula, $('#num_registro').val(), cedula, nombres, $('#sexo').val(), telefonos, fecha]);
+
                         // Agregar el id a la fila estado
-                        var oSettings = TPreinscrip.fnSettings();
-                        var nTr = oSettings.aoData[ newRow[0] ].nTr;  
+//                        var oSettings = TPreinscrip.fnSettings();
+//                        var nTr = oSettings.aoData[ newRow[0] ].nTr;  
+
+                        $('input:text').val('');
+                        $('#datos').select2('val', 0);
                     });
                 }
             });
@@ -195,13 +218,15 @@ $(document).ready(function() {
 
                                     /**********Modificar la fila 1 en la tabla esto creo que no va***************/
                                     /*$("#tabla_preinscrip tbody tr:eq(" + fila + ")").find("td:eq(1)").html($('#cedula').val());
-                                    $("#tabla_preinscrip tbody tr:eq(" + fila + ")").find("td:eq(2)").html($('#nombre').val());
-                                    $("#tabla_preinscrip tbody tr:eq(" + fila + ")").find("td:eq(3)").html($('#fech_naci').val());
-                                    $("#tabla_preinscrip tbody tr:eq(" + fila + ")").find("td:eq(3)").html($('#edad').val());
-                                    $("#tabla_preinscrip tbody tr:eq(" + fila + ")").find("td:eq(3)").html($('#sexo').val());
-                                    $("#tabla_preinscrip tbody tr:eq(" + fila + ")").find("td:eq(3)").html($('#telefono').val());
-                                    $("#tabla_preinscrip tbody tr:eq(" + fila + ")").find("td:eq(3)").html($('#celular').val());*/
-                                    $('input[type="text"]').val('');
+                                     $("#tabla_preinscrip tbody tr:eq(" + fila + ")").find("td:eq(2)").html($('#nombre').val());
+                                     $("#tabla_preinscrip tbody tr:eq(" + fila + ")").find("td:eq(3)").html($('#fech_naci').val());
+                                     $("#tabla_preinscrip tbody tr:eq(" + fila + ")").find("td:eq(3)").html($('#edad').val());
+                                     $("#tabla_preinscrip tbody tr:eq(" + fila + ")").find("td:eq(3)").html($('#sexo').val());
+                                     $("#tabla_preinscrip tbody tr:eq(" + fila + ")").find("td:eq(3)").html($('#telefono').val());
+                                     $("#tabla_preinscrip tbody tr:eq(" + fila + ")").find("td:eq(3)").html($('#celular').val());*/
+                                    $('input:text').val('');
+                                    $('#datos').select2('val', 0);
+
                                 });
                             }
                         });
@@ -209,7 +234,8 @@ $(document).ready(function() {
                 }
             });
         }
-    });;    
+    });
+    ;
 
     $('#salir').click(function() {
         $('#guardar').text('Guardar');
@@ -227,10 +253,10 @@ $(document).ready(function() {
 
 });
 
-function padLeft(nr, n, str){
-    return Array(n-String(nr).length+1).join(str||'0')+nr;
+function padLeft(nr, n, str) {
+    return Array(n - String(nr).length + 1).join(str || '0') + nr;
 }
 //or as a Number prototype method:
-Number.prototype.padLeft = function (n,str){
-    return Array(n-String(this).length+1).join(str||'0')+this;
+Number.prototype.padLeft = function(n, str) {
+    return Array(n - String(this).length + 1).join(str || '0') + this;
 }

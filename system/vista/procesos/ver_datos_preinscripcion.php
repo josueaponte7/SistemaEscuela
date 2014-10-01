@@ -11,9 +11,6 @@ $obj_pre   = new Preinscripcion();
 $campos['condicion'] = 1;
 $cedula_condicion    = 'e.cedula';
 
-if (!isset($_GET['cedula'])) {
-    
-}
 $cedula        = $_GET['cedula'];
 $campos['sql'] = "SELECT 
                     LPAD(pr.num_registro, 8, '0') AS num_registro,
@@ -26,7 +23,7 @@ $campos['sql'] = "SELECT
                 FROM pre_inscripcion pr
                 INNER JOIN estudiante AS e ON(pr.cedula = e.cedula)
                 INNER JOIN sexo se ON (e.sexo = se.id_sexo)
-                WHERE id_estatus < 3";
+                WHERE id_estatus < 3 AND pr.cedula=$cedula";
 
 /* $fp=fopen("archivo.txt","w+");
   fwrite($fp,$campos['sql']);
@@ -36,7 +33,7 @@ $resultado = $obj_pre->getPreinscricion($campos);
 
 $telefono = $resultado[0]['telefono'];
 $celular  = $resultado[0]['celular'];
-$telefono = "";
+$telefonos = "";
 if ($telefono != 0 && $celular == 0) {
     $telefonos = $telefono;
 } else if ($celular != 0 && $telefono == 0) {
@@ -94,7 +91,7 @@ if ($telefono != 0 && $celular == 0) {
                             <th width="58" height="41">Sexo:</th>
                             <td width="223"><?php echo $resultado[0]['sexo'] ?></td>
                             <th width="137" height="37"> Telefonos:</th>
-                            <td width="336"><?php echo $telefono ?></td>                            
+                            <td width="336"><?php echo $telefonos ?></td>                            
                         </tr>
                         <tr>
                             <th width="137" height="41">Fecha Actual:</th>

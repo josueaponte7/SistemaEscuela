@@ -9,7 +9,8 @@ $datos['sql'] = "SELECT
                     CONCAT_WS('-' ,(SELECT nombre FROM nacionalidad WHERE id_nacionalidad = pr.nacionalidad),pr.cedula) AS cedula,
                     CONCAT_WS(' ',e.nombre,e.apellido) AS nombres,
                     se.sexo,
-                    CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = e.cod_telefono),e.telefono) AS telefonos,
+                    IF(cod_telefono='',0,CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = cod_telefono),telefono)) AS telefono, 
+                    IF(cod_celular='',0,CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = cod_celular),celular)) AS celular,
                     DATE_FORMAT(CURRENT_DATE,'%d/%m/%Y' ) AS fecha_actual
                 FROM pre_inscripcion pr
                 INNER JOIN estudiante AS e ON(pr.cedula = e.cedula)
@@ -27,7 +28,7 @@ $_SESSION['abrir']       = 'procesos';
 
 $datos              = array();
 $datos['campos']    = "CONCAT_WS('-' ,(SELECT nombre FROM nacionalidad WHERE id_nacionalidad = es.nacionalidad),es.cedula) AS cedula,CONCAT_WS(' ',CONCAT_WS('-' ,(SELECT nombre FROM nacionalidad WHERE id_nacionalidad = es.nacionalidad),es.cedula),es.nombre, es.apellido) AS datos";
-$datos['condicion'] = "id_estatus < 3 AND condicion=1";
+$datos['condicion'] = "id_estatus < 2 AND condicion=1";
 $resul              = $obj_pre->datos($datos);
 ?>
 
@@ -93,7 +94,7 @@ $resul              = $obj_pre->datos($datos);
                             <th style="width: 35%">C&eacute;dula</th>
                             <th width="150">Nombres</th>
                             <th width="150">Sexo</th>
-                            <th width="150">Tel&eacute;fono</th>
+                            <th width="150">Tel&eacute;fonos</th>
                             <th width="150">Fecha</th>                            
                         </tr>
                     </thead>
@@ -101,19 +102,29 @@ $resul              = $obj_pre->datos($datos);
                     <tbody>
                         <?php
                         $es_array = is_array($resultado) ? TRUE : FALSE;
-
-                        if ($es_array === TRUE) {
+                        if ($es_array === TRUE) {                            
                             for ($i = 0; $i < count($resultado); $i++) {
+                                
+                                $telefono = $resultado[$i]['telefono'];
+                                $celular  = $resultado[$i]['celular'];
+                               $telefonos = "";
+                                
+                                if($telefono != 0 && $celular == 0){
+                                    $telefonos =$telefono;
+                                }else if($celular != 0 && $telefono == 0){
+                                    $telefonos = $celular;
+                                }else if($telefono != 0 && $celular != 0){
+                                    $telefonos = $telefono.','.$celular;
+                                } 
                                 ?>
-                        <tr class="letras">
-                                    <td>
-                                        <input type="checkbox" id="<?php echo $resultado[$i]['cedula']; ?>" name="cedula[]" value="<?php echo $resultado[$i]['cedula']; ?>" />
-                                    </td>
+                                <tr class="letras">
+                                    <td><input type="checkbox" name="cedula[]" value="<?php echo $resultado[$i]['cedula'] ?>" /></td>
+<!--                                    <td><input type="checkbox" id="<?php echo $resultado[$i]['cedula']; ?>" name="cedula[]" value="<?php echo $resultado[$i]['cedula']; ?>" /></td>-->
                                     <td><?php echo $resultado[$i]['num_registro'] ?></td>
                                     <td><span class="sub-rayar tooltip_ced"><?php echo $resultado[$i]['cedula'] ?></span></td>
                                     <td><?php echo $resultado[$i]['nombres'] ?></td>
                                     <td><?php echo $resultado[$i]['sexo'] ?></td>
-                                    <td><?php echo $resultado[$i]['telefonos'] ?></td>
+                                    <td><?php echo $telefonos ?></td>
                                     <td><?php echo $resultado[$i]['fecha_actual'] ?></td>
                                 </tr>
                                 <?php
@@ -127,7 +138,7 @@ $resul              = $obj_pre->datos($datos);
                 <button type="button" id="imprimir" class="btn btn-default btn-sm" style="margin-top:5%;margin-left: 25%;display: none;color:#2781D5" >Generar Listado</button>
                 <div id="contextMenu" class="dropdown clearfix">
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:block;position:static;margin-bottom:5px;">
-                        <li><span id="v_datos_r">Ver la Preinscripci&oacute;n</span></li>
+                        <li><span id="v_datos_pre">Ver la Preinscripci&oacute;n</span></li>
                     </ul>
                 </div>
             </div>

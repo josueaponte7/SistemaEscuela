@@ -91,7 +91,7 @@ $_SESSION['abrir']       = 'registros';
 
                     <tbody>
                         <?php
-                        $es_array                = is_array($resul_choferes) ? TRUE : FALSE;
+                        $es_array = is_array($resul_choferes) ? TRUE : FALSE;
                         if ($es_array === TRUE) {
                             for ($i = 0; $i < count($resul_choferes); $i++) {
                                 
