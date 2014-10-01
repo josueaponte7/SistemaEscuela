@@ -114,5 +114,14 @@ class Seguridad extends Conexion
         ini_set("error_log", "/tmp/php-error.log");
         error_log( "Hello, errors!" );
     }
+    public function restartSession($acivar=FALSE){
+        session_start();
+        $_SESSION['v_registro'] = 'none';
+        $_SESSION['v_table']    = 'block';
+        if($acivar == TRUE){
+            $_SESSION['v_registro'] = 'block';
+            $_SESSION['v_table']    = 'none';
+        }
+    }
 
 }

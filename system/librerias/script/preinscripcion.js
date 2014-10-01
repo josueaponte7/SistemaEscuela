@@ -164,34 +164,9 @@ $(document).ready(function() {
                 if (respuesta == 1) {
 
                     window.parent.bootbox.alert("Registro con Exito", function() {
-                        var nacionalidad = $('#nacionalidad').find('option').filter(":selected").text();
-                        var cedula_check = nacionalidad + '-' + $('#cedula').val();
-                        var cedula       = $('#cedula').val();
-                        cedula = '<span class="sub-rayar tooltip_ced" data-original-title="" title="">' + cedula + '</span>';
-                        var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula_check + '" />';
-                        //var cedula = $('#cedula').find('option:selected').val();
-
-                        // Agregar los datos a la tabla
-
-                        var f = new Date();
-                        var dia = f.getDate();
-                        var mes = f.getMonth() + 1;
-                        var pad = '00';
-                        var dia = (pad + dia).slice(-pad.length);
-                        var mes = (pad + mes).slice(-pad.length);
-                        var fecha = dia + "/" + mes + "/" + f.getFullYear();
-
-                        //var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
-                        //var newRow = TPreinscrip.fnAddData([$check_cedula, $('#num_registro').val(), cedula, nombres, $('#sexo').val(), telefono, fecha]);
-
-                        TPreinscrip.fnAddData([$check_cedula, $('#num_registro').val(), cedula, nombres, $('#sexo').val(), telefonos, fecha]);
-
-                        // Agregar el id a la fila estado
-//                        var oSettings = TPreinscrip.fnSettings();
-//                        var nTr = oSettings.aoData[ newRow[0] ].nTr;  
-
-                        $('input:text').val('');
-                        $('#datos').select2('val', 0);
+                        setTimeout(function(){
+                            window.location.href='preinscripcion.php?id=0';
+                        });
                     });
                 }
             });

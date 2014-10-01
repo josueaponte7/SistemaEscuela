@@ -71,7 +71,7 @@ $resultado       = $obj_repre->getRepresentantes($datos);
                             $clonedRow.find('select.parentesco option[value="5"]').text('Tio').val(6);
                         }
                         $clonedRow.find('select.parentesco').prop('disabled', false);
-                        $clonedRow.find('input:checkbox.representant').prop('disabled', false);
+                        $clonedRow.find('input:radio.representant').prop('disabled', false);
                     } else {
                         $clonedRow.find('select.parentesco option[value="2"]').text('Madre').val(1);
                         $clonedRow.find('select.parentesco option[value="4"]').text('Abuela').val(3);
@@ -79,8 +79,8 @@ $resultado       = $obj_repre->getRepresentantes($datos);
                         $clonedRow.find('select.parentesco').select2('val', 0);
                         $clonedRow.find('select.parentesco').select2('val', 0);
                         $clonedRow.find('select.parentesco').prop('disabled', true);
-                        $clonedRow.find('input:checkbox.representant').prop('disabled', true);
-                        $clonedRow.find('input:checkbox.representant').prop('checked', false);
+                        $clonedRow.find('input:radio.representant').prop('disabled', true);
+                        $clonedRow.find('input:radio.representant').prop('checked', false);
                     }
 
                     if (count >= 3) {
@@ -94,16 +94,6 @@ $resultado       = $obj_repre->getRepresentantes($datos);
                         //$('input:checkbox[name="repre[]"]:not(:checked)',nodes).closest('tr').find('td').find('input:radio').attr('disabled', false)
                     }
                 });
-                
-                $('input:checkbox[name="representant"]').on('change', function() {
-                    var nodes      = TReporterepre.fnGetNodes();
-                   
-                    var $chkbox    = $(this);
-                    var $actualrow = $chkbox.closest('tr');
-                    var $clonedRow = $actualrow.children('td');
-                    $('input:checkbox[name="representant"]', nodes).not($(this)).prop('checked', false);
-                });
-                
                 
                 
                $(".parentesco").change(function() {
@@ -130,7 +120,7 @@ $resultado       = $obj_repre->getRepresentantes($datos);
                 $('#asignar_rep').click(function() {
                     var nodes = TReporterepre.fnGetNodes();
                     var countCheck  = $('input:checkbox[name="repre[]"]:checked', nodes).length;
-                    var countRadio  = $('input:checkbox[name="representant"]:checked', nodes).length;
+                    var countRadio  = $('input:radio[name="representant"]:checked', nodes).length;
                     var countSelect = $('select[name="parentesco[]"] option:gt(0):selected', nodes).length;
                     if (countCheck == 0) {
                         alert("Seleccione minimo un Representante");
@@ -145,7 +135,7 @@ $resultado       = $obj_repre->getRepresentantes($datos);
                         var TEstuRepre = $iframe.find('#tbl_repre').dataTable();
                         //var checkboxValues = [];
                         TEstuRepre.fnClearTable();
-                        $('input:checkbox[name="repre[]"]:checked', nodes).each(function() {
+                        $('input:checkbox:checked', nodes).each(function() {
                             
                             var $chkbox       = $(this);          
                             var $actualrow    = $chkbox.closest('tr');
@@ -154,14 +144,14 @@ $resultado       = $obj_repre->getRepresentantes($datos);
                             var nombre        = $actualrow.find('td:eq(2)').text();
                             var parentesco    = $actualrow.find('td:eq(3)').find('select').find('option').filter(':selected').text();
                             var id_parentesco = $actualrow.find('td:eq(3)').find('select').find('option').filter(':selected').val();
-                            var ra_marcado    = $actualrow.find('td:eq(4)').find('input:checkbox[name="representant"]:checked').length;
+                            var ra_marcado    = $actualrow.find('td:eq(4)').find('input:radio[name="representant"]:checked').length;
                             
                             var marcado = '';
                             if(ra_marcado > 0){
                                 var marcado = 'checked';
                             }
                             var cedula = '<span class="datos">'+$chkbox.val()+'</span>';
-                            var radio  = '<input  type="checkbox" class="representant" name="representant" value="1" '+marcado+'/>';
+                            var radio  = '<input  type="radio" class="representant" name="representant" value="1" '+marcado+'/>';
                             var newRow = TEstuRepre.fnAddData([checkbox,cedula, nombre,telefonos, parentesco, radio]);
                             
                             // Agregar el id a la fila tblrepresentante en alumno en la cuarta columna
@@ -234,7 +224,7 @@ $resultado       = $obj_repre->getRepresentantes($datos);
                                         </select>
                                     </td>
                                     <td>
-                                        <input disabled="disabled" type="checkbox" class="representant" name="representant" value="1" />
+                                        <input disabled="disabled" type="radio" class="representant" name="representant" value="1" />
                                     </td>
                                 </tr>
                                 <?php

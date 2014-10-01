@@ -79,7 +79,9 @@ if (isset($_POST['accion'])) {
     switch ($accion) {
         case 'Guardar':
             $resultado = $obj->add($datos);
-        
+            session_start();
+            $_SESSION['v_registro'] = 'block';
+            $_SESSION['v_table']    = 'none';
             if ($resultado == 1 ) {
                 echo 1;
             } else if ($resultado == 13) {

@@ -302,27 +302,9 @@ $(document).ready(function() {
                         
                         
                         window.parent.bootbox.alert("Registro con Exito", function() {
-                            
-                            
-                            
-                            var cedula_che = $('#cedula').find('option:selected').val();
-                            var cedula = '<span class="sub-rayar tooltip_ced" data-original-title="" title="">' + cedula_che + '</span>';
-                            var $check = '<input type="checkbox" name="cedula[]" value="' + cedula_che + '" />';
-                            var dat_c = $('#cedula').find('option:selected').text();
-                            var dat_n = dat_c.split(' ');
-
-                            delete dat_n[0];
-                            var nombre = dat_n.join(' ');
-                            var tipo = $('#tipo_estudiante').val();
-                            var anio = $('#anio_escolar').val();
-                            var fecha = $('#fecha').val();
-                            var actividad = $('#actividad').find('option:selected').text();
-
-                            var modificar = '<img class="modificar" src="../../imagenes/edit.png" title="Modificar" style="cursor: pointer"  width="18" height="18" alt="Modificar"/>';
-                            var eliminar = '<img class="eliminar" src="../../imagenes/delete.png" title="Eliminar" style="cursor: pointer"  width="18" height="18"  alt="Eliminar"/>';
-                            
-                            TInscripcion.fnAddData([$check, cedula, nombre, tipo, anio, actividad, fecha, modificar, eliminar]);
-                            
+                            setTimeout(function(){
+                                window.location.href='inscripcion.php?id=0';
+                            });
                         });
                     } else {
                         window.parent.bootbox.alert("Ocurrio un error comuniquese con informatica", function() {
@@ -352,9 +334,9 @@ $(document).ready(function() {
                                     var fila = $("#fila").val();
 
                                     window.parent.bootbox.alert("Modificacion con Exito", function() {
-                                        // Modificar la fila 1 en la tabla 
-                                        $("table#tabla_inscripcion tbody tr:eq(" + fila + ")").find("td:eq(24)").html(actividad);
-                                        $('input[type="text"]').val('');
+                                        setTimeout(function(){
+                                           window.location.href='inscripcion.php?id=0';
+                                        });
 
                                     });
 

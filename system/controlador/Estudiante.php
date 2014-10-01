@@ -102,5 +102,10 @@ if (isset($_POST['accion'])) {
             $resultado = $obj->getRepresentante($datos);
             echo $resultado;
         break;
+        case 'ShowTable':
+            session_start();
+            $_SESSION['v_registro'] = 'none';
+            $_SESSION['v_table']    = 'block';
+        break;
     }
 }

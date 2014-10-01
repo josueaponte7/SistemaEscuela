@@ -244,9 +244,9 @@ $(document).ready(function() {
         $('table#tbl_repre tbody tr').css('color', '#000000');
         $(this).closest('tr').css('color', '#FF0000');
     });
-    
+
     /**Los monta todos***/
-    $('#todos').on('change',function() {
+    $('#todos').on('change', function() {
         var TotalRow = TEstudiante.fnGetData().length;
         var nodes = TEstudiante.fnGetNodes();
         if (TotalRow > 0) {
@@ -289,7 +289,7 @@ $(document).ready(function() {
                 cedula = cedula.trim();
                 checkboxValues += cedula.substr(2) + ',';
             });
-            
+
             checkboxValues = checkboxValues.substring(0, checkboxValues.length - 1);
             url = url + '?cedula=' + checkboxValues;
         }
@@ -324,16 +324,17 @@ $(document).ready(function() {
         }
     });
 
-
-     
-    $('table#tbl_repre').on('change','input:checkbox[name="representant"]', function() {
-        var nodes      = TTbl_Repre.fnGetNodes();
-        var $chkbox    = $(this);
-        var $actualrow = $chkbox.closest('tr');
-        $('input:checkbox[name="representant"]', nodes).not($(this)).prop('checked', false);
-        $('table#tbl_repre tbody tr').css('color','#000000');
-        $actualrow.css('color','#FF0000');
-    });
+    /*****$('table#tbl_repre').on('change', 'input:radio[name="representant"]', function() {
+     var $chkbox = $(this);
+     $('input:checkbox[name="repre[]"]:checked').prop('disabled', false);
+     $('input:radio[name="representant"]:checked').prop('checked', false);
+     $(this).prop('checked', true);
+     if ($(this).is(':checked')) {
+     var $actualrow = $chkbox.closest('tr');
+     var $clonedRow = $actualrow.children('td');
+     $clonedRow.find('input:checkbox[name="repre[]"]:checked').prop('disabled', true);
+     }
+     });******/
 
     $('#guardar').click(function() {
 
@@ -348,10 +349,10 @@ $(document).ready(function() {
             var $actualrow = $chkbox.closest('tr');
             var $clonedRow = $actualrow.find('td');
             var repre = $clonedRow.eq('4').attr('id');
-            var represen = $clonedRow.find("input:checkbox[name='representant']:checked").val();
+            var represen = $clonedRow.find("input:radio[name='representant']:checked").val();
             if (represen == 1) {
                 ced_repre = $actualrow.find('td:eq(1)').text();
-                nombre    = $actualrow.find('td:eq(2)').text();
+                nombre = $actualrow.find('td:eq(2)').text();
             }
             checkboxValues += $chkbox.val() + ';' + repre + ';' + represen + ",";
         });
@@ -436,34 +437,32 @@ $(document).ready(function() {
             var estatus = $('#estatus').find('option').filter(":selected").text();
             var modificar = '<img class="modificar" src="../../imagenes/edit.png" title="Modificar" style="cursor: pointer"  width="18" height="18" alt="Modificar"/>';
             var eliminar = '<img class="eliminar" src="../../imagenes/delete.png" title="Eliminar" style="cursor: pointer"  width="18" height="18"  alt="Eliminar"/>';
-           
-           var nombres = $('#nombre').val() + ' ' + $('#apellido').val(); 
-           
+
+            var nombres = $('#nombre').val() + ' ' + $('#apellido').val();
+
             if ($(this).text() == 'Guardar') {
-                
+
                 $('#estatus').select2("enable", true);
                 $.post("../../controlador/Estudiante.php", $("#frmestudiante").serialize(), function(respuesta) {
 
                     $('#estatus').select2("enable", false);
                     if (respuesta == 1) {
-                        
+
                         var nacionalidad = $('#nacionalidad').find('option').filter(":selected").text();
                         var cedula = nacionalidad + '-' + $('#cedula').val();
                         var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
 
                         window.parent.bootbox.alert("Registro con Exito", function() {
                             cedula = '<span class="sub-rayar tooltip_ced" data-original-title="" title="">' + cedula + '</span>';
-                            
-                            var represe = '<span id="'+ced_repre+'" class="sub-rayar representante" data-original-title="" title="">'+nombre+'</span>';
-                            
-                            
+
+                            var represe = '<span id="' + ced_repre + '" class="sub-rayar representante" data-original-title="" title="">' + nombre + '</span>';
+
+
                             TEstudiante.fnAddData([$check_cedula, cedula, nombres, estatus, represe, modificar, eliminar]);
 
                             $('table#tbl_repre').css('display', 'none');
                             TTbl_Repre.fnClearTable();
-                            setTimeout(function(){
-                                window.location.href='estudiante.php?id=0';
-                            },0);
+
                             $('input[type="text"]').val('');
                             $('textarea').val('');
                             $('select').not('#estatus').select2('val', 0);
@@ -504,10 +503,29 @@ $(document).ready(function() {
                                     // obtener la fila a modificar
                                     var fila = parseInt($('#fila').val());
 
+
+
                                     window.parent.bootbox.alert("Modificacion con Exito", function() {
-                                        setTimeout(function(){
-                                            window.location.href=self.location+'?id=0';
-                                        });
+
+                                        cedula = '<span class="sub-rayar tooltip_ced" data-original-title="" title="">' + cedula + '</span>';
+
+                                        var represe = '<span id="' + ced_repre + '" class="sub-rayar representante" data-original-title="" title="">' + nombre + '</span>';
+
+                                        // Modificar la fila 1 en la tabla 
+                                        TEstudiante.fnUpdate(nombres, fila, 2);
+                                        TEstudiante.fnUpdate(estatus, fila, 3);
+                                        TEstudiante.fnUpdate(represe, fila, 4);
+
+                                        $('table#tbl_repre').css('display', 'none');
+                                        TTbl_Repre.fnClearTable();
+
+                                        $('input[type="text"]').val('');
+                                        $('textarea').val('');
+                                        $('select').not('#estatus').select2('val', 0);
+                                        $('#municipio').find('option:gt(0)').remove().end();
+                                        $('#id_parroquia').find('option:gt(0)').remove().end();
+                                        $('#guardar').text('Guardar');
+
                                     });
 
                                 }
@@ -519,6 +537,7 @@ $(document).ready(function() {
             }
         }
     });
+
     $('table#tabla_estudiante').on('click', 'img.modificar', function() {
         // borra el campo fila
 
@@ -545,7 +564,7 @@ $(document).ready(function() {
 //            } else {
 //                nac_v = 2;
 //            }
-            var datos = respuesta.split(';');    
+            var datos = respuesta.split(';');
             //$('#nacionalidad').select2('val', nac_v);
             $('#nacionalidad').select2('val', datos[0]);
             $('#cedula').val(cedula);
@@ -596,7 +615,7 @@ $(document).ready(function() {
                     if (clave.representante > 0) {
                         var marcado = 'checked';
                     }
-                    var radio = '<input  type="checkbox" class="representant" name="representant" value="1" ' + marcado + '/>';
+                    var radio = '<input  type="radio" class="representant" name="representant" value="1" ' + marcado + '/>';
 
                     var newRow = TTbl_Repre.fnAddData([checkbox, clave.cedula, clave.nombres, clave.telefonos, clave.parentesco, radio]);
 

@@ -57,6 +57,7 @@ class Estudiante extends Seguridad
                 }
             }
         }
+        $this->restartSession(TRUE);
         return $resultado;
     }
 
@@ -102,7 +103,6 @@ class Estudiante extends Seguridad
         } else {
             $this->_sql = $opciones['sql'];
         }
-
         $resultado = $this->consultar_array($this->_sql);
         return $resultado;
     }
@@ -283,7 +283,7 @@ class Estudiante extends Seguridad
                     $this->ejecutar($sql);
                 }
             }
-        
+        $this->restartSession(TRUE);
         return $resultado;
     }
     

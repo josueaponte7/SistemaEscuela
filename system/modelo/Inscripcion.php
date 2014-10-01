@@ -97,7 +97,7 @@ class Inscripcion extends Preinscripcion
             }
         }
 
-
+        $this->restartSession(TRUE);
         return $resultado;
     }
 
@@ -352,6 +352,7 @@ class Inscripcion extends Preinscripcion
         if ($result_up) {
             $resultado = TRUE;
         }
+        $this->restartSession(TRUE);
         return $resultado;
     }
 

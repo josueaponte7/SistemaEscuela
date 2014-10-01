@@ -29,6 +29,7 @@ class Preinscripcion extends Estudiante {
             $sql_up = "UPDATE estudiante SET id_estatus = 2 WHERE CONCAT_WS('-' ,(SELECT nombre FROM nacionalidad WHERE id_nacionalidad = nacionalidad),cedula)='".$datos['cedula']."'";
             $resultado = $this->ejecutar($sql_up);
         }
+        $this->restartSession(TRUE);
         return $resultado;
     }
     

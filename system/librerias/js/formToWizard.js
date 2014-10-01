@@ -105,7 +105,11 @@
                                 if (i == count - 1) {
 
                                     $('#registro_inscripcion').slideUp(2000);
-                                    $('#reporte_inscripcion').slideDown(2000);
+                                    $('#reporte_inscripcion').slideDown(2000,function(){
+                                        setTimeout(function () {
+                                            window.location.href = 'inscripcion.php?id=0';
+                                        });
+                                    });
                                     $('input:text').val('');
                                     $("#step" + (count - 1)).hide();
                                     $("#step0").show();
@@ -165,7 +169,7 @@
                                         if (respuesta == 1) {
                                             window.parent.bootbox.alert("Datos guardados con Exito", function() {
                                                 
-                                                var $inscrito = $('#inscrito').val();
+                                                /*var $inscrito = $('#inscrito').val();
                             
                                                 
                                                 var cedula_che = $('#cedula').find('option:selected').val();
@@ -189,20 +193,18 @@
                                                     $('#inscrito').val(1)
                                                     $('#tabla_inscripcion').dataTable().fnAddData([$check, cedula, nombre, tipo, anio, actividad, fecha, modificar, eliminar]);
                                                 }
-                                                
+                                                */
                                                 $("#" + stepName).hide();
                                                 $("#step" + (i + 1)).show();
                                                 selectStep(i + 1);
                                                 if (i == count - 1) {
                                                     $('#registro_inscripcion').slideUp(2000);
-                                                    $('#reporte_inscripcion').slideDown(2000);
-                                                    $('input:text').val('');
-                                                    $("#step" + (count - 1)).hide();
-                                                    $("#step0").show();
-                                                    $(submmitButtonName).hide();
-                                                    selectStep(0);
-                                                    $('#inscrito').val(0);
-                                                    
+                                                    $('#reporte_inscripcion').slideDown(2000,function(){
+                                                        setTimeout(function(){
+                                                            window.location.href='inscripcion.php?id=0';
+                                                        });
+                                                        
+                                                    });                                                    
                                                 }
                                             });
                                         } else {

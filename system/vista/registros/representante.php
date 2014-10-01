@@ -23,6 +23,20 @@ $_SESSION['archivo_sys'] = 'representante';
 $_SESSION['height']      = '1200px';
 $_SESSION['heightifm']   = '1100px';
 $_SESSION['abrir']       = 'registros';
+
+$v_registro = 'none';
+$v_table    = 'block';
+
+if (isset($_GET['id']) && $_GET['id'] == 1) {
+    $_SESSION['v_registro'] = 'none';
+    $_SESSION['v_table']    = 'block';
+    $v_registro = 'none';
+    $v_table    = 'block';
+}else if (isset($_SESSION['v_registro']) && isset($_SESSION['v_table'])) {
+    $v_registro = $_SESSION['v_registro'];
+    $v_table    = $_SESSION['v_table'];
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -66,7 +80,7 @@ $_SESSION['abrir']       = 'registros';
         </style>
     </head>
     <body> 
-        <div id="reporte_representante" style="display: block;margin: auto;padding-bottom: 80px;">
+        <div id="reporte_representante" style="display: <?php echo $v_table; ?>;margin: auto;padding-bottom: 80px;">
             <fieldset>
                 <legend class="letras_label"> 
                     Listado de Representantes
@@ -142,7 +156,7 @@ $_SESSION['abrir']       = 'registros';
             </div>
         </div>
 
-        <div id="registro_erepresentante" style="display: none">
+        <div id="registro_erepresentante" style="display: <?php echo $v_registro; ?>">
             <form name="frmrepresentante" id="frmrepresentante"  role="form">
                 <div class="panel panel-default" style="width : 97%;margin: auto;height: auto;position: relative;">
                     <div class="panel-heading letras_titulos">Datos del Representante</div>

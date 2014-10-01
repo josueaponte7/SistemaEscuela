@@ -110,13 +110,15 @@ for ($i = 0; $i < count($resultado); $i++) {
     $telefono = $resultado[$i]['telefono'];
     $celular  = $resultado[$i]['celular'];
     $fecha_actual = $resultado[$i]['fecha_actual'];
+	
+	$telefonos = "";
     
     if ($telefono != 0 && $celular == 0) {
-        $telefono = $telefono;
+        $telefonos = $telefono;
     } else if ($celular != 0 && $telefono == 0) {
-        $telefono = $celular;
+        $telefonos = $celular;
     } else if ($telefono != 0 && $celular != 0) {
-        $telefono = $telefono . ',' . $celular;
+        $telefonos = $telefono . ',' . $celular;
     }
 
 
@@ -169,7 +171,7 @@ for ($i = 0; $i < count($resultado); $i++) {
     $pdf->Cell($w_cedula, $row_height, $cedula, 1, 0, 'C', 1);
     $pdf->Cell($w_nombres, $row_height, $nombres, 1, 0, 'L', 1);
     $pdf->Cell($w_sexo, $row_height, $sexo, 1, 0, 'L', 1);
-    $pdf->Cell($w_telefono, $row_height, $telefono, 1, 0, 'L', 1);
+    $pdf->Cell($w_telefono, $row_height, $telefonos, 1, 0, 'L', 1);
     $pdf->Cell($w_fecha_actual, $row_height, $fecha_actual, 1, 1, 'L', 1);
     $j++;
 }

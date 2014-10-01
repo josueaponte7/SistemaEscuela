@@ -56,6 +56,7 @@ class Representante extends Seguridad
 
         $resultado = $this->ejecutar($sql);
         }
+        $this->restartSession(TRUE);
         return $resultado;
     }
 
@@ -112,6 +113,7 @@ class Representante extends Seguridad
                     WHERE cedula = '$cedula';";
 
         $resultado = $this->ejecutar($sql);
+        $this->restartSession(TRUE);
         return $resultado;
     }
 

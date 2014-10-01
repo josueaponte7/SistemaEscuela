@@ -321,24 +321,9 @@ $(document).ready(function() {
                         var id_estatus = $('#estatus').find(' option').filter(":selected").val();
 
                         window.parent.bootbox.alert("Registro con Exito", function() {
-
-                            var nacionalidad = $('#nacionalidad').find(' option').filter(":selected").text();
-                            var cedula = nacionalidad + '-' + $('#cedula').val();
-                            
-                            var $check_cedula = '<input type="checkbox" name="cedula[]" value="' + cedula + '" />';
-
-//                    alert('Registro con Exito');
-                            var newRow = TRepresentante.fnAddData([$check_cedula, cedula, nombres, telefonos, estatus, modificar, eliminar]);
-
-                            // Agregar el id a la fila estado
-                            var oSettings = TRepresentante.fnSettings();
-                            var nTr = oSettings.aoData[ newRow[0] ].nTr;
-                            $('td', nTr)[4].setAttribute('id', id_estatus);
-
-                            $('input[type="text"]').val('');
-                            $('textarea').val('');
-                            $('#estado,#municipio,#parroquia,#estatus,#sexo,#cod_telefono,#cod_celular,#nivel_inst,#profesion').select2('val', 0);
-                            $('#nacionalidad').select2('val', 0);
+                            setTimeout(function(){
+                                 window.location.href='representante.php?id=0';
+                            });
                         });
                     }else if (respuesta == 13) {
                         window.parent.bootbox.alert("La Cédula se encuentra Registrada", function() {
@@ -374,34 +359,10 @@ $(document).ready(function() {
                                     var fila = $("#fila").val();
 
                                     window.parent.bootbox.alert("Modificacion con Exito", function() {
-
-                                        // obtener el nombre de la actividad
-//                                      var actividad = $('#actividad').find(' option').filter(":selected").text();
-
-//                                        // obtener el id de la actividad
-//                                        var id_actividad = $('#actividad').find(' option').filter(":selected").val();
-                                        // obtener el nombre de la actividad
-                                        var estatus = $('#estatus').find(' option').filter(":selected").text();
-//
-//                                        // obtener el id de la actividad
-                                        var id_estatus = $('#estatus').find(' option').filter(":selected").val();
-                                        //var actividad = $('#actividad').find('option:selected').text();
-
-                                        // Modificar la fila 1 en la 
-                                        $("#tabla_representante tbody tr:eq(" + fila + ")").find("td:eq(2)").html(nombres);                                       
-                                        $("#tabla_representante tbody tr:eq(" + fila + ")").find("td:eq(3)").html(telefonos);
-                                        //$("#tabla_docente tbody tr:eq(" + fila + ")").find("td.eq(4)").html(actividad);
-
-                                        // Modificar la fila 1 en la tabla 
-                                        $("#tabla_representante tbody tr:eq(" + fila + ")").find("td:eq(4)").html(estatus);
-                                        $("#tabla_representante tbody tr:eq(" + fila + ")").find("td:eq(4)").attr('id', id_estatus);
-
-                                        $('input[type="text"]').val('');
-                                        $('textarea').val('');
-                                        $('#estado,#municipio,#parroquia,#estatus,#sexo,#cod_telefono,#cod_celular,#nivel_inst,#profesion').select2('val', 0);
-                                        $('#nacionalidad').select2('val', 0);
                                         
-                                        $('#guardar').text('Guardar');
+                                        setTimeout(function(){
+                                            window.location.href=self.location+'?id=0';
+                                        });                                       
                                     });
                                 }
                             });

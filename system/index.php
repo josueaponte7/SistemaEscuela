@@ -5,9 +5,12 @@ $nombres = '';
 if (!isset($_SESSION['id_usuario'])) {
     header('location:../');
 } else {
-    $nombres = $_SESSION['nombres'];
-    $grupo   = $_SESSION['id_grupo'];
+    $nombres    = $_SESSION['nombres'];
+    $grupo      = $_SESSION['id_grupo'];
+    
 }
+
+
 $menu_activo = '';
 $height      = '700px';
 $heightifm   = '800px';
@@ -68,6 +71,8 @@ if ($grupo == 2) {
 } else if ($grupo == 3) {
     $abrir_rep = 'in';
 }
+$_SESSION['v_registro'] = 'none';
+$_SESSION['v_table']    = 'block';
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -102,12 +107,11 @@ if ($grupo == 2) {
                     var total = ruta.length;
                     var dir = ruta[0];
                     var archivo = ruta[1];
-                    var clase = $(this).attr('class');
-
+                    var clase = $(this).attr('class');      
                     if (total == 3) {
                         var archivo = ruta[1] + '_' + ruta[2];
                     }
-                    var url = './vista/' + dir + '/' + archivo + '.php';
+                    var url = './vista/' + dir + '/' + archivo + '.php?id=1';
                     if (archivo == 'estudiante') {
                         var height = '1220px';
                         var heightifm = '1120px';

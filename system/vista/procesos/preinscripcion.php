@@ -15,7 +15,7 @@ $datos['sql'] = "SELECT
                 FROM pre_inscripcion pr
                 INNER JOIN estudiante AS e ON(pr.cedula = e.cedula)
                 INNER JOIN sexo se ON (e.sexo = se.id_sexo)
-                WHERE id_estatus < 3";
+                WHERE id_estatus = 2";
 $resultado    = $obj_pre->datos($datos);
 
 $_SESSION['menu']        = 'procesos_preinscripcion';
@@ -30,6 +30,19 @@ $datos              = array();
 $datos['campos']    = "CONCAT_WS('-' ,(SELECT nombre FROM nacionalidad WHERE id_nacionalidad = es.nacionalidad),es.cedula) AS cedula,CONCAT_WS(' ',CONCAT_WS('-' ,(SELECT nombre FROM nacionalidad WHERE id_nacionalidad = es.nacionalidad),es.cedula),es.nombre, es.apellido) AS datos";
 $datos['condicion'] = "id_estatus < 2 AND condicion=1";
 $resul              = $obj_pre->datos($datos);
+
+if (isset($_GET['id']) && $_GET['id'] == 1) {
+    
+    $_SESSION['v_registro'] = 'none';
+    $_SESSION['v_table']    = 'block';
+    $v_registro = 'none';
+    $v_table    = 'block';
+    
+}else if (isset($_SESSION['v_registro']) && isset($_SESSION['v_table'])) {
+    $v_registro = $_SESSION['v_registro'];
+    $v_table    = $_SESSION['v_table'];
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -72,7 +85,7 @@ $resul              = $obj_pre->datos($datos);
 
     </head>
     <body>  
-        <div id="reporte_preinscrip" style="display: block;margin: auto;padding-bottom: 80px;">
+        <div id="reporte_preinscrip" style="display: <?php echo $v_table; ?>;margin: auto;padding-bottom: 80px;">
             <fieldset>
                 <legend class="letras_label"> 
                     Listado de Pre-Inscripci&oacute;n de Estudiantes 
@@ -144,7 +157,7 @@ $resul              = $obj_pre->datos($datos);
             </div>
         </div>
 
-        <div id="registro_preinscrip" style="display: none;">
+        <div id="registro_preinscrip" style="display: <?php echo $v_registro; ?>;">
             <form name="formpreinscripcion" id="formpreinscripcion"  role="form" >
                 <div class="panel panel-default" style="width : 97%;margin: auto;height: auto;position: relative;">
                     <div class="panel-heading letras_titulos">Pre-Inscripción de Estudiantes</div>

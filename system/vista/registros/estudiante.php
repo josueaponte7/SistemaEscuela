@@ -27,6 +27,16 @@ $_SESSION['archivo_sys'] = 'estudiante';
 $_SESSION['height']      = '1220px';
 $_SESSION['heightifm']   = '1120px';
 $_SESSION['abrir']       = 'registros';
+
+if (isset($_GET['id']) && $_GET['id'] == 1) {
+    $_SESSION['v_registro'] = 'none';
+    $_SESSION['v_table']    = 'block';
+    $v_registro = 'none';
+    $v_table    = 'block';
+}else if (isset($_SESSION['v_registro']) && isset($_SESSION['v_table'])) {
+    $v_registro = $_SESSION['v_registro'];
+    $v_table    = $_SESSION['v_table'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -72,7 +82,7 @@ $_SESSION['abrir']       = 'registros';
         </style>
     </head>
     <body>  
-        <div id="reporte_estudiante" style="display: block;margin: auto;padding-bottom: 80px;">
+        <div id="reporte_estudiante" style="display: <?php echo $v_table; ?>;margin: auto;padding-bottom: 80px;">
             <fieldset>
                 <legend class="letras_label"> 
                     Listado de Estudiantes
@@ -130,10 +140,10 @@ $_SESSION['abrir']       = 'registros';
                         ?>
                     </tbody>
                 </table>
-                <button type="button" id="imprimir" class="btn btn-default btn-sm" style="margin-top:5%;margin-left: 25%;display: none;color:#2781D5" >Generar Listado</button>
+                <button type="button" id="imprimir" class="btn btn-default btn-sm" style="margin-top:5%;margin-left: 25%;display:none;color:#2781D5" >Generar Listado</button>
                 <div id="contextMenuEst" class="dropdown clearfix">
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:block;position:static;margin-bottom:5px;">
-                        <li><span id="v_datos">Ver Datos</span></li>
+                        <li><span id="v_datos">Ver Datos Estudiante</span></li>
                         <li><span id="v_repre">Ver Representantes</span></li>
                     </ul>
                 </div>
@@ -145,7 +155,7 @@ $_SESSION['abrir']       = 'registros';
                 </div>
             </div>
         </div>
-        <div id="registro_estudiante" style="display:none">
+        <div id="registro_estudiante" style="display:<?php echo $v_registro; ?>">
             <form name="frmestudiante" id="frmestudiante"  role="form" >
                 <div class="panel panel-default" style="width : 97%;margin: auto;height: auto;position: relative;">
                     <div class="panel-heading letras_titulos">Datos del Estudiante</div>

@@ -16,6 +16,17 @@ $_SESSION['archivo_sys'] = 'inscripcion';
 $_SESSION['height']      = '1920px';
 $_SESSION['heightifm']   = '1820px';
 $_SESSION['abrir']       = 'procesos';
+
+if (isset($_GET['id']) && $_GET['id'] == 1) {
+    $_SESSION['v_registro'] = 'none';
+    $_SESSION['v_table']    = 'block';
+    $v_registro = 'none';
+    $v_table    = 'block';
+}else if (isset($_SESSION['v_registro']) && isset($_SESSION['v_table'])) {
+    $v_registro = $_SESSION['v_registro'];
+    $v_table    = $_SESSION['v_table'];
+}
+
 ?>
 
 <!DOCTYPE html>
