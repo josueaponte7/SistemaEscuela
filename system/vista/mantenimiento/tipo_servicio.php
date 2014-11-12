@@ -49,7 +49,7 @@ $_SESSION['abrir']       = 'mantenimiento';
                             <th style="margin-left: 20px !important;" width="81">
                                 <input type="checkbox" name="todos" id="todos" value="todos" />
                             </th>
-                            <th style="width: 35%">Codigo Servicio</th>
+                            <th style="width: 35%">C&oacute;digo Servicio</th>
                             <th width="150">Nombre Servicio</th>
                             <th style="width: 5%;text-align: center">Modificar</th>
                             <th style="width: 5%;text-align: center">Eliminar</th>
@@ -92,7 +92,7 @@ $_SESSION['abrir']       = 'mantenimiento';
                     <div class="panel-body">
                         <table width="376" border="0" align="center" style="margin-top: 25px;">                         
                             <tr>
-                                <td height="49" class="letras"> Tipo de Servicio</td>
+                                <td height="49" class="letras"> Tipo de Servicio: </td>
                                 <td align="center">
                                     <div id="div_serv" class="form-group">
                                         <input  type="text" class="form-control  input-sm" id="tiposervicio" name="tiposervicio" placeholder="Tipo de Servicio"/>

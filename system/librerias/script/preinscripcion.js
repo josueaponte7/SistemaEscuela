@@ -217,13 +217,13 @@ $(document).ready(function() {
         $('#registro_preinscrip').slideUp(2000);
         $('#reporte_preinscrip').slideDown(2000);
         $('input:text').val('');
-        $('#datos').select2('val', 0);
+        $('select').select2('val', 0);
     });
 
     $('#limpiar').click(function() {
         $('input:text').val('');
         $('#guardar').text('Guardar');
-        $('#datos').select2('val', 0);
+        $('select').select2('val', 0);
     });
 
 });

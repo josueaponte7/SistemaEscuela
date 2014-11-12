@@ -12,7 +12,7 @@ if (!isset($_SESSION['id_usuario'])) {
 
 
 $menu_activo = '';
-$height      = '700px';
+$height      = '750px';
 $heightifm   = '800px';
 $pagina      = 'titulo_pagina';
 $abrir       = 'registros';
@@ -111,7 +111,7 @@ $_SESSION['v_table']    = 'block';
                     if (total == 3) {
                         var archivo = ruta[1] + '_' + ruta[2];
                     }
-                    var url = './vista/' + dir + '/' + archivo + '.php?id=1';
+                   var url = './vista/' + dir + '/' + archivo + '.php?id=1';
                     if (archivo == 'estudiante') {
                         var height = '1220px';
                         var heightifm = '1120px';
@@ -131,11 +131,11 @@ $_SESSION['v_table']    = 'block';
                         var heightifm = '720px';
 
                     } else if (archivo == 'usuario' || archivo == 'preinscripcion' || archivo == 'menu' || archivo == 'sub_menu' || archivo == 'perfil') {
-                        var height = '700px';
+                        var height = '750px';
                         var heightifm = '540px';
 
                     }
-                    else if (archivo == 'programa_social' || archivo == 'profesion') {
+                    else if (archivo == 'programa_social' || archivo == 'profesion' || archivo== 'reinscripcion') {
                         var height = '880px';
                         var heightifm = '830px';
 
@@ -143,12 +143,13 @@ $_SESSION['v_table']    = 'block';
                             || archivo == 'estado' || archivo == 'municipio' || archivo == 'parroquia'
                             || archivo == 'status_docente' || archivo == 'status_chofer' || archivo == 'tipo_servicio' || archivo == 'actividad'
                             || archivo == 'tipo_enfermedades' || archivo == 'anio_escolar') {
-                        var height = '700px';
+                        var height = '750px';
                         var heightifm = '540px';
-                    } else if (archivo == 'inscripcion') {
+                    } else if (archivo == 'inscripcion' || archivo == 'reinscripcion') {
                         var height = '1820px';
                         var heightifm = '1720px';
                     }
+                    
                     if (clase == 'reporte') {
                         var url = 'vista/reportes/' + $id + '.php?todos=1';
                         window.open(url);
@@ -300,7 +301,8 @@ $_SESSION['v_table']    = 'block';
                                 <div class="contenido_men_izq">
                                     <ul  style="list-style-type:none;">
                                         <li id="procesos_preinscripcion">Pre-Inscripci&oacute;n</li>
-                                        <li id="procesos_inscripcion">Inscripci&oacute;n</li>                                   
+                                        <li id="procesos_inscripcion">Inscripci&oacute;n</li> 
+                                        <li id="procesos_reinscripcion">Re-Inscripci&oacute;n</li> 
                                     </ul>
                                 </div> 
                             </div>
@@ -315,6 +317,8 @@ $_SESSION['v_table']    = 'block';
                             <div class="panel-body">
                                 <div class="contenido_men_izq">
                                     <ul  style="list-style-type:none;">
+                                        <li id="reportes_constanciainscripcion" class="constancia">Constancia Inscripci&oacute;n</li>
+                                        <li id="reportes_constanciaestudio" class="constancia">Constancia Estudios</li>
                                         <li id="reporte_inscripcion" class="reporte">Inscripci&oacute;n</li>
                                         <li id="reporte_preinscripcion" class="reporte">Pre-Inscripci&oacute;n</li> 
                                         <li id="reporte_estudiante" class="reporte">Estudiante</li>                                                

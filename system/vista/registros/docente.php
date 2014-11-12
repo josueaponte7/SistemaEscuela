@@ -5,7 +5,7 @@ require_once '../../modelo/Seguridad.php';
 require_once '../../modelo/Docente.php';
 
 $obj_parro = new Parroquia();
-$obj_doc   = new Seguridad();
+$obj_doc = new Seguridad();
 $obj_docen = new Docente();
 
 $datos['sql'] = "SELECT 
@@ -14,14 +14,14 @@ $datos['sql'] = "SELECT
                     doc.apellido,
                     (SELECT ac.actividad FROM actividad ac WHERE doc.id_actividad = ac.id_actividad ) AS actividad
                     FROM docente AS doc WHERE condicion = 1;";
-$resultado    = $obj_docen->getDocente($datos);
+$resultado = $obj_docen->getDocente($datos);
 
-$_SESSION['menu']        = 'registros_docente';
-$_SESSION['dir_sys']     = 'registros';
+$_SESSION['menu'] = 'registros_docente';
+$_SESSION['dir_sys'] = 'registros';
 $_SESSION['archivo_sys'] = 'docente';
-$_SESSION['height']      = '1100px';
-$_SESSION['heightifm']   = '995px';
-$_SESSION['abrir']       = 'registros';
+$_SESSION['height'] = '1100px';
+$_SESSION['heightifm'] = '995px';
+$_SESSION['abrir'] = 'registros';
 ?>
 
 <!DOCTYPE html>
@@ -95,7 +95,7 @@ $_SESSION['abrir']       = 'registros';
 
                     <tbody>
                         <?php
-                        $es_array                = is_array($resultado) ? TRUE : FALSE;
+                        $es_array = is_array($resultado) ? TRUE : FALSE;
                         if ($es_array === TRUE) {
                             for ($i = 0; $i < count($resultado); $i++) {
                                 ?>
@@ -140,7 +140,7 @@ $_SESSION['abrir']       = 'registros';
                     <div class="panel-body">
                         <table width="887" border="0" align="center">                        
                             <tr>
-                                <td height="72" colspan="4" align="center">
+                                <td height="72" colspan="5" align="center">
                                     <fieldset style="width: 710px;">
                                         <legend class="letras_label"> 
                                             Datos Personales del Docente
@@ -149,8 +149,8 @@ $_SESSION['abrir']       = 'registros';
                                 </td>
                             </tr>
                             <tr>
-                                <td width="109" height="66" class="letras"> C&eacute;dula </td>
-                                <td width="369">
+                                <td width="116" height="66" class="letras"> C&eacute;dula: </td>
+                                <td width="344">
                                     <div class="form-inline">
                                         <div class="form-group">
                                             <select name="nacionalidad" class="form-control input-sm select2" id="nacionalidad" style="float: left;">
@@ -170,21 +170,33 @@ $_SESSION['abrir']       = 'registros';
                                         </div>
                                     </div>
                                 </td>
-                                <td width="119" class="letras"> Nombre </td>
-                                <td width="272">
+                                <td width="35" align="left">
+                                    <img style="cursor: pointer; margin-top: -8px; margin-left:-25px;" id="imgcedula" src="../../imagenes/exclamtion.png" width="15" height="15" alt="img_info"/>
+                                </td>
+                                
+                                <td width="88" align="left" class="letras">Nombre:</td>
+                                <td width="277">
                                     <div id="div_nombre" class="form-group">
                                         <input  type="text" class="form-control  input-sm" id="nombre" name="nombre" placeholder="Nombre"/>
                                     </div>
                                 </td>
+                                <td  width="18" heigth="10">
+                                    <img style="cursor: pointer; margin-top: -16px;" id="imgnombre" src="../../imagenes/exclamtion.png" width="15" height="15" alt="img_info"/>
+                                </td>
                             </tr>
+                            
                             <tr height="60">
-                                <td height="49" class="letras"> Apellido </td>
+                                <td height="49" class="letras"> Apellido: </td>
                                 <td>
                                     <div id="div_apellido" class="form-group">
                                         <input type="text" class="form-control  input-sm" id="apellido" name="apellido" placeholder="Apellido"/>
                                     </div>
                                 </td>
-                                <td height="49" class="letras"> Sexo:</td>
+                                <td width="35" align="left">
+                                    <img style="cursor: pointer; margin-top: -16px; margin-left:-25px;" id="imgapellido" src="../../imagenes/exclamtion.png" width="15" height="15" alt="img_info"/>
+                                </td>
+                                
+                                <td align="left" class="letras">Sexo: </td>
                                 <td>
                                     <select name="sexo" class="form-control input-sm select2" id="sexo">
                                         <option value="0">Seleccione</option>
@@ -192,29 +204,39 @@ $_SESSION['abrir']       = 'registros';
                                         <option value="2">Masculino</option>
                                     </select>
                                 </td>
+                                 <td  width="18" heigth="10">
+                                    <img style="cursor: pointer;" id="imgsexo" src="../../imagenes/exclamtion.png" width="15" height="15" alt="img_info"/>
+                                </td>
                             </tr>
+                            
                             <tr height="40">
-                                <td class="letras"> Fecha de Naci</td>
+                                <td class="letras" width="150"> Fecha de Naci: </td>
                                 <td>
                                     <div id="div_fech_naci" class="form-group">
                                         <input type="text" style="background-color: #ffffff" readonly="readonly" class="form-control input-sm" id="fech_naci" name="fech_naci" placeholder="Fecha de Nacimiento">
                                     </div>
                                 </td>
-                                <td class="letras"> Edad: </td>
+                                <td width="54" align="left">
+                                    <img style="cursor: pointer; margin-top: -16px; margin-left:-25px;" id="imgfechaNac" src="../../imagenes/exclamtion.png" width="15" height="15" alt="img_info"/>
+                                </td>
+                                
+                                <td align="left" class="letras">Edad: </td>
                                 <td>
                                     <div id="div_edad" class="form-group">
                                         <input type="text"  disabled="disabled" style="background-color: #ffffff" class="form-control input-sm" id="edad" name="edad" placeholder="Edad">
                                     </div>
                                 </td>
                             </tr>
+                            
                             <tr height="60">
-                                <td class="letras"> Email </td>
+                                <td class="letras"> Email: </td>
                                 <td>
                                     <div id="div_email" class="form-group">
                                         <input type="text" class="form-control input-sm" id="email" name="email" placeholder="Email">
                                     </div>
                                 </td>
-                                <td class="letras"> Tel&eacute;fono Hab </td>
+                                <td align="left" class="letras">&nbsp;</td>
+                                <td class="letras" width="120">Tel&eacute;fono Hab:</td>
                                 <td>
                                     <div class="form-inline">
                                         <div class="form-group">
@@ -235,10 +257,11 @@ $_SESSION['abrir']       = 'registros';
                                         </div>
                                     </div>
                                 </td> 
+                                <td width="54" align="left"></td>
                             </tr>
 
                             <tr>
-                                <td class="letras">Tel&eacute;fono Cel</td>  
+                                <td class="letras">Tel&eacute;fono Cel: </td>  
                                 <td>
                                     <div class="form-inline">
                                         <div class="form-group">
@@ -261,26 +284,27 @@ $_SESSION['abrir']       = 'registros';
                                         </div> 
                                     </div>
                                 </td>
-                                <td>
-                                    &nbsp;
+                                <td  width="5" heigth="10">
+                                    <img style="cursor: pointer; margin-top: -1px; margin-left: -25px;" id="imgtelcel" src="../../imagenes/exclamtion.png" width="15" height="15" alt="img_info"/>
                                 </td>
                             </tr>
                             <tr>
-                                <td>
-                                    &nbsp;
-                                </td>
+                                <td>&nbsp;</td>
                             </tr>
                             <tr height="60">
                                 <td height="52" class="letras">Lugar de Naci:</td>
-                                <td colspan="3">
+                                <td colspan="4">
                                     <div id="div_lugar_naci" class="form-group">
                                         <textarea style="width:99% !important" id="lugar_naci" class="form-control input-sm" placeholder="Lugar de Nacimiento" rows="1" name="lugar_naci"></textarea>
                                     </div>
                                 </td>
+                                <td  width="18" heigth="10">
+                                    <img style="cursor: pointer; margin-top: -16px;" id="imglugarNac" src="../../imagenes/exclamtion.png" width="15" height="15" alt="img_info"/>
+                                </td>
                             </tr>
 
                             <tr>
-                                <td height="86" colspan="4" align="center"> 
+                                <td height="86" colspan="5" align="center"> 
                                     <fieldset style="width: 710px;">
                                         <legend class="letras_label"> 
                                             Direcci&oacute;n del Docente 
@@ -289,7 +313,7 @@ $_SESSION['abrir']       = 'registros';
                                 </td>
                             </tr>
                             <tr>
-                                <td class="letras"> Estado </td>
+                                <td class="letras"> Estado: </td>
                                 <td>
                                     <div class="form-group">
                                         <select name="estado" class="form-control input-sm select2" id="estado">
@@ -305,7 +329,11 @@ $_SESSION['abrir']       = 'registros';
                                         </select>
                                     </div>
                                 </td>
-                                <td class="letras"> Municipio </td>
+                                <td width="35" align="left">
+                                    <img style="cursor: pointer; margin-left: -25px; margin-top: -16px;" id="imgestado" src="../../imagenes/exclamtion.png" width="15" height="15" alt="img_info"/>
+                                </td>
+                                
+                                <td align="left" class="letras">Municipio: </td>
                                 <td>
                                     <div class="form-group">
                                         <select name="municipio" class="form-control input-sm select2" id="municipio">
@@ -313,9 +341,13 @@ $_SESSION['abrir']       = 'registros';
                                         </select>
                                     </div>
                                 </td>
+                                <td  width="18" heigth="10">
+                                    <img style="cursor: pointer; margin-top: -16px;" id="imgminicipio" src="../../imagenes/exclamtion.png" width="15" height="15" alt="img_info"/>
+                                </td>
                             </tr>
+                            
                             <tr height="45">
-                                <td class="letras"> Parroquia </td>
+                                <td class="letras"> Parroquia: </td>
                                 <td>
                                     <div class="form-group">
                                         <select name="parroquia" class="form-control input-sm select2" id="parroquia">
@@ -323,38 +355,54 @@ $_SESSION['abrir']       = 'registros';
                                         </select>
                                     </div>
                                 </td>
-                                <td class="letras"> Calle </td>
+                               <td width="35" align="left">
+                                    <img style="cursor: pointer; margin-left: -25px; margin-top: -16px;" id="imgparroquia" src="../../imagenes/exclamtion.png" width="15" height="15" alt="img_info"/>
+                                </td>
+                                
+                                <td align="left" class="letras">Calle: </td>
                                 <td>
                                     <div id="div_calle" class="form-group">
                                         <input type="text" class="form-control input-sm" id="calle" name="calle" placeholder="Calle, Avenida o Vereda"/>
                                     </div>
                                 </td>
+                                <td  width="18" heigth="10">
+                                    <img style="cursor: pointer; margin-top: -16px;" id="imgcalle" src="../../imagenes/exclamtion.png" width="15" height="15" alt="img_info"/>
+                                </td>
                             </tr>
+                            
                             <tr  height="45">
-                                <td class="letras"> Casa o Apto </td>
+                                <td class="letras"> Casa o Apto: </td>
                                 <td>
                                     <div id="div_casa" class="form-group">
                                         <input type="text" class="form-control  input-sm" id="casa" name="casa" placeholder="Casa o Apartamento"/>
                                     </div>
                                 </td>
-                                <td class="letras"> Edificio </td>
+                                 <td width="35" align="left">
+                                    <img style="cursor: pointer; margin-left: -25px; margin-top: -16px;" id="imgcasa" src="../../imagenes/exclamtion.png" width="15" height="15" alt="img_info"/>
+                                </td>
+                                
+                                <td align="left" class="letras">Edificio:</td>
                                 <td>
                                     <div id="div_edificio" class="form-group">
                                         <input type="text" class="form-control  input-sm" id="edificio" name="edificio" placeholder="Edificio"/>
                                     </div>
                                 </td>
                             </tr>
+                            
                             <tr height="35">
-                                <td class="letras"> Barrio o Urb </td>
+                                <td class="letras"> Barrio o Urb: </td>
                                 <td>
                                     <div id="div_barrio" class="form-group">
                                         <input type="text" class="form-control input-sm" id="barrio" name="barrio" placeholder="Barrio o Urbanización">
                                     </div>
                                 </td>
+                                <td width="35" align="left">
+                                    <img style="cursor: pointer; margin-left: -25px; margin-top: -16px;" id="imgbarrio" src="../../imagenes/exclamtion.png" width="15" height="15" alt="img_info"/>
+                                </td>
                             </tr>
 
                             <tr>
-                                <td height="86" colspan="4" align="center"> 
+                                <td height="86" colspan="5" align="center"> 
                                     <fieldset style="width: 710px;">
                                         <legend class="letras_label"> 
                                             Otrso Datos
@@ -363,9 +411,7 @@ $_SESSION['abrir']       = 'registros';
                                 </td>
                             </tr>
                             <tr>
-                                <td class="letras">
-                                    Status
-                                </td>
+                                <td class="letras">Status: </td>
                                 <td>
                                     <div cclass="form-group">
                                         <select  name="estatus" class="form-control input-sm" id="estatus">
@@ -381,9 +427,11 @@ $_SESSION['abrir']       = 'registros';
                                         </select>                                                
                                     </div> 
                                 </td>
-                                <td class="letras">
-                                    Actividad
+                                <td width="35" align="left">
+                                    <img style="cursor: pointer; margin-left: -25px;" id="imgestatus" src="../../imagenes/exclamtion.png" width="15" height="15" alt="img_info"/>
                                 </td>
+                                
+                                <td align="left" class="letras">Actividad:</td>
                                 <td>
                                     <div class="form-group">
                                         <select  name="actividad" class="form-control input-sm select2" id="actividad">
@@ -399,9 +447,12 @@ $_SESSION['abrir']       = 'registros';
                                         </select>                                                
                                     </div> 
                                 </td>
+                                 <td  width="18" heigth="10">
+                                    <img style="cursor: pointer; margin-top: -16px;" id="imgactividad" src="../../imagenes/exclamtion.png" width="15" height="15" alt="img_info"/>
+                                </td>
                             </tr>
                             <tr>
-                                <td colspan="4" align="center"> 
+                                <td colspan="5" align="center"> 
                                     <div id="botones" style="margin-top: 50px;">
                                         <input type="hidden" name="accion" value="agregar" id="accion"/>
                                         <button type="button" id="guardar" class="btn btn-primary btn-sm">Guardar</button>

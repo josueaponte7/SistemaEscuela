@@ -39,7 +39,93 @@ $(document).ready(function() {
             {"sWidth": "2%", "sClass": "center"}
         ]
     });
+    
+    
+    /*************Izquido*****************/
+    $('#imgcedula').tooltip({
+        html: true,
+        placement: 'right',
+        style: 'margin-left:1550px;',
+        title: '<br/>La C&eacute;dula no puede estar en blanco<br/>'
+    });
+    
+    $('#imgapellido').tooltip({
+        html: true,
+        placement: 'right',
+        style: 'margin-left:1550px;',
+        title: '<br/>El Apellido no puede estar en blanco<br/>'
+    });
+    
+     $('#imgfechaNac').tooltip({
+        html: true,
+        placement: 'right',
+        style: 'margin-left:1550px;',
+        title: '<br/>La Fecha Nacimiento no puede estar en blanco<br/>'
+    });
+    
+     $('#imgestado').tooltip({
+        html: true,
+        placement: 'right',
+        style: 'margin-left:1550px;',
+        title: '<br/>El Estado no puede estar en blanco<br/>'
+    });
+    
+     $('#imgparroquia').tooltip({
+        html: true,
+        placement: 'right',
+        style: 'margin-left:1550px;',
+        title: '<br/>La Parroquia no puede estar en blanco<br/>'
+    });
+    
+     $('#imgcasa').tooltip({
+        html: true,
+        placement: 'right',
+        style: 'margin-left:1550px;',
+        title: '<br/>Casa o Apto no puede estar en blanco<br/>'
+    });
+    
+     $('#imgbarrio').tooltip({
+        html: true,
+        placement: 'right',
+        style: 'margin-left:1550px;',
+        title: '<br/>Barrio o Urb no puede estar en blanco<br/>'
+    });
+    
+    
+    /**************Derecho****************/
+    $('#imgnombre').tooltip({
+        html: true,
+        placement: 'left',
+        title: '<br/>El Nombre no debe estar en blanco<br/>'
+    });
+    
+    $('#imgsexo').tooltip({
+        html: true,
+        placement: 'left',
+        title: '<br/>El Sexo no debe estar en blanco<br/>'
+    });
+    
+      $('#imglugarNac').tooltip({
+        html: true,
+        placement: 'left',
+        title: '<br/>El Lugar de Nacimiento no debe estar en blanco<br/>'
+    });
+    
+     $('#imgminicipio').tooltip({
+        html: true,
+        placement: 'left',
+        title: '<br/>El Municipio no debe estar en blanco<br/>'
+    });
+    
+      $('#imgcalle').tooltip({
+        html: true,
+        placement: 'left',
+        title: '<br/>La Calle no debe estar en blanco<br/>'
+    });
+    
+    
 
+    /****************************************/
     $('#nacionalidad,#sexo').select2({
         minimumResultsForSearch: -1
     });
@@ -461,9 +547,7 @@ $(document).ready(function() {
 
                             $('table#tbl_repre').css('display', 'none');
                             TTbl_Repre.fnClearTable();
-                            setTimeout(function(){
-                                window.location.href='estudiante.php?id=0';
-                            },0);
+                            setTimeout(function(){window.parent.location.reload();},1000);
                             $('input[type="text"]').val('');
                             $('textarea').val('');
                             $('select').not('#estatus').select2('val', 0);

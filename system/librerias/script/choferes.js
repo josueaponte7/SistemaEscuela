@@ -14,6 +14,62 @@ $(document).ready(function() {
             {"sWidth": "4%", "bSortable": false, "sClass": "center sorting_false", "bSearchable": false}
         ]
     });
+    
+    
+    /*************Izquido*****************/
+    $('#imgcedula').tooltip({
+        html: true,
+        placement: 'right',
+        style: 'margin-left:1550px;',
+        title: '<br/>La C&eacute;dula no puede estar en blanco<br/>'
+    });
+    
+    $('#imgapellido').tooltip({
+        html: true,
+        placement: 'right',
+        style: 'margin-left:1550px;',
+        title: '<br/>El Apellido no puede estar en blanco<br/>'
+    });
+    
+    $('#imgplaca').tooltip({
+        html: true,
+        placement: 'right',
+        style: 'margin-left:1550px;',
+        title: '<br/>La Placa no puede estar en blanco<br/>'
+    });
+    
+    $('#imgcolor').tooltip({
+        html: true,
+        placement: 'right',
+        style: 'margin-left:1550px;',
+        title: '<br/>El Color no puede estar en blanco<br/>'
+    });
+    
+        
+    
+    /**************Derecho****************/
+    $('#imgnombre').tooltip({
+        html: true,
+        placement: 'left',
+        title: '<br/>El Nombre no debe estar en blanco<br/>'
+    });   
+    
+     $('#imgtelcel').tooltip({
+        html: true,
+        placement: 'left',
+        title: '<br/>La Teléfono Celular no debe estar en blanco<br/>'
+    });
+    
+     $('#imgmodelo').tooltip({
+        html: true,
+        placement: 'left',
+        title: '<br/>El Modelo no debe estar en blanco<br/>'
+    });
+    
+    
+    
+    
+    /***********************************/
     $('#nacionalidad').select2({
         minimumResultsForSearch: -1
     }).on('change', function() {

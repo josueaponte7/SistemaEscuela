@@ -85,7 +85,7 @@ $_SESSION['abrir']       = 'mantenimiento';
                     <div class="panel-body">
                         <table width="376" border="0" align="center" style="margin-top: 25px;">  
                             <tr>
-                                <td width="90" class="letras"> A&ntilde;o Escolar </td>
+                                <td width="90" class="letras"> A&ntilde;o Escolar: </td>
                                 <td width="276"  align="center">
                                     <div id="div_anio" class="form-group">
                                         <input  type="text" class="form-control  input-sm" id="anio_escolar" name="anio_escolar" placeholder="A&ntilde;o Escolar"/>

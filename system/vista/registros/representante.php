@@ -6,7 +6,7 @@ require_once '../../modelo/Representante.php';
 
 $obj_parro = new Parroquia();
 $obj_repre = new Seguridad();
-$obj_rep   = new Representante();
+$obj_rep = new Representante();
 
 $datos['sql'] = "SELECT  
                     CONCAT_WS('-' ,(SELECT nombre FROM nacionalidad WHERE id_nacionalidad = re.nacionalidad),re.cedula) AS cedula,  
@@ -15,7 +15,7 @@ $datos['sql'] = "SELECT
                     IF(cod_celular='',0,CONCAT_WS('-' ,(SELECT codigo FROM codigo_telefono WHERE id = cod_celular),celular)) AS celular,
                     (SELECT er.nombre FROM estatus_representante er WHERE re.id_estatus = er.id_estatus) AS estatus
                    FROM representante re WHERE condicion = 1;";
-$resultado    = $obj_rep->getRepresentantes($datos);
+$resultado = $obj_rep->getRepresentantes($datos);
 
 $_SESSION['menu']        = 'registros_representante';
 $_SESSION['dir_sys']     = 'registros';
@@ -25,18 +25,17 @@ $_SESSION['heightifm']   = '1100px';
 $_SESSION['abrir']       = 'registros';
 
 $v_registro = 'none';
-$v_table    = 'block';
+$v_table = 'block';
 
 if (isset($_GET['id']) && $_GET['id'] == 1) {
     $_SESSION['v_registro'] = 'none';
-    $_SESSION['v_table']    = 'block';
+    $_SESSION['v_table'] = 'block';
     $v_registro = 'none';
-    $v_table    = 'block';
-}else if (isset($_SESSION['v_registro']) && isset($_SESSION['v_table'])) {
+    $v_table = 'block';
+} else if (isset($_SESSION['v_registro']) && isset($_SESSION['v_table'])) {
     $v_registro = $_SESSION['v_registro'];
-    $v_table    = $_SESSION['v_table'];
+    $v_table = $_SESSION['v_table'];
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -86,6 +85,8 @@ if (isset($_GET['id']) && $_GET['id'] == 1) {
                     Listado de Representantes
                 </legend>
             </fieldset>
+<!--            <p id="estatus_filter"></p>
+        </div> -->
             <button type="button" id="registrar" class="btn btn-primary btn-sm" style="margin-left: 650px;" >Registrar Representante</button>
             <br/>
             <br/>
@@ -109,20 +110,20 @@ if (isset($_GET['id']) && $_GET['id'] == 1) {
                     <tbody>
 
                         <?php
-                        $es_array                = is_array($resultado) ? TRUE : FALSE;
+                        $es_array = is_array($resultado) ? TRUE : FALSE;
                         if ($es_array === TRUE) {
                             for ($i = 0; $i < count($resultado); $i++) {
-                                
+
                                 $telefono = $resultado[$i]['telefono'];
-                                $celular  = $resultado[$i]['celular'];
-                                
-                                if($telefono != 0 && $celular == 0){
-                                    $telefonos =$telefono;
-                                }else if($celular != 0 && $telefono == 0){
+                                $celular = $resultado[$i]['celular'];
+
+                                if ($telefono != 0 && $celular == 0) {
+                                    $telefonos = $telefono;
+                                } else if ($celular != 0 && $telefono == 0) {
                                     $telefonos = $celular;
-                                }else if($telefono != 0 && $celular != 0){
-                                    $telefonos = $telefono.','.$celular;
-                                } 
+                                } else if ($telefono != 0 && $celular != 0) {
+                                    $telefonos = $telefono . ',' . $celular;
+                                }
                                 ?>
                                 <tr class="letras">
                                     <td><input type="checkbox" name="cedula[]" value="<?php echo $resultado[$i]['cedula'] ?>" /></td>
@@ -163,7 +164,7 @@ if (isset($_GET['id']) && $_GET['id'] == 1) {
                     <div class="panel-body">
                         <table width="887" border="0" align="center">                        
                             <tr>
-                                <td height="72" colspan="4" align="center">
+                                <td height="72" colspan="5" align="center">
                                     <fieldset style="width: 710px;">
                                         <legend class="letras_label"> 
                                             Datos Personales del Representante 
@@ -172,8 +173,8 @@ if (isset($_GET['id']) && $_GET['id'] == 1) {
                                 </td>
                             </tr>
                             <tr>
-                                <td width="109" height="66" class="letras"> C&eacute;dula </td>
-                                <td width="369">
+                                <td width="116" height="66" class="letras"> C&eacute;dula: </td>
+                                <td width="344">
                                     <div class="form-inline">
                                         <div class="form-group">
                                             <select name="nacionalidad" class="form-control input-sm select2" id="nacionalidad" style="float: left;">
@@ -193,46 +194,65 @@ if (isset($_GET['id']) && $_GET['id'] == 1) {
                                         </div>
                                     </div>
                                 </td>
-                                <td width="119" class="letras"> Nombre </td>
-                                <td width="272">
+                                <td width="35" align="left">
+                                    <img style="cursor: pointer; margin-left: -40px;" id="imgcedula" src="../../imagenes/exclamtion.png" width="15" height="15" alt="img_info"/>
+                                </td>
+                                
+                                <td width="80" align="left" class="letras">Nombre: </td>
+                                <td width="271">
                                     <div id="div_nombre" class="form-group">
                                         <input  type="text" class="form-control  input-sm" id="nombre" name="nombre" placeholder="Nombre"/>
                                     </div>
                                 </td>
+                                <td  width="15" heigth="10">
+                                    <img style="cursor: pointer; margin-top: -20px;" id="imgnombre" src="../../imagenes/exclamtion.png" width="15" height="15" alt="img_info"/>
+                                </td>
                             </tr>
                             <tr height="60">
-                                <td height="49" class="letras"> Apellido </td>
+                                <td height="49" class="letras"> Apellido: </td>
                                 <td>
                                     <div id="div_apellido" class="form-group">
                                         <input type="text" class="form-control  input-sm" id="apellido" name="apellido" placeholder="Apellido"/>
                                     </div>
                                 </td>
-                                <td class="letras"> Sexo:</td>
+                                <td width="35" align="left">
+                                    <img style="cursor: pointer; margin-top: -15px; margin-left: -40px;" id="imgapellido" src="../../imagenes/exclamtion.png" width="15" height="15" alt="img_info"/>
+                                </td>
+                                <td align="left" class="letras">Sexo: </td>
                                 <td>
                                     <select name="sexo" class="form-control input-sm select2" id="sexo">
                                         <option value="0">Seleccione</option>
                                         <option value="1">Femenino</option>
                                         <option value="2">Masculino</option>
                                     </select>
-                                </td>                               
+                                </td>  
+                                <td  width="15" heigth="10">
+                                    <img style="cursor: pointer; margin-top: -8px;" id="imgsexo" src="../../imagenes/exclamtion.png" width="15" height="15" alt="img_info"/>
+                                </td>
                             </tr>
                             <tr height="40">
-                                <td class="letras"> Fecha de Naci</td>
+                                <td class="letras"> Fecha de Naci: </td>
                                 <td>
                                     <div id="div_fech_naci" class="form-group">
                                         <input type="text" style="background-color: #FFFFFF" readonly class="form-control input-sm" id="fech_naci" name="fech_naci" placeholder="Fecha de Nacimiento">
                                     </div>
                                 </td>
-                                <td class="letras"> Edad: </td>
+                                <td width="35" align="left">
+                                    <img style="cursor: pointer; margin-top: -18px; margin-left: -40px;" id="imgfechaNac" src="../../imagenes/exclamtion.png" width="15" height="15" alt="img_info"/>
+                                </td>
+                                <td align="left" class="letras">Edad:</td>
                                 <td>
                                     <div id="div_edad" class="form-group">
                                         <input disabled="disabled" type="text" style="background-color: #FFFFFF" class="form-control input-sm" id="edad" name="edad" placeholder="Edad">
                                     </div>
                                 </td>
+<!--                                <td  width="15" heigth="10">
+                                    <img style="cursor: pointer; margin-top: -20px;" id="imgedad" src="../../imagenes/exclamtion.png" width="15" height="15" alt="img_info"/>
+                                </td>-->
                             </tr>
 
                             <tr height="60">
-                                <td class="letras"> Tel&eacute;fono Hab </td>
+                                <td class="letras"> Tel&eacute;fono Hab: </td>
                                 <td>
                                     <div class="form-inline">
                                         <div class="form-group">
@@ -253,7 +273,10 @@ if (isset($_GET['id']) && $_GET['id'] == 1) {
                                         </div>
                                     </div>
                                 </td>                          
-                                <td class="letras">Tel&eacute;fono Cel</td>  
+                                <td width="35" align="left">
+<!--                                   <img style="cursor: pointer; margin-left: -40px;" id="imgtelhab" src="../../imagenes/exclamtion.png" width="15" height="15" alt="img_info"/>-->
+                                </td>
+                                <td align="left" class="letras">Tel&eacute;fono Cel: </td>  
                                 <td>
                                     <div class="form-inline">
                                         <div class="form-group">
@@ -276,17 +299,23 @@ if (isset($_GET['id']) && $_GET['id'] == 1) {
                                         </div> 
                                     </div>
                                 </td>
+                                <td  width="5" heigth="10">
+                                    <img style="cursor: pointer; margin-top: -8px;" id="imgtelcel" src="../../imagenes/exclamtion.png" width="15" height="15" alt="img_info"/>
+                                </td>
                             </tr>
                             <tr height="60">
                                 <td height="52" class="letras">Lugar de Naci:</td>
-                                <td colspan="3">
+                                <td colspan="4">
                                     <div id="div_lugar_naci" class="form-group">
-                                        <textarea style="width:98% !important" id="lugar_naci" class="form-control input-sm" placeholder="Lugar de Nacimiento" rows="1" name="lugar_naci"></textarea>
+                                        <textarea style="width:99% !important" id="lugar_naci" class="form-control input-sm" placeholder="Lugar de Nacimiento" rows="1" name="lugar_naci"></textarea>
                                     </div>
+                                </td>
+                                <td  width="5" heigth="10">
+                                    <img style="cursor: pointer; margin-top: -16px;" id="imglugarNac" src="../../imagenes/exclamtion.png" width="15" height="15" alt="img_info"/>
                                 </td>
                             </tr>
                             <tr>
-                                <td height="86" colspan="4" align="center"> 
+                                <td height="86" colspan="5" align="center"> 
                                     <fieldset style="width: 710px;">
                                         <legend class="letras_label"> 
                                             Direcci&oacute;n del Representante
@@ -295,7 +324,7 @@ if (isset($_GET['id']) && $_GET['id'] == 1) {
                                 </td>
                             </tr>
                             <tr>
-                                <td class="letras"> Estado </td>
+                                <td class="letras"> Estado: </td>
                                 <td>
                                     <div class="form-group">
                                         <select name="estado" class="form-control input-sm select2" id="estado">
@@ -311,7 +340,10 @@ if (isset($_GET['id']) && $_GET['id'] == 1) {
                                         </select>
                                     </div>
                                 </td>
-                                <td class="letras"> Municipio </td>
+                                <td width="35" align="left">
+                                    <img style="cursor: pointer; margin-left: -40px; margin-top: -16px;" id="imgestado" src="../../imagenes/exclamtion.png" width="15" height="15" alt="img_info"/>
+                                </td>
+                                <td width="80" align="left" class="letras">Municipio: </td>
                                 <td>
                                     <div class="form-group">
                                         <select name="municipio" class="form-control input-sm select2" id="municipio">
@@ -319,9 +351,12 @@ if (isset($_GET['id']) && $_GET['id'] == 1) {
                                         </select>
                                     </div>
                                 </td>
+                                <td  width="5" heigth="10">
+                                    <img style="cursor: pointer; margin-top: -16px;" id="imgmunicipio" src="../../imagenes/exclamtion.png" width="15" height="15" alt="img_info"/>
+                                </td>
                             </tr>
                             <tr height="45">
-                                <td class="letras"> Parroquia </td>
+                                <td class="letras"> Parroquia: </td>
                                 <td>
                                     <div class="form-group">
                                         <select name="parroquia" class="form-control input-sm" id="parroquia">
@@ -329,21 +364,30 @@ if (isset($_GET['id']) && $_GET['id'] == 1) {
                                         </select>
                                     </div>
                                 </td>
-                                <td class="letras"> Calle </td>
+                                <td width="35" align="left">
+                                    <img style="cursor: pointer; margin-left: -40px; margin-top: -16px;" id="imgparroquia" src="../../imagenes/exclamtion.png" width="15" height="15" alt="img_info"/>
+                                </td>
+                                <td width="80" align="left" class="letras">Calle: </td>
                                 <td>
                                     <div id="div_calle"class="form-group">
                                         <input type="text" class="form-control input-sm" id="calle" name="calle" placeholder="Calle, Avenida o Vereda"/>
                                     </div>
                                 </td>
+                                <td  width="5" heigth="10">
+                                    <img style="cursor: pointer; margin-top: -16px;" id="imgcalle" src="../../imagenes/exclamtion.png" width="15" height="15" alt="img_info"/>
+                                </td>
                             </tr>
                             <tr  height="45">
-                                <td class="letras"> Casa o Apto </td>
+                                <td class="letras"> Casa o Apto: </td>
                                 <td>
                                     <div id="div_casa" class="form-group">
                                         <input type="text" class="form-control  input-sm" id="casa" name="casa" placeholder="Casa o Apartamento"/>
                                     </div>
                                 </td>
-                                <td class="letras"> Edificio </td>
+                                <td width="35" align="left">
+                                    <img style="cursor: pointer; margin-left: -40px; margin-top: -16px;" id="imgcasa" src="../../imagenes/exclamtion.png" width="15" height="15" alt="img_info"/>
+                                </td>
+                                <td width="80" align="left" class="letras">Edificio: </td>
                                 <td>
                                     <div id="div_edificio" class="form-group">
                                         <input type="text" class="form-control  input-sm" id="edificio" name="edificio" placeholder="Edificio"/>
@@ -351,20 +395,23 @@ if (isset($_GET['id']) && $_GET['id'] == 1) {
                                 </td>
                             </tr>
                             <tr height="35">
-                                <td class="letras" > Barrio o Urb </td>
+                                <td class="letras" > Barrio o Urb: </td>
                                 <td>
                                     <div id="div_barrio" class="form-group">
                                         <input type="text" class="form-control input-sm" id="barrio" name="barrio" placeholder="Barrio o Urbanización">
                                     </div>
                                 </td>
-                                <td class="letras"></td>
-                                <td>
-                                    &nbsp;
+                                <td width="35" align="left">
+                                    <img style="cursor: pointer; margin-left: -40px; margin-top: -16px;" id="imgbarrio" src="../../imagenes/exclamtion.png" width="15" height="15" alt="img_info"/>
+                                </td>
+                                <td width="80" align="left" class="letras"></td>
+                                <td>&nbsp;
+
                                 </td>
                             </tr>
 
                             <tr>
-                                <td height="86" colspan="4" align="center"> 
+                                <td height="86" colspan="5" align="center"> 
                                     <fieldset style="width: 710px;">
                                         <legend class="letras_label"> 
                                             Otros Datos
@@ -374,10 +421,10 @@ if (isset($_GET['id']) && $_GET['id'] == 1) {
                             </tr>
 
                             <tr>
-                                <td width="126" class="letras">
-                                    Status
+                                <td width="116" class="letras">
+                                    Status:
                                 </td>
-                                <td width="250">
+                                <td width="344">
                                     <div class="form-group">
                                         <select  name="estatus" class="form-control input-sm" id="estatus">
                                             <option value="0">Seleccione</option>
@@ -392,9 +439,10 @@ if (isset($_GET['id']) && $_GET['id'] == 1) {
                                         </select>                                                
                                     </div> 
                                 </td>
-                                <td class="letras">
-                                    Antecedentes
+                                <td width="35" align="left">
+                                    <img style="cursor: pointer; margin-left: -40px; margin-top: -16px;" id="imgstatus" src="../../imagenes/exclamtion.png" width="15" height="15" alt="img_info"/>
                                 </td>
+                                <td width="80" align="left" class="letras">Antecedente: </td>
                                 <td>
                                     <div id="div_antecedente" class="form-group">
                                         <input  type="text" class="form-control  input-sm" id="antecedente" name="antecedente" placeholder="Antecedentes"/>
@@ -403,8 +451,8 @@ if (isset($_GET['id']) && $_GET['id'] == 1) {
                             </tr>
 
                             <tr height="45">
-                                <td width="103" class="letras">Nivel Instrucci&oacute;n</td>
-                                <td width="286">
+                                <td width="116" class="letras">Nivel Instrucci&oacute;n: </td>
+                                <td width="344">
                                     <div class="form-group">
                                         <select  name="nivel_inst" class="form-control input-sm" id="nivel_inst">
                                             <option value="0">Seleccione</option>
@@ -419,7 +467,10 @@ if (isset($_GET['id']) && $_GET['id'] == 1) {
                                         </select>                                                
                                     </div> 
                                 </td>
-                                <td class="letras"> Profesi&oacute;n </td>
+                                <td width="35" align="left">
+                                    <img style="cursor: pointer; margin-left: -40px; margin-top: -16px;" id="imgNivel" src="../../imagenes/exclamtion.png" width="15" height="15" alt="img_info"/>
+                                </td>
+                                <td width="80" align="left" class="letras">Profesi&oacute;n: </td>
                                 <td>
                                     <div class="form-group">
                                         <select name="profesion" class="form-control input-sm" id="profesion">
@@ -435,20 +486,22 @@ if (isset($_GET['id']) && $_GET['id'] == 1) {
                                         </select>
                                     </div>
                                 </td>
-                                <td>&nbsp;
-
+                                <td  width="5" heigth="10">
+                                    <img style="cursor: pointer; margin-top: -16px;" id="imgprofesion" src="../../imagenes/exclamtion.png" width="15" height="15" alt="img_info"/>
                                 </td>
+                                <td width="15">&nbsp;</td>
                             </tr>
                             <tr height="35">
-                                <td class="letras">
-                                    Ingreso Familiar
-                                </td>
+                                <td class="letras">Ingreso Familiar: </td>
                                 <td>
                                     <div id="div_fuente_ingreso" cclass="form-group">
                                         <input  type="text" class="form-control input-sm" id="fuente_ingreso" name="fuente_ingreso" placeholder="Fuente de Ingreso" maxlength="6">
                                     </div>
                                 </td>
-                               <td class="letras"> Email </td>
+                                <td width="35" align="left">
+                                    <img style="cursor: pointer; margin-left: -40px;" id="imgingreso" src="../../imagenes/exclamtion.png" width="15" height="15" alt="img_info"/>
+                                </td>
+                                <td width="80" align="left" class="letras">Email: </td>
                                 <td>
                                     <div id="div_email" class="form-group">
                                         <input type="text" class="form-control input-sm" id="email" name="email" placeholder="Email">
@@ -457,7 +510,7 @@ if (isset($_GET['id']) && $_GET['id'] == 1) {
                             </tr> 
 
                             <tr>
-                                <td colspan="4" align="center"> 
+                                <td colspan="5" align="center"> 
                                     <div  class="form-group" id="botones" style="margin-top: 50px;">
                                         <input type="hidden" name="accion" value="agregar" id="accion"/>
                                         <button type="button" id="guardar" class="btn btn-primary btn-sm">Guardar</button>

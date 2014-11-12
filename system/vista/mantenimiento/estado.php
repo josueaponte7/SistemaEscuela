@@ -91,7 +91,7 @@ $_SESSION['abrir']       = 'mantenimiento';
                     <div class="panel-body">
                         <table width="376" border="0" align="center" style="margin-top: 25px;">  
                             <tr>
-                                <td width="90" class="letras"> Nombre Estado </td>
+                                <td width="90" class="letras"> Nombre Estado: </td>
                                 <td width="276"  align="center">
                                     <div id="div_estado" class="form-group">
                                         <input  type="text" class="form-control  input-sm" id="nombre_estado" name="nombre_estado" placeholder="Nombre del Estado"/>

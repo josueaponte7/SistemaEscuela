@@ -8,7 +8,7 @@ $obj_misi    = new DatosGenerales();
 $obj_anioes  = new AnioEscolar();
 $obj_datos   = new Representante();
 
-$cedula = substr($_GET['cedula'], 2);
+$cedula = $_GET['cedula'];
 
 $obj       = new Inscripcion();
 $resultado = $obj->getDatosConst($cedula);

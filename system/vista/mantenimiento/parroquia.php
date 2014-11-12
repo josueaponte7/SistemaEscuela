@@ -113,7 +113,7 @@ $_SESSION['abrir']       = 'mantenimiento';
                                     <table width="370" align="center">
                                         <tr>
                                             <td width="62" height="60" class="letras">
-                                                Estado
+                                                Estado:
                                             </td>
                                             <td width="296">
                                                 <div class="form-group">
@@ -131,7 +131,7 @@ $_SESSION['abrir']       = 'mantenimiento';
                                                 </div>
                                             </td>                                        
                                         </tr>
-                                        <td class="letras"> Municipio </td>
+                                        <td class="letras"> Municipio: </td>
                                         <td>
                                             <div class="form-group">
                                                 <select name="municipio" class="form-control input-sm select2" id="municipio">
@@ -141,7 +141,7 @@ $_SESSION['abrir']       = 'mantenimiento';
                                         </td>
                                         <tr>
                                             <td width="62" class="letras">
-                                                Parroquia
+                                                Parroquia:
                                             </td>
                                             <td width="296">
                                                 <div id="div_parroquia" class="form-group">

@@ -19,7 +19,7 @@ $(document).ready(function() {
     });
 
     var letra = '1234567890';
-    $('#cant_habitacion').validar(letra);
+    $('#cant_habitacion,#cedula_cho').validar(letra);
     
      $('#registrar').click(function() {
         $('#registro_inscripcion').slideDown(2000);
@@ -62,6 +62,7 @@ $(document).ready(function() {
 
     $contextMenu.on("click", "span", function() {
         var accion = $(this).attr('id');
+        cedula = cedula.substring(2);
         if (accion == 'v_const') {
             url = '../reportes/constancia_inscripcion.php?cedula='+cedula;
             window.open(url);
@@ -264,9 +265,11 @@ $(document).ready(function() {
                     $('#telefono_cho').val(datos[3]);
 
                 } else {
-                    alert('La Cedula no esta registrada');
-                    $('#div_cedula_cho').addClass('has-error');
-                    este.val('');
+                    window.parent.bootbox.alert("La C&eacute;dula no se encuentra registrada", function () {
+                        este.parent('div').addClass('has-error');
+                        este.focus();
+                    });
+                    
                 }
             });
         }

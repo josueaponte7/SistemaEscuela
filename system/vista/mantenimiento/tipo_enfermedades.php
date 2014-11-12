@@ -49,7 +49,7 @@ $_SESSION['abrir']       = 'mantenimiento';
                             <th style="margin-left: 20px !important;" width="81">
                                 <input type="checkbox" name="todos" id="todos" value="todos" />
                             </th>
-                            <th style="width: 35%">Codigo Enfermedad</th>
+                            <th style="width: 35%">C&oacute;digo Enfermedad</th>
                             <th width="150">Nombre Enfermedad</th>
                             <th style="width: 5%;text-align: center">Modificar</th>
                             <th style="width: 5%;text-align: center">Eliminar</th>

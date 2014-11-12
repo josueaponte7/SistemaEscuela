@@ -21,7 +21,7 @@ $resultado    = $obj_pre->datos($datos);
 $_SESSION['menu']        = 'procesos_preinscripcion';
 $_SESSION['dir_sys']     = 'procesos';
 $_SESSION['archivo_sys'] = 'preinscripcion';
-$_SESSION['height']      = '600px';
+$_SESSION['height']      = '750px';
 $_SESSION['heightifm']   = '520px';
 $_SESSION['abrir']       = 'procesos';
 

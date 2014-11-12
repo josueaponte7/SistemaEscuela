@@ -123,9 +123,7 @@ if (isset($_POST['accion'])) {
                 echo 0;
             }
 
-            break;
-        
-        
+            break;             
         
     }
 }

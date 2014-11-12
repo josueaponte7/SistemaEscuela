@@ -9,7 +9,7 @@ $resul_statusrep = $obj_statusRep->getStrep($d_statusrep);
 $_SESSION['menu']        = 'mantenimiento_status_representante';
 $_SESSION['dir_sys']     = 'mantenimiento';
 $_SESSION['archivo_sys'] = 'status_representante';
-$_SESSION['height']      = '700px';
+$_SESSION['height']      = '750px';
 $_SESSION['heightifm']   = '540px';
 $_SESSION['abrir']       = 'mantenimiento';
 ?>
@@ -48,7 +48,7 @@ $_SESSION['abrir']       = 'mantenimiento';
                             <th style="margin-left: 20px !important;" width="81">
                                 <input type="checkbox" name="todos" id="todos" value="todos" />
                             </th>
-                            <th style="width: 35%">Codigo Status</th>
+                            <th style="width: 35%">C&oacute;digo Status</th>
                             <th width="81">Status Representante</th>
                             <th style="width: 5%;text-align: center">Modificar</th>
                             <th style="width: 5%;text-align: center">Eliminar</th>
@@ -89,7 +89,7 @@ $_SESSION['abrir']       = 'mantenimiento';
                     <div class="panel-body">
                         <table width="376" border="0" align="center" style="margin-top: 25px;">                         
                             <tr>
-                                <td height="49" class="letras"> Status Representante </td>
+                                <td height="49" class="letras"> Status Representante: </td>
                                 <td align="center">
                                     <div id="div_statusrepre" class="form-group">
                                         <input  type="text" class="form-control  input-sm" id="nombre" name="nombre" placeholder="Nombre del Status"/>

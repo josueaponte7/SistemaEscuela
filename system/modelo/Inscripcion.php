@@ -334,6 +334,7 @@ class Inscripcion extends Preinscripcion
             }
             return $resultado;
     }
+    
     public function update($datos)
     {
         $dat_ced       = explode('-', $datos['cedula_estudiante']);
@@ -354,8 +355,8 @@ class Inscripcion extends Preinscripcion
         }
         $this->restartSession(TRUE);
         return $resultado;
-    }
-
+    }   
+    
     public function tipoestudiante($where = 1)
     {
         $where = ' WHERE ' . $where;
@@ -383,8 +384,13 @@ class Inscripcion extends Preinscripcion
         return $resultado;
     }
     
-    public function getDatosConst($cedula)
-    {
+    public function getDatosConst($cedula,$todos=FALSE)
+    {   
+
+        $where = "";
+        if($todos == FALSE){
+            $where = "WHERE i.cedula_estudiante IN($cedula)";
+        }
         $datos['sql'] = "SELECT
                          CONCAT_WS('-' ,(SELECT nombre FROM nacionalidad WHERE id_nacionalidad = e.nacionalidad),e.cedula) AS cedula,
                          CONCAT_WS(' ',e.nombre,e.apellido) AS nombre,
@@ -394,7 +400,7 @@ class Inscripcion extends Preinscripcion
                          DATE_FORMAT(fecha_inscripcion,'%d-%m-%Y') AS fecha_inscripcion
                          FROM inscripcion AS i
                          INNER JOIN estudiante AS e ON i.cedula_estudiante=e.cedula
-                         WHERE i.cedula_estudiante=$cedula";
+                         $where";
         $resultado    = $this->datos($datos);
         return $resultado;
     }
@@ -908,6 +914,129 @@ class Inscripcion extends Preinscripcion
         }
 
         echo $datos;
+    }
+    
+    
+    /************************************************/
+    /*******Reinscripcion***********/
+    
+    
+        public function updateRein($datos)
+    {
+
+        $cedula               = substr($datos['cedula_estudiante'],2);
+        $fecha                = $this->formateaBD($datos['fecha']);
+        $anio_escolar         = $datos['anio_escolar'];
+        $actividad            = $datos['id_actividad'];
+        $area                 = $datos['area'];
+        $cedula_r             = $datos['cedula_representante'];
+        $medio                = $datos['id_medio']; 
+        $cedula_cho           = $datos['cedula_chofer'];
+
+        $sql = "UPDATE inscripcion
+                    SET 
+                    fecha_inscripcion      = $fecha,
+                    id_anio                = $anio_escolar,
+                    id_actividad           = $actividad,
+                    area_descripcion       = '$area',
+                    cedula_representante   = $cedula_r,
+                    id_medio               = $medio,   
+                    cedula_chofer          = $cedula_cho
+                   WHERE cedula_estudiante = $cedula;";
+        $resultado = $this->ejecutar($sql);
+        if($resultado === TRUE){
+            $sql_update = "UPDATE estudiante SET  id_estatus = 4 WHERE cedula = $cedula;";
+            $result_up  = $this->ejecutar($sql_update);
+            if ($result_up) {
+                $resultado = TRUE;
+            }
+        }
+        $this->restartSession(TRUE);
+        return $resultado;
+    }
+    
+    
+//    public function updateRep($datos)
+//    {
+//        $cedula               = $datos['cedula_estudiante'];
+//        $fecha_inscripcion    = $datos['fecha_inscripcion'];
+//        $id_anio              = $datos['id_anio'];
+//        $actividad            = $datos['id_actividad'];
+//        $area                 = $datos['area'];
+//        $cedula_representante = substr($datos['cedula_representante'], 2);
+//        $medio                = $datos['id_medio']; 
+//        $tipo                 = $datos['tipo'];
+//        $cedula_chofer        = $datos['cedula_chofer'];
+//        
+//    echo    $sql_update    = "UPDATE inscripcion SET 
+//                        fecha_inscripcion     = $fecha_inscripcion,
+//                        id_anio               = $id_anio,
+//                        id_actividad          = $actividad,
+//                        area_descripcion      = $area,
+//                        cedula_representante  = $cedula_representante,
+//                        id_medio              = $medio,
+//                        tipo                  = $tipo,   
+//                        cedula_chofer         = $cedula_chofer
+//                      WHERE cedula_estudiante = $cedula;";
+//        exit;
+//        
+//        
+//
+//        
+//        $result_up     = $this->ejecutar($sql_update);
+//        
+//        if ($result_up) {
+//            $resultado = TRUE;
+//        }
+//        
+//        $this->restartSession(TRUE);
+//        return $resultado;
+//    }
+    
+        
+    public function getRep($datos)
+    {
+        $cedula = $datos['cedula_representante'];
+
+
+       $sql_re['sql'] = "SELECT 
+                            r.nombre,
+                            r.apellido,
+                            er.parentesco
+                            FROM representante AS r
+                            INNER JOIN estudiante_representante AS er ON r.cedula = er.cedula_representante
+                            WHERE er.cedula_representante = $cedula";
+        
+       
+        $total = $this->numero_filas($sql_re['sql']);
+        if($total > 0){
+            $result_rep = $this->datos($sql_re);
+            $parentesco = '';
+            switch ((int)$result_rep[0]['parentesco']) {
+                case 1:
+                    $parentesco = 'Madre';
+                    break;
+                case 2:
+                    $parentesco = 'Padre';
+                    break;
+                case 3:
+                    $parentesco = 'Abuela';
+                    break;
+                case 4:
+                    $parentesco = 'Abuelo';
+                    break;
+                case 5:
+                    $parentesco = 'Tia';
+                    break;
+                case 6:
+                    $parentesco = 'Tio';
+                    break;
+            }
+            $datos =  $result_rep[0]['nombre'] . ';' . $result_rep[0]['apellido'] . ';' . $parentesco;       
+            return $datos;
+        }else{
+            echo 0;
+        }
     }
 
 }

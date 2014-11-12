@@ -68,7 +68,7 @@ $_SESSION['abrir']       = 'registros';
                             <th style="padding-left: 21px !important;" width="81">
                                 <input type="checkbox" name="todos" id="todos" value="todos" />
                             </th>
-                            <th style="width: 35%">Codigo</th>
+                            <th style="width: 35%">C&oacute;digo</th>
                             <th width="150">Centro de Salud</th>
                             <th width="150">Tipo de Centro de Salud</th>
                             <th width="150">Tel&eacute;fono</th>
@@ -124,13 +124,13 @@ $_SESSION['abrir']       = 'registros';
                                 </td>
                             </tr>
                             <tr>                            
-                                <td width="125" class="letras"> Nombre de Centro </td>
+                                <td width="125" class="letras"> Nombre de Centro: </td>
                                 <td width="353">
                                     <div id="div_servicio" class="form-group">
                                         <input  type="text" class="form-control  input-sm" id="servicio" name="servicio" placeholder="Nombre de Centro de Salud P&uacute;blica"/>
                                     </div>
                                 </td>
-                                <td width="96" class="letras"> Tipo  </td>
+                                <td width="96" class="letras"> Tipo:  </td>
                                 <td width="295">
                                     <div class="form-group">
                                         <select name="tiposervicio" class="form-control input-sm" id="tiposervicio">
@@ -158,7 +158,7 @@ $_SESSION['abrir']       = 'registros';
                                 </td>
                             </tr>
                             <tr>
-                                <td class="letras"> Estado </td>
+                                <td class="letras"> Estado: </td>
                                 <td>
                                     <div class="form-group">
                                         <select name="estado" class="form-control input-sm select2" id="estado">
@@ -174,7 +174,7 @@ $_SESSION['abrir']       = 'registros';
                                         </select>
                                     </div>
                                 </td>
-                                <td class="letras"> Municipio </td>
+                                <td class="letras"> Municipio: </td>
                                 <td>
                                     <div class="form-group">
                                         <select name="municipio" class="form-control input-sm select2" id="municipio">
@@ -185,7 +185,7 @@ $_SESSION['abrir']       = 'registros';
                             </tr>
 
                             <tr height="45">
-                                <td class="letras"> Parroquia </td>
+                                <td class="letras"> Parroquia: </td>
                                 <td>
                                     <div class="form-group">
                                         <select name="parroquia" class="form-control input-sm" id="parroquia">
@@ -193,7 +193,7 @@ $_SESSION['abrir']       = 'registros';
                                         </select>
                                     </div>
                                 </td>
-                                <td class="letras"> Tel&eacute;fono Ubic. </td>
+                                <td class="letras"> Tel&eacute;fono Ubic: </td>
                                 <td>
                                     <div class="form-inline">
                                         <div class="form-group">

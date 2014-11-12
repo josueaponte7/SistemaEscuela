@@ -17,11 +17,17 @@ if (isset($_POST['accion'])) {
     if (isset($_POST['id_anio'])) {
         $datos['id_anio'] = $_POST['id_anio'];
     } 
+    if (isset($_POST['anio_escolar'])) {
+        $datos['anio_escolar'] = $_POST['anio_escolar'];
+    } 
     if (isset($_POST['actividad'])) {
         $datos['id_actividad'] = $_POST['actividad'];
     }
     if (isset($_POST['area'])) {
         $datos['area'] = $_POST['area'];
+    }
+    if (isset($_POST['cedula_r'])) {
+        $datos['cedula_representante'] = $_POST['cedula_r'];
     }
     if (isset($_POST['cedula_r'])) {
         $datos['cedula_representante'] = $_POST['cedula_r'];
@@ -125,6 +131,13 @@ if (isset($_POST['accion'])) {
                 echo 1;
             }
         break;
+        
+        case 'Re-Inscribir':
+            $resultado = $obj->updateRein($datos);
+            if ($resultado) {
+                echo 1;
+            }
+        break;
 
         case 'Eliminar':
             $resultado = $obj->delete($datos);
@@ -134,6 +147,10 @@ if (isset($_POST['accion'])) {
         break;
         case 'BuscarDatos':
             $resultado = $obj->getDatos($datos);
+            echo $resultado;
+        break;
+        case 'BuscarRep':
+            $resultado = $obj->getRep($datos);
             echo $resultado;
         break;
         case 'GuardarDT':
